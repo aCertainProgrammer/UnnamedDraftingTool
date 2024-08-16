@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 200px;
+}
+
+.draft-team {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
