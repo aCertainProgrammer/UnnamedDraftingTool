@@ -12,3 +12,19 @@
   gap: 10px;
 }
 
+.champions-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.champion-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.champion-icon {
+  max-width: 50px;
+  max-height: 50pxl;
+}

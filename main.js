@@ -5,7 +5,7 @@ const pick_data = {
     mid: "good",
     adc: "maybe",
     support: "bad",
-    exceptions: "lilia cait jinx aurora gragas",
+    exceptions: "lillia cait jinx aurora gragas",
   },
   b2: {
     top: "maybe",
@@ -100,7 +100,7 @@ const role_data = {
     "sion",
   ],
   jungle: [
-    "xin zhao",
+    "xinzhao",
     "vi",
     "viego",
     "poppy",
@@ -108,7 +108,7 @@ const role_data = {
     "olaf",
     "wukong",
     "volibear",
-    "lilia",
+    "lillia",
     "taliyah",
     "ivern",
     "maokai",
@@ -177,5 +177,29 @@ for (let j = 0; j < picks.length; j++) {
   for (let i = 0; i < roles.length; i++) {
     picks[j].innerText +=
       roles[i] + " " + pick_data[pickstrings[j]][roles[i]] + ", ";
+  }
+}
+
+function capitalize(string) {
+  let newString = "";
+  newString += string[0].toUpperCase();
+  for (let i = 1; i < string.length; i++) {
+    newString += string[i];
+  }
+  return newString;
+}
+
+const championsContainer = document.getElementById("champions-container");
+for (let i = 0; i < 5; i++) {
+  for (let j = 0; j < role_data[roles[i]].length; j++) {
+    const currentChampion = role_data[roles[i]][j];
+    const newNode = document.createElement("div");
+    newNode.classList += "champion-container";
+    const championIcon = document.createElement("img");
+    championIcon.classList += "champion-icon";
+    championIcon.src =
+      "./champion_icons/centered/" + capitalize(currentChampion) + "_0.jpg";
+    newNode.appendChild(championIcon);
+    championsContainer.appendChild(newNode);
   }
 }
