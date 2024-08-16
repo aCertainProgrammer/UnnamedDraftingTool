@@ -173,12 +173,6 @@ const pickstrings = [
   "r5",
 ];
 const roles = ["top", "jungle", "mid", "adc", "support", "exceptions"];
-for (let j = 0; j < picks.length; j++) {
-  for (let i = 0; i < roles.length; i++) {
-    picks[j].innerText +=
-      roles[i] + " " + pick_data[pickstrings[j]][roles[i]] + ", ";
-  }
-}
 
 function capitalize(string) {
   let newString = "";
