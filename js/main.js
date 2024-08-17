@@ -174,6 +174,18 @@ const pickstrings = [
 ];
 const roles = ["top", "jungle", "mid", "adc", "support", "exceptions"];
 
+function prepareData(data) {
+  data.sort();
+  const newData = [];
+  newData.push(data[0]);
+  for (let i = 1; i < data.length; i++) {
+    if (data[i - 1] != data[i]) {
+      newData.push(data[i]);
+    }
+  }
+  return newData;
+}
+
 function capitalize(string) {
   let newString = "";
   newString += string[0].toUpperCase();
@@ -184,9 +196,10 @@ function capitalize(string) {
 }
 
 const championsContainer = document.getElementById("champions-container");
-for (let i = 0; i < 5; i++) {
-  for (let j = 0; j < role_data[roles[i]].length; j++) {
-    const currentChampion = role_data[roles[i]][j];
+function renderRoleIcons(data) {
+  data = prepareData(data);
+  for (let i = 0; i < data.length; i++) {
+    const currentChampion = data[i];
     const newNode = document.createElement("div");
     newNode.classList += "champion-container";
     const championIcon = document.createElement("img");
@@ -198,6 +211,30 @@ for (let i = 0; i < 5; i++) {
   }
 }
 
+function renderAllIcons(data) {
+  let allChampions = [];
+  for (let i = 0; i < roles.length - 1; i++) {
+    for (let j = 0; j < data[roles[i]].length; j++) {
+      allChampions.push(data[roles[i]][j]);
+    }
+  }
+  renderRoleIcons(allChampions);
+}
+renderAllIcons(role_data);
+// for (let i = 0; i < 5; i++) {
+//   for (let j = 0; j < role_data[roles[i]].length; j++) {
+//     const currentChampion = role_data[roles[i]][j];
+//     const newNode = document.createElement("div");
+//     newNode.classList += "champion-container";
+//     const championIcon = document.createElement("img");
+//     championIcon.classList += "champion-icon";
+//     championIcon.src =
+//       "./img/champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
+//     newNode.appendChild(championIcon);
+//     championsContainer.appendChild(newNode);
+//   }
+// }
+
 const searchBar = document.getElementById("search-bar");
 searchBar.addEventListener("input", (event) => {
   console.log(event.data);
@@ -206,21 +243,10 @@ searchBar.addEventListener("input", (event) => {
 const roleIcons = document.querySelectorAll(".role-icon");
 function filterRole(event) {
   const role = event.target.id;
-  console.log("clicked on " + role);
   while (championsContainer.hasChildNodes()) {
     championsContainer.removeChild(championsContainer.firstChild);
   }
-  for (let j = 0; j < role_data[role].length; j++) {
-    const currentChampion = role_data[role][j];
-    const newNode = document.createElement("div");
-    newNode.classList += "champion-container";
-    const championIcon = document.createElement("img");
-    championIcon.classList += "champion-icon";
-    championIcon.src =
-      "./img/champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
-    newNode.appendChild(championIcon);
-    championsContainer.appendChild(newNode);
-  }
+  renderRoleIcons(role_data[role]);
 }
 roleIcons.forEach((icon) => {
   icon.addEventListener("click", filterRole);
