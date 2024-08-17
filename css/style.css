@@ -138,7 +138,7 @@ table {
 
 body {
   background-color: grey;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .container {
@@ -147,6 +147,8 @@ body {
   align-items: center;
   justify-content: start;
   gap: 10px;
+  min-height: 0;
+  min-width: 0;
 }
 
 .time-bar {
@@ -182,6 +184,9 @@ body {
   flex-direction: row;
   align-items: start;
   justify-content: space-evenly;
+  flex-grow: 1;
+  min-height: 0;
+  min-width: 0;
 }
 
 .draft-team {
@@ -196,15 +201,18 @@ body {
 }
 
 .champions-container {
-  max-height: 80%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  flex-grow: 1;
+  flex-shrink: 1;
   align-items: center;
   justify-content: center;
   gap: 2px;
   overflow-y: scroll;
   overflow-x: hidden;
+  min-height: 0;
+  min-width: 0;
 }
 
 .champion-container {
@@ -213,8 +221,8 @@ body {
 }
 
 .champion-icon {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 100px;
+  max-height: 100px;
   border: 3px solid;
   border-color: black;
 }
