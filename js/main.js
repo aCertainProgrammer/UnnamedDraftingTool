@@ -197,3 +197,8 @@ for (let i = 0; i < 5; i++) {
     championsContainer.appendChild(newNode);
   }
 }
+
+const searchBar = document.getElementById("search-bar");
+searchBar.addEventListener("input", (event) => {
+  console.log(event.data);
+});
