@@ -202,3 +202,26 @@ const searchBar = document.getElementById("search-bar");
 searchBar.addEventListener("input", (event) => {
   console.log(event.data);
 });
+
+const roleIcons = document.querySelectorAll(".role-icon");
+function filterRole(event) {
+  const role = event.target.id;
+  console.log("clicked on " + role);
+  while (championsContainer.hasChildNodes()) {
+    championsContainer.removeChild(championsContainer.firstChild);
+  }
+  for (let j = 0; j < role_data[role].length; j++) {
+    const currentChampion = role_data[role][j];
+    const newNode = document.createElement("div");
+    newNode.classList += "champion-container";
+    const championIcon = document.createElement("img");
+    championIcon.classList += "champion-icon";
+    championIcon.src =
+      "./img/champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
+    newNode.appendChild(championIcon);
+    championsContainer.appendChild(newNode);
+  }
+}
+roleIcons.forEach((icon) => {
+  icon.addEventListener("click", filterRole);
+});
