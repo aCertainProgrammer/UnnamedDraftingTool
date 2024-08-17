@@ -192,7 +192,7 @@ for (let i = 0; i < 5; i++) {
     const championIcon = document.createElement("img");
     championIcon.classList += "champion-icon";
     championIcon.src =
-      "./champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
+      "./img/champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
     newNode.appendChild(championIcon);
     championsContainer.appendChild(newNode);
   }

@@ -138,7 +138,8 @@ table {
 
 body {
   background-color: grey;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .container {
@@ -200,6 +201,13 @@ body {
   background-color: gray;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .champions-container {
   display: flex;
   flex-direction: row;
@@ -230,4 +238,22 @@ body {
 .champion>img {
   max-width: 200px;
   max-height: 100px;
+}
+
+.role-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.role-selection>img {
+  max-width: 50px;
+}
+
+.utils {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 100%;
 }
