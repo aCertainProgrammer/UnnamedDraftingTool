@@ -81,7 +81,7 @@ const pick_data = {
   },
 };
 
-const role_data = {
+const leo_data = {
   top: [
     "gragas",
     "aatrox",
@@ -149,6 +149,105 @@ const role_data = {
     "seraphine",
   ],
 };
+
+const all_champions_data = {
+  top: [
+    "aatrox",
+    "akali",
+    "aurora",
+    "camille",
+    "chogath",
+    "darius",
+    "drmundo",
+    "fiora",
+    "gangplank",
+    "garen",
+    "gnar",
+    "gragas",
+    "gwen",
+    "illoi",
+    "irelia",
+    "jax",
+    "jayce",
+    "kayle",
+    "kennen",
+    "kled",
+    "ksante",
+    "malphite",
+    "mordekaiser",
+    "nasus",
+    "olaf",
+    "ornn",
+    "pantheon",
+    "quinn",
+    "renekton",
+    "riven",
+    "rumble",
+    "sett",
+    "shen",
+    "singed",
+    "sion",
+    "tahmkench",
+    "teemo",
+    "trundle",
+    "tryndamere",
+    "urgot"
+
+    "skarner",
+    "yone",
+    "sion",
+  ],
+  jungle: [
+    "xinzhao",
+    "vi",
+    "viego",
+    "poppy",
+    "nocturne",
+    "olaf",
+    "wukong",
+    "volibear",
+    "lillia",
+    "taliyah",
+    "ivern",
+    "maokai",
+  ],
+  mid: [
+    "orianna",
+    "syndra",
+    "viktor",
+    "anivia",
+    "lucian",
+    "corki",
+    "zilean",
+    "ornn",
+  ],
+  adc: [
+    "jinx",
+    "xayah",
+    "kaisa",
+    "varus",
+    "zeri",
+    "twitch",
+    "caitlyn",
+    "ziggs",
+  ],
+  support: [
+    "rell",
+    "leona",
+    "nautilus",
+    "blitzcrank",
+    "rakan",
+    "maokai",
+    "alistar",
+    "braum",
+    "janna",
+    "milio",
+    "lulu",
+    "karma",
+    "seraphine",
+  ],
+};
+
 const b1 = document.getElementById("b-one");
 const b2 = document.getElementById("b-two");
 const b3 = document.getElementById("b-three");
@@ -220,21 +319,6 @@ function renderAllIcons(data) {
   }
   renderRoleIcons(allChampions);
 }
-renderAllIcons(role_data);
-// for (let i = 0; i < 5; i++) {
-//   for (let j = 0; j < role_data[roles[i]].length; j++) {
-//     const currentChampion = role_data[roles[i]][j];
-//     const newNode = document.createElement("div");
-//     newNode.classList += "champion-container";
-//     const championIcon = document.createElement("img");
-//     championIcon.classList += "champion-icon";
-//     championIcon.src =
-//       "./img/champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
-//     newNode.appendChild(championIcon);
-//     championsContainer.appendChild(newNode);
-//   }
-// }
-
 const searchBar = document.getElementById("search-bar");
 searchBar.addEventListener("input", (event) => {
   console.log(event.data);
@@ -251,3 +335,6 @@ function filterRole(event) {
 roleIcons.forEach((icon) => {
   icon.addEventListener("click", filterRole);
 });
+
+let current_data = all_champions_data;
+renderAllIcons(role_data);
