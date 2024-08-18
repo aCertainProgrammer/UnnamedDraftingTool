@@ -422,6 +422,7 @@ const pickstrings = [
   "r5",
 ];
 const roles = ["top", "jungle", "mid", "adc", "support", "exceptions"];
+const pickedChampions = [];
 
 function prepareData(data) {
   data.sort();
@@ -444,6 +445,19 @@ function capitalize(string) {
   return newString;
 }
 
+let currentChampion = "none";
+function selectChampion(event) {
+  console.log(event.target);
+  if (event.target.style.opacity == "0.4") return;
+  if (currentChampion !== "none") {
+    let oldChampionContainer =
+      document.getElementById(currentChampion).firstChild;
+    oldChampionContainer.style.borderColor = "black";
+  }
+  currentChampion = event.target.alt;
+  event.target.style.borderColor = "white";
+}
+
 const championsContainer = document.getElementById("champions-container");
 function renderRoleIcons(data) {
   while (championsContainer.hasChildNodes()) {
@@ -451,16 +465,23 @@ function renderRoleIcons(data) {
   }
   data = prepareData(data);
   for (let i = 0; i < data.length; i++) {
-    const currentChampion = data[i];
+    const newChampion = data[i];
+
     const newNode = document.createElement("div");
     newNode.classList += "champion-container";
+    newNode.id = newChampion;
     const championIcon = document.createElement("img");
     championIcon.classList += "champion-icon";
     championIcon.src =
-      "./img/champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
+      "./img/champion_icons/tiles/" + capitalize(newChampion) + "_0.jpg";
     championIcon.alt = data[i];
+    if (pickedChampions.includes(newChampion)) {
+      championIcon.style.opacity = "0.4";
+      console.log(newChampion);
+    }
     newNode.appendChild(championIcon);
     championsContainer.appendChild(newNode);
+    championIcon.addEventListener("click", selectChampion);
   }
 }
 
@@ -478,11 +499,46 @@ searchBar.addEventListener("input", (event) => {
   console.log(event.data);
 });
 
+function colorPickValue(role) {
+  for (let i = 0; i < pickstrings.length; i++) {
+    if (pick_data[pickstrings[i]][role] == "good") {
+      picks[i].style.border = "3px solid green";
+    }
+    if (pick_data[pickstrings[i]][role] == "maybe") {
+      picks[i].style.border = "3px solid yellow";
+    }
+    if (pick_data[pickstrings[i]][role] == "bad") {
+      picks[i].style.border = "3px solid red";
+    }
+  }
+}
+
+function resetColors() {
+  for (let i = 0; i < pickstrings.length; i++) {
+    picks[i].style.border = "3px solid black";
+  }
+}
+
+let currentFilter = "none";
 const roleIcons = document.querySelectorAll(".role-icon");
 function filterRole(event) {
   const role = event.target.id;
+  if (currentFilter == role) {
+    currentFilter = "none";
+    resetColors();
+    renderAllIcons(current_data);
+    return;
+  }
+  currentFilter = role;
   renderRoleIcons(current_data[role]);
+
+  if (currentTeam == "leo") {
+    colorPickValue(currentFilter);
+  } else {
+    resetColors();
+  }
 }
+
 roleIcons.forEach((icon) => {
   icon.addEventListener("click", filterRole);
 });
@@ -491,18 +547,70 @@ const allLogo = document.querySelector("#all");
 const leoLogo = document.querySelector("#leo");
 const karolinernaLogo = document.querySelector("#karolinerna");
 
+let currentTeam = "all";
+
 allLogo.addEventListener("click", () => {
+  resetColors();
   current_data = all_champions_data;
-  renderAllIcons(current_data);
+  currentTeam = "all";
+  if (currentFilter == "none") {
+    renderAllIcons(current_data);
+    return;
+  }
+  renderRoleIcons(current_data[currentFilter]);
 });
 leoLogo.addEventListener("click", () => {
   current_data = leo_data;
-  renderAllIcons(current_data);
+  currentTeam = "leo";
+  colorPickValue(currentFilter);
+  if (currentFilter == "none") {
+    renderAllIcons(current_data);
+    return;
+  }
+  renderRoleIcons(current_data[currentFilter]);
 });
 
 karolinernaLogo.addEventListener("click", () => {
+  resetColors();
   current_data = karolinerna_data;
-  renderAllIcons(current_data);
+  if (currentFilter == "none") {
+    renderAllIcons(current_data);
+    return;
+  }
+  renderRoleIcons(current_data[currentFilter]);
+  currentTeam = "karolinerna";
 });
 let current_data = all_champions_data;
 renderAllIcons(current_data);
+
+function placeChampion(event) {
+  if (currentChampion == "none") {
+    event.target.src = "./img/pick_icon.png";
+    let oldChamp = event.target.alt;
+    event.target.alt = "champion-pick-icon";
+    event.target.id = "";
+    const oldChampContainer = document.getElementById(oldChamp);
+    console.log(oldChampContainer);
+    oldChampContainer.firstChild.style.opacity = "1.0";
+    return;
+  }
+  if (event.target.id != "") {
+    let oldChamp = event.target.alt;
+    const oldChampContainer = document.getElementById(oldChamp);
+    oldChampContainer.firstChild.style.opacity = "1.0";
+  }
+  event.target.src =
+    "./img/champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
+  const oldChampionContainer =
+    document.getElementById(currentChampion).firstChild;
+  oldChampionContainer.style.borderColor = "black";
+  oldChampionContainer.style.opacity = "0.4";
+  event.target.id = currentChampion + "_picked";
+  event.target.alt = currentChampion;
+  pickedChampions.push(currentChampion);
+  currentChampion = "none";
+}
+
+picks.forEach((current) => {
+  current.addEventListener("click", placeChampion);
+});

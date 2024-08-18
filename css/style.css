@@ -138,7 +138,7 @@ table {
 
 body {
   background-color: grey;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 
@@ -239,6 +239,13 @@ body {
 .champion>img {
   max-width: 200px;
   max-height: 100px;
+}
+
+.champion {
+  border: 3px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .role-selection {
