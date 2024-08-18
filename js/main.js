@@ -81,75 +81,6 @@ const pick_data = {
   },
 };
 
-const leo_data = {
-  top: [
-    "gragas",
-    "aatrox",
-    "ksante",
-    "rumble",
-    "gnar",
-    "olaf",
-    "aurora",
-    "gwen",
-    "skarner",
-    "yone",
-    "jayce",
-    "camille",
-    "kennen",
-    "ornn",
-    "sion",
-  ],
-  jungle: [
-    "xinzhao",
-    "vi",
-    "viego",
-    "poppy",
-    "nocturne",
-    "olaf",
-    "wukong",
-    "volibear",
-    "lillia",
-    "taliyah",
-    "ivern",
-    "maokai",
-  ],
-  mid: [
-    "orianna",
-    "syndra",
-    "viktor",
-    "anivia",
-    "lucian",
-    "corki",
-    "zilean",
-    "ornn",
-  ],
-  adc: [
-    "jinx",
-    "xayah",
-    "kaisa",
-    "varus",
-    "zeri",
-    "twitch",
-    "caitlyn",
-    "ziggs",
-  ],
-  support: [
-    "rell",
-    "leona",
-    "nautilus",
-    "blitzcrank",
-    "rakan",
-    "maokai",
-    "alistar",
-    "braum",
-    "janna",
-    "milio",
-    "lulu",
-    "karma",
-    "seraphine",
-  ],
-};
-
 const all_champions_data = {
   top: [
     "aatrox",
@@ -350,6 +281,123 @@ const all_champions_data = {
   ],
 };
 
+const leo_data = {
+  top: [
+    "gragas",
+    "aatrox",
+    "ksante",
+    "rumble",
+    "gnar",
+    "olaf",
+    "aurora",
+    "gwen",
+    "skarner",
+    "yone",
+    "jayce",
+    "camille",
+    "kennen",
+    "ornn",
+    "sion",
+  ],
+  jungle: [
+    "xinzhao",
+    "vi",
+    "viego",
+    "poppy",
+    "nocturne",
+    "olaf",
+    "wukong",
+    "volibear",
+    "lillia",
+    "taliyah",
+    "ivern",
+    "maokai",
+  ],
+  mid: [
+    "orianna",
+    "syndra",
+    "viktor",
+    "anivia",
+    "lucian",
+    "corki",
+    "zilean",
+    "ornn",
+  ],
+  adc: [
+    "jinx",
+    "xayah",
+    "kaisa",
+    "varus",
+    "zeri",
+    "twitch",
+    "caitlyn",
+    "ziggs",
+  ],
+  support: [
+    "rell",
+    "leona",
+    "nautilus",
+    "blitzcrank",
+    "rakan",
+    "maokai",
+    "alistar",
+    "braum",
+    "janna",
+    "milio",
+    "lulu",
+    "karma",
+    "seraphine",
+  ],
+};
+
+const karolinerna_data = {
+  top: [
+    "aurora",
+    "camille",
+    "gnar",
+    "irelia",
+    "jax",
+    "kennen",
+    "ksante",
+    "renekton",
+    "rumble",
+    "sion",
+    "volibear",
+  ],
+  jungle: [
+    "brand",
+    "gwen",
+    "ivern",
+    "talon",
+    "viego",
+    "maokai",
+    "drmundo",
+    "hecarim",
+  ],
+  mid: ["yasuo", "yone", "aurora", "syndra", "leblanc", "zed"],
+  adc: [
+    "zeri",
+    "missfortune",
+    "ezreal",
+    "kaisa",
+    "aphelios",
+    "xayah",
+    "jinx",
+    "ashe",
+  ],
+  support: [
+    "leona",
+    "nautilus",
+    "rell",
+    "rakan",
+    "pyke",
+    "braum",
+    "senna",
+    "camille",
+    "renata",
+  ],
+};
+
 const b1 = document.getElementById("b-one");
 const b2 = document.getElementById("b-two");
 const b3 = document.getElementById("b-three");
@@ -398,6 +446,9 @@ function capitalize(string) {
 
 const championsContainer = document.getElementById("champions-container");
 function renderRoleIcons(data) {
+  while (championsContainer.hasChildNodes()) {
+    championsContainer.removeChild(championsContainer.firstChild);
+  }
   data = prepareData(data);
   for (let i = 0; i < data.length; i++) {
     const currentChampion = data[i];
@@ -430,14 +481,28 @@ searchBar.addEventListener("input", (event) => {
 const roleIcons = document.querySelectorAll(".role-icon");
 function filterRole(event) {
   const role = event.target.id;
-  while (championsContainer.hasChildNodes()) {
-    championsContainer.removeChild(championsContainer.firstChild);
-  }
   renderRoleIcons(current_data[role]);
 }
 roleIcons.forEach((icon) => {
   icon.addEventListener("click", filterRole);
 });
 
+const allLogo = document.querySelector("#all");
+const leoLogo = document.querySelector("#leo");
+const karolinernaLogo = document.querySelector("#karolinerna");
+
+allLogo.addEventListener("click", () => {
+  current_data = all_champions_data;
+  renderAllIcons(current_data);
+});
+leoLogo.addEventListener("click", () => {
+  current_data = leo_data;
+  renderAllIcons(current_data);
+});
+
+karolinernaLogo.addEventListener("click", () => {
+  current_data = karolinerna_data;
+  renderAllIcons(current_data);
+});
 let current_data = all_champions_data;
 renderAllIcons(current_data);

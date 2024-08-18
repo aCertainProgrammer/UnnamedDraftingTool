@@ -181,11 +181,12 @@ body {
 }
 
 .draft-area {
+  padding: 20px;
   display: flex;
   flex-direction: row;
-  align-items: start;
-  justify-content: space-evenly;
-  flex-grow: 1;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
   min-height: 0;
   min-width: 0;
 }
@@ -255,5 +256,17 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 100%;
+  gap: 100px;
+}
+
+.team-selection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-selection>img {
+  max-width: 50px;
+  max-height: 100px;
 }
