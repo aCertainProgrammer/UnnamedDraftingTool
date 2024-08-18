@@ -447,7 +447,6 @@ function capitalize(string) {
 
 let currentChampion = "none";
 function selectChampion(event) {
-  console.log(event.target);
   if (event.target.style.opacity == "0.4") return;
   if (currentChampion !== "none") {
     let oldChampionContainer =
@@ -477,7 +476,6 @@ function renderRoleIcons(data) {
     championIcon.alt = data[i];
     if (pickedChampions.includes(newChampion)) {
       championIcon.style.opacity = "0.4";
-      console.log(newChampion);
     }
     newNode.appendChild(championIcon);
     championsContainer.appendChild(newNode);
@@ -495,9 +493,7 @@ function renderAllIcons(data) {
   renderRoleIcons(allChampions);
 }
 const searchBar = document.getElementById("search-bar");
-searchBar.addEventListener("input", (event) => {
-  console.log(event.data);
-});
+searchBar.addEventListener("input", (event) => { });
 
 function colorPickValue(role) {
   for (let i = 0; i < pickstrings.length; i++) {
@@ -590,8 +586,9 @@ function placeChampion(event) {
     event.target.alt = "champion-pick-icon";
     event.target.id = "";
     const oldChampContainer = document.getElementById(oldChamp);
-    console.log(oldChampContainer);
-    oldChampContainer.firstChild.style.opacity = "1.0";
+    if (oldChampContainer != null) {
+      oldChampContainer.firstChild.style.opacity = "1.0";
+    }
     const index = pickedChampions.indexOf(oldChamp);
     if (index > -1) {
       pickedChampions.splice(index, 1);
