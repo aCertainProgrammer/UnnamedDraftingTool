@@ -592,6 +592,10 @@ function placeChampion(event) {
     const oldChampContainer = document.getElementById(oldChamp);
     console.log(oldChampContainer);
     oldChampContainer.firstChild.style.opacity = "1.0";
+    const index = pickedChampions.indexOf(oldChamp);
+    if (index > -1) {
+      pickedChampions.splice(index, 1);
+    }
     return;
   }
   if (event.target.id != "") {
@@ -612,5 +616,32 @@ function placeChampion(event) {
 }
 
 picks.forEach((current) => {
+  current.addEventListener("click", placeChampion);
+});
+
+const banb1 = document.getElementById("banb-one");
+const banb2 = document.getElementById("banb-two");
+const banb3 = document.getElementById("banb-three");
+const banb4 = document.getElementById("banb-four");
+const banb5 = document.getElementById("banb-five");
+const banr1 = document.getElementById("banr-one");
+const banr2 = document.getElementById("banr-two");
+const banr3 = document.getElementById("banr-three");
+const banr4 = document.getElementById("banr-four");
+const banr5 = document.getElementById("banr-five");
+const bans = [
+  banb1,
+  banb2,
+  banb3,
+  banb4,
+  banb5,
+  banr1,
+  banr2,
+  banr3,
+  banr4,
+  banr5,
+];
+
+bans.forEach((current) => {
   current.addEventListener("click", placeChampion);
 });
