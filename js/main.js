@@ -492,28 +492,6 @@ function renderAllIcons(data) {
   }
   renderRoleIcons(allChampions);
 }
-const searchBar = document.getElementById("search-bar");
-searchBar.addEventListener("input", (event) => { });
-
-function colorPickValue(role) {
-  for (let i = 0; i < pickstrings.length; i++) {
-    if (pick_data[pickstrings[i]][role] == "good") {
-      picks[i].style.border = "3px solid green";
-    }
-    if (pick_data[pickstrings[i]][role] == "maybe") {
-      picks[i].style.border = "3px solid yellow";
-    }
-    if (pick_data[pickstrings[i]][role] == "bad") {
-      picks[i].style.border = "3px solid red";
-    }
-  }
-}
-
-function resetColors() {
-  for (let i = 0; i < pickstrings.length; i++) {
-    picks[i].style.border = "3px solid black";
-  }
-}
 
 let currentFilter = "none";
 const roleIcons = document.querySelectorAll(".role-icon");
@@ -521,18 +499,12 @@ function filterRole(event) {
   const role = event.target.id;
   if (currentFilter == role) {
     currentFilter = "none";
-    resetColors();
     renderAllIcons(current_data);
     return;
   }
   currentFilter = role;
+  currentChampion = "none";
   renderRoleIcons(current_data[role]);
-
-  if (currentTeam == "leo") {
-    colorPickValue(currentFilter);
-  } else {
-    resetColors();
-  }
 }
 
 roleIcons.forEach((icon) => {
@@ -546,7 +518,7 @@ const karolinernaLogo = document.querySelector("#karolinerna");
 let currentTeam = "all";
 
 allLogo.addEventListener("click", () => {
-  resetColors();
+  currentChampion = "none";
   current_data = all_champions_data;
   currentTeam = "all";
   if (currentFilter == "none") {
@@ -556,9 +528,9 @@ allLogo.addEventListener("click", () => {
   renderRoleIcons(current_data[currentFilter]);
 });
 leoLogo.addEventListener("click", () => {
+  currentChampion = "none";
   current_data = leo_data;
   currentTeam = "leo";
-  colorPickValue(currentFilter);
   if (currentFilter == "none") {
     renderAllIcons(current_data);
     return;
@@ -567,7 +539,7 @@ leoLogo.addEventListener("click", () => {
 });
 
 karolinernaLogo.addEventListener("click", () => {
-  resetColors();
+  currentChampion = "none";
   current_data = karolinerna_data;
   if (currentFilter == "none") {
     renderAllIcons(current_data);
@@ -598,7 +570,9 @@ function placeChampion(event) {
   if (event.target.id != "") {
     let oldChamp = event.target.alt;
     const oldChampContainer = document.getElementById(oldChamp);
-    oldChampContainer.firstChild.style.opacity = "1.0";
+    if (oldChampContainer != null) {
+      oldChampContainer.firstChild.style.opacity = "1.0";
+    }
   }
   event.target.src =
     "./img/champion_icons/tiles/" + capitalize(currentChampion) + "_0.jpg";
