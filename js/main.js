@@ -421,8 +421,34 @@ const pickstrings = [
   "r4",
   "r5",
 ];
+const banb1 = document.getElementById("banb-one");
+const banb2 = document.getElementById("banb-two");
+const banb3 = document.getElementById("banb-three");
+const banb4 = document.getElementById("banb-four");
+const banb5 = document.getElementById("banb-five");
+const banr1 = document.getElementById("banr-one");
+const banr2 = document.getElementById("banr-two");
+const banr3 = document.getElementById("banr-three");
+const banr4 = document.getElementById("banr-four");
+const banr5 = document.getElementById("banr-five");
+const bans = [
+  banb1,
+  banb2,
+  banb3,
+  banb4,
+  banb5,
+  banr1,
+  banr2,
+  banr3,
+  banr4,
+  banr5,
+];
+
+bans.forEach((current) => {
+  current.addEventListener("click", placeChampion);
+});
 const roles = ["top", "jungle", "mid", "adc", "support", "exceptions"];
-const pickedChampions = [];
+let pickedChampions = [];
 
 function prepareData(data) {
   data.sort();
@@ -459,6 +485,16 @@ function selectChampion(event) {
 
 const championsContainer = document.getElementById("champions-container");
 function renderRoleIcons(data) {
+  pickedChampions = [];
+  picks.forEach((current) => {
+    if (current.children[0].alt != "champion-pick-icon")
+      pickedChampions.push(current.children[0].alt);
+  });
+  bans.forEach((current) => {
+    if (current.children[0].alt != "champion-pick-icon")
+      pickedChampions.push(current.children[0].alt);
+  });
+  console.log(pickedChampions);
   while (championsContainer.hasChildNodes()) {
     championsContainer.removeChild(championsContainer.firstChild);
   }
@@ -587,32 +623,5 @@ function placeChampion(event) {
 }
 
 picks.forEach((current) => {
-  current.addEventListener("click", placeChampion);
-});
-
-const banb1 = document.getElementById("banb-one");
-const banb2 = document.getElementById("banb-two");
-const banb3 = document.getElementById("banb-three");
-const banb4 = document.getElementById("banb-four");
-const banb5 = document.getElementById("banb-five");
-const banr1 = document.getElementById("banr-one");
-const banr2 = document.getElementById("banr-two");
-const banr3 = document.getElementById("banr-three");
-const banr4 = document.getElementById("banr-four");
-const banr5 = document.getElementById("banr-five");
-const bans = [
-  banb1,
-  banb2,
-  banb3,
-  banb4,
-  banb5,
-  banr1,
-  banr2,
-  banr3,
-  banr4,
-  banr5,
-];
-
-bans.forEach((current) => {
   current.addEventListener("click", placeChampion);
 });
