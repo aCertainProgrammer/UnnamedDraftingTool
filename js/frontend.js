@@ -10,13 +10,16 @@ class Frontend {
       pickedChampions: [],
       bannedChampions: [],
     };
+    this.selectedChampion = "";
     this.picks = document.querySelectorAll(".champion-pick");
     this.bans = document.querySelectorAll(".champion-ban");
     this.picks.forEach((current) => {
       current.addEventListener("click", this.placeChampion);
+      current.childNodes[1].dataset.champion = "";
     });
     this.bans.forEach((current) => {
       current.addEventListener("click", this.placeChampion);
+      current.childNodes[1].dataset.champion = "";
     });
 
     this.championsContainer = document.querySelector("#champions-container");
@@ -44,10 +47,11 @@ class Frontend {
     this.renderingData.visibleChampions = backend.requestVisibleChampions(
       this.request,
     );
-    this.renderingData.pickedChampions = this.requestPickedChampions();
-    this.renderingData.bannedChampions = this.requestBannedChampions();
-    console.log(this.renderingData.visibleChampions);
+    this.requestPickedChampions();
+    this.requestBannedChampions();
     this.renderVisibleChampions();
+    this.renderPickedChampions();
+    this.renderBannedChampions();
   }
 
   renderVisibleChampions() {
@@ -58,30 +62,85 @@ class Frontend {
       const newChampion = this.renderingData.visibleChampions[i];
       const newNode = document.createElement("div");
       newNode.classList += "champion-container";
-      newNode.id = newChampion;
       const championIcon = document.createElement("img");
       championIcon.classList += "champion-icon";
       championIcon.src =
         "./img/champion_icons/tiles/" + capitalize(newChampion) + "_0.jpg";
       championIcon.alt = this.renderingData.visibleChampions[i];
-      if (this.renderingData.pickedChampions.includes(newChampion)) {
+      championIcon.dataset.champion = newChampion;
+      if (
+        this.renderingData.pickedChampions.includes(newChampion) ||
+        this.renderingData.bannedChampions.includes(newChampion)
+      ) {
         championIcon.style.opacity = "0.4";
       }
       newNode.appendChild(championIcon);
       this.championsContainer.appendChild(newNode);
-      championIcon.addEventListener("click", selectChampion);
+      championIcon.addEventListener("click", this.selectChampion);
     }
   }
   requestPickedChampions() {
-    return ["akali", "ornn", "", "", "", "lillia", "skarner"];
+    for (let i = 0; i < 10; i++) {
+      let img = this.picks[i].childNodes[1];
+      this.renderingData.pickedChampions[i] = img.dataset.champion;
+    }
   }
   requestBannedChampions() {
-    return ["bard", "camille", "", "", "", "missfortune", "urgot"];
+    for (let i = 0; i < 10; i++) {
+      let img = this.bans[i].childNodes[1];
+      this.renderingData.bannedChampions[i] = img.dataset.champion;
+    }
   }
-
-  placeChampion(event) { }
-}
-
-function selectChampion() {
-  return 1;
+  renderPickedChampions() {
+    for (let i = 0; i < 10; i++) {
+      let img = this.picks[i].childNodes[1];
+      if (this.renderingData.pickedChampions[i] == "") {
+        img.src = "./img/pick_icon.png";
+        img.dataset.champion = "";
+        continue;
+      }
+      img.src =
+        "./img/champion_icons/tiles/" +
+        capitalize(this.renderingData.pickedChampions[i]) +
+        "_0.jpg";
+      img.dataset.champion = this.renderingData.pickedChampions[i];
+    }
+  }
+  renderBannedChampions() {
+    for (let i = 0; i < 10; i++) {
+      let img = this.bans[i].childNodes[1];
+      if (this.renderingData.bannedChampions[i] == "") {
+        img.src = "./img/pick_icon.png";
+        img.dataset.champion = "";
+        continue;
+      }
+      img.src =
+        "./img/champion_icons/tiles/" +
+        capitalize(this.renderingData.bannedChampions[i]) +
+        "_0.jpg";
+      img.dataset.champion = this.renderingData.bannedChampions[i];
+    }
+  }
+  //calling frontend. instead of this. is necessary due to how the "this"
+  //keyword works in javascript
+  selectChampion(event) {
+    console.log(frontend.renderingData.pickedChampions);
+    frontend.selectedChampion = event.target.dataset.champion;
+    if (
+      frontend.renderingData.pickedChampions.includes(
+        frontend.selectedChampion,
+      ) ||
+      frontend.renderingData.bannedChampions.includes(frontend.selectedChampion)
+    ) {
+      frontend.selectedChampion = "";
+    }
+  }
+  placeChampion(event) {
+    if (frontend.selectedChampion == "") {
+      event.target.src = "./img/pick_icon.png";
+    }
+    event.target.dataset.champion = frontend.selectedChampion;
+    frontend.selectedChampion = "";
+    frontend.render();
+  }
 }
