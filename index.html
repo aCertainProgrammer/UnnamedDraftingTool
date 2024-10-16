@@ -1,122 +1,152 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The thing</title>
+    <link href="./css/style.css" rel="stylesheet" />
+    <script defer src="./js/util.js"></script>
+    <script defer src="./js/all_champions_data.js"></script>
+    <script defer src="./js/leo_data.js"></script>
+    <script defer src="./js/enemy_data.js"></script>
+    <script defer src="./js/backend.js"></script>
+    <script defer src="./js/frontend.js"></script>
+    <script defer src="./js/main.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The thing</title>
-  <link href="./css/style.css" rel="stylesheet" />
-  <script defer src="./js/main.js"></script>
-</head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="utils">
+          <div class="role-selection">
+            <img
+              id="top"
+              class="role-icon"
+              src="./img/Top_icon.webp"
+              alt="toplane icon"
+            />
+            <img
+              id="jungle"
+              class="role-icon"
+              src="./img/Jungle_icon.webp"
+              alt="jungle icon"
+            />
+            <img
+              id="mid"
+              class="role-icon"
+              src="./img/Middle_icon.webp"
+              alt="midlane icon"
+            />
+            <img
+              id="adc"
+              class="role-icon"
+              src="./img/Bottom_icon.webp"
+              alt="adc icon"
+            />
+            <img
+              id="support"
+              class="role-icon"
+              src="./img/Support_icon.webp"
+              alt="support icon"
+            />
+          </div>
+          <div class="team-selection">
+            <img id="all" class="team-logo" src="./img/org_icons/all.webp" />
+            <img id="leo" class="team-logo" src="./img/org_icons/leo.webp" />
+            <img
+              id="enemy"
+              class="team-logo"
+              src="img/org_icons/karolinerna.webp"
+              alt="K5"
+            />
+          </div>
+          <input
+            id="search-bar"
+            type="text"
+            class="search-bar"
+            placeholder="Search..."
+          />
+        </div>
+        <div class="draft-area">
+          <div class="bans">
+            <div class="draft-team-bans" id="blue-team">
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+            </div>
 
-<body>
-  <div class="container">
-    <div class="time-bar">
-      <p id="blue-bar">Blue</p>
-      <div id="time">30</div>
-      <p id="red-bar">Red</p>
-    </div>
-    <div class="wrapper">
-      <div class="utils">
-        <div class="role-selection">
-          <img id="top" class="role-icon" src="./img/Top_icon.webp" alt="toplane icon" />
-          <img id="jungle" class="role-icon" src="./img/Jungle_icon.webp" alt="jungle icon" />
-          <img id="mid" class="role-icon" src="./img/Middle_icon.webp" alt="midlane icon" />
-          <img id="adc" class="role-icon" src="./img/Bottom_icon.webp" alt="adc icon" />
-          <img id="support" class="role-icon" src="./img/Support_icon.webp" alt="support icon" />
+            <div class="draft-team-bans" id="red-team">
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-ban">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+            </div>
+          </div>
+
+          <div class="not-bans">
+            <div class="draft-team" id="blue-team">
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+            </div>
+            <div class="wrapper">
+              <div class="champions-container" id="champions-container"></div>
+            </div>
+            <div class="draft-team" id="red-team">
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+              <div class="champion-pick">
+                <img src="./img/pick_icon.png" alt="champion-pick-icon" />
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="team-selection">
-          <img id="all" class="team-logo" src="./img/org_icons/all.webp" />
-          <img id="leo" class="team-logo" src="./img/org_icons/leo.webp" />
-          <img id="karolinerna" class="team-logo" src="img/org_icons/karolinerna.webp" alt="K5" />
-        </div>
-        <input id="search-bar" type="text" class="search-bar" placeholder="Search..." />
       </div>
-      <div class="draft-area">
-        <div class="bans">
-          <div class="draft-team-bans" id="blue-team">
-            <div class="champion" id="banb-one">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="banb-two">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="banb-three">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="stage-separator-horizontal"></div>
-            <div class="champion" id="banb-four">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="banb-five">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-          </div>
-
-          <div class="draft-team-bans" id="red-team">
-            <div class="champion" id="banr-one">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="banr-two">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="banr-three">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="stage-separator-horizontal"></div>
-            <div class="champion" id="banr-four">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="banr-five">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-          </div>
-        </div>
-
-        <div class="not-bans">
-          <div class="draft-team" id="blue-team">
-            <div class="champion" id="b-one">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="b-two">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="b-three">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="stage-separator-vertical"></div>
-            <div class="champion" id="b-four">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="b-five">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-          </div>
-          <div class="wrapper">
-            <div class="champions-container" id="champions-container"></div>
-          </div>
-          <div class="draft-team" id="red-team">
-            <div class="champion" id="r-one">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="r-two">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="r-three">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="stage-separator-vertical"></div>
-            <div class="champion" id="r-four">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-            <div class="champion" id="r-five">
-              <img src="./img/pick_icon.png" alt="champion-pick-icon" />
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
