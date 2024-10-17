@@ -137,8 +137,10 @@ table {
 /* ------------------------------------------- */
 
 body {
+  height: 100vh;
+  width: 100vw;
   background-color: grey;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 
@@ -150,34 +152,6 @@ body {
   gap: 10px;
   min-height: 0;
   min-width: 0;
-}
-
-.time-bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: 90%;
-}
-
-.time-bar > #time {
-  width: 20%;
-  text-align: center;
-}
-
-.time-bar > p {
-  color: #eeeeee;
-  width: 20%;
-  text-align: center;
-}
-
-.time-bar > #blue-bar {
-  background-color: #0064e0;
-}
-
-.time-bar > #red-bar {
-  background-color: #ff5555;
 }
 
 .draft-area {
@@ -197,12 +171,13 @@ body {
   gap: 10px;
 }
 
-.draft-team > .stage-separator-vertical {
+.draft-team>.stage-separator-vertical {
   height: 50px;
   background-color: gray;
 }
 
 .wrapper {
+  width: 73vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -210,6 +185,7 @@ body {
 }
 
 .champions-container {
+  max-height: 77.8vh;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -219,7 +195,6 @@ body {
   justify-content: center;
   gap: 2px;
   overflow-y: scroll;
-  overflow-x: hidden;
   min-height: 0;
   min-width: 0;
 }
@@ -227,18 +202,20 @@ body {
 .champion-container {
   display: flex;
   flex-direction: column;
+  width: 150px;
+  height: 150px;
 }
 
 .champion-icon {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 150px;
+  max-height: 150px;
   border: 3px solid;
   border-color: black;
 }
 
-.champion > img {
+.champion>img {
   max-width: 200px;
-  max-height: 100px;
+  max-height: 200px;
   border: 3px solid black;
 }
 
@@ -254,8 +231,8 @@ body {
   justify-content: center;
 }
 
-.role-selection > img {
-  max-width: 50px;
+.role-selection>img {
+  max-width: 100px;
 }
 
 .utils {
@@ -263,7 +240,13 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 100px;
+  gap: 10px;
+}
+
+.search-bar {
+  height: 50px;
+  font-size: 3rem;
+  width: 300px;
 }
 
 .team-selection {
@@ -273,8 +256,8 @@ body {
   justify-content: center;
 }
 
-.team-selection > img {
-  max-width: 50px;
+.team-selection>img {
+  max-width: 100px;
   max-height: 100px;
 }
 
@@ -295,7 +278,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 10px;
   min-height: 0;
   min-width: 0;
 }
@@ -311,24 +294,35 @@ body {
   min-width: 0;
 }
 
-.stage-separator-horizontal {
-  width: 30px;
+.draft-team-bans#red-team {
+  flex-direction: row-reverse;
 }
 
-.draft-team-bans > .champion-ban > img {
-  width: 120px;
-  height: 120px;
-  max-width: 120px;
-  max-height: 120px;
+.ban-separator {
+  width: 15px;
 }
 
-.draft-team > .champion-pick > img {
-  width: 120px;
-  height: 120px;
-  max-width: 120px;
-  max-height: 120px;
+.pick-separator {
+  height: 15px;
 }
 
-.not-bans > .wrapper {
+.draft-team-bans>.champion-ban>img {
+  width: 141px;
+  height: 141px;
+  max-width: 141px;
+  max-height: 141px;
+}
+
+/*1280 × 720 pixels
+* meaning a 1.77 : 1 ratio
+* */
+.draft-team>.champion-pick>img {
+  width: 354px;
+  height: 200px;
+  max-width: 345px;
+  max-height: 200px;
+}
+
+.not-bans>.wrapper {
   overflow-y: auto;
 }

@@ -100,7 +100,7 @@ class Frontend {
         continue;
       }
       img.src =
-        "./img/champion_icons/tiles/" +
+        "./img/champion_icons/centered/" +
         capitalize(this.renderingData.pickedChampions[i]) +
         "_0.jpg";
       img.dataset.champion = this.renderingData.pickedChampions[i];
