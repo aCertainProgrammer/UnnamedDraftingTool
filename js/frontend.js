@@ -4,6 +4,7 @@ class Frontend {
     this.request = {
       team: "all",
       role: "all",
+      search: "",
     };
     this.renderingData = {
       visibleChampions: [],
@@ -40,6 +41,11 @@ class Frontend {
           this.request.role = current.id;
         this.render();
       });
+    });
+    this.searchBar = document.querySelector(".search-bar");
+    this.searchBar.addEventListener("input", () => {
+      frontend.request.search = frontend.searchBar.value;
+      frontend.render();
     });
   }
 

@@ -24,6 +24,7 @@ class Backend {
     } else {
       data = this.prepareData(data[request.role]);
     }
+    data = this.filterDataBySearchQuery(data, request.search);
     return data;
   }
   prepareData(data) {
@@ -32,6 +33,16 @@ class Backend {
     newData.push(data[0]);
     for (let i = 1; i < data.length; i++) {
       if (data[i - 1] != data[i]) {
+        newData.push(data[i]);
+      }
+    }
+    return newData;
+  }
+  filterDataBySearchQuery(data, search_query) {
+    if (search_query == "") return data;
+    const newData = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].toLowerCase().includes(search_query.toLowerCase())) {
         newData.push(data[i]);
       }
     }
