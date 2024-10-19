@@ -20,14 +20,14 @@ class Backend {
         data["adc"],
         data["support"],
       );
-      data = this.prepareData(data);
+      data = this.sortAndRemoveDuplicates(data);
     } else {
-      data = this.prepareData(data[request.role]);
+      data = this.sortAndRemoveDuplicates([request.role]);
     }
     data = this.filterDataBySearchQuery(data, request.search);
     return data;
   }
-  prepareData(data) {
+  sortAndRemoveDuplicates(data) {
     data.sort();
     const newData = [];
     newData.push(data[0]);
