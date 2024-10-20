@@ -194,7 +194,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 2px;
-  overflow-y: scroll;
+  overflow-y: auto;
   min-height: 0;
   min-width: 0;
 }

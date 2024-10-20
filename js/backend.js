@@ -22,7 +22,7 @@ class Backend {
       );
       data = this.sortAndRemoveDuplicates(data);
     } else {
-      data = this.sortAndRemoveDuplicates([request.role]);
+      data = this.sortAndRemoveDuplicates(data[request.role]);
     }
     data = this.filterDataBySearchQuery(data, request.search);
     return data;
