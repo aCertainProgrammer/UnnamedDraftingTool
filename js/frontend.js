@@ -168,7 +168,7 @@ class Frontend {
 		const form_container = document.querySelector(
 			"#user_data_form_container",
 		);
-		if (form_container) form_container.style.visibility = "visible";
+		if (form_container) form_container.style.display = "block";
 		else {
 			frontend.createUserDataForm();
 		}
@@ -180,6 +180,8 @@ class Frontend {
 		form_container.id = "user_data_form_container";
 		const textarea = document.createElement("textarea");
 		textarea.name = "user_data_input";
+		textarea.cols = "50";
+		textarea.rows = "10";
 		const label = document.createElement("label");
 		label.innerHTML =
 			'Read the <a href="./input.html">input data specification</a>';
@@ -203,7 +205,7 @@ class Frontend {
 			frontend.render();
 		});
 		hide.addEventListener("click", () => {
-			form_container.style.visibility = "hidden";
+			form_container.style.display = "none";
 		});
 	}
 }
