@@ -327,3 +327,30 @@ body {
 .not-bans > .wrapper {
 	overflow-y: auto;
 }
+
+.source-button {
+	min-width: 80px;
+	min-height: 50px;
+	font-size: 40px;
+}
+
+#user_data_form_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+#user_data_form_container > textarea {
+	font-size: 30px;
+}
+#user_data_form_container > label {
+	border: 3px solid black;
+	font-size: 30px;
+}
+#user_data_form_container > label > a {
+	color: #5eeb73;
+}
+
+.hidden {
+	display: none !important;
+}

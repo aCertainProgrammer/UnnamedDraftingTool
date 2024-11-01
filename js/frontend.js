@@ -168,7 +168,7 @@ class Frontend {
 		const form_container = document.querySelector(
 			"#user_data_form_container",
 		);
-		if (form_container) form_container.style.display = "block";
+		if (form_container) form_container.classList.remove("hidden");
 		else {
 			frontend.createUserDataForm();
 		}
@@ -176,23 +176,24 @@ class Frontend {
 	createUserDataForm() {
 		const container = document.querySelector("#data");
 		const form_container = document.createElement("div");
-		form_container.classList = "wrapper";
 		form_container.id = "user_data_form_container";
 		const textarea = document.createElement("textarea");
 		textarea.name = "user_data_input";
-		textarea.cols = "50";
+		textarea.cols = "80";
 		textarea.rows = "10";
 		const label = document.createElement("label");
 		label.innerHTML =
-			'Read the <a href="./input.html">input data specification</a>';
+			'Read the <a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#data-specification">input data specification</a>';
 		label.for = "user_data_input";
 		const button_container = document.createElement("div");
 		button_container.style.display = "flex";
 		button_container.style.flexDirection = "row";
 		const save = document.createElement("button");
 		save.innerText = "Save and load";
+		save.classList += "source-button";
 		const hide = document.createElement("button");
 		hide.innerText = "Hide";
+		hide.classList += "source-button";
 		button_container.appendChild(save);
 		button_container.appendChild(hide);
 		form_container.appendChild(label);
@@ -205,7 +206,7 @@ class Frontend {
 			frontend.render();
 		});
 		hide.addEventListener("click", () => {
-			form_container.style.display = "none";
+			form_container.classList += "hidden";
 		});
 	}
 }
