@@ -2,6 +2,7 @@ backend = new Backend();
 class Frontend {
 	constructor() {
 		this.request = {
+			source: "default_data",
 			team: "all",
 			role: "all",
 			search: "",
@@ -136,7 +137,6 @@ class Frontend {
 	//calling frontend. instead of this. is necessary due to how the "this"
 	//keyword works in javascript
 	selectChampion(event) {
-		console.log(frontend.renderingData.pickedChampions);
 		frontend.selectedChampion = event.target.dataset.champion;
 		if (
 			frontend.renderingData.pickedChampions.includes(

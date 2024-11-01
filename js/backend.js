@@ -2,17 +2,7 @@ class Backend {
 	constructor() {}
 	requestVisibleChampions(request) {
 		let data = [];
-		switch (request.team) {
-			case "all":
-				data = all_champions_data;
-				break;
-			case "leo":
-				data = leo_data;
-				break;
-			case "enemy":
-				data = enemy_data;
-				break;
-		}
+		data = loadData(request.source, request.team);
 		if (request.role == "all") {
 			data = data["top"].concat(
 				data["jungle"],
