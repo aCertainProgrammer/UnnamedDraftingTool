@@ -1,5 +1,7 @@
-backend = new Backend();
-class Frontend {
+import { Backend } from "./backend.js";
+import { saveData, loadData, capitalize } from "./util.js";
+const backend = new Backend();
+export class Frontend {
 	constructor() {
 		this.request = {
 			source: "default_data",
