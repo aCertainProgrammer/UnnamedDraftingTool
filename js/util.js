@@ -18,3 +18,8 @@ export function loadData(source, team) {
 	const data = all_data[team];
 	return data;
 }
+
+export async function readFile(file) {
+	const data = await file.text();
+	return data;
+}

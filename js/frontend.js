@@ -1,5 +1,5 @@
 import { Backend } from "./backend.js";
-import { saveData, loadData, capitalize } from "./util.js";
+import { saveData, loadData, capitalize, readFile } from "./util.js";
 const backend = new Backend();
 export class Frontend {
 	constructor() {
@@ -198,8 +198,16 @@ export class Frontend {
 		const hide = document.createElement("button");
 		hide.innerText = "Hide";
 		hide.classList += "source-button";
+		const file_input = document.createElement("input");
+		file_input.type = "file";
+		file_input.name = "user_file_input";
+		file_input.style.display = "none";
+		const file_input_button = document.createElement("button");
+		file_input_button.innerText = "Load from file";
 		button_container.appendChild(save);
 		button_container.appendChild(hide);
+		button_container.appendChild(file_input);
+		button_container.appendChild(file_input_button);
 		form_container.appendChild(label);
 		form_container.appendChild(textarea);
 		form_container.appendChild(button_container);
@@ -208,6 +216,11 @@ export class Frontend {
 		hide.addEventListener("click", () => {
 			form_container.classList += "hidden";
 		});
+		file_input.addEventListener("input", this.loadFileData.bind(this));
+		file_input_button.addEventListener(
+			"click",
+			this.clickInput.bind(this, file_input),
+		);
 	}
 	switchTeam(team) {
 		this.request.team = team;
@@ -225,5 +238,15 @@ export class Frontend {
 		saveData("user_data", textarea.value);
 		this.request.source = "user_data";
 		this.render();
+	}
+	async loadFileData(event) {
+		const file = event.target.files[0];
+		const data = await readFile(file);
+		saveData("user_data", data);
+		this.request.source = "user_data";
+		this.render();
+	}
+	clickInput(input) {
+		input.click();
 	}
 }
