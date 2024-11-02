@@ -3,7 +3,7 @@ https://acertainprogrammer.github.io/UnnamedDraftingTool/index.html
 
 # Custom data specification
 
-THe custom data needs to be in the form of valid JSON, as an object containing 3 objects:
+The custom data needs to be in the form of valid JSON, as an object containing 3 objects:
 ```
 {
     "all",
