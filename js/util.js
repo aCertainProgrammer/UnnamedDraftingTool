@@ -8,6 +8,7 @@ export function capitalize(string) {
 }
 
 export function saveData(destination, data) {
+	if (typeof data !== "string") data = JSON.stringify(data);
 	localStorage.setItem(destination, data);
 }
 

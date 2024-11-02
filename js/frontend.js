@@ -204,7 +204,7 @@ export class Frontend {
 		form_container.appendChild(textarea);
 		form_container.appendChild(button_container);
 		container.appendChild(form_container);
-		save.addEventListener("click", saveUserData.bind(this, textarea.value));
+		save.addEventListener("click", this.saveUserData.bind(this, textarea));
 		hide.addEventListener("click", () => {
 			form_container.classList += "hidden";
 		});
@@ -221,8 +221,9 @@ export class Frontend {
 		this.request.source = "default_data";
 		this.render();
 	}
-	saveUserData(data) {
-		saveData("user_data", textarea);
+	saveUserData(textarea) {
+		console.log(textarea.value);
+		saveData("user_data", textarea.value);
 		this.request.source = "user_data";
 		this.render();
 	}
