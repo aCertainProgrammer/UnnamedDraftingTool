@@ -222,7 +222,6 @@ export class Frontend {
 		this.render();
 	}
 	saveUserData(textarea) {
-		console.log(textarea.value);
 		saveData("user_data", textarea.value);
 		this.request.source = "user_data";
 		this.render();

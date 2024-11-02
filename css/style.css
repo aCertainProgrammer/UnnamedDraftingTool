@@ -136,10 +136,28 @@ table {
 
 /* ------------------------------------------- */
 
+:root {
+	--pickMaxWidth: 230px;
+	--pickMaxHeight: 130px;
+	--championMaxWidth: 100px;
+	--championMaxHeight: var(--championMaxWidth);
+	--banMaxWidth: 100px;
+	--banMaxHeight: var(--banMaxWidth);
+	--roleIconMaxWidth: 70px;
+	--roleIconMaxHeight: var(--roleIconMaxWidth);
+	--teamIconMaxWidth: 70px;
+	--teamIconMaxHeight: var(--teamIconMaxWidth);
+	--searchBarMaxWidth: 130px;
+	--searchBarMaxHeight: 70px;
+	--searchBarFontSize: 2rem;
+	--dataButtonMaxWidth: 100px;
+	--dataButtonMaxHeight: 20px;
+	--dataButtonFontSize: 20px;
+}
 body {
 	height: 100vh;
 	width: 100vw;
-	background-color: grey;
+	background-color: #696f77;
 	overflow-y: hidden;
 	overflow-x: hidden;
 }
@@ -193,7 +211,7 @@ body {
 	flex-shrink: 1;
 	align-items: center;
 	justify-content: center;
-	gap: 2px;
+	gap: 3px;
 	overflow-y: auto;
 	min-height: 0;
 	min-width: 0;
@@ -202,21 +220,19 @@ body {
 .champion-container {
 	display: flex;
 	flex-direction: column;
-	width: 150px;
-	height: 150px;
+	width: var(--championMaxWidth);
+	height: var(--championMaxHeight);
 }
 
 .champion-icon {
-	max-width: 150px;
-	max-height: 150px;
+	max-width: var(--championMaxWidth);
+	max-height: var(--championMaxHeight);
+	width: var(--championMaxWidth);
+	height: var(--championMaxHeight);
+	box-sizing: border-box;
+
 	border: 3px solid;
 	border-color: black;
-}
-
-.champion > img {
-	max-width: 200px;
-	max-height: 200px;
-	border: 3px solid black;
 }
 
 .champion-pick {
@@ -232,7 +248,8 @@ body {
 }
 
 .role-selection > img {
-	max-width: 100px;
+	max-width: var(--roleIconMaxWidth);
+	max-height: var(--roleIconMaxHeight);
 }
 
 .utils {
@@ -244,9 +261,10 @@ body {
 }
 
 .search-bar {
-	height: 50px;
-	font-size: 3rem;
-	width: 300px;
+	width: var(--searchBarMaxWidth);
+	height: var(--searchBarMaxHeight);
+	font-size: var(--searchBarFontSize);
+	box-sizing: border-box;
 }
 
 .team-selection {
@@ -258,8 +276,8 @@ body {
 }
 
 .team-selection > img {
-	max-width: 100px;
-	max-height: 100px;
+	max-width: var(--teamIconMaxWidth);
+	max-height: var(--teamIconMaxHeight);
 }
 
 .not-bans {
@@ -274,7 +292,8 @@ body {
 }
 
 .bans {
-	padding: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -285,7 +304,6 @@ body {
 }
 
 .draft-team-bans {
-	padding: 20px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -308,20 +326,21 @@ body {
 }
 
 .draft-team-bans > .champion-ban > img {
-	width: 141px;
-	height: 141px;
-	max-width: 141px;
-	max-height: 141px;
+	width: var(--banMaxWidth);
+	height: var(--banMaxHeight);
+	max-width: var(--banMaxWidth);
+	max-height: var(--banMaxHeight);
+	object-fit: cover;
 }
 
 /*1280 × 720 pixels
 * meaning a 1.77 : 1 ratio
 * */
 .draft-team > .champion-pick > img {
-	width: 354px;
-	height: 200px;
-	max-width: 345px;
-	max-height: 200px;
+	width: var(--pickMaxWidth);
+	height: var(--pickMaxHeight);
+	max-width: var(--pickMaxWidth);
+	max-height: var(--pickMaxHeight);
 }
 
 .not-bans > .wrapper {
@@ -329,9 +348,9 @@ body {
 }
 
 .source-button {
-	min-width: 80px;
-	min-height: 50px;
-	font-size: 40px;
+	min-width: var(--dataButtonMaxWidth);
+	min-height: var(--dataButtonMaxHeight);
+	font-size: var(--dataButtonFontSize);
 }
 
 #user_data_form_container {
