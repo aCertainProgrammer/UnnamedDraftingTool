@@ -18,11 +18,11 @@ export class Frontend {
 		this.picks = document.querySelectorAll(".champion-pick");
 		this.bans = document.querySelectorAll(".champion-ban");
 		this.picks.forEach((current) => {
-			current.addEventListener("click", this.placeChampion);
+			current.addEventListener("click", this.placeChampion.bind(this));
 			current.childNodes[1].dataset.champion = "";
 		});
 		this.bans.forEach((current) => {
-			current.addEventListener("click", this.placeChampion);
+			current.addEventListener("click", this.placeChampion.bind(this));
 			current.childNodes[1].dataset.champion = "";
 		});
 
@@ -31,10 +31,10 @@ export class Frontend {
 		);
 		this.logos = document.querySelectorAll(".team-logo");
 		this.logos.forEach((current) => {
-			current.addEventListener("click", () => {
-				this.request.team = current.id;
-				this.render();
-			});
+			current.addEventListener(
+				"click",
+				this.switchTeam.bind(this, current.id),
+			);
 		});
 
 		this.roleIcons = document.querySelectorAll(".role-icon");
@@ -48,17 +48,20 @@ export class Frontend {
 			});
 		});
 		this.searchBar = document.querySelector(".search-bar");
-		this.searchBar.addEventListener("input", () => {
-			frontend.request.search = frontend.searchBar.value;
-			frontend.render();
-		});
+		this.searchBar.addEventListener(
+			"input",
+			this.searchChampion.bind(this),
+		);
 		this.defaultDataSwitch = document.querySelector("#default_data");
-		this.defaultDataSwitch.addEventListener("click", () => {
-			frontend.request.source = "default_data";
-			frontend.render();
-		});
+		this.defaultDataSwitch.addEventListener(
+			"click",
+			this.loadDefaultData.bind(this),
+		);
 		this.userDataSwitch = document.querySelector("#user_data");
-		this.userDataSwitch.addEventListener("click", this.showUserDataForm);
+		this.userDataSwitch.addEventListener(
+			"click",
+			this.showUserDataForm.bind(this),
+		);
 	}
 
 	render() {
@@ -98,7 +101,10 @@ export class Frontend {
 			}
 			newNode.appendChild(championIcon);
 			this.championsContainer.appendChild(newNode);
-			championIcon.addEventListener("click", this.selectChampion);
+			championIcon.addEventListener(
+				"click",
+				this.selectChampion.bind(this),
+			);
 		}
 	}
 	requestPickedChampions() {
@@ -143,28 +149,24 @@ export class Frontend {
 			img.dataset.champion = this.renderingData.bannedChampions[i];
 		}
 	}
-	//calling frontend. instead of this. is necessary due to how the "this"
-	//keyword works in javascript
 	selectChampion(event) {
-		frontend.selectedChampion = event.target.dataset.champion;
+		this.selectedChampion = event.target.dataset.champion;
 		if (
-			frontend.renderingData.pickedChampions.includes(
-				frontend.selectedChampion,
+			this.renderingData.pickedChampions.includes(
+				this.selectedChampion,
 			) ||
-			frontend.renderingData.bannedChampions.includes(
-				frontend.selectedChampion,
-			)
+			this.renderingData.bannedChampions.includes(this.selectedChampion)
 		) {
-			frontend.selectedChampion = "";
+			this.selectedChampion = "";
 		}
 	}
 	placeChampion(event) {
-		if (frontend.selectedChampion == "") {
+		if (this.selectedChampion == "") {
 			event.target.src = "./img/pick_icon.png";
 		}
-		event.target.dataset.champion = frontend.selectedChampion;
-		frontend.selectedChampion = "";
-		frontend.render();
+		event.target.dataset.champion = this.selectedChampion;
+		this.selectedChampion = "";
+		this.render();
 	}
 	showUserDataForm() {
 		const form_container = document.querySelector(
@@ -172,7 +174,7 @@ export class Frontend {
 		);
 		if (form_container) form_container.classList.remove("hidden");
 		else {
-			frontend.createUserDataForm();
+			this.createUserDataForm();
 		}
 	}
 	createUserDataForm() {
@@ -202,13 +204,26 @@ export class Frontend {
 		form_container.appendChild(textarea);
 		form_container.appendChild(button_container);
 		container.appendChild(form_container);
-		save.addEventListener("click", () => {
-			saveData("user_data", textarea.value);
-			frontend.request.source = "user_data";
-			frontend.render();
-		});
+		save.addEventListener("click", saveUserData.bind(this, textarea.value));
 		hide.addEventListener("click", () => {
 			form_container.classList += "hidden";
 		});
+	}
+	switchTeam(team) {
+		this.request.team = team;
+		this.render();
+	}
+	searchChampion() {
+		this.request.search = this.searchBar.value;
+		this.render();
+	}
+	loadDefaultData() {
+		this.request.source = "default_data";
+		this.render();
+	}
+	saveUserData(data) {
+		saveData("user_data", textarea);
+		this.request.source = "user_data";
+		this.render();
 	}
 }
