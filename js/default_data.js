@@ -1,6 +1,6 @@
-const default_data = `{
-	"all": {
-		"top": [
+export const default_data = JSON.stringify({
+	all: {
+		top: [
 			"aatrox",
 			"akali",
 			"aurora",
@@ -46,9 +46,9 @@ const default_data = `{
 			"vayne",
 			"volibear",
 			"yone",
-			"yorick"
+			"yorick",
 		],
-		"jungle": [
+		jungle: [
 			"amumu",
 			"belveth",
 			"brand",
@@ -89,9 +89,9 @@ const default_data = `{
 			"volibear",
 			"warwick",
 			"xinzhao",
-			"zac"
+			"zac",
 		],
-		"mid": [
+		mid: [
 			"ahri",
 			"anivia",
 			"annie",
@@ -135,9 +135,9 @@ const default_data = `{
 			"yone",
 			"zed",
 			"ziggs",
-			"zoe"
+			"zoe",
 		],
-		"adc": [
+		adc: [
 			"aphelios",
 			"ashe",
 			"caitlyn",
@@ -160,9 +160,9 @@ const default_data = `{
 			"vayne",
 			"xayah",
 			"zeri",
-			"ziggs"
+			"ziggs",
 		],
-		"support": [
+		support: [
 			"alistar",
 			"bard",
 			"blitzcrank",
@@ -195,11 +195,11 @@ const default_data = `{
 			"xerath",
 			"yuumi",
 			"zilean",
-			"zyra"
-		]
+			"zyra",
+		],
 	},
-	"ally": {
-		"top": [
+	ally: {
+		top: [
 			"gragas",
 			"aatrox",
 			"ksante",
@@ -214,9 +214,9 @@ const default_data = `{
 			"camille",
 			"kennen",
 			"ornn",
-			"sion"
+			"sion",
 		],
-		"jungle": [
+		jungle: [
 			"xinzhao",
 			"vi",
 			"viego",
@@ -228,9 +228,9 @@ const default_data = `{
 			"lillia",
 			"taliyah",
 			"ivern",
-			"maokai"
+			"maokai",
 		],
-		"mid": [
+		mid: [
 			"orianna",
 			"syndra",
 			"viktor",
@@ -238,9 +238,9 @@ const default_data = `{
 			"lucian",
 			"corki",
 			"zilean",
-			"ornn"
+			"ornn",
 		],
-		"adc": [
+		adc: [
 			"jinx",
 			"xayah",
 			"kaisa",
@@ -248,9 +248,9 @@ const default_data = `{
 			"zeri",
 			"twitch",
 			"caitlyn",
-			"ziggs"
+			"ziggs",
 		],
-		"support": [
+		support: [
 			"rell",
 			"leona",
 			"nautilus",
@@ -263,11 +263,11 @@ const default_data = `{
 			"milio",
 			"lulu",
 			"karma",
-			"seraphine"
-		]
+			"seraphine",
+		],
 	},
-	"enemy": {
-		"top": [
+	enemy: {
+		top: [
 			"riven",
 			"gragas",
 			"aatrox",
@@ -275,9 +275,9 @@ const default_data = `{
 			"gnar",
 			"gwen",
 			"camille",
-			"renekton"
+			"renekton",
 		],
-		"jungle": [
+		jungle: [
 			"shen",
 			"vi",
 			"viego",
@@ -289,10 +289,10 @@ const default_data = `{
 			"maokai",
 			"jarvan",
 			"skarner",
-			"sejuani"
+			"sejuani",
 		],
-		"mid": ["orianna", "syndra", "azir", "neeko", "ahri", "yone"],
-		"adc": [
+		mid: ["orianna", "syndra", "azir", "neeko", "ahri", "yone"],
+		adc: [
 			"jinx",
 			"tristana",
 			"ashe",
@@ -302,9 +302,9 @@ const default_data = `{
 			"caitlyn",
 			"ziggs",
 			"smolder",
-			"missfortune"
+			"missfortune",
 		],
-		"support": [
+		support: [
 			"rell",
 			"leona",
 			"bard",
@@ -316,7 +316,7 @@ const default_data = `{
 			"lulu",
 			"karma",
 			"renata",
-			"tahmkench"
-		]
-	}
-}`;
+			"tahmkench",
+		],
+	},
+});

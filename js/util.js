@@ -1,4 +1,4 @@
-function capitalize(string) {
+export function capitalize(string) {
 	let newString = "";
 	newString += string[0].toUpperCase();
 	for (let i = 1; i < string.length; i++) {
@@ -7,11 +7,11 @@ function capitalize(string) {
 	return newString;
 }
 
-function saveData(destination, data) {
+export function saveData(destination, data) {
 	localStorage.setItem(destination, data);
 }
 
-function loadData(source, team) {
+export function loadData(source, team) {
 	const json = localStorage.getItem(source);
 	const all_data = JSON.parse(json);
 	const data = all_data[team];

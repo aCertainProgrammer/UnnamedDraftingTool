@@ -1,4 +1,5 @@
-class Backend {
+import { loadData } from "./util.js";
+export class Backend {
 	constructor() {}
 	requestVisibleChampions(request) {
 		let data = [];
