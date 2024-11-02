@@ -1,9 +1,9 @@
 # UnnamedDraftingTool
 https://acertainprogrammer.github.io/UnnamedDraftingTool/index.html
 
-# Data specification
+# Custom data specification
 
-Data needs to be in the form of valid JSON, as an object containing 3 objects:
+The custom data needs to be in the form of valid JSON, as an object containing 3 objects:
 ```
 {
     "all",
@@ -12,7 +12,7 @@ Data needs to be in the form of valid JSON, as an object containing 3 objects:
 }
 ```
 
-Each one of the objects contains 5 arrays, one for each roles, as follows:
+Each one of the objects contains 5 arrays, one for each role, as follows:
 ```
 {
     "all": {
