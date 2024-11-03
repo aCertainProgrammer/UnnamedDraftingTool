@@ -1,0 +1,11 @@
+CURRENT WORK:
+- Keyboard shortcuts
+
+IDEAS:
+- Color champion borders green/red/mixed based on the team they belong to 
+
+- Drag and drop support
+
+- Data presets (maybe some templates like "assasin midlaner", "tank toplaner" etc? This could work in the form of premade JSON snippets)
+
+- Revamp team icons
