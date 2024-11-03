@@ -62,6 +62,10 @@ export class Frontend {
 			"click",
 			this.showUserDataForm.bind(this),
 		);
+		document.addEventListener(
+			"keydown",
+			this.processKeyboardInput.bind(this),
+		);
 	}
 
 	render() {
@@ -226,7 +230,8 @@ export class Frontend {
 		this.render();
 	}
 	searchChampion() {
-		this.request.search = this.searchBar.value;
+		if (this.searchBar.value == " ") this.searchBar.value = "";
+		this.request.search = this.searchBar.value.replace(/\s+/g, "");
 		this.render();
 	}
 	loadDefaultData() {
@@ -247,5 +252,10 @@ export class Frontend {
 	}
 	clickInput(input) {
 		input.click();
+	}
+	processKeyboardInput(event) {
+		const key = event.key;
+		console.log(key);
+		if (key == " ") this.searchBar.focus();
 	}
 }
