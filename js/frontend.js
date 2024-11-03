@@ -1,8 +1,8 @@
 import { Backend } from "./backend.js";
 import { saveData, loadData, capitalize, readFile } from "./util.js";
-const backend = new Backend();
 export class Frontend {
-	constructor() {
+	constructor(backend) {
+		this.backend = backend;
 		this.request = {
 			source: "default_data",
 			team: "all",
@@ -65,9 +65,8 @@ export class Frontend {
 	}
 
 	render() {
-		this.renderingData.visibleChampions = backend.requestVisibleChampions(
-			this.request,
-		);
+		this.renderingData.visibleChampions =
+			this.backend.requestVisibleChampions(this.request);
 		this.requestPickedChampions();
 		this.requestBannedChampions();
 		this.renderVisibleChampions();

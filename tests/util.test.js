@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { capitalize, saveData, loadData } from "./../js/util.js";
 import { default_data } from "./../js/default_data.js";
 import user_data from "./../js/example_user_data_for_debug.json";
