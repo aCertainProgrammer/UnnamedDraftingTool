@@ -1,7 +1,10 @@
 CURRENT WORK:
-- Keyboard shortcuts
+- Refactor 
+THEN:
 
 IDEAS:
+- Keyboard shortcuts
+
 - Color champion borders green/red/mixed based on the team they belong to 
 
 - Drag and drop support
