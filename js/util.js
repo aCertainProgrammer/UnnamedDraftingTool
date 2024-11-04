@@ -6,20 +6,3 @@ export function capitalize(string) {
 	}
 	return newString;
 }
-
-export function saveData(destination, data) {
-	if (typeof data !== "string") data = JSON.stringify(data);
-	localStorage.setItem(destination, data);
-}
-
-export function loadData(source, team) {
-	const json = localStorage.getItem(source);
-	const all_data = JSON.parse(json);
-	const data = all_data[team];
-	return data;
-}
-
-export async function readFile(file) {
-	const data = await file.text();
-	return data;
-}

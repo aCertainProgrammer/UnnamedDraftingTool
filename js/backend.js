@@ -1,9 +1,8 @@
-import { loadData } from "./util.js";
 export class Backend {
 	constructor() {}
-	requestVisibleChampions(request) {
+	requestVisibleChampions(request, dataController) {
 		let data = [];
-		data = loadData(request.source, request.team);
+		data = dataController.loadData(request.dataSource, request.team);
 		if (request.role == "all") {
 			data = data["top"].concat(
 				data["jungle"],
@@ -15,7 +14,7 @@ export class Backend {
 		} else {
 			data = this.sortAndRemoveDuplicates(data[request.role]);
 		}
-		data = this.filterDataBySearchQuery(data, request.search);
+		data = this.filterDataBySearchQuery(data, request.searchQuery);
 		return data;
 	}
 	sortAndRemoveDuplicates(data) {
@@ -29,11 +28,11 @@ export class Backend {
 		}
 		return newData;
 	}
-	filterDataBySearchQuery(data, search_query) {
-		if (search_query == "") return data;
+	filterDataBySearchQuery(data, searchQuery) {
+		if (searchQuery == "") return data;
 		const newData = [];
 		for (let i = 0; i < data.length; i++) {
-			if (data[i].toLowerCase().includes(search_query.toLowerCase())) {
+			if (data[i].toLowerCase().includes(searchQuery.toLowerCase())) {
 				newData.push(data[i]);
 			}
 		}

@@ -1,3 +1,4 @@
+import { capitalize } from "./util.js";
 export class Renderer {
 	constructor(
 		picksSelector,
@@ -8,16 +9,16 @@ export class Renderer {
 	) {
 		this.picks = document.querySelectorAll(picksSelector);
 		this.bans = document.querySelectorAll(banSelector);
-		this.championsContainer = document.querySelectorAll(
+		this.championsContainer = document.querySelector(
 			championsContainerSelector,
 		);
 		this.defaultPickIconPath = defaultPickIconPath;
 		this.championIconPath = championIconPath;
 	}
 	clearScreen() {
-		while (this.championContainer.hasChildNodes()) {
-			this.championContainer.removeChild(
-				this.championContainer.firstChild,
+		while (this.championsContainer.hasChildNodes()) {
+			this.championsContainer.removeChild(
+				this.championsContainer.firstChild,
 			);
 		}
 		for (let i = 0; i < this.picks.length; i++) {
@@ -29,55 +30,74 @@ export class Renderer {
 			img.src = this.defaultPickIconPath;
 		}
 	}
-	render(renderingData, callback) {
-		for (let i = 0; i < this.renderingData.visibleChampions.length; i++) {
-			const championIcon = this.renderingData.visibleChampions[i];
+	render(renderingData, callbackForChampionSelect, userInterface) {
+		// Render champions (central part)
+		for (let i = 0; i < renderingData.visibleChampions.length; i++) {
+			const championName = renderingData.visibleChampions[i];
+			let isPickedOrBanned = "false";
+			if (
+				renderingData.pickedChampions.includes(championName) ||
+				renderingData.bannedChampions.includes(championName)
+			) {
+				isPickedOrBanned = "true";
+			}
+			const championIcon = this.createChampionIcon(
+				championName,
+				isPickedOrBanned,
+			);
 			this.championsContainer.appendChild(championIcon);
-			championIcon.addEventListener("click", callback);
+			championIcon.addEventListener(
+				"click",
+				callbackForChampionSelect.bind(userInterface),
+			);
 		}
-		for (let i = 0; i < picks.length; i++) {
+
+		// Render picked champions
+		for (let i = 0; i < this.picks.length; i++) {
 			let img = this.picks[i].childNodes[1];
-			if (this.renderingData.pickedChampions[i] == "") {
+			if (renderingData.pickedChampions[i] == "") {
 				img.src = this.defaultPickIconPath;
 				img.dataset.champion = "";
 			} else {
 				img.src =
 					this.championIconPath +
 					"/centered/" +
-					capitalize(this.renderingData.pickedChampions[i]) +
+					capitalize(renderingData.pickedChampions[i]) +
 					"_0.jpg";
-				img.dataset.champion = this.renderingData.pickedChampions[i];
+				img.dataset.champion = renderingData.pickedChampions[i];
 			}
 		}
-		for (let i = 0; i < bans.length; i++) {
+
+		// Render banned champions
+		for (let i = 0; i < this.bans.length; i++) {
 			let img = this.bans[i].childNodes[1];
-			if (this.renderingData.bannedChampions[i] == "") {
+			if (renderingData.bannedChampions[i] == "") {
 				img.src = this.defaultPickIconPath;
 				img.dataset.champion = "";
 			} else {
 				img.src =
 					this.championIconPath +
 					"/centered/" +
-					capitalize(this.renderingData.bannedChampions[i]) +
+					capitalize(renderingData.bannedChampions[i]) +
 					"_0.jpg";
-				img.dataset.champion = this.renderingData.bannedChampions[i];
+				img.dataset.champion = renderingData.bannedChampions[i];
 			}
 		}
 	}
-	createChampionIcon(championName) {
+	createChampionIcon(championName, isPickedOrBanned) {
 		const newNode = document.createElement("div");
 		newNode.classList += "champion-container";
 		const championIcon = document.createElement("img");
 		championIcon.classList += "champion-icon";
 		championIcon.src =
 			"./img/champion_icons/tiles/" + capitalize(championName) + "_0.jpg";
-		championIcon.alt = this.renderingData.visibleChampions[i];
+		championIcon.alt = championName;
 		championIcon.dataset.champion = championName;
-		if (
-			this.renderingData.pickedChampions.includes(championName) ||
-			this.renderingData.bannedChampions.includes(championName)
-		) {
+		if (isPickedOrBanned === "true") {
 			championIcon.style.opacity = "0.4";
+			championIcon.dataset.pickedOrBanned = "true";
+		} else {
+			championIcon.dataset.pickedOrBanned = "false";
 		}
 		newNode.appendChild(championIcon);
 		return newNode;

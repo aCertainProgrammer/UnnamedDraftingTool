@@ -1,20 +1,16 @@
-import { Backend } from "./backend.js";
-import { saveData, loadData, capitalize, readFile } from "./util.js";
-export class UI {
-	constructor(backend) {
-		this.backend = backend;
-		this.request = {
-			source: "default_data",
-			team: "all",
-			role: "all",
-			search: "",
-		};
+export class UserInterface {
+	constructor(dataSource, dataController) {
+		this.sendProcessSignal = null;
+		this.dataSource = dataSource;
+		this.dataController = dataController;
+		this.team = "all";
+		this.role = "all";
+		this.selectedChampion = "";
 		this.renderingData = {
 			visibleChampions: [],
 			pickedChampions: [],
 			bannedChampions: [],
 		};
-		this.selectedChampion = "";
 		this.picks = document.querySelectorAll(".champion-pick");
 		this.bans = document.querySelectorAll(".champion-ban");
 		this.picks.forEach((current) => {
@@ -33,19 +29,16 @@ export class UI {
 		this.logos.forEach((current) => {
 			current.addEventListener(
 				"click",
-				this.switchTeam.bind(this, current.id),
+				this.setTeam.bind(this, current.id),
 			);
 		});
 
 		this.roleIcons = document.querySelectorAll(".role-icon");
 		this.roleIcons.forEach((current) => {
-			current.addEventListener("click", () => {
-				if (this.request.role == current.id) {
-					this.request.role = "all";
-				} else if (this.request.role != current.id)
-					this.request.role = current.id;
-				this.render();
-			});
+			current.addEventListener(
+				"click",
+				this.setRole.bind(this, current.id),
+			);
 		});
 		this.searchBar = document.querySelector(".search-bar");
 		this.searchBar.addEventListener(
@@ -67,15 +60,39 @@ export class UI {
 			this.processKeyboardInput.bind(this),
 		);
 	}
+	getDataSource() {
+		const source = this.dataSource;
+		return source;
+	}
+	getTeam() {
+		const team = this.team;
+		return team;
+	}
+	getRole() {
+		const role = this.role;
+		return role;
+	}
+	getSearchQuery() {
+		const searchQuery = this.searchBar.value;
+		return searchQuery;
+	}
+	setDataSource() {}
+	setTeam(team) {
+		this.team = team;
+		this.sendProcessSignal();
+	}
+	setRole(role) {
+		if (this.role == role) {
+			this.role = "all";
+		} else if (this.role != role) {
+			this.role = role;
+		}
+		this.sendProcessSignal();
+	}
 
 	selectChampion(event) {
 		this.selectedChampion = event.target.dataset.champion;
-		if (
-			this.renderingData.pickedChampions.includes(
-				this.selectedChampion,
-			) ||
-			this.renderingData.bannedChampions.includes(this.selectedChampion)
-		) {
+		if (event.target.dataset.pickedOrBanned == "true") {
 			this.selectedChampion = "";
 		}
 	}
@@ -85,7 +102,7 @@ export class UI {
 		}
 		event.target.dataset.champion = this.selectedChampion;
 		this.selectedChampion = "";
-		this.render();
+		this.sendProcessSignal();
 	}
 	showUserDataForm() {
 		const form_container = document.querySelector(
@@ -95,6 +112,33 @@ export class UI {
 		else {
 			this.createUserDataForm();
 		}
+	}
+
+	searchChampion() {
+		if (this.searchBar.value == " ") this.searchBar.value = "";
+		this.sendProcessSignal();
+	}
+	loadDefaultData() {
+		this.dataSource = "default_data";
+		this.sendProcessSignal();
+	}
+	saveUserData(textarea) {
+		this.dataController.saveData("user_data", textarea.value);
+		this.request.source = "user_data";
+		this.render();
+	}
+	async takeFileInput(event) {
+		this.dataSource = "user_data";
+		const file = event.target.files[0];
+		const ok = await this.dataController.loadFileData(file);
+		this.sendProcessSignal();
+	}
+	clickInput(input) {
+		input.click();
+	}
+	processKeyboardInput(event) {
+		const key = event.key;
+		if (key == " ") this.searchBar.focus();
 	}
 	createUserDataForm() {
 		const container = document.querySelector("#data");
@@ -135,43 +179,10 @@ export class UI {
 		hide.addEventListener("click", () => {
 			form_container.classList += "hidden";
 		});
-		file_input.addEventListener("input", this.loadFileData.bind(this));
+		file_input.addEventListener("input", this.takeFileInput.bind(this));
 		file_input_button.addEventListener(
 			"click",
 			this.clickInput.bind(this, file_input),
 		);
-	}
-	switchTeam(team) {
-		this.request.team = team;
-		this.render();
-	}
-	searchChampion() {
-		if (this.searchBar.value == " ") this.searchBar.value = "";
-		this.request.search = this.searchBar.value.replace(/\s+/g, "");
-		this.render();
-	}
-	loadDefaultData() {
-		this.request.source = "default_data";
-		this.render();
-	}
-	saveUserData(textarea) {
-		saveData("user_data", textarea.value);
-		this.request.source = "user_data";
-		this.render();
-	}
-	async loadFileData(event) {
-		const file = event.target.files[0];
-		const data = await readFile(file);
-		saveData("user_data", data);
-		this.request.source = "user_data";
-		this.render();
-	}
-	clickInput(input) {
-		input.click();
-	}
-	processKeyboardInput(event) {
-		const key = event.key;
-		console.log(key);
-		if (key == " ") this.searchBar.focus();
 	}
 }

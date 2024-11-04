@@ -1,8 +1,11 @@
-import { FrontController } from "./frontcontroller.js";
+import { Backend } from "./backend.js";
+import { Controller } from "./controller.js";
+import { DataController } from "./datacontroller.js";
 import { Renderer } from "./renderer.js";
 import { Scraper } from "./scraper.js";
+import { UserInterface } from "./userinterface.js";
 
-const controller = new FrontController(
+const controller = new Controller(
 	new Scraper(".champion-pick", ".champion-ban"),
 	new Renderer(
 		".champion-pick",
@@ -11,4 +14,10 @@ const controller = new FrontController(
 		"./../img/pick_icon.png",
 		"./../img/champion_icons/",
 	),
+	new UserInterface("default_data"),
+	new Backend(),
+	new DataController(),
 );
+
+controller.init();
+controller.process();

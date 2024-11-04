@@ -10,11 +10,11 @@ export class Scraper {
 		};
 		for (let i = 0; i < 10; i++) {
 			let img = this.picks[i].childNodes[1];
-			this.data.picks[i] = img.dataset.champion;
+			data.picks[i] = img.dataset.champion;
 		}
 		for (let i = 0; i < 10; i++) {
 			let img = this.bans[i].childNodes[1];
-			this.data.bans[i] = img.dataset.champion;
+			data.bans[i] = img.dataset.champion;
 		}
 		return data;
 	}
