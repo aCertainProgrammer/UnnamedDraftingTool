@@ -1,6 +1,14 @@
 # UnnamedDraftingTool
 https://acertainprogrammer.github.io/UnnamedDraftingTool/index.html
 
+# Manual
+You can pick a champion in two ways:
+- click a champion, then click a pick/ban slot
+- drag and drop the champion 
+
+There is keyboard support, the current shortcuts are:
+- `spacebar` to focus the search bar (no need to click it with the mouse) 
+
 # Custom data specification
 
 The custom data needs to be in the form of valid JSON, as an object containing 3 objects:
