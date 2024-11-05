@@ -151,7 +151,7 @@ export class UserInterface {
 	}
 
 	searchChampion() {
-		if (this.searchBar.value == " ") this.searchBar.value = "";
+		this.searchBar.value = this.searchBar.value.trim();
 		this.sendProcessSignal();
 	}
 	loadDefaultData() {
