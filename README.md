@@ -76,6 +76,7 @@ The current list of all champions:
 "ahri"
 "akali"
 "alistar"
+"ambessa"
 "amumu"
 "anivia"
 "annie"

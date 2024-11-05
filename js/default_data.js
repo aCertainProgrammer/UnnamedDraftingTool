@@ -3,6 +3,7 @@ export const default_data = JSON.stringify({
 		top: [
 			"aatrox",
 			"akali",
+			"ambessa",
 			"aurora",
 			"camille",
 			"chogath",
