@@ -160,13 +160,17 @@ export class UserInterface {
 	}
 	saveUserData(textarea) {
 		DataController.saveData("user_data", textarea.value);
-		this.request.source = "user_data";
-		this.render();
+		this.dataSource = "user_data";
+		this.sendProcessSignal();
 	}
 	async takeFileInput(event) {
 		this.dataSource = "user_data";
 		const file = event.target.files[0];
-		const ok = await DataController.loadFileData(file);
+		const data = await DataController.loadFileData(file);
+		const json = JSON.parse(data);
+		const pretty_text = JSON.stringify(json, null, 2);
+		const textarea = document.querySelector("textarea");
+		textarea.innerHTML = pretty_text;
 		this.sendProcessSignal();
 	}
 	clickInput(input) {

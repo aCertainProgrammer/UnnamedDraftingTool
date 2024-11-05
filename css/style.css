@@ -378,7 +378,7 @@ body {
 	align-items: center;
 }
 #user_data_form_container > textarea {
-	font-size: 30px;
+	font-size: 15px;
 }
 #user_data_form_container > label {
 	border: 3px solid black;
