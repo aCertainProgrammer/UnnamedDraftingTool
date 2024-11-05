@@ -82,7 +82,7 @@ export class Renderer {
 			} else {
 				img.src =
 					this.championIconPath +
-					"/centered/" +
+					"/tiles/" +
 					capitalize(renderingData.bannedChampions[i]) +
 					"_0.jpg";
 				img.dataset.champion = renderingData.bannedChampions[i];
