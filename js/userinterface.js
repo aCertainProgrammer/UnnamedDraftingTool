@@ -2,6 +2,9 @@ import { DataController } from "./datacontroller.js";
 export class UserInterface {
 	constructor(dataSource, dataController) {
 		this.sendProcessSignal = null;
+		this.config = {
+			colorBorders: true,
+		};
 		this.dataSource = dataSource;
 		this.team = "all";
 		this.role = "all";
@@ -83,10 +86,21 @@ export class UserInterface {
 			"click",
 			this.showUserDataForm.bind(this),
 		);
+		this.colorBordersToggle = document.getElementById(
+			"color-borders-toggle",
+		);
+		this.colorBordersToggle.addEventListener(
+			"click",
+			this.toggleBorderColor.bind(this),
+		);
 		document.addEventListener(
 			"keydown",
 			this.processKeyboardInput.bind(this),
 		);
+	}
+	getConfig() {
+		const config = this.config;
+		return config;
 	}
 	getDataSource() {
 		const source = this.dataSource;
@@ -179,6 +193,11 @@ export class UserInterface {
 	processKeyboardInput(event) {
 		const key = event.key;
 		if (key == " ") this.searchBar.focus();
+	}
+	toggleBorderColor() {
+		this.config.colorBorders = !this.config.colorBorders;
+		DataController.saveConfig(this.config);
+		this.sendProcessSignal();
 	}
 	createUserDataForm() {
 		const container = document.querySelector("#data");

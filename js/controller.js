@@ -11,6 +11,7 @@ export class Controller {
 	init() {
 		this.userInterface.sendProcessSignal = this.process.bind(this);
 		DataController.saveData("default_data", default_data);
+		DataController.saveConfig(this.userInterface.getConfig());
 	}
 	process() {
 		const request = {
@@ -25,6 +26,7 @@ export class Controller {
 		);
 		const picksAndBans = this.scraper.getPicksAndBans();
 		const renderingData = {
+			dataSource: this.userInterface.getDataSource(),
 			pickedChampions: picksAndBans.picks,
 			bannedChampions: picksAndBans.bans,
 			visibleChampions: visibleChampions,

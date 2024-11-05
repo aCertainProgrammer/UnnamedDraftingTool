@@ -6,8 +6,8 @@ export class DataController {
 
 	static loadData(source, team) {
 		const json = localStorage.getItem(source);
-		const all_data = JSON.parse(json);
-		const data = all_data[team];
+		let data = JSON.parse(json);
+		if (team != "none") data = data[team];
 		return data;
 	}
 
@@ -19,5 +19,11 @@ export class DataController {
 		const data = await this.readFile(file);
 		this.saveData("user_data", data);
 		return data;
+	}
+	static saveConfig(config) {
+		localStorage.setItem("config", JSON.stringify(config));
+	}
+	static readConfig() {
+		return JSON.parse(localStorage.getItem("config"));
 	}
 }

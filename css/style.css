@@ -391,3 +391,15 @@ body {
 .hidden {
 	display: none !important;
 }
+
+[data-team="both"] {
+	border-color: orange;
+}
+
+[data-team="ally"] {
+	border-color: green;
+}
+
+[data-team="enemy"] {
+	border-color: red;
+}
