@@ -1,6 +1,7 @@
 CURRENT WORK:
-- Color champion borders green/red/mixed based on the team they belong to 
+- File input should copy the file contents into the textarea
 THEN:
+- Color champion borders green/red/mixed based on the team they belong to 
 
 IDEAS:
 - Keyboard shortcuts
@@ -12,5 +13,3 @@ IDEAS:
 BUGS:
 
 - Picks have a transition period when picking a champion, you can see the scale on the default pick icon, it's ugly
-
-- Search bar doesnt remove the last space
