@@ -10,5 +10,7 @@ IDEAS:
 
 - If there is user data, load from it (configurable)
 
+- Dragging champions around from picks
+
 BUGS:
 
