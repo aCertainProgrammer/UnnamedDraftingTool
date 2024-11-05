@@ -15,11 +15,27 @@ export class UserInterface {
 		this.bans = document.querySelectorAll(".champion-ban");
 		this.picks.forEach((current) => {
 			current.addEventListener("click", this.placeChampion.bind(this));
+			current.addEventListener("drop", this.dropChampion.bind(this));
+			current.addEventListener("dragover", (event) => {
+				event.preventDefault();
+			});
+			current.addEventListener("dragstart", (event) => {
+				event.preventDefault();
+			});
 			current.childNodes[1].dataset.champion = "";
+			current.draggable = "false";
 		});
 		this.bans.forEach((current) => {
 			current.addEventListener("click", this.placeChampion.bind(this));
+			current.addEventListener("drop", this.dropChampion.bind(this));
+			current.addEventListener("dragover", (event) => {
+				event.preventDefault();
+			});
 			current.childNodes[1].dataset.champion = "";
+			current.addEventListener("dragstart", (event) => {
+				event.preventDefault();
+			});
+			current.draggable = "false";
 		});
 
 		this.championsContainer = document.querySelector(
@@ -31,6 +47,10 @@ export class UserInterface {
 				"click",
 				this.setTeam.bind(this, current.id),
 			);
+			current.addEventListener("dragstart", (event) => {
+				event.preventDefault();
+			});
+			current.draggable = "false";
 		});
 
 		this.roleIcons = document.querySelectorAll(".role-icon");
@@ -39,12 +59,20 @@ export class UserInterface {
 				"click",
 				this.setRole.bind(this, current.id),
 			);
+			current.addEventListener("dragstart", (event) => {
+				event.preventDefault();
+			});
+			current.draggable = "false";
 		});
 		this.searchBar = document.querySelector(".search-bar");
 		this.searchBar.addEventListener(
 			"input",
 			this.searchChampion.bind(this),
 		);
+		this.searchBar.addEventListener("dragstart", (event) => {
+			event.preventDefault();
+		});
+		this.searchBar.draggable = "false";
 		this.defaultDataSwitch = document.querySelector("#default_data");
 		this.defaultDataSwitch.addEventListener(
 			"click",
@@ -104,6 +132,14 @@ export class UserInterface {
 		this.selectedChampion = "";
 		this.sendProcessSignal();
 	}
+	dropChampion(event) {
+		event.preventDefault();
+		this.placeChampion(event);
+	}
+	dragChampion(event) {
+		this.selectChampion(event);
+	}
+
 	showUserDataForm() {
 		const form_container = document.querySelector(
 			"#user_data_form_container",

@@ -1,7 +1,6 @@
 CURRENT WORK:
-- Drag and drop support
-THEN:
 - Color champion borders green/red/mixed based on the team they belong to 
+THEN:
 
 IDEAS:
 - Keyboard shortcuts

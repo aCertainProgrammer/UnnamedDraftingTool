@@ -32,8 +32,8 @@ export class Controller {
 		this.renderer.clearScreen();
 		this.renderer.render(
 			renderingData,
-			this.userInterface.selectChampion,
-			this.userInterface,
+			this.userInterface.selectChampion.bind(this.userInterface),
+			this.userInterface.dragChampion.bind(this.userInterface),
 		);
 	}
 }

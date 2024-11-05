@@ -30,7 +30,11 @@ export class Renderer {
 			img.src = this.defaultPickIconPath;
 		}
 	}
-	render(renderingData, callbackForChampionSelect, userInterface) {
+	render(
+		renderingData,
+		callbackForChampionSelect,
+		callbackForDragstartEvent,
+	) {
 		// Render champions (central part)
 		for (let i = 0; i < renderingData.visibleChampions.length; i++) {
 			const championName = renderingData.visibleChampions[i];
@@ -46,9 +50,10 @@ export class Renderer {
 				isPickedOrBanned,
 			);
 			this.championsContainer.appendChild(championIcon);
+			championIcon.addEventListener("click", callbackForChampionSelect);
 			championIcon.addEventListener(
-				"click",
-				callbackForChampionSelect.bind(userInterface),
+				"dragstart",
+				callbackForDragstartEvent,
 			);
 		}
 
@@ -93,6 +98,7 @@ export class Renderer {
 			"./img/champion_icons/tiles/" + capitalize(championName) + "_0.jpg";
 		championIcon.alt = championName;
 		championIcon.dataset.champion = championName;
+		championIcon.draggable = "true";
 		if (isPickedOrBanned === "true") {
 			championIcon.style.opacity = "0.4";
 			championIcon.dataset.pickedOrBanned = "true";
