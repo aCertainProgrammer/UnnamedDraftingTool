@@ -1,8 +1,9 @@
+import { DataController } from "./datacontroller.js";
 export class Backend {
 	constructor() {}
-	requestVisibleChampions(request, dataController) {
+	requestVisibleChampions(request) {
 		let data = [];
-		data = dataController.loadData(request.dataSource, request.team);
+		data = DataController.loadData(request.dataSource, request.team);
 		if (request.role == "all") {
 			data = data["top"].concat(
 				data["jungle"],

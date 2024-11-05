@@ -16,7 +16,6 @@ const controller = new Controller(
 	),
 	new UserInterface("default_data"),
 	new Backend(),
-	new DataController(),
 );
 
 controller.init();

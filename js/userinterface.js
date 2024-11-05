@@ -1,8 +1,8 @@
+import { DataController } from "./datacontroller.js";
 export class UserInterface {
 	constructor(dataSource, dataController) {
 		this.sendProcessSignal = null;
 		this.dataSource = dataSource;
-		this.dataController = dataController;
 		this.team = "all";
 		this.role = "all";
 		this.selectedChampion = "";
@@ -123,14 +123,14 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 	saveUserData(textarea) {
-		this.dataController.saveData("user_data", textarea.value);
+		DataController.saveData("user_data", textarea.value);
 		this.request.source = "user_data";
 		this.render();
 	}
 	async takeFileInput(event) {
 		this.dataSource = "user_data";
 		const file = event.target.files[0];
-		const ok = await this.dataController.loadFileData(file);
+		const ok = await DataController.loadFileData(file);
 		this.sendProcessSignal();
 	}
 	clickInput(input) {

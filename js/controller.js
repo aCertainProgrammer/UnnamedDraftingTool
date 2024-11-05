@@ -1,17 +1,16 @@
+import { DataController } from "./datacontroller.js";
 import { default_data } from "./default_data.js";
 
 export class Controller {
-	constructor(scraper, renderer, userInterface, backend, dataController) {
+	constructor(scraper, renderer, userInterface, backend) {
 		this.scraper = scraper;
 		this.renderer = renderer;
 		this.userInterface = userInterface;
 		this.backend = backend;
-		this.dataController = dataController;
 	}
 	init() {
 		this.userInterface.sendProcessSignal = this.process.bind(this);
-		this.userInterface.dataController = this.dataController;
-		this.dataController.saveData("default_data", default_data);
+		DataController.saveData("default_data", default_data);
 	}
 	process() {
 		const request = {
