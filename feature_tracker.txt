@@ -1,12 +1,11 @@
 CURRENT WORK:
-- File input should copy the file contents into the textarea
-THEN:
 - Color champion borders green/red/mixed based on the team they belong to 
+THEN:
 
-IDEAS:
-- Keyboard shortcuts
 
 - Data presets (maybe some templates like "assasin midlaner", "tank toplaner" etc? This could work in the form of premade JSON snippets)
+IDEAS:
+- Keyboard shortcuts
 
 - Revamp team icons
 
