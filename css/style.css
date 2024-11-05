@@ -221,7 +221,7 @@ body {
 	flex-shrink: 1;
 	align-items: center;
 	justify-content: center;
-	gap: 3px;
+	gap: 4px;
 	overflow-y: auto;
 	min-height: 0;
 	min-width: 0;
