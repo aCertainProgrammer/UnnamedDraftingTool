@@ -252,15 +252,6 @@ body {
 	overflow: clip;
 }
 
-.champion-pick > img {
-	transform: scale(1.8) translateY(22px);
-	transition-delay: 35ms;
-	transition-property: transform;
-}
-.champion-pick > img[src*="pick_icon.png"] {
-	transform: scale(1);
-}
-
 .role-selection {
 	display: flex;
 	align-items: center;

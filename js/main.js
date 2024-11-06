@@ -12,7 +12,7 @@ const controller = new Controller(
 		".champion-ban",
 		"#champions-container",
 		"./img/pick_icon.png",
-		"./img/champion_icons/",
+		"./img/champion_icons",
 	),
 	new UserInterface("default_data"),
 	new Backend(),
