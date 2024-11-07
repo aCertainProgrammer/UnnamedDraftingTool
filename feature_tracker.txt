@@ -1,4 +1,5 @@
 CURRENT WORK:
+    
 THEN:
 
 
@@ -7,8 +8,6 @@ IDEAS:
 - Keyboard shortcuts
 
 - Revamp team icons
-
-- If there is user data, load from it (configurable)
 
 - Dragging champions around from picks
 

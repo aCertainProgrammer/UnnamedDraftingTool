@@ -3,10 +3,7 @@ export class UserInterface {
 	constructor() {
 		this.sendProcessSignal = null;
 		this.dataSource = null;
-		this.config = {
-			colorBorders: true,
-			loadUserDataOnProgramStart: true,
-		};
+		this.config = null;
 		this.team = "all";
 		this.role = "all";
 		this.selectedChampion = "";

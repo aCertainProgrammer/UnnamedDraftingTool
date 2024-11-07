@@ -27,6 +27,13 @@ export class DataController {
 		localStorage.setItem("config", JSON.stringify(config));
 	}
 	static readConfig() {
-		return JSON.parse(localStorage.getItem("config"));
+		const config = localStorage.getItem("config");
+		if (config == null) {
+			return {
+				colorBorders: true,
+				loadUserDataOnProgramStart: false,
+			};
+		}
+		return JSON.parse(config);
 	}
 }
