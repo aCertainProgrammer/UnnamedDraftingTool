@@ -6,6 +6,9 @@ export class DataController {
 
 	static loadData(source, team) {
 		const json = localStorage.getItem(source);
+		if (json == null) {
+			return -1;
+		}
 		let data = JSON.parse(json);
 		if (team != "none") data = data[team];
 		return data;

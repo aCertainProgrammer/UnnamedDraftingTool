@@ -10,7 +10,11 @@ export class Controller {
 	}
 	init() {
 		this.userInterface.sendProcessSignal = this.process.bind(this);
-		this.userInterface.dataSource = "default_data";
+		const user_data = DataController.loadData("user_data", "none");
+		if (user_data != -1) this.userInterface.dataSource = "user_data";
+		else {
+			this.userInterface.dataSource = "default_data";
+		}
 		DataController.saveData("default_data", default_data);
 		DataController.saveConfig(this.userInterface.getConfig());
 	}
