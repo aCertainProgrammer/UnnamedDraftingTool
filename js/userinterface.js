@@ -5,6 +5,7 @@ export class UserInterface {
 		this.dataSource = null;
 		this.config = {
 			colorBorders: true,
+			loadUserDataOnProgramStart: true,
 		};
 		this.team = "all";
 		this.role = "all";
@@ -92,6 +93,13 @@ export class UserInterface {
 		this.colorBordersToggle.addEventListener(
 			"click",
 			this.toggleBorderColor.bind(this),
+		);
+		this.dataSourceOnLoadToggle = document.querySelector(
+			"#load-user-data-on-program-load-toggle",
+		);
+		this.dataSourceOnLoadToggle.addEventListener(
+			"click",
+			this.toggleDataSourceOnLoad.bind(this),
 		);
 		document.addEventListener(
 			"keydown",
@@ -198,6 +206,11 @@ export class UserInterface {
 		this.config.colorBorders = !this.config.colorBorders;
 		DataController.saveConfig(this.config);
 		this.sendProcessSignal();
+	}
+	toggleDataSourceOnLoad() {
+		this.config.loadUserDataOnProgramStart =
+			!this.config.loadUserDataOnProgramStart;
+		DataController.saveConfig(this.config);
 	}
 	createUserDataForm() {
 		const container = document.querySelector("#data");
