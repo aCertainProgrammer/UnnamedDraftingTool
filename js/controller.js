@@ -10,6 +10,7 @@ export class Controller {
 	}
 	init() {
 		this.userInterface.sendProcessSignal = this.process.bind(this);
+		this.userInterface.dataSource = "default_data";
 		DataController.saveData("default_data", default_data);
 		DataController.saveConfig(this.userInterface.getConfig());
 	}

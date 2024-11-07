@@ -1,11 +1,11 @@
 import { DataController } from "./datacontroller.js";
 export class UserInterface {
-	constructor(dataSource, dataController) {
+	constructor() {
 		this.sendProcessSignal = null;
+		this.dataSource = null;
 		this.config = {
 			colorBorders: true,
 		};
-		this.dataSource = dataSource;
 		this.team = "all";
 		this.role = "all";
 		this.selectedChampion = "";

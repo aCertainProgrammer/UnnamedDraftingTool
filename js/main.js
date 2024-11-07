@@ -14,7 +14,7 @@ const controller = new Controller(
 		"./img/pick_icon.png",
 		"./img/champion_icons",
 	),
-	new UserInterface("default_data"),
+	new UserInterface(),
 	new Backend(),
 );
 
