@@ -2,9 +2,8 @@ import { DataController } from "./datacontroller.js";
 import { default_data } from "./default_data.js";
 
 export class Controller {
-	constructor(scraper, renderer, userInterface, backend) {
+	constructor(scraper, userInterface, backend) {
 		this.scraper = scraper;
-		this.renderer = renderer;
 		this.userInterface = userInterface;
 		this.backend = backend;
 	}
@@ -18,7 +17,6 @@ export class Controller {
 			if (user_data != -1) this.userInterface.dataSource = "user_data";
 		}
 		DataController.saveData("default_data", default_data);
-		DataController.saveConfig(this.userInterface.getConfig());
 	}
 	process() {
 		const request = {
@@ -38,8 +36,8 @@ export class Controller {
 			bannedChampions: picksAndBans.bans,
 			visibleChampions: visibleChampions,
 		};
-		this.renderer.clearScreen();
-		this.renderer.render(
+		this.userInterface.clearScreen();
+		this.userInterface.render(
 			renderingData,
 			this.userInterface.selectChampion.bind(this.userInterface),
 			this.userInterface.dragChampion.bind(this.userInterface),
