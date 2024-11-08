@@ -2,6 +2,7 @@ CURRENT WORK:
     
 THEN:
 
+- There should be a button to load the currently saved user data
 
 - Data presets (maybe some templates like "assasin midlaner", "tank toplaner" etc? This could work in the form of premade JSON snippets)
 IDEAS:
