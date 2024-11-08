@@ -83,8 +83,14 @@ export class UserInterface {
 			"click",
 			this.loadDefaultData.bind(this),
 		);
-		this.userDataSwitch = document.querySelector("#user_data");
+
+		this.userDataSwitch = document.querySelector("#load_user_data");
 		this.userDataSwitch.addEventListener(
+			"click",
+			this.loadUserData.bind(this),
+		);
+		this.userDataInput = document.querySelector("#input_user_data");
+		this.userDataInput.addEventListener(
 			"click",
 			this.showUserDataForm.bind(this),
 		);
@@ -179,6 +185,10 @@ export class UserInterface {
 	}
 	loadDefaultData() {
 		this.dataSource = "default_data";
+		this.sendProcessSignal();
+	}
+	loadUserData() {
+		this.dataSource = "user_data";
 		this.sendProcessSignal();
 	}
 	saveUserData(textarea) {
