@@ -225,6 +225,9 @@ export class UserInterface {
 		input.click();
 	}
 	processKeyboardInput(event) {
+		const container = document.querySelector("#user_data_form_container");
+		if (container !== null)
+			if (!container.classList.contains("hidden")) return;
 		const key = event.key;
 		if (key == " ") this.searchBar.focus();
 	}
@@ -256,6 +259,7 @@ export class UserInterface {
 		form_container.id = "user_data_form_container";
 		const textarea = document.createElement("textarea");
 		textarea.name = "user_data_input";
+		textarea.id = "user_data_input";
 		textarea.cols = "80";
 		textarea.rows = "10";
 		const label = document.createElement("label");

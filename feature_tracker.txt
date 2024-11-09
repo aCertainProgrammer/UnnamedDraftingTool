@@ -1,11 +1,5 @@
 CURRENT WORK:
 
-- An indicator for selected champions
-
-- An indicator for selected roles
-
-- An indicator for selected teams
-
 THEN:
 
 
