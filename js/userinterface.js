@@ -39,24 +39,20 @@ export class UserInterface {
 		this.championsContainer = document.querySelector(
 			"#champions-container",
 		);
+		this.teamsContainer = document.querySelector("#teams-container");
 		this.logos = document.querySelectorAll(".team-logo");
 		this.logos.forEach((current) => {
-			current.addEventListener(
-				"click",
-				this.setTeam.bind(this, current.id),
-			);
+			current.addEventListener("click", this.setTeam.bind(this, current));
 			current.addEventListener("dragstart", (event) => {
 				event.preventDefault();
 			});
 			current.draggable = "false";
 		});
 
+		this.rolesContainer = document.querySelector("#roles");
 		this.roleIcons = document.querySelectorAll(".role-icon");
 		this.roleIcons.forEach((current) => {
-			current.addEventListener(
-				"click",
-				this.setRole.bind(this, current.id),
-			);
+			current.addEventListener("click", this.setRole.bind(this, current));
 			current.addEventListener("dragstart", (event) => {
 				event.preventDefault();
 			});
@@ -137,23 +133,40 @@ export class UserInterface {
 	}
 	setDataSource() {}
 	setTeam(team) {
-		this.team = team;
+		this.team = team.id;
+		const currentlySelectedTeam =
+			this.teamsContainer.querySelector(".selected");
+		if (currentlySelectedTeam !== null)
+			currentlySelectedTeam.classList.remove("selected");
+		team.classList.add("selected");
 		this.sendProcessSignal();
 	}
-	setRole(role) {
-		if (this.role == role) {
+	setRole(roleIcon) {
+		const currentlySelectedIcon =
+			this.rolesContainer.querySelector(".selected");
+		if (currentlySelectedIcon !== null)
+			currentlySelectedIcon.classList.remove("selected");
+		if (this.role == roleIcon.id) {
 			this.role = "all";
-		} else if (this.role != role) {
-			this.role = role;
+		} else if (this.role != roleIcon.id) {
+			this.role = roleIcon.id;
+			roleIcon.classList.add("selected");
 		}
 		this.sendProcessSignal();
 	}
 
 	selectChampion(event) {
-		this.selectedChampion = event.target.dataset.champion;
-		if (event.target.dataset.pickedOrBanned == "true") {
+		const championIcon = event.target;
+		if (championIcon.dataset.pickedOrBanned == "true") {
 			this.selectedChampion = "";
+			return;
 		}
+		const currentlySelectedIcon =
+			this.championsContainer.querySelector(".selected");
+		if (currentlySelectedIcon !== null)
+			currentlySelectedIcon.classList.remove("selected");
+		championIcon.classList.add("selected");
+		this.selectedChampion = event.target.dataset.champion;
 	}
 	placeChampion(event) {
 		if (this.selectedChampion == "") {

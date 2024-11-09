@@ -1,4 +1,11 @@
 CURRENT WORK:
+
+- An indicator for selected champions
+
+- An indicator for selected roles
+
+- An indicator for selected teams
+
 THEN:
 
 
@@ -11,12 +18,6 @@ IDEAS:
 - Revamp team icons
 
 - When dragging from pick to a pick, the champions should be swapped
-
-- An indicator for selected champions
-
-- An indicator for selected roles
-
-- An indicator for selected teams
 
 - Comfort level indicator for champions (border coloring repurposed?)
 
@@ -33,5 +34,8 @@ IDEAS:
 - Make an options menu
 
 - Make "everything" customizable with a config file
+
+- Testing
+
 BUGS:
 
