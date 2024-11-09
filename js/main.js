@@ -6,7 +6,11 @@ import { UserInterface } from "./userinterface.js";
 
 const controller = new Controller(
 	new Scraper(".champion-pick", ".champion-ban"),
-	new UserInterface("./img/pick_icon.png", "./img/champion_icons"),
+	new UserInterface(
+		"./img/pick_icon.png",
+		"./img/ban-icon.png",
+		"./img/champion_icons",
+	),
 	new Backend(),
 );
 

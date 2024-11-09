@@ -37,10 +37,6 @@ export class Controller {
 			visibleChampions: visibleChampions,
 		};
 		this.userInterface.clearScreen();
-		this.userInterface.render(
-			renderingData,
-			this.userInterface.selectChampion.bind(this.userInterface),
-			this.userInterface.dragChampion.bind(this.userInterface),
-		);
+		this.userInterface.render(renderingData);
 	}
 }

@@ -1,7 +1,7 @@
 import { DataController } from "./datacontroller.js";
 import { capitalize } from "./util.js";
 export class UserInterface {
-	constructor(defaultPickIconPath, championIconPath) {
+	constructor(defaultPickIconPath, defaultBanIconPath, championIconPath) {
 		this.sendProcessSignal = null;
 		this.dataSource = null;
 		this.config = null;
@@ -14,6 +14,7 @@ export class UserInterface {
 			bannedChampions: [],
 		};
 		this.defaultPickIconPath = defaultPickIconPath;
+		this.defaultBanIconPath = defaultBanIconPath;
 		this.championIconPath = championIconPath;
 
 		this.picks = document.querySelectorAll(".champion-pick");
@@ -24,11 +25,7 @@ export class UserInterface {
 			current.addEventListener("dragover", (event) => {
 				event.preventDefault();
 			});
-			current.addEventListener("dragstart", (event) => {
-				event.preventDefault();
-			});
 			current.childNodes[1].dataset.champion = "";
-			current.draggable = "false";
 		});
 		this.bans.forEach((current) => {
 			current.addEventListener("click", this.placeChampion.bind(this));
@@ -37,10 +34,6 @@ export class UserInterface {
 				event.preventDefault();
 			});
 			current.childNodes[1].dataset.champion = "";
-			current.addEventListener("dragstart", (event) => {
-				event.preventDefault();
-			});
-			current.draggable = "false";
 		});
 
 		this.championsContainer = document.querySelector(
@@ -112,6 +105,15 @@ export class UserInterface {
 			"keydown",
 			this.processKeyboardInput.bind(this),
 		);
+		this.dragFunction = this.dragChampion.bind(this);
+		this.stopDrag = (event) => {
+			event.preventDefault();
+		};
+		this.dragendFunction = function () {
+			event.target.dataset.champion = "";
+			event.target.src = this.defaultPickIconPath;
+			this.sendProcessSignal();
+		}.bind(this);
 	}
 	getConfig() {
 		const config = this.config;
@@ -224,11 +226,7 @@ export class UserInterface {
 		DataController.saveConfig(this.config);
 	}
 	clearScreen() {
-		while (this.championsContainer.hasChildNodes()) {
-			this.championsContainer.removeChild(
-				this.championsContainer.firstChild,
-			);
-		}
+		this.championsContainer.innerHTML = "";
 		for (let i = 0; i < this.picks.length; i++) {
 			const img = this.picks[i].childNodes[1];
 			img.src = this.defaultPickIconPath;
@@ -284,7 +282,7 @@ export class UserInterface {
 			this.clickInput.bind(this, file_input),
 		);
 	}
-	render(renderingData, callbackForChampionSelect) {
+	render(renderingData) {
 		const championData = DataController.loadData(
 			renderingData.dataSource,
 			"none",
@@ -338,6 +336,10 @@ export class UserInterface {
 			if (renderingData.pickedChampions[i] == "") {
 				img.src = this.defaultPickIconPath;
 				img.dataset.champion = "";
+				img.draggable = "false";
+				img.removeEventListener("dragstart", this.dragFunction);
+				img.addEventListener("dragstart", this.stopDrag);
+				img.removeEventListener("dragend", this.dragendFunction);
 			} else {
 				img.src =
 					this.championIconPath +
@@ -345,6 +347,11 @@ export class UserInterface {
 					capitalize(renderingData.pickedChampions[i]) +
 					"_0.jpg";
 				img.dataset.champion = renderingData.pickedChampions[i];
+				img.draggable = "true";
+				img.removeEventListener("dragstart", this.stopDrag);
+				img.addEventListener("dragstart", this.dragFunction);
+				img.removeEventListener("dragend", this.dragendFunction);
+				img.addEventListener("dragend", this.dragendFunction);
 			}
 		}
 
@@ -352,8 +359,12 @@ export class UserInterface {
 		for (let i = 0; i < this.bans.length; i++) {
 			let img = this.bans[i].childNodes[1];
 			if (renderingData.bannedChampions[i] == "") {
-				img.src = this.defaultPickIconPath;
+				img.src = this.defaultBanIconPath;
 				img.dataset.champion = "";
+				img.draggable = "false";
+				img.removeEventListener("dragstart", this.dragFunction);
+				img.addEventListener("dragstart", this.stopDrag);
+				img.removeEventListener("dragend", this.dragendFunction);
 			} else {
 				img.src =
 					this.championIconPath +
@@ -361,12 +372,17 @@ export class UserInterface {
 					capitalize(renderingData.bannedChampions[i]) +
 					"_0.jpg";
 				img.dataset.champion = renderingData.bannedChampions[i];
+				img.draggable = "true";
+				img.removeEventListener("dragstart", this.stopDrag);
+				img.addEventListener("dragstart", this.dragFunction);
+				img.removeEventListener("dragend", this.dragendFunction);
+				img.addEventListener("dragend", this.dragendFunction);
 			}
 		}
 	}
 	createChampionIcon(championName, isPickedOrBanned, team) {
-		const newNode = document.createElement("div");
-		newNode.classList += "champion-container";
+		const championContainer = document.createElement("div");
+		championContainer.classList += "champion-container";
 		const championIcon = document.createElement("img");
 		championIcon.classList += "champion-icon";
 		championIcon.src =
@@ -381,7 +397,7 @@ export class UserInterface {
 		} else {
 			championIcon.dataset.pickedOrBanned = "false";
 		}
-		newNode.appendChild(championIcon);
-		return newNode;
+		championContainer.appendChild(championIcon);
+		return championContainer;
 	}
 }
