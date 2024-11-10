@@ -11,8 +11,6 @@ IDEAS:
 
 - Revamp team icons
 
-- When dragging from pick to a pick, the champions should be swapped
-
 - Comfort level indicator for champions (border coloring repurposed?)
 
 - Give feedback on correct/incorrect data (background color in the input element?)

@@ -8,6 +8,7 @@ export class UserInterface {
 		this.team = "all";
 		this.role = "all";
 		this.selectedChampion = "";
+		this.recentlyDragged = null;
 		this.renderingData = {
 			visibleChampions: [],
 			pickedChampions: [],
@@ -106,9 +107,7 @@ export class UserInterface {
 			event.preventDefault();
 		};
 		this.dragendFunction = function () {
-			event.target.dataset.champion = "";
-			event.target.src = this.defaultPickIconPath;
-			this.sendProcessSignal();
+			event.preventDefault();
 		}.bind(this);
 	}
 	getConfig() {
@@ -183,9 +182,12 @@ export class UserInterface {
 	}
 	dropChampion(event) {
 		event.preventDefault();
+		const replacedChampion = event.target.dataset.champion;
+		this.recentlyDragged.dataset.champion = replacedChampion;
 		this.placeChampion(event);
 	}
 	dragChampion(event) {
+		this.recentlyDragged = event.target;
 		this.selectChampion(event);
 	}
 
