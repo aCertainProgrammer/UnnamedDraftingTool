@@ -1,5 +1,4 @@
 CURRENT WORK:
-- When a team is omitted in the json input, pull it from the default config
 
 THEN:
 
@@ -21,9 +20,6 @@ IDEAS:
 - When dragging set the image to a champion file
 
 - Select a slot if no champ is selected, then the next champion goes into that slot
-
-
-- Make "everything" customizable with a config file
 
 - Testing
 
