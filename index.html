@@ -9,37 +9,46 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<div id="data" class="data">
-				<input
-					class="source-button"
-					id="default_data"
-					type="button"
-					value="Use default data"
-				/>
-				<input
-					class="source-button"
-					id="load_user_data"
-					type="button"
-					value="Use custom data"
-				/>
-				<input
-					class="source-button"
-					id="input_user_data"
-					type="button"
-					value="Input custom data"
-				/>
-				<input
-					class="source-button"
-					id="color-borders-toggle"
-					type="button"
-					value="Toggle border coloring"
-				/><input
-					class="source-button"
-					id="load-user-data-on-program-load-toggle"
-					type="button"
-					value="Toggle data source on program start"
-				/>
+		<div id="settings-menu" class="hidden">
+			<input class="source-button" id="leave-settings-button" value="Save settings and leave"type="button"></input>
+			<input
+				class="source-button"
+				id="color-borders-toggle"
+				type="button"
+				value="Color champion borders"
+			/>
+                <input
+				class="source-button"
+				id="load-user-data-on-program-load-toggle"
+				type="button"
+				value="Load user data on page load"
+			/>
+		</div>
+		<div id="content-container" class="container">
+			<div id="header">
+				<div id="data" class="data">
+					<input
+						class="source-button"
+						id="default_data"
+						type="button"
+						value="Use default data"
+					/>
+					<input
+						class="source-button"
+						id="load_user_data"
+						type="button"
+						value="Use custom data"
+					/>
+					<input
+						class="source-button"
+						id="input_user_data"
+						type="button"
+						value="Input custom data"
+					/>
+				</div>
+				<button class="settings-button" id="enter-settings-button">
+					<img src="./img/settings-cog.png" />
+				</button>
 			</div>
 			<div class="wrapper">
 				<div class="draft-area">

@@ -1,4 +1,5 @@
 :root {
+	--bodyBackgroundColor: #696f77;
 	--pickMaxWidth: 230px;
 	--pickMaxHeight: 130px;
 	--championMaxWidth: 100px;
@@ -29,7 +30,7 @@
 body {
 	height: 100vh;
 	width: 100vw;
-	background-color: #696f77;
+	background-color: var(--bodyBackgroundColor);
 	overflow-y: hidden;
 	overflow-x: hidden;
 }
@@ -50,7 +51,7 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 10px;
+	gap: 2px;
 	min-height: 0;
 	min-width: 0;
 }
@@ -229,6 +230,10 @@ body {
 	min-width: var(--dataButtonMaxWidth);
 	min-height: var(--dataButtonMaxHeight);
 	font-size: var(--dataButtonFontSize);
+	border: 1px solid;
+	border-color: var(--bodyBackgroundColor);
+	padding: 4px 8px;
+	border-radius: 6px;
 }
 
 #user_data_form_container {
@@ -262,4 +267,43 @@ body {
 
 [data-team="enemy"] {
 	border-color: red;
+}
+
+.settings-button,
+.settings-button > img {
+	max-height: 28px;
+	max-width: 28px;
+}
+.settings-button > img {
+	filter: brightness(1.4);
+}
+.settings-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--bodyBackgroundColor);
+	border: 0px;
+}
+
+#settings-menu {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: center;
+	gap: 3px;
+}
+#settings-menu > label {
+	color: #eeeeee;
+	padding: 0px 2px;
+}
+
+#header {
+	display: flex;
+	flex-direction: row;
+	align-items: start;
+	justify-content: center;
+	gap: 10px;
+}
+#leave-settings-button {
+	font-weight: 700;
 }

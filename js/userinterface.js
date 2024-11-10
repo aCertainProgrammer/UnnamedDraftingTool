@@ -114,6 +114,31 @@ export class UserInterface {
 			if (currentlySelectedIcon !== null)
 				currentlySelectedIcon.classList.remove("selected");
 		}.bind(this);
+		this.settingsMenu = document.querySelector("#settings-menu");
+		this.enterSettingsButton = document.querySelector(
+			"#enter-settings-button",
+		);
+		this.enterSettingsButton.addEventListener(
+			"click",
+			this.openSettingsMenu.bind(this),
+		);
+		this.contentContainer = document.querySelector("#content-container");
+		this.leaveSettingsButton = document.querySelector(
+			"#leave-settings-button",
+		);
+		this.leaveSettingsButton.addEventListener(
+			"click",
+			this.closeMenu.bind(this),
+		);
+	}
+	colorSettingsButtons() {
+		if (this.config.colorBorders == false) {
+			this.colorBordersToggle.style.backgroundColor = "pink";
+		} else this.colorBordersToggle.style.backgroundColor = "lightgreen";
+
+		if (this.config.loadUserDataOnProgramStart == false)
+			this.dataSourceOnLoadToggle.style.backgroundColor = "pink";
+		else this.dataSourceOnLoadToggle.style.backgroundColor = "lightgreen";
 	}
 	getConfig() {
 		const config = this.config;
@@ -245,12 +270,14 @@ export class UserInterface {
 	}
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
+		this.colorSettingsButtons();
 		DataController.saveConfig(this.config);
 		this.sendProcessSignal();
 	}
 	toggleDataSourceOnLoad() {
 		this.config.loadUserDataOnProgramStart =
 			!this.config.loadUserDataOnProgramStart;
+		this.colorSettingsButtons();
 		DataController.saveConfig(this.config);
 	}
 	clearScreen() {
@@ -265,6 +292,14 @@ export class UserInterface {
 		}
 	}
 
+	openSettingsMenu() {
+		this.settingsMenu.classList.remove("hidden");
+		this.contentContainer.classList.add("hidden");
+	}
+	closeMenu() {
+		this.settingsMenu.classList.add("hidden");
+		this.contentContainer.classList.remove("hidden");
+	}
 	createUserDataForm() {
 		const container = document.querySelector("#data");
 		const form_container = document.createElement("div");

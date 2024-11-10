@@ -12,6 +12,7 @@ export class Controller {
 		this.userInterface.dataSource = "default_data";
 		const config = DataController.readConfig();
 		this.userInterface.config = config;
+		this.userInterface.colorSettingsButtons();
 		if (config.loadUserDataOnProgramStart == true) {
 			const user_data = DataController.loadData("user_data", "none");
 			if (user_data != -1) this.userInterface.dataSource = "user_data";
