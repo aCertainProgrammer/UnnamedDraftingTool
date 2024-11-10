@@ -4,7 +4,7 @@ export class Backend {
 	requestVisibleChampions(request) {
 		let data = [];
 		data = DataController.loadData(request.dataSource, request.team);
-		if (data == null)
+		if (data == null || data == undefined)
 			data = DataController.loadData("default_data", request.team);
 		if (request.role == "all") {
 			data = data["top"].concat(
