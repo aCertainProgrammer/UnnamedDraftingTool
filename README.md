@@ -36,6 +36,8 @@ Each one of the objects contains 5 arrays, one for each role, as follows:
 
 Together, they define the 3 teams you can select in the tool.
 
+Note: You don't need to provide all 3 teams, if you omit a team the data will be pulled from the default data. This enables you to not have to bother with pasting the list of all champions for every config.
+
 `all` is intended to simply be a list of all champions, but there might be other uses for it so I made it customizable. A full list of champions is provided below.
 
 `ally` and `enemy` are simply the pools of two teams involved in the draft, use them however you like
