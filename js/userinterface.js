@@ -108,6 +108,11 @@ export class UserInterface {
 		};
 		this.dragendFunction = function () {
 			event.preventDefault();
+			this.selectedChampion = "";
+			const currentlySelectedIcon =
+				this.championsContainer.querySelector(".selected");
+			if (currentlySelectedIcon !== null)
+				currentlySelectedIcon.classList.remove("selected");
 		}.bind(this);
 	}
 	getConfig() {
@@ -351,6 +356,10 @@ export class UserInterface {
 			championIcon.addEventListener(
 				"dragstart",
 				this.dragChampion.bind(this),
+			);
+			championIcon.addEventListener(
+				"dragend",
+				this.dragendFunction.bind(this),
 			);
 		}
 
