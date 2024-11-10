@@ -1,4 +1,5 @@
 CURRENT WORK:
+Save picked champions
 
 THEN:
 
@@ -22,8 +23,6 @@ IDEAS:
 - Select a slot if no champ is selected, then the next champion goes into that slot
 
 - When a team is omitted in the json input, pull it from the default config
-
-- Make an options menu
 
 - Make "everything" customizable with a config file
 
