@@ -20,7 +20,6 @@ export class DataController {
 	}
 	static async loadFileData(file) {
 		const data = await this.readFile(file);
-		this.saveData("user_data", data);
 		return data;
 	}
 	static saveConfig(config) {

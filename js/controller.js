@@ -27,10 +27,7 @@ export class Controller {
 			role: this.userInterface.getRole(),
 			searchQuery: this.userInterface.getSearchQuery(),
 		};
-		const visibleChampions = this.backend.requestVisibleChampions(
-			request,
-			this.dataController,
-		);
+		const visibleChampions = this.backend.requestVisibleChampions(request);
 		let picksAndBans;
 		if (this.firstProcess) picksAndBans = DataController.loadPicksAndBans();
 		if (!this.firstProcess || picksAndBans === null)

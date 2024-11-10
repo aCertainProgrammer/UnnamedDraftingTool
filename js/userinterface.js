@@ -243,15 +243,30 @@ export class UserInterface {
 		this.dataSource = "user_data";
 		this.sendProcessSignal();
 	}
+	validateUserData(data) {
+		const teams = ["all", "ally", "enemy"];
+		const defaultData = DataController.loadData("default_data", "none");
+		teams.forEach((current) => {
+			if (data[current] == null) {
+				data[current] = defaultData[current];
+			}
+		});
+		return data;
+	}
 	saveUserData(textarea) {
-		DataController.saveData("user_data", textarea.value);
+		const data = JSON.parse(textarea.value);
+		const validatedData = this.validateUserData(data);
+		DataController.saveData("user_data", JSON.stringify(validatedData));
 		this.dataSource = "user_data";
 		this.sendProcessSignal();
 	}
 	async takeFileInput(event) {
-		this.dataSource = "user_data";
 		const file = event.target.files[0];
 		const data = await DataController.loadFileData(file);
+		const unvalidatedJSON = JSON.parse(data);
+		const validatedData = this.validateUserData(unvalidatedJSON);
+		DataController.saveData("user_data", JSON.stringify(validatedData));
+		this.dataSource = "user_data";
 		const json = JSON.parse(data);
 		const pretty_text = JSON.stringify(json, null, 2);
 		const textarea = document.querySelector("textarea");
