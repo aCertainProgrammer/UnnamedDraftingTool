@@ -6,6 +6,7 @@ export class Controller {
 		this.scraper = scraper;
 		this.userInterface = userInterface;
 		this.backend = backend;
+		this.firstProcess = true;
 	}
 	init() {
 		this.userInterface.sendProcessSignal = this.process.bind(this);
@@ -30,13 +31,17 @@ export class Controller {
 			request,
 			this.dataController,
 		);
-		const picksAndBans = this.scraper.getPicksAndBans();
+		let picksAndBans;
+		if (this.firstProcess) picksAndBans = DataController.loadPicksAndBans();
+		if (!this.firstProcess || picksAndBans === null)
+			picksAndBans = this.scraper.getPicksAndBans();
 		const renderingData = {
 			dataSource: this.userInterface.getDataSource(),
 			pickedChampions: picksAndBans.picks,
 			bannedChampions: picksAndBans.bans,
 			visibleChampions: visibleChampions,
 		};
+		DataController.saveData("picksAndBans", picksAndBans);
 		this.userInterface.clearScreen();
 		this.userInterface.render(renderingData);
 	}

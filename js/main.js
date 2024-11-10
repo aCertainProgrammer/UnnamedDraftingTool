@@ -16,3 +16,4 @@ const controller = new Controller(
 
 controller.init();
 controller.process();
+controller.firstProcess = false;

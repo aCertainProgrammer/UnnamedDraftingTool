@@ -37,4 +37,9 @@ export class DataController {
 		}
 		return JSON.parse(config);
 	}
+	static loadPicksAndBans() {
+		const json = localStorage.getItem("picksAndBans");
+		const picksAndBans = JSON.parse(json);
+		return picksAndBans;
+	}
 }

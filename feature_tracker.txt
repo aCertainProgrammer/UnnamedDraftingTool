@@ -1,5 +1,5 @@
 CURRENT WORK:
-Save picked champions
+- Save picked champions
 
 THEN:
 
