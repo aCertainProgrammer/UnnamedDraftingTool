@@ -161,6 +161,11 @@ export class UserInterface {
 			this.selectedChampion = "";
 			return;
 		}
+		if (this.selectedChampion == championIcon.dataset.champion) {
+			championIcon.classList.remove("selected");
+			this.selectedChampion = "";
+			return;
+		}
 		const currentlySelectedIcon =
 			this.championsContainer.querySelector(".selected");
 		if (currentlySelectedIcon !== null)
@@ -375,6 +380,8 @@ export class UserInterface {
 		// Render banned champions
 		for (let i = 0; i < this.bans.length; i++) {
 			let img = this.bans[i].childNodes[1];
+			if (img.classList.contains("selected"))
+				img.classList.remove("selected");
 			if (renderingData.bannedChampions[i] == "") {
 				img.src = this.defaultBanIconPath;
 				img.dataset.champion = "";
