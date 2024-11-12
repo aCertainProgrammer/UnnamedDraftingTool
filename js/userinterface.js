@@ -130,6 +130,16 @@ export class UserInterface {
 			"click",
 			this.closeMenu.bind(this),
 		);
+		this.openManualButton = document.querySelector("#open-manual-button");
+		this.openManualButton.addEventListener(
+			"click",
+			this.openManual.bind(this),
+		);
+		this.closeManualButton = document.querySelector("#close-manual-button");
+		this.closeManualButton.addEventListener(
+			"click",
+			this.closeManual.bind(this),
+		);
 		this.fileInput = null;
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
@@ -143,6 +153,16 @@ export class UserInterface {
 		if (this.config.loadUserDataOnProgramStart == false)
 			this.dataSourceOnLoadToggle.style.backgroundColor = "pink";
 		else this.dataSourceOnLoadToggle.style.backgroundColor = "lightgreen";
+	}
+	openManual() {
+		const manualContainer = document.querySelector("#manual-container");
+		manualContainer.classList.remove("hidden");
+		this.contentContainer.classList.add("hidden");
+	}
+	closeManual() {
+		const manualContainer = document.querySelector("#manual-container");
+		manualContainer.classList.add("hidden");
+		this.contentContainer.classList.remove("hidden");
 	}
 	getConfig() {
 		const config = this.config;

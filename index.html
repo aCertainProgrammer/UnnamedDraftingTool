@@ -9,6 +9,45 @@
 	</head>
 
 	<body>
+		<div id="manual-container" class="hidden">
+			<input
+				class="source-button"
+				id="close-manual-button"
+				value="Close manual"
+				type="button"
+			/>
+			<div class="manual-container" markdown="1">
+				<p>You can pick a champion in two ways:</p>
+				<p>- click a champion, then click a pick/ban slot</p>
+				<p>- drag and drop the champion</p>
+				<p>There is keyboard support, the current shortcuts are:</p>
+				<p>
+					- `Spacebar` to focus the search bar (no need to click it
+					with the mouse)
+				</p>
+				<p>
+					- `Backspace` to focus the search bar and remove a character
+				</p>
+				<p>
+					- any small letter such as `a` or `l` to search (it also
+					inputs the pressed key)
+				</p>
+				<p>
+					- any number from 1 to 0 (0 represents 10) to pick or ban a
+					champion in that slot, depending on the current mode
+				</p>
+				<p>- `P` to get into `pick` mode</p>
+				<p>- `B` to get into `ban` mode</p>
+				<p>- `Delete` to clear all picks and bans</p>
+				<p>- `C` to load custom data</p>
+				<p>- `D` to load default data</p>
+				<p>
+					- `I` to open the "Input custom data" input area (note that
+					this disables keyboard input until the input area is hidden)
+				</p>
+				<p>- `F` to open the file data input dialog</p>
+			</div>
+		</div>
 		<div id="settings-menu" class="hidden">
 			<input
 				class="source-button"
@@ -53,6 +92,9 @@
 				</div>
 				<button class="settings-button" id="enter-settings-button">
 					<img src="./img/settings-cog.png" alt="settings-icon" />
+				</button>
+				<button class="settings-button" id="open-manual-button">
+					<img src="./img/question-mark.png" alt="settings-icon" />
 				</button>
 			</div>
 			<div class="wrapper">
