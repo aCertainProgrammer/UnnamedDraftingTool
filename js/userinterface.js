@@ -133,6 +133,7 @@ export class UserInterface {
 		this.fileInput = null;
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
+		this.currentMode = "pick";
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
@@ -279,7 +280,10 @@ export class UserInterface {
 	clickInput(input) {
 		input.click();
 	}
-	pickChampionWithKeyInput(key) {
+	pickBanChampionWithKeyInput(key) {
+		let data;
+		if (this.currentMode == "pick") data = this.picks;
+		if (this.currentMode == "ban") data = this.bans;
 		if (
 			this.currentlyHoveredChampion == "" ||
 			this.championsContainer.childNodes.length == 1
@@ -290,6 +294,7 @@ export class UserInterface {
 			} else return;
 		}
 		let oldIndex = null;
+		let pickOrBan = null;
 		for (let i = 0; i < 10; i++) {
 			if (
 				this.picks[i].childNodes[1].dataset.champion ==
@@ -297,6 +302,15 @@ export class UserInterface {
 			) {
 				this.picks[i].childNodes[1].dataset.champion = "";
 				oldIndex = i;
+				pickOrBan = this.picks;
+			}
+			if (
+				this.bans[i].childNodes[1].dataset.champion ==
+				this.currentlyHoveredChampion
+			) {
+				this.bans[i].childNodes[1].dataset.champion = "";
+				oldIndex = i;
+				pickOrBan = this.bans;
 			}
 		}
 		const number = parseInt(key);
@@ -311,10 +325,10 @@ export class UserInterface {
 		}
 		//swap champs if both are present
 		if (oldIndex != null) {
-			this.picks[oldIndex].childNodes[1].dataset.champion =
-				this.picks[index].childNodes[1].dataset.champion;
+			pickOrBan[oldIndex].childNodes[1].dataset.champion =
+				data[index].childNodes[1].dataset.champion;
 		}
-		this.picks[index].childNodes[1].dataset.champion =
+		data[index].childNodes[1].dataset.champion =
 			this.currentlyHoveredChampion;
 		this.currentlyHoveredChampion = "";
 		this.sendProcessSignal();
@@ -324,13 +338,15 @@ export class UserInterface {
 		if (container !== null)
 			if (!container.classList.contains("hidden")) return;
 		const key = event.key;
-		if (key == " ") this.searchBar.focus();
+		if (key == " ") {
+			this.searchBar.focus();
+		}
 		if (key >= "a" && key <= "z") {
 			this.searchBar.focus();
 		}
-		if (key >= 0 && key <= 9) {
+		if (key >= "0" && key <= "9") {
 			this.searchBar.blur();
-			this.pickChampionWithKeyInput(key);
+			this.pickBanChampionWithKeyInput(key);
 		}
 		console.log(key);
 		if (key == "Delete") {
@@ -370,6 +386,14 @@ export class UserInterface {
 			const val = this.searchBar.value;
 			this.searchBar.value = "";
 			this.searchBar.value = val;
+		}
+		if (key == "P") {
+			this.searchBar.blur();
+			this.currentMode = "pick";
+		}
+		if (key == "B") {
+			this.searchBar.blur();
+			this.currentMode = "ban";
 		}
 	}
 	toggleBorderColor() {

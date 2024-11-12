@@ -10,7 +10,9 @@ There is keyboard support, the current shortcuts are:
 - `Spacebar` to focus the search bar (no need to click it with the mouse) 
 - `Backspace` to focus the search bar and remove a character
 - any small letter such as `a` or `l` to search (it also inputs the pressed key)
-- any number from 1 to 0 (0 represents 10) to pick a champion in that slot
+- any number from 1 to 0 (0 represents 10) to pick or ban a champion in that slot, depending on the current mode 
+- `P` to get into `pick` mode
+- `B` to get into `ban` mode
 - `Delete` to clear all picks and bans
 - `C` to load custom data
 - `D` to load default data 

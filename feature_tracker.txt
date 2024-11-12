@@ -4,6 +4,8 @@ CURRENT WORK:
 
 THEN:
 
+- A manual is needed on the front page, could be a shorter version of the docs
+
 IDEAS:
 
 - Data presets (maybe some templates like "assasin midlaner", "tank toplaner" etc? This could work in the form of premade JSON snippets)
@@ -13,8 +15,6 @@ IDEAS:
 - Comfort level indicator for champions (border coloring repurposed?)
 
 - Give feedback on correct/incorrect data (background color in the input element?)
-
-- A manual is needed on the front page, could be a shorter version of the docs
 
 - When dragging set the image to a champion file
 
