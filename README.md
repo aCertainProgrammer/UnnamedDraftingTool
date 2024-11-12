@@ -36,8 +36,11 @@ You can pick or ban a champion in four ways:
 - click a champion, then click a pick/ban slot
 - drag and drop the champion 
 - hover over a champion, then press a number on your keyboard (1 to 10, with 10 being represented by 0 to keep consistency left-to-right).
+
 This will either pick or ban the champion, depending on your current mode (pick or ban, toggled with `P` and `B` respectively)
+
 - search for a champion until there is only one available to be picked, then use the number method from above.
+
 This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiasts
 
 ## Keyboard shortucts
@@ -46,12 +49,13 @@ This method has the advantage of not requiring a hover to work, which will certa
 
 - `P` to get into `pick` mode
 - `B` to get into `ban` mode
-- any number from 1 to 0 (0 represents 10) to pick or ban a champion in that slot, depending on the current mode 
+- any number from 1 to 10 (10 being represented by 0) to pick or ban a champion into that slot, depending on the current mode 
 - `Delete` to clear all picks and bans
 - `X` to clear picks or bans depending on the mode
 
 ### Search bar operations
-- `Spacebar`, `Backspace` or any small letter (`a` to `z`) to focus the search bar (no need to click it with the mouse) 
+- `Spacebar`, `Backspace` or any small letter (`a` to `z`) to focus the search bar (no need to click it with the mouse).
+
 Backspace removes the last character, while a letter adds a character after focusing the search bar
 
 ### Data management
@@ -78,10 +82,9 @@ If enabled, your custom data will be loaded, provided it is available
 ## Custom data input
 
 **Note: if the data doesn't load, it means you made a mistake in your input. Press F12 or open your browser's console to check the error message. 
-Your can also validate your JSON here:
+You can also validate your JSON here:
 https://jsonchecker.com/
-or on any other JSON validation website
-**
+or on any other JSON validation website**
 
 The custom data needs to be in the form of valid JSON, as an object containing 3 objects:
 ```
@@ -108,7 +111,9 @@ Each one of the objects contains 5 arrays, one for each role, as follows:
 
 Together, they define the 3 teams you can select in the tool.
 
-**Note**: You don't need to provide all 3 teams, if you omit a team the data will be pulled from the default data. This enables you to not have to bother with pasting the list of all champions for every config.
+**Note**: You don't need to provide all 3 teams, if you omit a team the data will be pulled from the default data. 
+
+This enables you to not have to bother with pasting the list of all champions for every config.
 
 `all` is intended to simply be a list of all champions, but there might be other uses for it so I made it customizable. A full list of champions is provided below.
 
@@ -141,7 +146,9 @@ An example of a full, valid config:
 }
 ```
 
-**Pay attention to how some names are changed (xinzhao, jarvan, chogath)**. This is to make writing configs more convenient. Consult the list of all champions for the accepted names.
+**Pay attention to how some names are changed (xinzhao, jarvan, chogath)**. 
+
+This is to make writing configs more convenient. Consult the list of all champions for the accepted names.
 
 ### All champions
 The current list of all champions:

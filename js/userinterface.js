@@ -468,7 +468,7 @@ export class UserInterface {
 		textarea.rows = "10";
 		const label = document.createElement("label");
 		label.innerHTML =
-			'Read the <a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-specification" target="_blank">input data specification</a>';
+			'Read the <a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input" target="_blank">input data specification</a>';
 		label.for = "user_data_input";
 		const button_container = document.createElement("div");
 		button_container.style.display = "flex";
