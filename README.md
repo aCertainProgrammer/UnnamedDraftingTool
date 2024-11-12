@@ -11,7 +11,7 @@ Head over to https://acertainprogrammer.github.io/UnnamedDraftingTool/ and you'r
 ### Local installation
 The program can be used locally, as it has no backend.
 
-`git clone https://github.com/aCertainProgrammer/UnnamedDraftingTool.git`
+```git clone https://github.com/aCertainProgrammer/UnnamedDraftingTool.git```
 
 Then run it with something like `live-server` or `vite`
 
@@ -24,9 +24,9 @@ This will open the app in localhost
 
 There is no build step required.
 To install the live server:
-`npm install -g live-server`
+```npm install -g live-server```
 
-To update the program, run `git pull`
+To update the program, run ```git pull```
 
 Running the program locally makes the performance better since images (the main bottleneck) are on your disk and don't need to be downloaded on the fly.
 You will also occasionally get access to new features before they are published on the website
@@ -41,7 +41,7 @@ This will either pick or ban the champion, depending on your current mode (pick 
 
 - search for a champion until there is only one available to be picked, then use the number method from above.
 
-This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiasts
+This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast
 
 ## Keyboard shortucts
 
@@ -112,7 +112,6 @@ Each one of the objects contains 5 arrays, one for each role, as follows:
 Together, they define the 3 teams you can select in the tool.
 
 **Note**: You don't need to provide all 3 teams, if you omit a team the data will be pulled from the default data. 
-
 This enables you to not have to bother with pasting the list of all champions for every config.
 
 `all` is intended to simply be a list of all champions, but there might be other uses for it so I made it customizable. A full list of champions is provided below.
