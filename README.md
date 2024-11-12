@@ -7,7 +7,7 @@ This program is aiming to build on top of the currently available drafting tools
 |-----------------|
 |[Running the program](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#running-the-program)|
 |[Picking and banning champions](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#picking-and-banning-champions)|
-|[Keyboard shortcuts](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#keyboard-shortucts)|
+|[Keyboard shortcuts](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#keyboard-shortcuts)|
 |[Personalisation and configuration](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#personalisation-and-configuration)|
 |[Custom data input](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input)|
 
