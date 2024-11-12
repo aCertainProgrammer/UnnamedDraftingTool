@@ -1,8 +1,10 @@
 CURRENT WORK:
 
-- A manual is needed on the front page, could be a shorter version of the docs
+- Manual contents
 
 THEN:
+
+- Styling and css refactoring
 
 IDEAS:
 
@@ -17,6 +19,8 @@ IDEAS:
 - When dragging set the image to a champion file
 
 - Select a slot if no champ is selected, then the next champion goes into that slot
+
+- Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
 
 - Testing
 
