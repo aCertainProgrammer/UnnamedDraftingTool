@@ -276,12 +276,38 @@ export class UserInterface {
 	clickInput(input) {
 		input.click();
 	}
+	pickChampionWithKeyInput(key) {
+		this.picks.forEach((current) => {
+			if (
+				current.childNodes[1].dataset.champion ==
+				this.currentlyHoveredChampion
+			)
+				current.childNodes[1].dataset.champion = "";
+		});
+		const number = parseInt(key);
+		let index;
+		switch (number) {
+			case 0:
+				index = 9;
+				break;
+			default:
+				index = number - 1;
+				break;
+		}
+		this.picks[index].childNodes[1].dataset.champion =
+			this.currentlyHoveredChampion;
+		this.sendProcessSignal();
+	}
 	processKeyboardInput(event) {
 		const container = document.querySelector("#user_data_form_container");
 		if (container !== null)
 			if (!container.classList.contains("hidden")) return;
 		const key = event.key;
 		if (key == " ") this.searchBar.focus();
+		if (key >= "a" && key <= "z") {
+			this.searchBar.focus();
+		}
+		if (key >= 0 && key <= 9) this.pickChampionWithKeyInput(key);
 	}
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
@@ -393,24 +419,31 @@ export class UserInterface {
 			) {
 				isPickedOrBanned = "true";
 			}
-			const championIcon = this.createChampionIcon(
+			const championContainer = this.createChampionIcon(
 				championName,
 				isPickedOrBanned,
 				team,
 			);
-			this.championsContainer.appendChild(championIcon);
-			championIcon.addEventListener(
+			this.championsContainer.appendChild(championContainer);
+			championContainer.addEventListener(
 				"click",
 				this.selectChampion.bind(this),
 			);
-			championIcon.addEventListener(
+			championContainer.addEventListener(
 				"dragstart",
 				this.dragChampion.bind(this),
 			);
-			championIcon.addEventListener(
+			championContainer.addEventListener(
 				"dragend",
 				this.dragendFunction.bind(this),
 			);
+			championContainer.addEventListener("mouseenter", () => {
+				this.currentlyHoveredChampion =
+					championContainer.firstChild.dataset.champion;
+			});
+			championContainer.addEventListener("mouseleave", () => {
+				this.currentlyHoveredChampion = "";
+			});
 		}
 
 		// Render picked champions

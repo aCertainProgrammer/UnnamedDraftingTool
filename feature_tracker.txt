@@ -1,10 +1,8 @@
 CURRENT WORK:
 
-- Remove needless rendering code
+- Keyboard shortcuts
 
 THEN:
-
-- Keyboard shortcuts
 
 IDEAS:
 

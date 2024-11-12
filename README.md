@@ -8,6 +8,8 @@ You can pick a champion in two ways:
 
 There is keyboard support, the current shortcuts are:
 - `spacebar` to focus the search bar (no need to click it with the mouse) 
+- any small letter such as `a` or `l` to search (it also inputs the pressed key)
+- any number from 1 to 0 (0 represents 10) to pick a champion in that slot
 
 # Custom data specification
 
