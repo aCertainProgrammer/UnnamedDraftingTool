@@ -11,7 +11,9 @@ Head over to https://acertainprogrammer.github.io/UnnamedDraftingTool/ and you'r
 ### Local installation
 The program can be used locally, as it has no backend.
 
-```git clone https://github.com/aCertainProgrammer/UnnamedDraftingTool.git```
+```
+git clone https://github.com/aCertainProgrammer/UnnamedDraftingTool.git
+```
 
 Then run it with something like `live-server` or `vite`
 
@@ -24,9 +26,14 @@ This will open the app in localhost
 
 There is no build step required.
 To install the live server:
-```npm install -g live-server```
+```
+npm install -g live-server
+```
 
-To update the program, run ```git pull```
+To update the program, run 
+```
+git pull
+```
 
 Running the program locally makes the performance better since images (the main bottleneck) are on your disk and don't need to be downloaded on the fly.
 You will also occasionally get access to new features before they are published on the website
