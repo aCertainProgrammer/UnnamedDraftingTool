@@ -18,6 +18,7 @@ There is keyboard support, the current shortcuts are:
 - `D` to load default data 
 - `I` to open the "Input custom data" input area (note that this disables keyboard input until the input area is hidden)
 - `F` to open the file data input dialog
+- `X` to clear picks or bans depending on the mode
 
 # Custom data specification
 

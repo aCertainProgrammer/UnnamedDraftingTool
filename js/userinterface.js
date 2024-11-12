@@ -368,7 +368,6 @@ export class UserInterface {
 			this.searchBar.blur();
 			this.pickBanChampionWithKeyInput(key);
 		}
-		console.log(key);
 		if (key == "Delete") {
 			this.searchBar.blur();
 			this.picks.forEach((current) => {
@@ -414,6 +413,15 @@ export class UserInterface {
 		if (key == "B") {
 			this.searchBar.blur();
 			this.currentMode = "ban";
+		}
+		if (key == "X") {
+			let data;
+			if (this.currentMode == "pick") data = this.picks;
+			if (this.currentMode == "ban") data = this.bans;
+			data.forEach((current) => {
+				current.childNodes[1].dataset.champion = "";
+			});
+			this.sendProcessSignal();
 		}
 	}
 	toggleBorderColor() {
