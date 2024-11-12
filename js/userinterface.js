@@ -131,6 +131,8 @@ export class UserInterface {
 			this.closeMenu.bind(this),
 		);
 		this.fileInput = null;
+		this.currentlyHoveredChampion = "";
+		this.userInputContainer = null;
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
@@ -287,13 +289,16 @@ export class UserInterface {
 					this.championsContainer.firstChild.firstChild.dataset.champion;
 			} else return;
 		}
-		this.picks.forEach((current) => {
+		let oldIndex = null;
+		for (let i = 0; i < 10; i++) {
 			if (
-				current.childNodes[1].dataset.champion ==
+				this.picks[i].childNodes[1].dataset.champion ==
 				this.currentlyHoveredChampion
-			)
-				current.childNodes[1].dataset.champion = "";
-		});
+			) {
+				this.picks[i].childNodes[1].dataset.champion = "";
+				oldIndex = i;
+			}
+		}
 		const number = parseInt(key);
 		let index;
 		switch (number) {
@@ -304,8 +309,14 @@ export class UserInterface {
 				index = number - 1;
 				break;
 		}
+		//swap champs if both are present
+		if (oldIndex != null) {
+			this.picks[oldIndex].childNodes[1].dataset.champion =
+				this.picks[index].childNodes[1].dataset.champion;
+		}
 		this.picks[index].childNodes[1].dataset.champion =
 			this.currentlyHoveredChampion;
+		this.currentlyHoveredChampion = "";
 		this.sendProcessSignal();
 	}
 	processKeyboardInput(event) {
@@ -323,6 +334,7 @@ export class UserInterface {
 		}
 		console.log(key);
 		if (key == "Delete") {
+			this.searchBar.blur();
 			this.picks.forEach((current) => {
 				current.childNodes[1].dataset.champion = "";
 			});
@@ -332,19 +344,24 @@ export class UserInterface {
 			this.sendProcessSignal();
 		}
 		if (key == "C") {
+			this.searchBar.blur();
 			this.dataSource = "user_data";
 			this.sendProcessSignal();
 		}
 		if (key == "D") {
+			this.searchBar.blur();
 			this.dataSource = "default_data";
 			this.sendProcessSignal();
 		}
 		if (key == "I") {
+			this.searchBar.blur();
 			this.userDataInput.click();
 		}
 		if (key == "F") {
+			this.searchBar.blur();
 			if (this.fileInput == null) {
 				this.createUserDataForm();
+				this.userInputContainer.classList.add("hidden");
 			}
 			this.clickInput(this.fileInput);
 		}
@@ -391,6 +408,7 @@ export class UserInterface {
 		const container = document.querySelector("#data");
 		const form_container = document.createElement("div");
 		form_container.id = "user_data_form_container";
+		this.userInputContainer = form_container;
 		const textarea = document.createElement("textarea");
 		textarea.name = "user_data_input";
 		textarea.id = "user_data_input";
