@@ -22,5 +22,7 @@ IDEAS:
 
 - Testing
 
+- M for menu, S for settings
+
 BUGS:
 
