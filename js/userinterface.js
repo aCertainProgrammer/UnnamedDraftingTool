@@ -130,6 +130,7 @@ export class UserInterface {
 			"click",
 			this.closeMenu.bind(this),
 		);
+		this.fileInput = null;
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
@@ -277,6 +278,15 @@ export class UserInterface {
 		input.click();
 	}
 	pickChampionWithKeyInput(key) {
+		if (
+			this.currentlyHoveredChampion == "" ||
+			this.championsContainer.childNodes.length == 1
+		) {
+			if (this.championsContainer.childNodes.length == 1) {
+				this.currentlyHoveredChampion =
+					this.championsContainer.firstChild.firstChild.dataset.champion;
+			} else return;
+		}
 		this.picks.forEach((current) => {
 			if (
 				current.childNodes[1].dataset.champion ==
@@ -307,7 +317,43 @@ export class UserInterface {
 		if (key >= "a" && key <= "z") {
 			this.searchBar.focus();
 		}
-		if (key >= 0 && key <= 9) this.pickChampionWithKeyInput(key);
+		if (key >= 0 && key <= 9) {
+			this.searchBar.blur();
+			this.pickChampionWithKeyInput(key);
+		}
+		console.log(key);
+		if (key == "Delete") {
+			this.picks.forEach((current) => {
+				current.childNodes[1].dataset.champion = "";
+			});
+			this.bans.forEach((current) => {
+				current.childNodes[1].dataset.champion = "";
+			});
+			this.sendProcessSignal();
+		}
+		if (key == "C") {
+			this.dataSource = "user_data";
+			this.sendProcessSignal();
+		}
+		if (key == "D") {
+			this.dataSource = "default_data";
+			this.sendProcessSignal();
+		}
+		if (key == "I") {
+			this.userDataInput.click();
+		}
+		if (key == "F") {
+			if (this.fileInput == null) {
+				this.createUserDataForm();
+			}
+			this.clickInput(this.fileInput);
+		}
+		if (key == "Backspace") {
+			this.searchBar.focus();
+			const val = this.searchBar.value;
+			this.searchBar.value = "";
+			this.searchBar.value = val;
+		}
 	}
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
@@ -386,6 +432,7 @@ export class UserInterface {
 			"click",
 			this.clickInput.bind(this, file_input),
 		);
+		this.fileInput = file_input;
 	}
 	render(renderingData) {
 		const championData = DataController.loadData(

@@ -7,9 +7,15 @@ You can pick a champion in two ways:
 - drag and drop the champion 
 
 There is keyboard support, the current shortcuts are:
-- `spacebar` to focus the search bar (no need to click it with the mouse) 
+- `Spacebar` to focus the search bar (no need to click it with the mouse) 
+- `Backspace` to focus the search bar and remove a character
 - any small letter such as `a` or `l` to search (it also inputs the pressed key)
 - any number from 1 to 0 (0 represents 10) to pick a champion in that slot
+- `Delete` to clear all picks and bans
+- `C` to load custom data
+- `D` to load default data 
+- `I` to open the "Input custom data" input area (note that this disables keyboard input until the input area is hidden)
+- `F` to open the file data input dialog
 
 # Custom data specification
 
