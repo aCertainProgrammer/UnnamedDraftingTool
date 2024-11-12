@@ -10,14 +10,19 @@
 
 	<body>
 		<div id="settings-menu" class="hidden">
-			<input class="source-button" id="leave-settings-button" value="Save settings and leave"type="button"></input>
+			<input
+				class="source-button"
+				id="leave-settings-button"
+				value="Save settings and leave"
+				type="button"
+			/>
 			<input
 				class="source-button"
 				id="color-borders-toggle"
 				type="button"
 				value="Color champion borders"
 			/>
-                <input
+			<input
 				class="source-button"
 				id="load-user-data-on-program-load-toggle"
 				type="button"
@@ -47,13 +52,13 @@
 					/>
 				</div>
 				<button class="settings-button" id="enter-settings-button">
-					<img src="./img/settings-cog.png" />
+					<img src="./img/settings-cog.png" alt="settings-icon" />
 				</button>
 			</div>
 			<div class="wrapper">
 				<div class="draft-area">
 					<div class="bans">
-						<div class="draft-team-bans" id="blue-team">
+						<div class="draft-team-bans" id="blue-team-bans">
 							<div class="champion-ban">
 								<img
 									src="./img/ban-icon.png"
@@ -121,20 +126,22 @@
 							</div>
 							<div id="teams-container" class="team-selection">
 								<img
+									alt="all-team-logo"
 									id="all"
 									class="team-logo"
 									src="./img/org_icons/all.webp"
 								/>
 								<img
+									alt="ally-team-logo"
 									id="ally"
 									class="team-logo"
 									src="./img/org_icons/ally.webp"
 								/>
 								<img
+									alt="enemy-team-logo"
 									id="enemy"
 									class="team-logo"
 									src="./img/org_icons/enemy.webp"
-									alt="K5"
 								/>
 							</div>
 							<input
@@ -145,7 +152,7 @@
 							/>
 						</div>
 
-						<div class="draft-team-bans" id="red-team">
+						<div class="draft-team-bans" id="red-team-bans">
 							<div class="champion-ban">
 								<img
 									src="./img/ban-icon.png"
