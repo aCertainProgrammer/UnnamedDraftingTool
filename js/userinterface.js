@@ -144,6 +144,14 @@ export class UserInterface {
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
 		this.currentMode = "pick";
+		this.toggleDarkmodeButton = document.querySelector(
+			"#toggle-darkmode-button",
+		);
+		this.toggleDarkmodeButton.addEventListener("click", () => {
+			const root = document.documentElement;
+			if (root.dataset.theme == "light") root.dataset.theme = "dark";
+			else if (root.dataset.theme == "dark") root.dataset.theme = "light";
+		});
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
