@@ -3,6 +3,14 @@ This program is aiming to build on top of the currently available drafting tools
 
 # Manual
 
+|Table of contents|
+|-----------------|
+|[Running the program](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#running-the-program)|
+|[Picking and banning champions](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#picking-and-banning-champions)|
+|[Keyboard shortcuts](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#keyboard-shortucts)|
+|[Personalisation and configuration](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#personalisation-and-configuration)|
+|[Custom data input](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input)|
+
 ## Running the program 
 
 ### On the website
@@ -50,7 +58,7 @@ This will either pick or ban the champion, depending on your current mode (pick 
 
 This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast
 
-## Keyboard shortucts
+## Keyboard shortcuts
 
 ### Picking and banning
 
