@@ -79,6 +79,9 @@ Backspace removes the last character, while a letter adds a character after focu
 - `I` to open the "Input custom data" input area (note that this disables keyboard input until the input area is hidden)
 - `F` to open the file data input dialog
 
+### UI navigation
+- `M` to toggle the manual tab
+- `S` to toggle the settings tab
 ## Personalisation and configuration
 
 Currently you are given the option to customize the following:

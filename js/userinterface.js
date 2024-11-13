@@ -152,6 +152,7 @@ export class UserInterface {
 			if (root.dataset.theme == "light") root.dataset.theme = "dark";
 			else if (root.dataset.theme == "dark") root.dataset.theme = "light";
 		});
+		this.manualContainer = document.querySelector("#manual-container");
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
@@ -163,13 +164,11 @@ export class UserInterface {
 		else this.dataSourceOnLoadToggle.style.backgroundColor = "lightgreen";
 	}
 	openManual() {
-		const manualContainer = document.querySelector("#manual-container");
-		manualContainer.classList.remove("hidden");
+		this.manualContainer.classList.remove("hidden");
 		this.contentContainer.classList.add("hidden");
 	}
 	closeManual() {
-		const manualContainer = document.querySelector("#manual-container");
-		manualContainer.classList.add("hidden");
+		this.manualContainer.classList.add("hidden");
 		this.contentContainer.classList.remove("hidden");
 	}
 	getConfig() {
@@ -430,6 +429,24 @@ export class UserInterface {
 				current.childNodes[1].dataset.champion = "";
 			});
 			this.sendProcessSignal();
+		}
+		if (key == "M") {
+			if (!this.contentContainer.classList.contains("hidden"))
+				this.contentContainer.classList.add("hidden");
+			if (!this.settingsMenu.classList.contains("hidden"))
+				this.settingsMenu.classList.add("hidden");
+			if (this.manualContainer.classList.contains("hidden"))
+				this.openManualButton.click();
+			else this.closeManualButton.click();
+		}
+		if (key == "S") {
+			if (!this.contentContainer.classList.contains("hidden"))
+				this.contentContainer.classList.add("hidden");
+			if (!this.manualContainer.classList.contains("hidden"))
+				this.manualContainer.classList.add("hidden");
+			if (this.settingsMenu.classList.contains("hidden"))
+				this.enterSettingsButton.click();
+			else this.leaveSettingsButton.click();
 		}
 	}
 	toggleBorderColor() {
