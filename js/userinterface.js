@@ -1,6 +1,5 @@
 import { DataController } from "./datacontroller.js";
 import { capitalize } from "./util.js";
-import { manualString } from "./manualString.js";
 export class UserInterface {
 	constructor(defaultPickIconPath, defaultBanIconPath, championIconPath) {
 		this.sendProcessSignal = null;
