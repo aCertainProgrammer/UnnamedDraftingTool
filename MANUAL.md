@@ -3,10 +3,10 @@
 |Table of contents|
 |-----------------|
 |[Running the program](#running-the-program)|
-|[Picking and banning champions](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#picking-and-banning-champions)|
-|[Keyboard shortcuts](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#keyboard-shortcuts)|
-|[Personalisation and configuration](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#personalisation-and-configuration)|
-|[Custom data input](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input)|
+|[Picking and banning champions](#picking-and-banning-champions)|
+|[Keyboard shortcuts](#keyboard-shortcuts)|
+|[Personalisation and configuration](#personalisation-and-configuration)|
+|[Custom data input](#custom-data-input)|
 
 ## Running the program 
 
