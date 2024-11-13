@@ -15,5 +15,8 @@
 	},
 	"jest": {
 		"testEnvironment": "jsdom"
+	},
+	"dependencies": {
+		"marked": "^15.0.0"
 	}
 }

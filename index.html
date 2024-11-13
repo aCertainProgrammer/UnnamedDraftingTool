@@ -17,15 +17,15 @@
 				type="button"
 			/>
 			<div class="manual-contents">
-				<h1>
-					Until I figure out a way to prettify the markdown in this
-					tab, check out the manual
-					<a
-						href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#manual"
-						target="_blank"
-						>HERE</a
-					>
-				</h1>
+				<zero-md src="MANUAL.md" id="manual-text">
+					<template data-append>
+						<style>
+							.markdown-body {
+								padding: 20px 10px;
+							}
+						</style>
+					</template>
+				</zero-md>
 			</div>
 		</div>
 		<div id="settings-menu" class="hidden">

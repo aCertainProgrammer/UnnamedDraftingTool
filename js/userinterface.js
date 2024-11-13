@@ -1,5 +1,6 @@
 import { DataController } from "./datacontroller.js";
 import { capitalize } from "./util.js";
+import { manualString } from "./manualString.js";
 export class UserInterface {
 	constructor(defaultPickIconPath, defaultBanIconPath, championIconPath) {
 		this.sendProcessSignal = null;
@@ -153,6 +154,7 @@ export class UserInterface {
 			else if (root.dataset.theme == "dark") root.dataset.theme = "light";
 		});
 		this.manualContainer = document.querySelector("#manual-container");
+		this.manualText = document.querySelector("#manual-text");
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {

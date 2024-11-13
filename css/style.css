@@ -24,6 +24,7 @@ body {
 	background-color: var(--bodyBackgroundColor);
 	overflow-y: hidden;
 	overflow-x: hidden;
+	margin: 0px;
 }
 
 .container {
@@ -299,6 +300,7 @@ body {
 	font-weight: 700;
 }
 
-.manual-contents > p {
-	color: #eeeeee;
+#manual-text {
+	max-height: 100vh;
+	overflow-y: auto;
 }
