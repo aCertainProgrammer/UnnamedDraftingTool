@@ -14,15 +14,11 @@ IDEAS:
 
 - Give feedback on correct/incorrect data (background color in the input element?)
 
-- When dragging set the image to a champion file
-
 - Select a slot if no champ is selected, then the next champion goes into that slot
 
 - Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
 
 - Testing
-
-- M for menu, S for settings
 
 BUGS:
 
