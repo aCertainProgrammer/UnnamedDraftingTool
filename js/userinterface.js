@@ -430,9 +430,9 @@ export class UserInterface {
 			this.clickInput(this.fileInput);
 		}
 		if (key == "Backspace") {
-			this.searchBar.focus();
 			const val = this.searchBar.value;
-			this.searchBar.value = "";
+			this.searchBar.value = "a";
+			this.searchBar.focus();
 			if (this.lastKey != "Shift") this.searchBar.value = val;
 		}
 		if (key == "P") {
