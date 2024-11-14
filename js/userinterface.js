@@ -123,6 +123,14 @@ export class UserInterface {
 			this.openSettingsMenu.bind(this),
 		);
 		this.contentContainer = document.querySelector("#content-container");
+		this.contentContainer.addEventListener("dragover", (event) => {
+			event.preventDefault();
+		});
+		this.contentContainer.addEventListener(
+			"drop",
+			this.dropChampionIntoVoid.bind(this),
+		);
+		this.contentContainer.add;
 		this.leaveSettingsButton = document.querySelector(
 			"#leave-settings-button",
 		);
@@ -245,9 +253,21 @@ export class UserInterface {
 	}
 	dropChampion(event) {
 		event.preventDefault();
+		event.stopPropagation();
 		const replacedChampion = event.target.dataset.champion;
 		this.recentlyDragged.dataset.champion = replacedChampion;
 		this.placeChampion(event);
+	}
+	dropChampionIntoVoid(event) {
+		event.preventDefault();
+		const droppedChampion = this.recentlyDragged;
+		if (
+			droppedChampion.dataset.type == "pick" ||
+			droppedChampion.dataset.type == "ban"
+		) {
+			droppedChampion.dataset.champion = "";
+			this.sendProcessSignal();
+		}
 	}
 	dragChampion(event) {
 		this.recentlyDragged = event.target;
@@ -597,6 +617,7 @@ export class UserInterface {
 			if (renderingData.pickedChampions[i] == "") {
 				img.src = this.defaultPickIconPath;
 				img.dataset.champion = "";
+				img.dataset.type = "pick";
 				img.draggable = "false";
 				img.removeEventListener("dragstart", this.dragFunction);
 				img.addEventListener("dragstart", this.stopDrag);
@@ -624,6 +645,7 @@ export class UserInterface {
 			if (renderingData.bannedChampions[i] == "") {
 				img.src = this.defaultBanIconPath;
 				img.dataset.champion = "";
+				img.dataset.type = "ban";
 				img.draggable = "false";
 				img.removeEventListener("dragstart", this.dragFunction);
 				img.addEventListener("dragstart", this.stopDrag);
