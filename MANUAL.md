@@ -83,6 +83,9 @@ To clear the search bar as you are focusing it, use `Shift` + `Backspace` (as lo
 ### UI navigation
 - `M` to toggle the manual tab
 - `S` to toggle the settings tab
+- `!, @, #, $, %` (meaning `Shift` + `1, 2, 3, 4, 5`) to toggle role filtering from top to support
+- `Q, W, E` to toggle team filtering (All, Ally, Enemy respectively)
+
 ## Personalisation and configuration
 
 Currently you are given the option to customize the following:
