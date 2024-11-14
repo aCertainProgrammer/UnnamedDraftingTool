@@ -266,6 +266,7 @@ export class UserInterface {
 			droppedChampion.dataset.type == "ban"
 		) {
 			droppedChampion.dataset.champion = "";
+			this.selectedChampion = "";
 			this.sendProcessSignal();
 		}
 	}
