@@ -295,6 +295,7 @@ body {
 	align-items: start;
 	justify-content: center;
 	gap: 10px;
+	padding-top: 2px;
 }
 #leave-settings-button {
 	font-weight: 700;
