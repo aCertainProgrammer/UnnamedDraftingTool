@@ -484,6 +484,31 @@ export class UserInterface {
 				this.enterSettingsButton.click();
 			else this.leaveSettingsButton.click();
 		}
+		if (key == "!") {
+			this.roleIcons[0].click();
+		}
+		if (key == "@") {
+			this.roleIcons[1].click();
+		}
+		if (key == "#") {
+			this.roleIcons[2].click();
+		}
+		if (key == "$") {
+			this.roleIcons[3].click();
+		}
+		if (key == "%") {
+			this.roleIcons[4].click();
+		}
+		if (key == "Q") {
+			this.logos[0].click();
+		}
+		if (key == "W") {
+			this.logos[1].click();
+		}
+		if (key == "E") {
+			this.logos[2].click();
+		}
+
 		this.lastKey = key;
 	}
 	toggleBorderColor() {
