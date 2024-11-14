@@ -445,6 +445,7 @@ export class UserInterface {
 			this.currentMode = "ban";
 		}
 		if (key == "X") {
+			this.searchBar.blur();
 			let data;
 			if (this.currentMode == "pick") data = this.picks;
 			if (this.currentMode == "ban") data = this.bans;
@@ -454,6 +455,7 @@ export class UserInterface {
 			this.sendProcessSignal();
 		}
 		if (key == "M") {
+			this.searchBar.blur();
 			if (!this.contentContainer.classList.contains("hidden"))
 				this.contentContainer.classList.add("hidden");
 			if (!this.settingsMenu.classList.contains("hidden"))
@@ -463,6 +465,7 @@ export class UserInterface {
 			else this.closeManualButton.click();
 		}
 		if (key == "S") {
+			this.searchBar.blur();
 			if (!this.contentContainer.classList.contains("hidden"))
 				this.contentContainer.classList.add("hidden");
 			if (!this.manualContainer.classList.contains("hidden"))
