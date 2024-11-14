@@ -114,6 +114,14 @@ export class UserInterface {
 			if (currentlySelectedIcon !== null)
 				currentlySelectedIcon.classList.remove("selected");
 		}.bind(this);
+		this.mouseenterFunction = function () {
+			event.preventDefault();
+			this.currentlyHoveredChampion = event.target.dataset.champion;
+		}.bind(this);
+		this.mouseleaveFunction = function () {
+			event.preventDefault();
+			this.currentlyHoveredChampion = "";
+		}.bind(this);
 		this.settingsMenu = document.querySelector("#settings-menu");
 		this.enterSettingsButton = document.querySelector(
 			"#enter-settings-button",
@@ -345,24 +353,6 @@ export class UserInterface {
 		}
 		let oldIndex = null;
 		let pickOrBan = null;
-		for (let i = 0; i < 10; i++) {
-			if (
-				this.picks[i].childNodes[1].dataset.champion ==
-				this.currentlyHoveredChampion
-			) {
-				this.picks[i].childNodes[1].dataset.champion = "";
-				oldIndex = i;
-				pickOrBan = this.picks;
-			}
-			if (
-				this.bans[i].childNodes[1].dataset.champion ==
-				this.currentlyHoveredChampion
-			) {
-				this.bans[i].childNodes[1].dataset.champion = "";
-				oldIndex = i;
-				pickOrBan = this.bans;
-			}
-		}
 		const number = parseInt(key);
 		let index;
 		switch (number) {
@@ -372,6 +362,26 @@ export class UserInterface {
 			default:
 				index = number - 1;
 				break;
+		}
+		for (let i = 0; i < 10; i++) {
+			if (
+				this.picks[i].childNodes[1].dataset.champion ==
+				this.currentlyHoveredChampion
+			) {
+				this.picks[i].childNodes[1].dataset.champion = "";
+				oldIndex = i;
+				pickOrBan = this.picks;
+				break;
+			}
+			if (
+				this.bans[i].childNodes[1].dataset.champion ==
+				this.currentlyHoveredChampion
+			) {
+				this.bans[i].childNodes[1].dataset.champion = "";
+				oldIndex = i;
+				pickOrBan = this.bans;
+				break;
+			}
 		}
 		//swap champs if both are present
 		if (oldIndex != null) {
@@ -626,6 +636,8 @@ export class UserInterface {
 				img.removeEventListener("dragstart", this.dragFunction);
 				img.addEventListener("dragstart", this.stopDrag);
 				img.removeEventListener("dragend", this.dragendFunction);
+				img.removeEventListener("mouseenter", this.mouseenterFunction);
+				img.removeEventListener("mouseleave", this.mouseleaveFunction);
 			} else {
 				img.src =
 					this.championIconPath +
@@ -638,6 +650,10 @@ export class UserInterface {
 				img.addEventListener("dragstart", this.dragFunction);
 				img.removeEventListener("dragend", this.dragendFunction);
 				img.addEventListener("dragend", this.dragendFunction);
+				img.removeEventListener("mouseenter", this.mouseenterFunction);
+				img.addEventListener("mouseenter", this.mouseenterFunction);
+				img.removeEventListener("mouseleave", this.mouseleaveFunction);
+				img.addEventListener("mouseleave", this.mouseleaveFunction);
 			}
 		}
 
@@ -654,6 +670,8 @@ export class UserInterface {
 				img.removeEventListener("dragstart", this.dragFunction);
 				img.addEventListener("dragstart", this.stopDrag);
 				img.removeEventListener("dragend", this.dragendFunction);
+				img.removeEventListener("mouseenter", this.mouseenterFunction);
+				img.removeEventListener("mouseleave", this.mouseleaveFunction);
 			} else {
 				img.src =
 					this.championIconPath +
@@ -666,6 +684,10 @@ export class UserInterface {
 				img.addEventListener("dragstart", this.dragFunction);
 				img.removeEventListener("dragend", this.dragendFunction);
 				img.addEventListener("dragend", this.dragendFunction);
+				img.removeEventListener("mouseenter", this.mouseenterFunction);
+				img.addEventListener("mouseenter", this.mouseenterFunction);
+				img.removeEventListener("mouseleave", this.mouseleaveFunction);
+				img.addEventListener("mouseleave", this.mouseleaveFunction);
 			}
 		}
 	}

@@ -54,6 +54,8 @@ You can pick or ban a champion in four ways:
 
 This will either pick or ban the champion, depending on your current mode (pick or ban, toggled with `P` and `B` respectively)
 
+This also works on already picked/banned champions. There is, however, a limitation to it: if you want to use this method while hovering over the same pick/ban slot twice, you need to leave and reenter it with your mouse.
+
 - search for a champion until there is only one available to be picked, then use the number method from above.
 
 This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast
