@@ -154,6 +154,7 @@ export class UserInterface {
 		});
 		this.manualContainer = document.querySelector("#manual-container");
 		this.manualText = document.querySelector("#manual-text");
+		this.lastKey = "";
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
@@ -412,7 +413,7 @@ export class UserInterface {
 			this.searchBar.focus();
 			const val = this.searchBar.value;
 			this.searchBar.value = "";
-			this.searchBar.value = val;
+			if (this.lastKey != "Shift") this.searchBar.value = val;
 		}
 		if (key == "P") {
 			this.searchBar.blur();
@@ -449,6 +450,7 @@ export class UserInterface {
 				this.enterSettingsButton.click();
 			else this.leaveSettingsButton.click();
 		}
+		this.lastKey = key;
 	}
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;

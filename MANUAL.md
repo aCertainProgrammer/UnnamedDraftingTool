@@ -70,6 +70,8 @@ This method has the advantage of not requiring a hover to work, which will certa
 
 Backspace removes the last character, while a letter adds a character after focusing the search bar
 
+To clear the search bar as you are focusing it, use `Shift` + `Backspace` (as long as `Shift` is the last key pressed before `Backspace` you are fine)
+
 ### Data management
 - `C` to load custom data
 - `D` to load default data 
