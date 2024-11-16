@@ -1,20 +1,14 @@
 CURRENT WORK:
 
-- Styling and css refactoring
-
 THEN:
 
 IDEAS:
 
 - Data presets (maybe some templates like "assasin midlaner", "tank toplaner" etc? This could work in the form of premade JSON snippets)
 
-- Revamp team icons
-
 - Comfort level indicator for champions (border coloring repurposed?)
 
 - Give feedback on correct/incorrect data (background color in the input element?)
-
-- Select a slot if no champ is selected, then the next champion goes into that slot
 
 - Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
 
