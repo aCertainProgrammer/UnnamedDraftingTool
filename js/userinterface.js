@@ -509,27 +509,35 @@ export class UserInterface {
 			else this.leaveSettingsButton.click();
 		}
 		if (key == "!") {
+			this.searchBar.blur();
 			this.roleIcons[0].click();
 		}
 		if (key == "@") {
+			this.searchBar.blur();
 			this.roleIcons[1].click();
 		}
 		if (key == "#") {
+			this.searchBar.blur();
 			this.roleIcons[2].click();
 		}
 		if (key == "$") {
+			this.searchBar.blur();
 			this.roleIcons[3].click();
 		}
 		if (key == "%") {
+			this.searchBar.blur();
 			this.roleIcons[4].click();
 		}
 		if (key == "Q") {
+			this.searchBar.blur();
 			this.logos[0].click();
 		}
 		if (key == "W") {
+			this.searchBar.blur();
 			this.logos[1].click();
 		}
 		if (key == "E") {
+			this.searchBar.blur();
 			this.logos[2].click();
 		}
 
