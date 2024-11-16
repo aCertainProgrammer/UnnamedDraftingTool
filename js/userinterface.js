@@ -315,6 +315,11 @@ export class UserInterface {
 		else {
 			this.createUserDataForm();
 		}
+		const textarea = document.querySelector("#user_data_input");
+		if (textarea != null) {
+			const json = DataController.loadData(this.getDataSource(), "none");
+			textarea.value = JSON.stringify(json, null, 4);
+		}
 	}
 
 	searchChampion() {
@@ -323,10 +328,20 @@ export class UserInterface {
 	}
 	loadDefaultData() {
 		this.dataSource = "default_data";
+		const textarea = document.querySelector("#user_data_input");
+		if (textarea != null) {
+			const json = DataController.loadData(this.getDataSource(), "none");
+			textarea.value = JSON.stringify(json, null, 4);
+		}
 		this.sendProcessSignal();
 	}
 	loadUserData() {
 		this.dataSource = "user_data";
+		const textarea = document.querySelector("#user_data_input");
+		if (textarea != null) {
+			const json = DataController.loadData(this.getDataSource(), "none");
+			textarea.value = JSON.stringify(json, null, 4);
+		}
 		this.sendProcessSignal();
 	}
 	validateUserData(data) {
@@ -354,9 +369,8 @@ export class UserInterface {
 		DataController.saveData("user_data", JSON.stringify(validatedData));
 		this.dataSource = "user_data";
 		const json = JSON.parse(data);
-		const pretty_text = JSON.stringify(json, null, 2);
-		const textarea = document.querySelector("textarea");
-		textarea.innerHTML = pretty_text;
+		const textarea = document.querySelector("user_data_input");
+		if (textarea != null) textarea.value = JSON.stringify(json, null, 4);
 		this.sendProcessSignal();
 	}
 	clickInput(input) {
@@ -586,6 +600,8 @@ export class UserInterface {
 		textarea.cols = "80";
 		textarea.rows = "10";
 		textarea.classList.add("custom-data-input-textarea");
+		const json = DataController.loadData(this.dataSource, "none");
+		textarea.value = JSON.stringify(json, null, 4);
 		const label = document.createElement("label");
 		label.innerHTML =
 			'Read the <a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input" target="_blank">input data specification</a>';
