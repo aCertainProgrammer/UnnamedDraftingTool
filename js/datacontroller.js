@@ -31,7 +31,6 @@ export class DataController {
 			return {
 				colorBorders: true,
 				loadUserDataOnProgramStart: false,
-				allowDraggingPicksBans: true,
 			};
 		}
 		return JSON.parse(config);

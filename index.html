@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -50,38 +50,42 @@
 		</div>
 		<div id="content-container" class="container">
 			<div id="header">
-				<div id="data" class="data">
-					<input
-						class="source-button"
-						id="default_data"
-						type="button"
-						value="Use default data"
-					/>
-					<input
-						class="source-button"
-						id="load_user_data"
-						type="button"
-						value="Use custom data"
-					/>
-					<input
-						class="source-button"
-						id="input_user_data"
-						type="button"
-						value="Input custom data"
-					/>
+				<div class="control-buttons">
+					<button class="settings-button" id="enter-settings-button">
+						<img src="./img/settings-cog.png" alt="settings-icon" />
+					</button>
+					<button class="settings-button" id="open-manual-button">
+						<img
+							src="./img/question-mark.png"
+							alt="settings-icon"
+						/>
+					</button>
+					<button class="settings-button" id="toggle-darkmode-button">
+						<img src="./img/moon.png" alt="darkmode-toggle" />
+					</button>
 				</div>
-				<button class="settings-button" id="enter-settings-button">
-					<img src="./img/settings-cog.png" alt="settings-icon" />
-				</button>
-				<button class="settings-button" id="open-manual-button">
-					<img src="./img/question-mark.png" alt="settings-icon" />
-				</button>
-				<button
-					class="settings-button hidden"
-					id="toggle-darkmode-button"
-				>
-					<img src="./img/moon.png" alt="darkmode-toggle" />
-				</button>
+				<div id="data" class="data">
+					<div>
+						<input
+							class="source-button"
+							id="default_data"
+							type="button"
+							value="Use default data"
+						/>
+						<input
+							class="source-button"
+							id="load_user_data"
+							type="button"
+							value="Use custom data"
+						/>
+						<input
+							class="source-button"
+							id="input_user_data"
+							type="button"
+							value="Input custom data"
+						/>
+					</div>
+				</div>
 			</div>
 			<div class="wrapper">
 				<div class="draft-area">
@@ -156,7 +160,7 @@
 								<img
 									alt="all-team-logo"
 									id="all"
-									class="team-logo"
+									class="team-logo selected"
 									src="./img/org_icons/all.webp"
 								/>
 								<img

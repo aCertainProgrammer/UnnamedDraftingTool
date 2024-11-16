@@ -163,23 +163,37 @@ export class UserInterface {
 		this.toggleDarkmodeButton = document.querySelector(
 			"#toggle-darkmode-button",
 		);
-		this.toggleDarkmodeButton.addEventListener("click", () => {
-			const root = document.documentElement;
-			if (root.dataset.theme == "light") root.dataset.theme = "dark";
-			else if (root.dataset.theme == "dark") root.dataset.theme = "light";
-		});
+		this.toggleDarkmodeButton.addEventListener(
+			"click",
+			this.toggleDarkmode.bind(this),
+		);
+		if (
+			localStorage.getItem("darkmode") !=
+				document.documentElement.dataset.theme &&
+			localStorage.getItem("darkmode") != null
+		) {
+			this.toggleDarkmode();
+		}
 		this.manualContainer = document.querySelector("#manual-container");
 		this.manualText = document.querySelector("#manual-text");
 		this.lastKey = "";
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
-			this.colorBordersToggle.style.backgroundColor = "pink";
-		} else this.colorBordersToggle.style.backgroundColor = "lightgreen";
+			this.colorBordersToggle.classList.remove("on");
+			this.colorBordersToggle.classList.add("off");
+		} else {
+			this.colorBordersToggle.classList.remove("off");
+			this.colorBordersToggle.classList.add("on");
+		}
 
-		if (this.config.loadUserDataOnProgramStart == false)
-			this.dataSourceOnLoadToggle.style.backgroundColor = "pink";
-		else this.dataSourceOnLoadToggle.style.backgroundColor = "lightgreen";
+		if (this.config.loadUserDataOnProgramStart == false) {
+			this.dataSourceOnLoadToggle.classList.remove("on");
+			this.dataSourceOnLoadToggle.classList.add("off");
+		} else {
+			this.dataSourceOnLoadToggle.classList.remove("off");
+			this.dataSourceOnLoadToggle.classList.add("on");
+		}
 	}
 	openManual() {
 		this.manualContainer.classList.remove("hidden");
@@ -231,6 +245,16 @@ export class UserInterface {
 			roleIcon.classList.add("selected");
 		}
 		this.sendProcessSignal();
+	}
+	toggleDarkmode() {
+		const root = document.documentElement;
+		if (root.dataset.theme == "light") {
+			root.dataset.theme = "dark";
+			DataController.saveData("darkmode", "dark");
+		} else if (root.dataset.theme == "dark") {
+			root.dataset.theme = "light";
+			DataController.saveData("darkmode", "light");
+		}
 	}
 
 	selectChampion(event) {
@@ -553,6 +577,7 @@ export class UserInterface {
 		textarea.id = "user_data_input";
 		textarea.cols = "80";
 		textarea.rows = "10";
+		textarea.classList.add("custom-data-input-textarea");
 		const label = document.createElement("label");
 		label.innerHTML =
 			'Read the <a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input" target="_blank">input data specification</a>';
@@ -572,6 +597,7 @@ export class UserInterface {
 		file_input.style.display = "none";
 		const file_input_button = document.createElement("button");
 		file_input_button.innerText = "Load from file";
+		file_input_button.classList.add("source-button");
 		button_container.appendChild(save);
 		button_container.appendChild(hide);
 		button_container.appendChild(file_input);
