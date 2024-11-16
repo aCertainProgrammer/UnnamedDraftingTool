@@ -16,5 +16,23 @@ IDEAS:
 
 - GUI for making champion pools
 
+- change darkmode icon when in dark mode
+
+- figure out github manual styling
+
+- click input data again to hide it
+
+- fix form styling
+
+- consider data input placement (to the side?)
+
+- give data source indication
+
+- be explicit about shift P etc for big letters ( allow CAPSLOCK to work ) 
+
+- clear searchbar when reentering ?
+
+- Explain champion border coloring better
+
 BUGS:
 

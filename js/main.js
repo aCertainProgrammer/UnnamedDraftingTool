@@ -3,7 +3,7 @@ import { Controller } from "./controller.js";
 import { DataController } from "./datacontroller.js";
 import { Scraper } from "./scraper.js";
 import { UserInterface } from "./userinterface.js";
-import ZeroMd from "https://cdn.jsdelivr.net/npm/zero-md@3";
+import ZeroMd, { STYLES } from "https://cdn.jsdelivr.net/npm/zero-md@3";
 
 const controller = new Controller(
 	new Scraper(".champion-pick", ".champion-ban"),
@@ -15,7 +15,16 @@ const controller = new Controller(
 	new Backend(),
 );
 
-customElements.define("zero-md", ZeroMd);
+customElements.define(
+	"zero-md",
+	class extends ZeroMd {
+		async load() {
+			await super.load();
+			this.template = STYLES.preset("dark");
+		}
+	},
+);
+
 controller.init();
 controller.process();
 controller.firstProcess = false;
