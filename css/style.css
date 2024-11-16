@@ -5,6 +5,8 @@
 	--championMaxHeight: var(--championMaxWidth);
 	--banMaxWidth: 100px;
 	--banMaxHeight: var(--banMaxWidth);
+	--banMinWidth: 50px;
+	--banMinHeight: 50px;
 	--roleIconMaxWidth: 70px;
 	--roleIconMaxHeight: var(--roleIconMaxWidth);
 	--teamIconMaxWidth: 70px;
@@ -81,9 +83,8 @@ body {
 	align-items: center;
 	justify-content: center;
 	gap: 10px;
-	max-width: 100vw;
 	min-height: 0;
-	max-height: 100%;
+	width: 100%;
 }
 
 .draft-team {
@@ -144,6 +145,7 @@ body {
 	justify-content: center;
 	flex-shrink: 1;
 	gap: 5px;
+	min-width: 150px;
 }
 
 .role-selection>img {
@@ -162,11 +164,13 @@ body {
 	justify-content: center;
 	gap: 11px;
 	flex-shrink: 1;
+	height: 100%;
 }
 
 .search-bar {
-	width: var(--searchBarMaxWidth);
-	height: var(--searchBarMaxHeight);
+	height: 100%;
+	max-width: var(--searchBarMaxWidth);
+	max-height: var(--searchBarMaxHeight);
 	font-size: var(--searchBarFontSize);
 	box-sizing: border-box;
 	background-color: var(--textInputBackgroundColor);
@@ -219,11 +223,18 @@ body {
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
+	height: 100%;
+	width: 100%;
 	gap: 10px;
 }
 
-.draft-team-bans#red-team {
+.draft-team-bans#red-team-bans {
 	flex-direction: row-reverse;
+	justify-content: end;
+}
+
+.draft-team-bans#blue-team-bans {
+	justify-content: start;
 }
 
 .ban-separator {
@@ -234,14 +245,18 @@ body {
 	height: 15px;
 }
 
-.draft-team-bans>.champion-ban>img {
-	width: var(--banMaxWidth);
-	height: var(--banMaxHeight);
+.champion-ban {
+	height: fit-content;
+	border: var(--championPickBanBorder);
+	aspect-ratio: 1;
+	height: 100%;
+	width: 100%;
+	min-height: var(--banMinWidth);
+	min-width: var(--banMinHeight);
 	max-width: var(--banMaxWidth);
 	max-height: var(--banMaxHeight);
-	object-fit: cover;
-	border: var(--championPickBanBorder);
-	box-sizing: border-box;
+	background-size: cover;
+	background-image: url("/img/ban-icon.png");
 }
 
 /*1280 × 720 pixels
@@ -395,4 +410,10 @@ label {
 	align-items: center;
 	justify-content: center;
 	gap: 5px;
+}
+
+@media (max-width: 1700px) {
+	.team-selection {
+		display: none !important;
+	}
 }
