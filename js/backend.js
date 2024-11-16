@@ -18,6 +18,15 @@ export class Backend {
 			data = this.sortAndRemoveDuplicates(data[request.role]);
 		}
 		data = this.filterDataBySearchQuery(data, request.searchQuery);
+		if (data.length == 0 && request.role != "all") {
+			const allRolesData = this.requestVisibleChampions({
+				dataSource: request.dataSource,
+				team: request.team,
+				role: "all",
+				searchQuery: request.searchQuery,
+			});
+			if (allRolesData != []) return allRolesData;
+		}
 		return data;
 	}
 	sortAndRemoveDuplicates(data) {
