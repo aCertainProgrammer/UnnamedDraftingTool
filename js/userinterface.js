@@ -106,20 +106,20 @@ export class UserInterface {
 		this.stopDrag = (event) => {
 			event.preventDefault();
 		};
-		this.dragendFunction = function () {
-			event.preventDefault();
+		this.dragendFunction = function (e) {
+			e.preventDefault();
 			this.selectedChampion = "";
 			const currentlySelectedIcon =
 				this.championsContainer.querySelector(".selected");
 			if (currentlySelectedIcon !== null)
 				currentlySelectedIcon.classList.remove("selected");
 		}.bind(this);
-		this.mouseenterFunction = function () {
-			event.preventDefault();
-			this.currentlyHoveredChampion = event.target.dataset.champion;
+		this.mouseenterFunction = function (e) {
+			e.preventDefault();
+			this.currentlyHoveredChampion = e.target.dataset.champion;
 		}.bind(this);
-		this.mouseleaveFunction = function () {
-			event.preventDefault();
+		this.mouseleaveFunction = function (e) {
+			e.preventDefault();
 			this.currentlyHoveredChampion = "";
 		}.bind(this);
 		this.settingsMenu = document.querySelector("#settings-menu");
@@ -169,7 +169,7 @@ export class UserInterface {
 		);
 		if (
 			localStorage.getItem("darkmode") !=
-				document.documentElement.dataset.theme &&
+			document.documentElement.dataset.theme &&
 			localStorage.getItem("darkmode") != null
 		) {
 			this.toggleDarkmode();
@@ -223,7 +223,7 @@ export class UserInterface {
 		const searchQuery = this.searchBar.value;
 		return searchQuery;
 	}
-	setDataSource() {}
+	setDataSource() { }
 	setTeam(team) {
 		this.team = team.id;
 		const currentlySelectedTeam =
