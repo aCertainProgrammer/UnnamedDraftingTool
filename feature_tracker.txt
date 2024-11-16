@@ -34,5 +34,7 @@ IDEAS:
 
 - Explain champion border coloring better
 
+- Add darkmode shortcut
+
 BUGS:
 
