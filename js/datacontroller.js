@@ -56,7 +56,7 @@ export class DataController {
 		const config = localStorage.getItem("config");
 		if (config == null) {
 			return {
-				colorBorders: true,
+				colorBorders: false,
 				loadUserDataOnProgramStart: false,
 			};
 		}
