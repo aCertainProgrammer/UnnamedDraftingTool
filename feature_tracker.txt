@@ -14,5 +14,7 @@ IDEAS:
 
 - Testing
 
+- GUI for making champion pools
+
 BUGS:
 
