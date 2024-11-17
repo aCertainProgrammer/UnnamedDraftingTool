@@ -74,6 +74,8 @@ Backspace removes the last character, while a letter adds a character after focu
 
 To clear the search bar as you are focusing it, use `Shift` + `Backspace` (as long as `Shift` is the last key pressed before `Backspace` you are fine)
 
+If the "Clear search bar on focus" setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.
+
 ### Data management
 - `C` to load custom data
 - `D` to load default data 
