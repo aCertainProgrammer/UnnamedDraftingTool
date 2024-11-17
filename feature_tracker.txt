@@ -26,5 +26,11 @@ IDEAS:
 
 - a welcome screen to explain biggest features
 
+- add themes with different color palletes
+
+- Push picks a bit down to create space?
+
+- Dragging a champion onto itself shouldnt cause it to be unpicked
+
 BUGS:
 
