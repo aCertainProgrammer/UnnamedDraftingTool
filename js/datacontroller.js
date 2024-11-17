@@ -63,6 +63,15 @@ export class DataController {
 		}
 		return JSON.parse(config);
 	}
+	static validateConfig(configToValidate) {
+		let config = configToValidate;
+
+		if (config.colorBorders === null) config.colorBorders = false;
+		if (config.loadUserDataOnProgramStart === null)
+			config.loadUserDataOnProgramStart = false;
+		if (config.clearSearchBarOnFocus === null)
+			config.clearSearchBarOnFocus = true;
+	}
 	static loadPicksAndBans() {
 		const json = localStorage.getItem("picksAndBans");
 		const picksAndBans = JSON.parse(json);
