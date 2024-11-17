@@ -414,7 +414,7 @@ export class UserInterface {
 		DataController.saveData("user_data", JSON.stringify(validatedData));
 		this.dataSource = "user_data";
 		const json = JSON.parse(data);
-		const textarea = document.querySelector("user_data_input");
+		const textarea = document.querySelector("#user_data_input");
 		if (textarea != null) textarea.value = JSON.stringify(json, null, 4);
 		this.sendProcessSignal();
 	}
