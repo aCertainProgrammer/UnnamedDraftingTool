@@ -1,155 +1,299 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Unnamed Drafting Tool</title>
+		<link href="./css/style.css" rel="stylesheet" />
+		<script type="module" src="./js/main.js"></script>
+	</head>
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Unnamed Drafting Tool</title>
-	<link href="./css/style.css" rel="stylesheet" />
-	<script type="module" src="./js/main.js"></script>
-</head>
-
-<body>
-	<div id="manual-container" class="hidden">
-		<input class="source-button" id="close-manual-button" value="Close manual" type="button" />
-		<div class="manual-contents">
-			<zero-md src="MANUAL.md" id="manual-text">
-				<template data-append>
-					<style>
-						.markdown-body {
-							padding: 20px 10px;
-							max-width: 900px;
-							border-radius: 8px;
-						}
-					</style>
-				</template>
-			</zero-md>
-		</div>
-	</div>
-	<div id="settings-menu" class="hidden">
-		<input class="source-button" id="leave-settings-button" value="Save settings and leave" type="button" />
-		<input class="source-button" id="color-borders-toggle" type="button" value="Color champion borders" />
-		<input class="source-button" id="load-user-data-on-program-load-toggle" type="button"
-			value="Load user data on page load" />
-	</div>
-	<div id="content-container" class="container">
-		<div id="header">
-			<div class="control-buttons">
-				<button class="settings-button" id="enter-settings-button">
-					<img src="./img/settings-cog.png" alt="settings-icon" />
-				</button>
-				<button class="settings-button" id="open-manual-button">
-					<img src="./img/question-mark.png" alt="settings-icon" />
-				</button>
-				<button class="settings-button" id="toggle-darkmode-button">
-					<img src="./img/moon.png" alt="darkmode-toggle" />
-				</button>
-			</div>
-			<div id="data" class="data">
-				<div>
-					<input class="source-button" id="default_data" type="button" value="Use default data" />
-					<input class="source-button" id="load_user_data" type="button" value="Use custom data" />
-					<input class="source-button" id="input_user_data" type="button" value="Input custom data" />
-				</div>
+	<body>
+		<div id="manual-container" class="hidden">
+			<input
+				class="source-button"
+				id="close-manual-button"
+				value="Close manual"
+				type="button"
+			/>
+			<div class="manual-contents">
+				<zero-md src="MANUAL.md" id="manual-text">
+					<template data-append>
+						<style>
+							.markdown-body {
+								padding: 20px 10px;
+								max-width: 900px;
+								border-radius: 8px;
+							}
+						</style>
+					</template>
+				</zero-md>
 			</div>
 		</div>
-		<div class="draft-area">
-			<div class="bans">
-				<div class="draft-team-bans" id="blue-team-bans">
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
-					<div class="ban-separator"></div>
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
+		<div id="settings-menu" class="hidden">
+			<input
+				class="source-button"
+				id="leave-settings-button"
+				value="Save settings and leave"
+				type="button"
+			/>
+			<input
+				class="source-button"
+				id="color-borders-toggle"
+				type="button"
+				value="Color champion borders"
+			/>
+			<input
+				class="source-button"
+				id="load-user-data-on-program-load-toggle"
+				type="button"
+				value="Load user data on page load"
+			/>
+		</div>
+		<div id="content-container" class="container">
+			<div id="header">
+				<div class="control-buttons">
+					<button class="settings-button" id="enter-settings-button">
+						<img src="./img/settings-cog.png" alt="settings-icon" />
+					</button>
+					<button class="settings-button" id="open-manual-button">
+						<img
+							src="./img/question-mark.png"
+							alt="settings-icon"
+						/>
+					</button>
+					<button class="settings-button" id="toggle-darkmode-button">
+						<img src="./img/moon.png" alt="darkmode-toggle" />
+					</button>
 				</div>
-				<div class="utils">
-					<div id="roles" class="role-selection">
-						<img id="top" class="role-icon" src="./img/Top_icon.webp" alt="Toplane icon" />
-						<img id="jungle" class="role-icon" src="./img/Jungle_icon.webp" alt="Jungle icon" />
-						<img id="mid" class="role-icon" src="./img/Middle_icon.webp" alt="Midlane icon" />
-						<img id="adc" class="role-icon" src="./img/Bottom_icon.webp" alt="Adc icon" />
-						<img id="support" class="role-icon" src="./img/Support_icon.webp" alt="Support icon" />
-					</div>
-					<div id="teams-container" class="team-selection">
-						<img id="all" class="team-logo selected" src="./img/org_icons/all.webp" alt="all-team-logo" />
-						<img id="ally" class="team-logo" src="./img/org_icons/ally.webp" alt="ally-team-logo" />
-						<img id="enemy" class="team-logo" src="./img/org_icons/enemy.webp" alt="enemy-team-logo" />
-					</div>
-					<input id="search-bar" type="text" class="search-bar" placeholder="Search..." />
-				</div>
-
-				<div class="draft-team-bans" id="red-team-bans">
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
-					<div class="ban-separator"></div>
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
-					</div>
-					<div class="champion-ban">
-						<img src="./img/ban-icon.png" alt="champion-ban-icon" />
+				<div id="data" class="data">
+					<div>
+						<input
+							class="source-button"
+							id="default_data"
+							type="button"
+							value="Use default data"
+						/>
+						<input
+							class="source-button"
+							id="load_user_data"
+							type="button"
+							value="Use custom data"
+						/>
+						<input
+							class="source-button"
+							id="input_user_data"
+							type="button"
+							value="Input custom data"
+						/>
 					</div>
 				</div>
 			</div>
+			<div class="draft-area">
+				<div class="bans">
+					<div class="draft-team-bans" id="blue-team-bans">
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+						<div class="ban-separator"></div>
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+					</div>
+					<div class="utils">
+						<div id="roles" class="role-selection">
+							<img
+								id="top"
+								class="role-icon"
+								src="./img/Top_icon.webp"
+								alt="Toplane icon"
+							/>
+							<img
+								id="jungle"
+								class="role-icon"
+								src="./img/Jungle_icon.webp"
+								alt="Jungle icon"
+							/>
+							<img
+								id="mid"
+								class="role-icon"
+								src="./img/Middle_icon.webp"
+								alt="Midlane icon"
+							/>
+							<img
+								id="adc"
+								class="role-icon"
+								src="./img/Bottom_icon.webp"
+								alt="Adc icon"
+							/>
+							<img
+								id="support"
+								class="role-icon"
+								src="./img/Support_icon.webp"
+								alt="Support icon"
+							/>
+						</div>
+						<div id="teams-container" class="team-selection">
+							<img
+								id="all"
+								class="team-logo selected"
+								src="./img/org_icons/all.webp"
+								alt="all-team-logo"
+							/>
+							<img
+								id="ally"
+								class="team-logo"
+								src="./img/org_icons/ally.webp"
+								alt="ally-team-logo"
+							/>
+							<img
+								id="enemy"
+								class="team-logo"
+								src="./img/org_icons/enemy.webp"
+								alt="enemy-team-logo"
+							/>
+						</div>
+						<input
+							id="search-bar"
+							type="text"
+							class="search-bar"
+							placeholder="Search..."
+						/>
+					</div>
 
-			<div class="not-bans">
-				<div class="draft-team" id="blue-team">
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
-					</div>
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
-					</div>
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
-					</div>
-					<div class="pick-separator"></div>
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
-					</div>
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
+					<div class="draft-team-bans" id="red-team-bans">
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+						<div class="ban-separator"></div>
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
+						<div class="champion-ban">
+							<img
+								src="./img/ban-icon.png"
+								alt="champion-ban-icon"
+							/>
+						</div>
 					</div>
 				</div>
-				<div class="champions-container" id="champions-container"></div>
-				<div class="draft-team" id="red-team">
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
+
+				<div class="not-bans">
+					<div class="draft-team" id="blue-team">
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
+						<div class="pick-separator"></div>
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
 					</div>
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
-					</div>
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
-					</div>
-					<div class="pick-separator"></div>
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
-					</div>
-					<div class="champion-pick">
-						<img src="./img/pick_icon.png" alt="champion-pick-icon" />
+					<div
+						class="champions-container"
+						id="champions-container"
+					></div>
+					<div class="draft-team" id="red-team">
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
+						<div class="pick-separator"></div>
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
+						<div class="champion-pick">
+							<img
+								src="./img/pick_icon.png"
+								alt="champion-pick-icon"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</body>
-
+	</body>
 </html>
+

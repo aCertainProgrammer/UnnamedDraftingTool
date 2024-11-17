@@ -93,7 +93,7 @@ body {
 	gap: 10px;
 }
 
-.draft-team>.stage-separator-vertical {
+.draft-team > .stage-separator-vertical {
 	height: 50px;
 	background-color: gray;
 }
@@ -146,7 +146,7 @@ body {
 	background-image: url("/img/pick_icon.png");
 }
 
-.draft-team>.champion-pick>img {
+.draft-team > .champion-pick > img {
 	width: var(--pickMaxWidth);
 	height: var(--pickMaxHeight);
 	max-width: var(--pickMaxWidth);
@@ -154,7 +154,7 @@ body {
 	border: var(--championPickBanBorder);
 }
 
-.draft-team>.champion-pick>img:not([src="./img/pick_icon.png"]) {
+.draft-team > .champion-pick > img:not([src="./img/pick_icon.png"]) {
 	cursor: pointer;
 }
 
@@ -167,7 +167,7 @@ body {
 	min-width: 150px;
 }
 
-.role-selection>img {
+.role-selection > img {
 	max-width: var(--roleIconMaxWidth);
 	max-height: var(--roleIconMaxHeight);
 	border-radius: var(--generalBorderRadius);
@@ -211,7 +211,7 @@ body {
 	gap: 10px;
 }
 
-.team-selection>img {
+.team-selection > img {
 	max-width: var(--teamIconMaxWidth);
 	max-height: var(--teamIconMaxHeight);
 }
@@ -224,7 +224,7 @@ body {
 	gap: 10px;
 	min-height: 0;
 	width: 100%;
-	padding: 0px 20px;
+	padding: 0px 10px;
 }
 
 .bans {
@@ -276,21 +276,20 @@ body {
 	max-width: var(--banMaxWidth);
 }
 
-.draft-team-bans>.champion-ban>img {
+.draft-team-bans > .champion-ban > img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 }
 
-
-.draft-team-bans>.champion-ban>img:not([src="./img/ban-icon.png"]) {
+.draft-team-bans > .champion-ban > img:not([src="./img/ban-icon.png"]) {
 	cursor: pointer;
 }
 
 /*1280 × 720 pixels
 * meaning a 1.77 : 1 ratio
 * */
-.draft-team>.champion-pick>img {
+.draft-team > .champion-pick > img {
 	width: 100%;
 	height: 100%;
 	max-width: var(--pickMaxWidth);
@@ -316,15 +315,15 @@ body {
 	align-items: center;
 }
 
-#user_data_form_container>textarea {
+#user_data_form_container > textarea {
 	font-size: 15px;
 }
 
-#user_data_form_container>label {
+#user_data_form_container > label {
 	font-size: 30px;
 }
 
-#user_data_form_container>label>a {
+#user_data_form_container > label > a {
 	color: #5eeb73;
 }
 
@@ -345,12 +344,12 @@ body {
 }
 
 .settings-button,
-.settings-button>img {
+.settings-button > img {
 	max-height: 28px;
 	max-width: 28px;
 }
 
-.settings-button>img {
+.settings-button > img {
 	filter: var(--settingsButtonFilter);
 }
 
@@ -370,7 +369,7 @@ body {
 	gap: 3px;
 }
 
-#settings-menu>label {
+#settings-menu > label {
 	color: #eeeeee;
 	padding: 0px 2px;
 }
@@ -444,3 +443,4 @@ label {
 		display: none !important;
 	}
 }
+
