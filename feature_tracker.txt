@@ -24,5 +24,7 @@ IDEAS:
 
 - add the set searching to search query
 
+- a welcome screen to explain biggest features
+
 BUGS:
 
