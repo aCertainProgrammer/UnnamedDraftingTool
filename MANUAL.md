@@ -90,7 +90,7 @@ To clear the search bar as you are focusing it, use `Shift` + `Backspace` (as lo
 
 Currently you are given the option to customize the following:
 
-### Border coloring
+### Color champion borders
 This colors the borders of the champions depending on which team they belong to:
 - green for ally champions
 - red for enemy champions
@@ -100,6 +100,12 @@ This colors the borders of the champions depending on which team they belong to:
 ### Load user data on page reload
 This option decides which data source the program loads on startup (or when the page is reloaded).
 If enabled, your custom data will be loaded, provided it is available
+
+### Clear search bar on focus
+If enabled, clears the search bar whenever it is refocused. This enables the following:
+1. Search a champion 
+2. Pick it with a key 
+3. Start typing the name of the next champion, no need to clear the previous one
 
 ## Custom data input
 
