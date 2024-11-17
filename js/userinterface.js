@@ -654,6 +654,15 @@ export class UserInterface {
 		this.fileInput = file_input;
 	}
 	render(renderingData) {
+		if (this.dataSource === "default_data") {
+			this.userDataSwitch.classList.remove("highlighted");
+			this.defaultDataSwitch.classList.add("highlighted");
+		}
+		if (this.dataSource === "user_data") {
+			this.defaultDataSwitch.classList.remove("highlighted");
+			this.userDataSwitch.classList.add("highlighted");
+		}
+
 		const championData = DataController.loadData(
 			renderingData.dataSource,
 			"none",

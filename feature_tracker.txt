@@ -1,5 +1,7 @@
 CURRENT WORK:
 
+- give data source indication
+
 THEN:
 
 IDEAS:
@@ -20,13 +22,9 @@ IDEAS:
 
 - figure out github manual styling
 
-- click input data again to hide it
-
 - fix form styling
 
 - consider data input placement (to the side?)
-
-- give data source indication
 
 - be explicit about shift P etc for big letters ( allow CAPSLOCK to work ) 
 

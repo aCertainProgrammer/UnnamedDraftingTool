@@ -35,6 +35,7 @@
 	--onBackgroundColor: lightgreen;
 	--offBackgroundColor: pink;
 	--labelColor: black;
+	--highlightedBackgroundColor: lightgreen;
 }
 
 :root[data-theme="dark"] {
@@ -52,6 +53,7 @@
 	--onBackgroundColor: darkgreen;
 	--offBackgroundColor: darkred;
 	--labelColor: #eeeeee;
+	--highlightedBackgroundColor: darkgreen;
 }
 
 * {
@@ -444,3 +446,6 @@ label {
 	}
 }
 
+.highlighted {
+	background-color: var(--highlightedBackgroundColor);
+}
