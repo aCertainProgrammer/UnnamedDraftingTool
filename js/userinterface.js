@@ -98,6 +98,13 @@ export class UserInterface {
 			"click",
 			this.toggleDataSourceOnLoad.bind(this),
 		);
+		this.clearSearchbarOnFocusToggle = document.querySelector(
+			"#clear-searchbar-on-focus-toggle",
+		);
+		this.clearSearchbarOnFocusToggle.addEventListener(
+			"click",
+			this.toggleClearingSearchbarOnFocus.bind(this),
+		);
 		document.addEventListener(
 			"keydown",
 			this.processKeyboardInput.bind(this),
@@ -193,6 +200,13 @@ export class UserInterface {
 		} else {
 			this.dataSourceOnLoadToggle.classList.remove("off");
 			this.dataSourceOnLoadToggle.classList.add("on");
+		}
+		if (this.config.clearSearchBarOnFocus === false) {
+			this.clearSearchbarOnFocusToggle.classList.remove("on");
+			this.clearSearchbarOnFocusToggle.classList.add("off");
+		} else {
+			this.clearSearchbarOnFocusToggle.classList.remove("off");
+			this.clearSearchbarOnFocusToggle.classList.add("on");
 		}
 	}
 	openManual() {
@@ -451,6 +465,11 @@ export class UserInterface {
 			this.searchBar.focus();
 		}
 		if (key >= "a" && key <= "z") {
+			if (
+				!(document.activeElement == this.searchBar) &&
+				this.config.clearSearchBarOnFocus === true
+			)
+				this.searchBar.value = "";
 			this.searchBar.focus();
 		}
 		if (key >= "0" && key <= "9") {
@@ -581,6 +600,11 @@ export class UserInterface {
 	toggleDataSourceOnLoad() {
 		this.config.loadUserDataOnProgramStart =
 			!this.config.loadUserDataOnProgramStart;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+	}
+	toggleClearingSearchbarOnFocus() {
+		this.config.clearSearchBarOnFocus = !this.config.clearSearchBarOnFocus;
 		this.colorSettingsButtons();
 		DataController.saveConfig(this.config);
 	}
