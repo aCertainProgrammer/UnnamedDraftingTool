@@ -11,13 +11,15 @@ export class Controller {
 	init() {
 		this.userInterface.sendProcessSignal = this.process.bind(this);
 		this.userInterface.dataSource = "default_data";
-		const config = DataController.readConfig();
-		this.userInterface.config = config;
+		const savedConfig = DataController.readConfig();
+		const validatedConfig = DataController.validateConfig(savedConfig);
+		this.userInterface.config = validatedConfig;
 		this.userInterface.colorSettingsButtons();
-		if (config.loadUserDataOnProgramStart == true) {
+		if (validatedConfig.loadUserDataOnProgramStart == true) {
 			const user_data = DataController.loadData("user_data", "none");
 			if (user_data != -1) this.userInterface.dataSource = "user_data";
 		}
+		DataController.saveConfig(validatedConfig);
 		DataController.saveData("default_data", default_data);
 	}
 	process() {

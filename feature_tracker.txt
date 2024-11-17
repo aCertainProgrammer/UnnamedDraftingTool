@@ -26,5 +26,7 @@ IDEAS:
 
 - be explicit about shift P etc for big letters ( allow CAPSLOCK to work ) 
 
+- add the set searching to search query
+
 BUGS:
 

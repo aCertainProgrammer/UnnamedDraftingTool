@@ -64,13 +64,22 @@ export class DataController {
 		return JSON.parse(config);
 	}
 	static validateConfig(configToValidate) {
-		let config = configToValidate;
+		let config = {};
 
-		if (config.colorBorders === null) config.colorBorders = false;
-		if (config.loadUserDataOnProgramStart === null)
+		if (configToValidate.colorBorders == undefined)
+			config.colorBorders = false;
+		else config.colorBorders = configToValidate.colorBorders;
+		if (configToValidate.loadUserDataOnProgramStart == undefined)
 			config.loadUserDataOnProgramStart = false;
-		if (config.clearSearchBarOnFocus === null)
+		else
+			config.loadUserDataOnProgramStart =
+				configToValidate.loadUserDataOnProgramStart;
+		if (configToValidate.clearSearchBarOnFocus == undefined)
 			config.clearSearchBarOnFocus = true;
+		else
+			config.clearSearchBarOnFocus =
+				configToValidate.clearSearchBarOnFocus;
+		return config;
 	}
 	static loadPicksAndBans() {
 		const json = localStorage.getItem("picksAndBans");
