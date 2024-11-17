@@ -8,15 +8,11 @@ IDEAS:
 
 - Comfort level indicator for champions (border coloring repurposed?)
 
-- Give feedback on correct/incorrect data (background color in the input element?)
-
 - Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
 
 - Testing
 
 - GUI for making champion pools
-
-- change darkmode icon when in dark mode
 
 - figure out github manual styling
 
