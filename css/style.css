@@ -213,11 +213,16 @@ body {
 	align-items: center;
 	justify-content: center;
 	gap: 10px;
+	flex-shrink: 1;
+	min-width: 150px;
 }
 
 .team-selection > img {
 	max-width: var(--teamIconMaxWidth);
 	max-height: var(--teamIconMaxHeight);
+	width: 100%;
+	height: auto;
+	flex-shrink: 1;
 }
 
 .not-bans {
@@ -440,12 +445,6 @@ label {
 	align-items: center;
 	justify-content: center;
 	gap: 5px;
-}
-
-@media screen and (max-width: 1700px) {
-	.team-selection#teams-container {
-		display: none !important;
-	}
 }
 
 .highlighted {
