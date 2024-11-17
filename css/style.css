@@ -36,6 +36,7 @@
 	--offBackgroundColor: pink;
 	--labelColor: black;
 	--highlightedBackgroundColor: lightgreen;
+	--settingsTooltipColor: black;
 }
 
 :root[data-theme="dark"] {
@@ -54,6 +55,7 @@
 	--offBackgroundColor: darkred;
 	--labelColor: #eeeeee;
 	--highlightedBackgroundColor: darkgreen;
+	--settingsTooltipColor: #eeeeee;
 }
 
 * {
@@ -448,4 +450,8 @@ label {
 
 .highlighted {
 	background-color: var(--highlightedBackgroundColor);
+}
+
+.settings-tooltip {
+	color: var(--settingsTooltipColor);
 }

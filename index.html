@@ -43,12 +43,35 @@
 				type="button"
 				value="Color champion borders"
 			/>
+			<div class="settings-tooltip">
+				<p>
+					This colors the borders of the champions depending on which
+					team they belong to:
+				</p>
+				<p>- green for ally champions</p>
+				<p>- red for enemy champions</p>
+				<p>- orange for champions in both teams</p>
+				<p>
+					- champions that are not in either ally or enemy teams are
+					not given a colored border
+				</p>
+			</div>
 			<input
 				class="source-button"
 				id="load-user-data-on-program-load-toggle"
 				type="button"
 				value="Load user data on page load"
 			/>
+			<div class="settings-tooltip">
+				<p>
+					This option decides which data source the program loads on
+					startup (or when the page is reloaded).
+				</p>
+				<p>
+					If enabled, your custom data will be loaded, provided it is
+					available
+				</p>
+			</div>
 		</div>
 		<div id="content-container" class="container">
 			<div id="header">
@@ -296,4 +319,3 @@
 		</div>
 	</body>
 </html>
-

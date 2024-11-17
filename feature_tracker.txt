@@ -1,7 +1,5 @@
 CURRENT WORK:
 
-- give data source indication
-
 THEN:
 
 IDEAS:
@@ -29,10 +27,6 @@ IDEAS:
 - be explicit about shift P etc for big letters ( allow CAPSLOCK to work ) 
 
 - clear searchbar when reentering ?
-
-- Explain champion border coloring better
-
-- Add darkmode shortcut
 
 BUGS:
 
