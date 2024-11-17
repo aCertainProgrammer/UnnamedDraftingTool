@@ -533,6 +533,10 @@ export class UserInterface {
 				this.enterSettingsButton.click();
 			else this.leaveSettingsButton.click();
 		}
+		if (key === "T") {
+			this.searchBar.blur();
+			this.toggleDarkmodeButton.click();
+		}
 		if (key == "!") {
 			this.searchBar.blur();
 			this.roleIcons[0].click();
