@@ -26,7 +26,5 @@ IDEAS:
 
 - be explicit about shift P etc for big letters ( allow CAPSLOCK to work ) 
 
-- clear searchbar when reentering ?
-
 BUGS:
 
