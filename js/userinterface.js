@@ -82,7 +82,7 @@ export class UserInterface {
 		this.userDataInput = document.querySelector("#input_user_data");
 		this.userDataInput.addEventListener(
 			"click",
-			this.showUserDataForm.bind(this),
+			this.toggleUserDataForm.bind(this),
 		);
 		this.colorBordersToggle = document.getElementById(
 			"color-borders-toggle",
@@ -309,19 +309,28 @@ export class UserInterface {
 		this.selectChampion(event);
 	}
 
-	showUserDataForm() {
-		const form_container = document.querySelector(
+	toggleUserDataForm() {
+		let form_container = document.querySelector(
 			"#user_data_form_container",
 		);
-		if (form_container) form_container.classList.remove("hidden");
-		else {
+		if (form_container === null) {
 			this.createUserDataForm();
+			form_container = document.querySelector(
+				"#user_data_form_container",
+			);
 		}
-		const textarea = document.querySelector("#user_data_input");
-		if (textarea != null) {
-			const json = DataController.loadData(this.getDataSource(), "none");
-			textarea.value = JSON.stringify(json, null, 4);
-		}
+		if (form_container.classList.contains("hidden")) {
+			form_container.classList.remove("hidden");
+
+			const textarea = document.querySelector("#user_data_input");
+			if (textarea != null) {
+				const json = DataController.loadData(
+					this.getDataSource(),
+					"none",
+				);
+				textarea.value = JSON.stringify(json, null, 4);
+			}
+		} else form_container.classList.add("hidden");
 	}
 
 	searchChampion() {
@@ -595,6 +604,7 @@ export class UserInterface {
 		const container = document.querySelector("#data");
 		const form_container = document.createElement("div");
 		form_container.id = "user_data_form_container";
+		form_container.classList.add("hidden");
 		this.userInputContainer = form_container;
 		const textarea = document.createElement("textarea");
 		textarea.name = "user_data_input";
