@@ -187,7 +187,7 @@ body {
 	justify-content: space-between;
 	gap: 11px;
 	flex-shrink: 1;
-	width: 140%;
+	width: 100%;
 	height: 100%;
 }
 
@@ -251,7 +251,7 @@ body {
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	width: 100%;
+	width: 75%;
 	flex-shrink: 1;
 	gap: 10px;
 }
@@ -453,4 +453,16 @@ label {
 
 .settings-tooltip {
 	color: var(--settingsTooltipColor);
+}
+
+@media screen and (max-width: 1900px) {
+	.team-selection#teams-container {
+		display: none !important;
+	}
+}
+
+@media screen and (max-width: 1275px) {
+	.role-selection {
+		display: none !important;
+	}
 }
