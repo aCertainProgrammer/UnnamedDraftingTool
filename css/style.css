@@ -37,6 +37,8 @@
 	--labelColor: black;
 	--highlightedBackgroundColor: lightgreen;
 	--settingsTooltipColor: black;
+	--invalidBackgroundColor: red;
+	--validBackgroundColor: lightgreen;
 }
 
 :root[data-theme="dark"] {
@@ -56,6 +58,8 @@
 	--labelColor: #eeeeee;
 	--highlightedBackgroundColor: darkgreen;
 	--settingsTooltipColor: #eeeeee;
+	--invalidBackgroundColor: #640d0d;
+	--validBackgroundColor: darkgreen;
 }
 
 * {
@@ -467,4 +471,21 @@ label {
 	.role-selection {
 		display: none !important;
 	}
+}
+
+.invalid {
+	background-color: var(--invalidBackgroundColor);
+}
+
+.valid {
+	background-color: var(--validBackgroundColor);
+}
+
+#input-error-box {
+	color: var(--textInputTextColor);
+	font-size: var(--dataButtonFontSize);
+	border: var(--sourceButtonBorder);
+	background-color: var(--sourceButtonBackgroundColor);
+	border-radius: var(--generalBorderRadius);
+	padding: 2px 4px;
 }

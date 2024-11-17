@@ -112,7 +112,7 @@ If enabled, clears the search bar whenever it is refocused. This enables the fol
 
 ## Custom data input
 
-**Note: if the data doesn't load, it means you made a mistake in your input. Press F12 or open your browser's console to check the error message. 
+**Note: if the data doesn't load, it means you made a mistake in your input. Read the error message that is being displayed for you and fix the problem.
 You can also validate your JSON here:
 https://jsonchecker.com/
 or on any other JSON validation website**

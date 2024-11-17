@@ -380,7 +380,24 @@ export class UserInterface {
 		return data;
 	}
 	saveUserData(textarea) {
-		const data = JSON.parse(textarea.value);
+		const input_error_box = document.querySelector("#input-error-box");
+		let data;
+		try {
+			data = JSON.parse(textarea.value);
+		} catch (e) {
+			textarea.classList.remove("valid");
+			textarea.classList.add("invalid");
+
+			input_error_box.classList.remove("hidden");
+
+			const message = e.toString();
+			input_error_box.innerText = message;
+
+			return;
+		}
+		textarea.classList.remove("invalid");
+		textarea.classList.add("valid");
+		input_error_box.classList.add("hidden");
 		const validatedData = this.validateUserData(data);
 		DataController.saveData("user_data", JSON.stringify(validatedData));
 		this.dataSource = "user_data";
@@ -646,6 +663,9 @@ export class UserInterface {
 		label.innerHTML =
 			'Read the <a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input" target="_blank">input data specification</a>';
 		label.for = "user_data_input";
+		const error_box = document.createElement("div");
+		error_box.classList.add("hidden");
+		error_box.id = "input-error-box";
 		const button_container = document.createElement("div");
 		button_container.style.display = "flex";
 		button_container.style.flexDirection = "row";
@@ -668,6 +688,7 @@ export class UserInterface {
 		button_container.appendChild(file_input_button);
 		form_container.appendChild(label);
 		form_container.appendChild(textarea);
+		form_container.appendChild(error_box);
 		form_container.appendChild(button_container);
 		container.appendChild(form_container);
 		save.addEventListener("click", this.saveUserData.bind(this, textarea));
