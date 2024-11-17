@@ -169,7 +169,7 @@ export class UserInterface {
 		);
 		if (
 			localStorage.getItem("darkmode") !=
-			document.documentElement.dataset.theme &&
+				document.documentElement.dataset.theme &&
 			localStorage.getItem("darkmode") != null
 		) {
 			this.toggleDarkmode();
@@ -223,7 +223,7 @@ export class UserInterface {
 		const searchQuery = this.searchBar.value;
 		return searchQuery;
 	}
-	setDataSource() { }
+	setDataSource() {}
 	setTeam(team) {
 		this.team = team.id;
 		const currentlySelectedTeam =
@@ -703,6 +703,8 @@ export class UserInterface {
 		// Render picked champions
 		for (let i = 0; i < this.picks.length; i++) {
 			let img = this.picks[i].childNodes[1];
+			if (img.classList.contains("selected"))
+				img.classList.remove("selected");
 			if (renderingData.pickedChampions[i] == "") {
 				img.src = this.defaultPickIconPath;
 				img.dataset.champion = "";
