@@ -256,23 +256,25 @@ export class UserInterface {
 			DataController.saveData("darkmode", "light");
 		}
 	}
+	clearSelectedChampions() {
+		const selected = this.championsContainer.querySelector(".selected");
+		if (selected !== null) {
+			selected.classList.remove("selected");
+		}
+	}
 
 	selectChampion(event) {
 		const championIcon = event.target;
+		this.clearSelectedChampions();
 		if (championIcon.dataset.pickedOrBanned == "true") {
 			this.selectedChampion = "";
 			return;
 		}
 		if (this.selectedChampion == championIcon.dataset.champion) {
-			championIcon.classList.remove("selected");
 			this.selectedChampion = "";
 			return;
 		}
-		const currentlySelectedIcon =
-			this.championsContainer.querySelector(".selected");
-		if (currentlySelectedIcon !== null)
-			currentlySelectedIcon.classList.remove("selected");
-		championIcon.classList.add("selected");
+		const currentlySelectedIcon = championIcon.classList.add("selected");
 		this.selectedChampion = event.target.dataset.champion;
 	}
 	placeChampion(event) {
