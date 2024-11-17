@@ -158,7 +158,7 @@ body {
 	border: var(--championPickBanBorder);
 }
 
-.draft-team > .champion-pick > img:not([src="./img/pick_icon.png"]) {
+.draft-team > .champion-pick > img[src*="/img/champion_icons/"] {
 	cursor: pointer;
 }
 
@@ -178,6 +178,7 @@ body {
 	width: 100%;
 	height: auto;
 	flex-shrink: 1;
+	min-width: 0px;
 }
 
 .utils {
@@ -220,6 +221,7 @@ body {
 .team-selection > img {
 	max-width: var(--teamIconMaxWidth);
 	max-height: var(--teamIconMaxHeight);
+	min-width: 0px;
 	width: 100%;
 	height: auto;
 	flex-shrink: 1;
@@ -455,13 +457,13 @@ label {
 	color: var(--settingsTooltipColor);
 }
 
-@media screen and (max-width: 1900px) {
+@media screen and (max-width: 1115px) {
 	.team-selection#teams-container {
 		display: none !important;
 	}
 }
 
-@media screen and (max-width: 1275px) {
+@media screen and (max-width: 960px) {
 	.role-selection {
 		display: none !important;
 	}
