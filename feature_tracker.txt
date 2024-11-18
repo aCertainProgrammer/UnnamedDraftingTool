@@ -32,5 +32,11 @@ IDEAS:
 
 - Dragging a champion onto itself shouldnt cause it to be unpicked
 
+- Self-inputtable team statistics (gather pick stats for enemy team >> input it >> it shows in some way)
+
+- style search bar
+
+- fix the image problem on drag
+
 BUGS:
 
