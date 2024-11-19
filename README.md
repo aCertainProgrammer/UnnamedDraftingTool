@@ -71,11 +71,9 @@ This method has the advantage of not requiring a hover to work, which will certa
 - `X` to clear picks or bans depending on the mode
 
 ### Search bar operations
-- `Spacebar`, `Backspace` or any small letter (`a` to `z`) to focus the search bar (no need to click it with the mouse).
+- `Spacebar`, `Backspace` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse).
 
-Backspace removes the last character, while a letter adds a character after focusing the search bar
-
-To clear the search bar as you are focusing it, use `Shift` + `Backspace` (as long as `Shift` is the last key pressed before `Backspace` you are fine)
+When refocusing the searchbar, backspace removes the last character (assuming that "Clear search bar on focus is off"), while a letter adds a character
 
 If the "Clear search bar on focus" setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.
 

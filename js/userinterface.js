@@ -492,23 +492,11 @@ export class UserInterface {
 		if (container !== null)
 			if (!container.classList.contains("hidden")) return;
 		const key = event.key;
+		const shiftKeyPressed = event.shiftKey;
 		if (key == " ") {
 			this.searchBar.focus();
 		}
-		if (key >= "a" && key <= "z") {
-			if (
-				!(document.activeElement == this.searchBar) &&
-				this.config.clearSearchBarOnFocus === true
-			)
-				this.searchBar.value = "";
-			this.searchBar.focus();
-		}
-		if (key >= "0" && key <= "9") {
-			this.searchBar.blur();
-			this.pickBanChampionWithKeyInput(key);
-		}
 		if (key == "Delete") {
-			this.searchBar.blur();
 			this.picks.forEach((current) => {
 				current.childNodes[1].dataset.champion = "";
 			});
@@ -517,110 +505,125 @@ export class UserInterface {
 			});
 			this.sendProcessSignal();
 		}
-		if (key == "C") {
-			this.searchBar.blur();
-			this.dataSource = "user_data";
-			this.sendProcessSignal();
-		}
-		if (key == "D") {
-			this.searchBar.blur();
-			this.dataSource = "default_data";
-			this.sendProcessSignal();
-		}
-		if (key == "I") {
-			this.searchBar.blur();
-			this.userDataInput.click();
-		}
-		if (key == "F") {
-			this.searchBar.blur();
-			if (this.fileInput == null) {
-				this.createUserDataForm();
-				this.userInputContainer.classList.add("hidden");
-			}
-			this.clickInput(this.fileInput);
-		}
 		if (key == "Backspace") {
-			const val = this.searchBar.value;
-			this.searchBar.value = "a";
+			if (
+				this.config.clearSearchBarOnFocus == true &&
+				document.activeElement != this.searchBar
+			)
+				this.searchBar.value = "a";
 			this.searchBar.focus();
-			if (this.lastKey != "Shift") this.searchBar.value = val;
 		}
-		if (key == "P") {
-			this.searchBar.blur();
-			this.currentMode = "pick";
+		if (!shiftKeyPressed) {
+			if ((key >= "a" && key <= "z") || (key >= "A" && key <= "Z")) {
+				if (
+					document.activeElement != this.searchBar &&
+					this.config.clearSearchBarOnFocus === true
+				)
+					this.searchBar.value = "";
+				this.searchBar.focus();
+			}
+			if (key >= "0" && key <= "9") {
+				this.searchBar.blur();
+				this.pickBanChampionWithKeyInput(key);
+			}
+		} else {
+			if (key == "C" || key == "c") {
+				this.searchBar.blur();
+				this.dataSource = "user_data";
+				this.sendProcessSignal();
+			}
+			if (key == "D" || key == "d") {
+				this.searchBar.blur();
+				this.dataSource = "default_data";
+				this.sendProcessSignal();
+			}
+			if (key == "I" || key == "i") {
+				this.searchBar.blur();
+				this.userDataInput.click();
+			}
+			if (key == "F" || key == "f") {
+				this.searchBar.blur();
+				if (this.fileInput == null) {
+					this.createUserDataForm();
+					this.userInputContainer.classList.add("hidden");
+				}
+				this.clickInput(this.fileInput);
+			}
+			if (key == "P" || key == "p") {
+				this.searchBar.blur();
+				this.currentMode = "pick";
+			}
+			if (key == "B" || key == "b") {
+				this.searchBar.blur();
+				this.currentMode = "ban";
+			}
+			if (key == "X" || key == "x") {
+				this.searchBar.blur();
+				let data;
+				if (this.currentMode == "pick") data = this.picks;
+				if (this.currentMode == "ban") data = this.bans;
+				data.forEach((current) => {
+					current.childNodes[1].dataset.champion = "";
+				});
+				this.sendProcessSignal();
+			}
+			if (key == "M" || key == "m") {
+				this.searchBar.blur();
+				if (!this.contentContainer.classList.contains("hidden"))
+					this.contentContainer.classList.add("hidden");
+				if (!this.settingsMenu.classList.contains("hidden"))
+					this.settingsMenu.classList.add("hidden");
+				if (this.manualContainer.classList.contains("hidden"))
+					this.openManualButton.click();
+				else this.closeManualButton.click();
+			}
+			if (key == "S" || key == "s") {
+				this.searchBar.blur();
+				if (!this.contentContainer.classList.contains("hidden"))
+					this.contentContainer.classList.add("hidden");
+				if (!this.manualContainer.classList.contains("hidden"))
+					this.manualContainer.classList.add("hidden");
+				if (this.settingsMenu.classList.contains("hidden"))
+					this.enterSettingsButton.click();
+				else this.leaveSettingsButton.click();
+			}
+			if (key === "T" || key == "t") {
+				this.searchBar.blur();
+				this.toggleDarkmodeButton.click();
+			}
+			if (key == "!") {
+				this.searchBar.blur();
+				this.roleIcons[0].click();
+			}
+			if (key == "@") {
+				this.searchBar.blur();
+				this.roleIcons[1].click();
+			}
+			if (key == "#") {
+				this.searchBar.blur();
+				this.roleIcons[2].click();
+			}
+			if (key == "$") {
+				this.searchBar.blur();
+				this.roleIcons[3].click();
+			}
+			if (key == "%") {
+				this.searchBar.blur();
+				this.roleIcons[4].click();
+			}
+			if (key == "Q" || key == "q") {
+				this.searchBar.blur();
+				this.logos[0].click();
+			}
+			if (key == "W" || key == "w") {
+				this.searchBar.blur();
+				this.logos[1].click();
+			}
+			if (key == "E" || key == "e") {
+				this.searchBar.blur();
+				this.logos[2].click();
+			}
 		}
-		if (key == "B") {
-			this.searchBar.blur();
-			this.currentMode = "ban";
-		}
-		if (key == "X") {
-			this.searchBar.blur();
-			let data;
-			if (this.currentMode == "pick") data = this.picks;
-			if (this.currentMode == "ban") data = this.bans;
-			data.forEach((current) => {
-				current.childNodes[1].dataset.champion = "";
-			});
-			this.sendProcessSignal();
-		}
-		if (key == "M") {
-			this.searchBar.blur();
-			if (!this.contentContainer.classList.contains("hidden"))
-				this.contentContainer.classList.add("hidden");
-			if (!this.settingsMenu.classList.contains("hidden"))
-				this.settingsMenu.classList.add("hidden");
-			if (this.manualContainer.classList.contains("hidden"))
-				this.openManualButton.click();
-			else this.closeManualButton.click();
-		}
-		if (key == "S") {
-			this.searchBar.blur();
-			if (!this.contentContainer.classList.contains("hidden"))
-				this.contentContainer.classList.add("hidden");
-			if (!this.manualContainer.classList.contains("hidden"))
-				this.manualContainer.classList.add("hidden");
-			if (this.settingsMenu.classList.contains("hidden"))
-				this.enterSettingsButton.click();
-			else this.leaveSettingsButton.click();
-		}
-		if (key === "T") {
-			this.searchBar.blur();
-			this.toggleDarkmodeButton.click();
-		}
-		if (key == "!") {
-			this.searchBar.blur();
-			this.roleIcons[0].click();
-		}
-		if (key == "@") {
-			this.searchBar.blur();
-			this.roleIcons[1].click();
-		}
-		if (key == "#") {
-			this.searchBar.blur();
-			this.roleIcons[2].click();
-		}
-		if (key == "$") {
-			this.searchBar.blur();
-			this.roleIcons[3].click();
-		}
-		if (key == "%") {
-			this.searchBar.blur();
-			this.roleIcons[4].click();
-		}
-		if (key == "Q") {
-			this.searchBar.blur();
-			this.logos[0].click();
-		}
-		if (key == "W") {
-			this.searchBar.blur();
-			this.logos[1].click();
-		}
-		if (key == "E") {
-			this.searchBar.blur();
-			this.logos[2].click();
-		}
-
-		this.lastKey = key;
 	}
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
