@@ -32,6 +32,8 @@ IDEAS:
 
 - allow toggling centered vs tiles for picks
 
+- display mode information to user
+
 BUGS:
 
 - Not a bug but good to remember and think about:

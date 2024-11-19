@@ -49,9 +49,9 @@ You can pick or ban a champion in four ways:
 - drag and drop the champion 
 - hover over a champion, then press a number on your keyboard (1 to 10, with 10 being represented by 0 to keep consistency left-to-right).
 
-This will either pick or ban the champion, depending on your current mode (pick or ban, toggled with `Shift` +`P` and `Shift` + `B` respectively).
+    This will either pick or ban the champion, depending on your current mode (pick or ban, toggled with `Shift` +`P` and `Shift` + `B` respectively).
 
-This also works on already picked/banned champions. There is, however, a limitation to it: if you want to use this method while hovering over the same pick/ban slot twice, you need to leave and reenter it with your mouse.
+    This also works on already picked/banned champions. There is, however, a limitation to it: if you want to use this method while hovering over the same pick/ban slot twice, you need to leave and reenter it with your mouse.
 
 - search for a champion until there is only one available to be picked, then use the number method from above
 
