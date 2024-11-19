@@ -28,13 +28,9 @@ IDEAS:
 
 - add themes with different color palletes
 
-- Push picks a bit down to create space?
-
 - Dragging a champion onto itself shouldnt cause it to be unpicked
 
 - Self-inputtable team statistics (gather pick stats for enemy team >> input it >> it shows in some way)
-
-- fix the image problem on drag
 
 BUGS:
 
