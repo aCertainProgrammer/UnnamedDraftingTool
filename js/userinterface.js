@@ -163,6 +163,7 @@ export class UserInterface {
 			"click",
 			this.closeManual.bind(this),
 		);
+
 		this.fileInput = null;
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
@@ -183,6 +184,11 @@ export class UserInterface {
 		}
 		this.manualContainer = document.querySelector("#manual-container");
 		this.manualText = document.querySelector("#manual-text");
+		this.goToTopOfManualButton =
+			document.querySelector("#go-to-top-button");
+		this.goToTopOfManualButton.addEventListener("click", () => {
+			this.manualText.scrollTop = 0;
+		});
 		this.lastKey = "";
 	}
 	colorSettingsButtons() {

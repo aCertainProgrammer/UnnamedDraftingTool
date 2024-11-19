@@ -20,8 +20,6 @@ IDEAS:
 
 - consider data input placement (to the side?)
 
-- be explicit about shift P etc for big letters ( allow CAPSLOCK to work ) 
-
 - add the set searching to search query
 
 - a welcome screen to explain biggest features
@@ -36,3 +34,4 @@ IDEAS:
 
 BUGS:
 
+- random keys like capslock refocus the searchbar for no reason
