@@ -32,5 +32,7 @@ IDEAS:
 
 - Self-inputtable team statistics (gather pick stats for enemy team >> input it >> it shows in some way)
 
+- allow toggling centered vs tiles for picks
+
 BUGS:
 

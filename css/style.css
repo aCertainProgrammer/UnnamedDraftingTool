@@ -30,7 +30,8 @@
 	--textInputBackgroundColor: white;
 	--textInputPlaceholderColor: #797979;
 	--textInputTextColor: black;
-	--championPickBanBorder: 1px solid black;
+	--championPickBorder: 1px solid black;
+	--championBanBorder: 1px solid black;
 	--championIconBorder: 2px solid black;
 	--onBackgroundColor: lightgreen;
 	--offBackgroundColor: pink;
@@ -52,7 +53,8 @@
 	--textInputBackgroundColor: #0f093e;
 	--textInputPlaceholderColor: #797979;
 	--textInputTextColor: #eeeeee;
-	--championPickBanBorder: 1px solid #404040;
+	--championPickBorder: 1px solid #404040;
+	--championBanBorder: 1px solid #404040;
 	--championIconBorder: 2px solid #404040;
 	--onBackgroundColor: darkgreen;
 	--offBackgroundColor: darkred;
@@ -145,7 +147,6 @@ body {
 
 .champion-pick {
 	height: fit-content;
-	border: var(--championPickBanBorder);
 	aspect-ratio: 1.77;
 	height: 100%;
 	width: 100%;
@@ -162,7 +163,7 @@ body {
 	height: var(--pickMaxHeight);
 	max-width: var(--pickMaxWidth);
 	max-height: var(--pickMaxHeight);
-	border: var(--championPickBanBorder);
+	border: var(--championPickBorder);
 }
 
 .draft-team > .champion-pick > img[src*="/img/champion_icons/"] {
@@ -285,7 +286,7 @@ body {
 
 .champion-ban {
 	height: fit-content;
-	border: var(--championPickBanBorder);
+	border: var(--championBanBorder);
 	aspect-ratio: 1;
 	height: 100%;
 	width: 100%;
@@ -313,7 +314,7 @@ body {
 	height: 100%;
 	max-width: var(--pickMaxWidth);
 	max-height: var(--pickMaxHeight);
-	border: var(--championPickBanBorder);
+	border: var(--championPickBorder);
 }
 
 .source-button {
