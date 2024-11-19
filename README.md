@@ -47,7 +47,7 @@ Running the program locally makes the performance better since images (the main 
 You will also occasionally get access to new features before they are published on the website.
 
 ## Picking and banning champions
-You can pick or ban a champion in four ways:
+You can pick or ban a champion in several ways:
 - click a champion, then click a pick/ban slot
 - drag and drop the champion 
 - hover over a champion, then press a number on your keyboard (1 to 10, with 10 being represented by 0 to keep consistency left-to-right).
@@ -58,7 +58,7 @@ You can pick or ban a champion in four ways:
 
 - search for a champion until there is only one available to be picked, then use the number method from above
 
-This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
+    This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
 
 ## Keyboard shortcuts
 
