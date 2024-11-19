@@ -243,6 +243,7 @@ body {
 	min-height: 0;
 	width: 100%;
 	padding: 0px 10px;
+	padding-top: 5px;
 }
 
 .bans {
