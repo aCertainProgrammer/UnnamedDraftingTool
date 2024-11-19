@@ -2,19 +2,11 @@ CURRENT WORK:
 
 THEN:
 
-IDEAS:
-
-- Data presets (maybe some templates like "assasin midlaner", "tank toplaner" etc? This could work in the form of premade JSON snippets)
-
-- Comfort level indicator for champions (border coloring repurposed?)
-
-- Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
+SHORT IDEAS:
 
 - Testing
 
 - GUI for making champion pools
-
-- figure out github manual styling
 
 - fix form styling
 
@@ -24,19 +16,23 @@ IDEAS:
 
 - a welcome screen to explain biggest features
 
-- add themes with different color palletes
-
-- Dragging a champion onto itself shouldnt cause it to be unpicked
-
-- Self-inputtable team statistics (gather pick stats for enemy team >> input it >> it shows in some way)
-
 - allow toggling centered vs tiles for picks
 
-- add a bind to unpick champion
-
 - fix binds for weird keyboards
+
+LONG IDEAS:
+
+- Data presets 
+
+- Comfort level indicator for champions (border coloring repurposed?)
+
+- Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
+
+- add themes with different color palletes
+
+- Self-inputtable team statistics (gather pick stats for enemy team >> input it >> it shows in some way)
 
 BUGS:
 
 - Not a bug but good to remember and think about:
-When you leave the mouse in the middle of the champions, then search, unless you have only 1 champ remaining, when you press a button 0-9 it will pick your last hovered champion (quite random if you were just searching), this is due to hover being stringer than non-explicit search and can be confusing
+When you leave the mouse in the middle of the champions, then search, unless you have only 1 champ remaining, when you press a button 0-9 it will pick your last hovered champion (quite random if you were just searching), this is due to hover being stronger than non-explicit search and can be confusing

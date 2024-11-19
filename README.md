@@ -48,15 +48,15 @@ You will also occasionally get access to new features before they are published 
 
 ## Picking and banning champions
 You can pick or ban a champion in four ways:
-- click a champion, then click a pick/ban slot
-- drag and drop the champion 
-- hover over a champion, then press a number on your keyboard (1 to 10, with 10 being represented by 0 to keep consistency left-to-right).
+- Click a champion, then click a pick/ban slot
+- Drag and drop the champion 
+- Hover over a champion, then press a number on your keyboard (1 to 10, with 10 being represented by 0 to keep consistency left-to-right).
 
     This will either pick or ban the champion, depending on your current mode (pick or ban, toggled with `Shift` +`P` and `Shift` + `B` respectively).
 
     This also works on already picked/banned champions. There is, however, a limitation to it: if you want to use this method while hovering over the same pick/ban slot twice, you need to leave and reenter it with your mouse.
 
-- search for a champion until there is only one available to be picked, then use the number method from above
+- Search for a champion until there is only one available to be picked, then use the number method from above
 
 This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
 
@@ -66,7 +66,7 @@ This method has the advantage of not requiring a hover to work, which will certa
 
 - `Shift` + `P` to get into `pick` mode
 - `Shift` + `B` to get into `ban` mode
-- any number from 1 to 10 (10 being represented by 0) to pick or ban a champion into that slot, depending on the current mode 
+- Any number from 1 to 10 (10 being represented by 0) to pick or ban a champion into that slot, depending on the current mode 
 - `Backspace` to unpick or unban a champion
 - `Delete` to clear all picks and bans
 - `Shift` + `X` to clear picks or bans depending on the mode
@@ -74,7 +74,7 @@ This method has the advantage of not requiring a hover to work, which will certa
 ### Search bar operations
 - `Spacebar` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse)
 
-If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.
+    If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.
 
 ### Data management
 - `Shift` + `C` to load custom data
@@ -94,10 +94,10 @@ Currently you are given the option to customize the following:
 
 ### Color champion borders
 This colors the borders of the champions depending on which team they belong to:
-- green for ally champions
-- red for enemy champions
-- orange for champions in both teams
-- champions that are not in either ally or enemy teams are not given a colored border
+- Green for ally champions
+- Red for enemy champions
+- Orange for champions in both teams
+- Champions that are not in either ally or enemy teams are not given a colored border
 
 ### Load user data on page reload
 This option decides which data source the program loads on startup (or when the page is reloaded).
@@ -353,3 +353,4 @@ The current list of all champions:
 
 UnnamedDraftingTool isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc.
 UnnamedDraftingTool was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.
+
