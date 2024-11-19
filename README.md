@@ -47,7 +47,7 @@ Running the program locally makes the performance better since images (the main 
 You will also occasionally get access to new features before they are published on the website.
 
 ## Picking and banning champions
-You can pick or ban a champion in several ways:
+You can pick or ban a champion in four ways:
 - click a champion, then click a pick/ban slot
 - drag and drop the champion 
 - hover over a champion, then press a number on your keyboard (1 to 10, with 10 being represented by 0 to keep consistency left-to-right).
@@ -58,7 +58,7 @@ You can pick or ban a champion in several ways:
 
 - search for a champion until there is only one available to be picked, then use the number method from above
 
-    This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
+This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
 
 ## Keyboard shortcuts
 
@@ -67,13 +67,12 @@ You can pick or ban a champion in several ways:
 - `Shift` + `P` to get into `pick` mode
 - `Shift` + `B` to get into `ban` mode
 - any number from 1 to 10 (10 being represented by 0) to pick or ban a champion into that slot, depending on the current mode 
+- `Backspace` to unpick or unban a champion
 - `Delete` to clear all picks and bans
 - `Shift` + `X` to clear picks or bans depending on the mode
 
 ### Search bar operations
-- `Spacebar`, `Backspace` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse)
-
-When refocusing the searchbar, backspace removes the last character (assuming that [Clear search bar on focus](#clear-search-bar-on-focus) is off), while a letter adds a character. Pressing spacebar has no effect on the search query.
+- `Spacebar` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse)
 
 If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.
 

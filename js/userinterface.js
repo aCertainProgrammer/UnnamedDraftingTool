@@ -490,7 +490,7 @@ export class UserInterface {
 			}
 		}
 		//swap champs if both are present
-		if (oldIndex != null) {
+		if (oldIndex != null && data[index] != null) {
 			pickOrBan[oldIndex].childNodes[1].dataset.champion =
 				data[index].childNodes[1].dataset.champion;
 		}
@@ -535,12 +535,14 @@ export class UserInterface {
 			this.sendProcessSignal();
 		}
 		if (key == "Backspace") {
-			if (
-				this.config.clearSearchBarOnFocus == true &&
-				document.activeElement != this.searchBar
-			)
-				this.searchBar.value = "a";
-			this.searchBar.focus();
+			this.searchBar.blur();
+			if (this.currentlyHoveredChampion) {
+				const selector = `[data-champion=${this.currentlyHoveredChampion}]`;
+				const hoveredImg = document.querySelector(selector);
+				if (hoveredImg.dataset.champion != "")
+					hoveredImg.dataset.champion = "";
+				this.sendProcessSignal();
+			}
 		}
 		if (!shiftKeyPressed) {
 			const letterRegex = /^[A-Za-z]$/;

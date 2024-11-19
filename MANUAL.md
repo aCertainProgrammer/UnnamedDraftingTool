@@ -64,13 +64,12 @@ This method has the advantage of not requiring a hover to work, which will certa
 - `Shift` + `P` to get into `pick` mode
 - `Shift` + `B` to get into `ban` mode
 - any number from 1 to 10 (10 being represented by 0) to pick or ban a champion into that slot, depending on the current mode 
+- `Backspace` to unpick or unban a champion
 - `Delete` to clear all picks and bans
 - `Shift` + `X` to clear picks or bans depending on the mode
 
 ### Search bar operations
-- `Spacebar`, `Backspace` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse)
-
-When refocusing the searchbar, backspace removes the last character (assuming that [Clear search bar on focus](#clear-search-bar-on-focus) is off), while a letter adds a character. Pressing spacebar has no effect on the search query.
+- `Spacebar` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse)
 
 If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.
 

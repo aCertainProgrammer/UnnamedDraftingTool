@@ -32,8 +32,6 @@ IDEAS:
 
 - allow toggling centered vs tiles for picks
 
-- display mode information to user
-
 - add a bind to unpick champion
 
 - fix binds for weird keyboards
