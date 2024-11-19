@@ -276,11 +276,11 @@ export class UserInterface {
 		const root = document.documentElement;
 		if (root.dataset.theme == "light") {
 			root.dataset.theme = "dark";
-			this.toggleDarkmodeButton.childNodes[1].src = "./img/full_moon.png";
+			this.toggleDarkmodeButton.childNodes[1].src = "./img/sun.png";
 			DataController.saveData("darkmode", "dark");
 		} else if (root.dataset.theme == "dark") {
 			root.dataset.theme = "light";
-			this.toggleDarkmodeButton.childNodes[1].src = "./img/moon.png";
+			this.toggleDarkmodeButton.childNodes[1].src = "./img/full_moon.png";
 			DataController.saveData("darkmode", "light");
 		}
 	}
