@@ -115,7 +115,7 @@ body {
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: center;
-	justify-content: start;
+	justify-content: center;
 	padding: 4px;
 	gap: 5px;
 	min-height: 0;
