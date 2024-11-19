@@ -535,13 +535,16 @@ export class UserInterface {
 			this.sendProcessSignal();
 		}
 		if (key == "Backspace") {
-			this.searchBar.blur();
-			if (this.currentlyHoveredChampion) {
-				const selector = `[data-champion=${this.currentlyHoveredChampion}]`;
-				const hoveredImg = document.querySelector(selector);
-				if (hoveredImg.dataset.champion != "")
-					hoveredImg.dataset.champion = "";
-				this.sendProcessSignal();
+			if (document.activeElement != this.searchBar) {
+				this.searchBar.blur();
+				if (this.currentlyHoveredChampion) {
+					event.preventDefault();
+					const selector = `[data-champion=${this.currentlyHoveredChampion}]`;
+					const hoveredImg = document.querySelector(selector);
+					if (hoveredImg.dataset.champion != "")
+						hoveredImg.dataset.champion = "";
+					this.sendProcessSignal();
+				}
 			}
 		}
 		if (!shiftKeyPressed) {
