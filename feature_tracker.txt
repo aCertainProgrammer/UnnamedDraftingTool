@@ -34,6 +34,8 @@ IDEAS:
 
 - display mode information to user
 
+- add a bind to unpick champion
+
 BUGS:
 
 - Not a bug but good to remember and think about:
