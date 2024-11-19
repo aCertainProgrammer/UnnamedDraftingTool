@@ -520,7 +520,8 @@ export class UserInterface {
 			this.searchBar.focus();
 		}
 		if (!shiftKeyPressed) {
-			if ((key >= "a" && key <= "z") || (key >= "A" && key <= "Z")) {
+			const letterRegex = /^[A-Za-z]$/;
+			if (key.match(letterRegex)) {
 				if (
 					document.activeElement != this.searchBar &&
 					this.config.clearSearchBarOnFocus === true
@@ -528,7 +529,8 @@ export class UserInterface {
 					this.searchBar.value = "";
 				this.searchBar.focus();
 			}
-			if (key >= "0" && key <= "9") {
+			const numberRegex = /[0-9]/;
+			if (key.match(numberRegex)) {
 				this.searchBar.blur();
 				this.pickBanChampionWithKeyInput(key);
 			}

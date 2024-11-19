@@ -34,4 +34,5 @@ IDEAS:
 
 BUGS:
 
-- random keys like capslock refocus the searchbar for no reason
+- Not a bug but good to remember and think about:
+When you leave the mouse in the middle of the champions, then search, unless you have only 1 champ remaining, when you press a button 0-9 it will pick your last hovered champion (quite random if you were just searching), this is due to hover being stringer than non-explicit search and can be confusing
