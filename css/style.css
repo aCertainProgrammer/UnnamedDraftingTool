@@ -155,7 +155,7 @@ body {
 	max-width: var(--pickMaxWidth);
 	max-height: var(--pickMaxHeight);
 	background-size: cover;
-	background-image: url("/img/pick_icon.png");
+	background-image: url("./../img/pick_icon.png");
 }
 
 .draft-team > .champion-pick > img {
@@ -493,4 +493,15 @@ label {
 	background-color: var(--sourceButtonBackgroundColor);
 	border-radius: var(--generalBorderRadius);
 	padding: 2px 4px;
+}
+
+[data-mode="pick"] {
+	background-color: var(--onBackgroundColor);
+}
+[data-mode="ban"] {
+	background-color: var(--offBackgroundColor);
+}
+#toggle-pick-ban-mode {
+	min-width: 194px;
+	text-align: left;
 }

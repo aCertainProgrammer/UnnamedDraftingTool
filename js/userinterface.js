@@ -189,7 +189,13 @@ export class UserInterface {
 		this.goToTopOfManualButton.addEventListener("click", () => {
 			this.manualText.scrollTop = 0;
 		});
-		this.lastKey = "";
+		this.togglePickBanModeButton = document.querySelector(
+			"#toggle-pick-ban-mode",
+		);
+		this.togglePickBanModeButton.addEventListener(
+			"click",
+			this.togglePickBanMode.bind(this),
+		);
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
@@ -493,6 +499,23 @@ export class UserInterface {
 		this.currentlyHoveredChampion = "";
 		this.sendProcessSignal();
 	}
+
+	togglePickBanMode() {
+		let mode;
+		if (this.currentMode == "pick") mode = "ban";
+		else mode = "pick";
+		this.setPickBanMode(mode);
+	}
+	setPickBanMode(mode) {
+		this.currentMode = mode;
+		if (this.currentMode == "pick") {
+			this.togglePickBanModeButton.dataset.mode = "pick";
+			this.togglePickBanModeButton.value = "Current mode: pick";
+		} else {
+			this.togglePickBanModeButton.dataset.mode = "ban";
+			this.togglePickBanModeButton.value = "Current mode: ban";
+		}
+	}
 	processKeyboardInput(event) {
 		const container = document.querySelector("#user_data_form_container");
 		if (container !== null)
@@ -559,11 +582,11 @@ export class UserInterface {
 			}
 			if (key == "P" || key == "p") {
 				this.searchBar.blur();
-				this.currentMode = "pick";
+				this.setPickBanMode("pick");
 			}
 			if (key == "B" || key == "b") {
 				this.searchBar.blur();
-				this.currentMode = "ban";
+				this.setPickBanMode("ban");
 			}
 			if (key == "X" || key == "x") {
 				this.searchBar.blur();

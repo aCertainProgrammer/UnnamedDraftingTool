@@ -36,6 +36,8 @@ IDEAS:
 
 - add a bind to unpick champion
 
+- fix binds for weird keyboards
+
 BUGS:
 
 - Not a bug but good to remember and think about:
