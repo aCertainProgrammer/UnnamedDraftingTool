@@ -14,7 +14,7 @@ This program is aiming to build on top of the currently available drafting tools
 ## Running the program 
 
 ### On the website
-Head over to https://acertainprogrammer.github.io/UnnamedDraftingTool/ and you're good to go
+Head over to https://acertainprogrammer.github.io/UnnamedDraftingTool/ and you're good to go.
 
 ### Local installation
 The program can be used locally, as it has no backend.
@@ -30,7 +30,7 @@ cd UnnamedDraftingTool
 live-server
 ```
 
-This will open the app in localhost
+This will open the app in localhost.
 
 There is no build step required.
 To install the live server:
@@ -44,7 +44,7 @@ git pull
 ```
 
 Running the program locally makes the performance better since images (the main bottleneck) are on your disk and don't need to be downloaded on the fly.
-You will also occasionally get access to new features before they are published on the website
+You will also occasionally get access to new features before they are published on the website.
 
 ## Picking and banning champions
 You can pick or ban a champion in four ways:
@@ -52,42 +52,42 @@ You can pick or ban a champion in four ways:
 - drag and drop the champion 
 - hover over a champion, then press a number on your keyboard (1 to 10, with 10 being represented by 0 to keep consistency left-to-right).
 
-This will either pick or ban the champion, depending on your current mode (pick or ban, toggled with `P` and `B` respectively)
+This will either pick or ban the champion, depending on your current mode (pick or ban, toggled with `Shift` +`P` and `Shift` + `B` respectively).
 
 This also works on already picked/banned champions. There is, however, a limitation to it: if you want to use this method while hovering over the same pick/ban slot twice, you need to leave and reenter it with your mouse.
 
-- search for a champion until there is only one available to be picked, then use the number method from above.
+- search for a champion until there is only one available to be picked, then use the number method from above
 
-This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast
+This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
 
 ## Keyboard shortcuts
 
 ### Picking and banning
 
-- `P` to get into `pick` mode
-- `B` to get into `ban` mode
+- `Shift` + `P` to get into `pick` mode
+- `Shift` + `B` to get into `ban` mode
 - any number from 1 to 10 (10 being represented by 0) to pick or ban a champion into that slot, depending on the current mode 
 - `Delete` to clear all picks and bans
-- `X` to clear picks or bans depending on the mode
+- `Shift` + `X` to clear picks or bans depending on the mode
 
 ### Search bar operations
-- `Spacebar`, `Backspace` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse).
+- `Spacebar`, `Backspace` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse)
 
-When refocusing the searchbar, backspace removes the last character (assuming that "Clear search bar on focus is off"), while a letter adds a character
+When refocusing the searchbar, backspace removes the last character (assuming that [Clear search bar on focus](#clear-search-bar-on-focus) is off), while a letter adds a character. Pressing spacebar has no effect on the search query.
 
-If the "Clear search bar on focus" setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.
+If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.
 
 ### Data management
-- `C` to load custom data
-- `D` to load default data 
-- `I` to open the "Input custom data" input area (note that this disables keyboard input until the input area is hidden)
-- `F` to open the file data input dialog
+- `Shift` + `C` to load custom data
+- `Shift` + `D` to load default data 
+- `Shift` + `I` to open the "Input custom data" input area (note that this disables keyboard input until the input area is hidden)
+- `Shift` + `F` to open the file data input dialog
 
 ### UI navigation
-- `M` to toggle the manual tab
-- `S` to toggle the settings tab
+- `Shift` + `M` to toggle the manual tab
+- `Shift` + `S` to toggle the settings tab
 - `!, @, #, $, %` (meaning `Shift` + `1, 2, 3, 4, 5`) to toggle role filtering from top to support
-- `Q, W, E` to toggle team filtering (All, Ally, Enemy respectively)
+- `Shift` + `Q, W, E` to toggle team filtering (All, Ally, Enemy respectively)
 
 ## Personalisation and configuration
 
@@ -102,7 +102,7 @@ This colors the borders of the champions depending on which team they belong to:
 
 ### Load user data on page reload
 This option decides which data source the program loads on startup (or when the page is reloaded).
-If enabled, your custom data will be loaded, provided it is available
+If enabled, your custom data will be loaded, provided it is available.
 
 ### Clear search bar on focus
 If enabled, clears the search bar whenever it is refocused. This enables the following:
@@ -147,7 +147,7 @@ This enables you to not have to bother with pasting the list of all champions fo
 
 `all` is intended to simply be a list of all champions, but there might be other uses for it so I made it customizable. A full list of champions is provided below.
 
-`ally` and `enemy` are simply the pools of two teams involved in the draft, use them however you like
+`ally` and `enemy` are simply the pools of two teams involved in the draft, use them however you like.
 
 An example of a full, valid config:
 ```
