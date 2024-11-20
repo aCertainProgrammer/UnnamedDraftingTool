@@ -14,6 +14,8 @@ SHORT IDEAS:
 
 - add the set searching to search query
 
+- fix the Vi problem when searching
+
 - a welcome screen to explain biggest features
 
 - allow toggling centered vs tiles for picks
