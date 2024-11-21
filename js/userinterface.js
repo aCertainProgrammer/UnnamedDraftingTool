@@ -266,7 +266,7 @@ export class UserInterface {
 		return role;
 	}
 	getSearchQuery() {
-		const searchQuery = this.searchBar.value;
+		const searchQuery = this.searchBar.value.toLowerCase();
 		return searchQuery;
 	}
 	setDataSource() {}
