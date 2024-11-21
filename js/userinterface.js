@@ -793,10 +793,11 @@ export class UserInterface {
 		const roles = ["top", "jungle", "mid", "adc", "support"];
 		const config = DataController.readConfig();
 		// Render champions (central part)
+		let exactlyMatchingChampion = null;
 		for (let i = 0; i < renderingData.visibleChampions.length; i++) {
 			const championName = renderingData.visibleChampions[i];
 			if (championName == this.searchBar.value) {
-				this.currentlyHoveredChampion = championName;
+				exactlyMatchingChampion = championName;
 			}
 			let enemy = 0,
 				ally = 0,
@@ -845,6 +846,12 @@ export class UserInterface {
 			championContainer.addEventListener("mouseleave", () => {
 				this.currentlyHoveredChampion = "";
 			});
+		}
+		if (exactlyMatchingChampion == null) {
+			this.currentlyHoveredChampion =
+				this.championsContainer.childNodes[0].childNodes[0].dataset.champion;
+		} else {
+			this.currentlyHoveredChampion = exactlyMatchingChampion;
 		}
 
 		// Render picked champions

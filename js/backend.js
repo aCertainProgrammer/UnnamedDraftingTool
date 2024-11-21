@@ -62,7 +62,6 @@ export class Backend {
 				}
 				if (query_index === searchQuery.length) {
 					newData.push(data[i]);
-					query_index = 0;
 					break;
 				}
 			}
