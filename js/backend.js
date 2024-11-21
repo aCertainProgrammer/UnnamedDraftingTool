@@ -71,7 +71,6 @@ export class Backend {
 	}
 	filterDataBySearchQueryLegacy(data, searchQuery) {
 		if (searchQuery == "") return data;
-		console.log(searchQuery);
 		const newData = [];
 		for (let i = 0; i < data.length; i++) {
 			if (data[i].includes(searchQuery)) newData.push(data[i]);
