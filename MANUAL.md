@@ -79,7 +79,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 ### Data management
 - `Shift` + `C` to load custom data
 - `Shift` + `D` to load default data 
-- `Shift` + `I` to open the "Input custom data" input area (note that this disables keyboard input until the input area is hidden)
+- `Shift` + `I` to toggle the "Input custom data" input area - this disables keyboard input until the input area is hidden, with the sole exception of being able to `Shift` + `I` again to close the input area
 - `Shift` + `F` to open the file data input dialog
 
 ### UI navigation
