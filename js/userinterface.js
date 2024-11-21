@@ -2,28 +2,10 @@ import { DataController } from "./datacontroller.js";
 import { capitalize } from "./util.js";
 export class UserInterface {
 	constructor(defaultPickIconPath, defaultBanIconPath, championIconPath) {
-		this.rightOverlay = document.querySelector("#right-overlay");
-		this.userDataInputTextarea = document.querySelector("#user_data_input");
-		this.saveUserDataButton = document.querySelector("#save-user-data");
-		this.saveUserDataButton.addEventListener(
-			"click",
-			this.saveUserData.bind(this, this.userDataInputTextarea),
-		);
-		this.hideUserInputTextarea = document.querySelector(
-			"#hide-user-data-form",
-		);
-		this.hideUserInputTextarea.addEventListener("click", () => {
-			this.rightOverlay.classList += "hidden";
-		});
-		this.fileInput = document.querySelector("#user-data-file-input");
-		this.fileInput.addEventListener("input", this.takeFileInput.bind(this));
-		this.fileInputButton = document.querySelector(
-			"#user-data-file-input-button",
-		);
-		this.fileInputButton.addEventListener(
-			"click",
-			this.clickInput.bind(this, this.fileInput),
-		);
+		this.defaultPickIconPath = defaultPickIconPath;
+		this.defaultBanIconPath = defaultBanIconPath;
+		this.championIconPath = championIconPath;
+
 		this.sendProcessSignal = null;
 		this.dataSource = null;
 		this.config = null;
@@ -36,12 +18,79 @@ export class UserInterface {
 			pickedChampions: [],
 			bannedChampions: [],
 		};
-		this.defaultPickIconPath = defaultPickIconPath;
-		this.defaultBanIconPath = defaultBanIconPath;
-		this.championIconPath = championIconPath;
+		this.currentlyHoveredChampion = "";
+		this.userInputContainer = null;
+		this.currentMode = "pick";
 
+		this.rightOverlay = document.querySelector("#right-overlay");
+		this.userDataInputTextarea = document.querySelector("#user_data_input");
+		this.saveUserDataButton = document.querySelector("#save-user-data");
+		this.hideUserInputTextarea = document.querySelector(
+			"#hide-user-data-form",
+		);
+		this.fileInput = document.querySelector("#user-data-file-input");
+		this.fileInputButton = document.querySelector(
+			"#user-data-file-input-button",
+		);
 		this.picks = document.querySelectorAll(".champion-pick");
 		this.bans = document.querySelectorAll(".champion-ban");
+		this.championsContainer = document.querySelector(
+			"#champions-container",
+		);
+		this.teamsContainer = document.querySelector("#teams-container");
+		this.logos = document.querySelectorAll(".team-logo");
+		this.rolesContainer = document.querySelector("#roles");
+		this.roleIcons = document.querySelectorAll(".role-icon");
+		this.searchBar = document.querySelector(".search-bar");
+		this.defaultDataSwitch = document.querySelector("#default_data");
+		this.userDataSwitch = document.querySelector("#load_user_data");
+		this.userDataInput = document.querySelector("#input_user_data");
+		this.colorBordersToggle = document.getElementById(
+			"color-borders-toggle",
+		);
+		this.dataSourceOnLoadToggle = document.querySelector(
+			"#load-user-data-on-program-load-toggle",
+		);
+		this.clearSearchbarOnFocusToggle = document.querySelector(
+			"#clear-searchbar-on-focus-toggle",
+		);
+		this.settingsMenu = document.querySelector("#settings-menu");
+		this.enterSettingsButton = document.querySelector(
+			"#enter-settings-button",
+		);
+		this.contentContainer = document.querySelector("#content-container");
+		this.leaveSettingsButton = document.querySelector(
+			"#leave-settings-button",
+		);
+		this.openManualButton = document.querySelector("#open-manual-button");
+		this.closeManualButton = document.querySelector("#close-manual-button");
+		this.toggleDarkmodeButton = document.querySelector(
+			"#toggle-darkmode-button",
+		);
+		this.manualContainer = document.querySelector("#manual-container");
+		this.manualText = document.querySelector("#manual-text");
+		this.goToTopOfManualButton =
+			document.querySelector("#go-to-top-button");
+		this.togglePickBanModeButton = document.querySelector(
+			"#toggle-pick-ban-mode",
+		);
+		this.toggleSearchModeButton = document.querySelector(
+			"#search-mode-toggle",
+		);
+
+		this.saveUserDataButton.addEventListener(
+			"click",
+			this.saveUserData.bind(this, this.userDataInputTextarea),
+		);
+		this.hideUserInputTextarea.addEventListener("click", () => {
+			this.rightOverlay.classList += "hidden";
+		});
+		this.fileInput.addEventListener("input", this.takeFileInput.bind(this));
+		this.fileInputButton.addEventListener(
+			"click",
+			this.clickInput.bind(this, this.fileInput),
+		);
+
 		this.picks.forEach((current) => {
 			current.addEventListener("click", this.placeChampion.bind(this));
 			current.addEventListener("drop", this.dropChampion.bind(this));
@@ -59,11 +108,6 @@ export class UserInterface {
 			current.childNodes[1].dataset.champion = "";
 		});
 
-		this.championsContainer = document.querySelector(
-			"#champions-container",
-		);
-		this.teamsContainer = document.querySelector("#teams-container");
-		this.logos = document.querySelectorAll(".team-logo");
 		this.logos.forEach((current) => {
 			current.addEventListener("click", this.setTeam.bind(this, current));
 			current.addEventListener("dragstart", (event) => {
@@ -72,8 +116,6 @@ export class UserInterface {
 			current.draggable = "false";
 		});
 
-		this.rolesContainer = document.querySelector("#roles");
-		this.roleIcons = document.querySelectorAll(".role-icon");
 		this.roleIcons.forEach((current) => {
 			current.addEventListener("click", this.setRole.bind(this, current));
 			current.addEventListener("dragstart", (event) => {
@@ -81,7 +123,7 @@ export class UserInterface {
 			});
 			current.draggable = "false";
 		});
-		this.searchBar = document.querySelector(".search-bar");
+
 		this.searchBar.addEventListener(
 			"input",
 			this.searchChampion.bind(this),
@@ -90,47 +132,86 @@ export class UserInterface {
 			event.preventDefault();
 		});
 		this.searchBar.draggable = "false";
-		this.defaultDataSwitch = document.querySelector("#default_data");
+
 		this.defaultDataSwitch.addEventListener(
 			"click",
 			this.loadDefaultData.bind(this),
 		);
-
-		this.userDataSwitch = document.querySelector("#load_user_data");
 		this.userDataSwitch.addEventListener(
 			"click",
 			this.loadUserData.bind(this),
 		);
-		this.userDataInput = document.querySelector("#input_user_data");
 		this.userDataInput.addEventListener(
 			"click",
 			this.toggleUserDataForm.bind(this),
-		);
-		this.colorBordersToggle = document.getElementById(
-			"color-borders-toggle",
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
 			this.toggleBorderColor.bind(this),
 		);
-		this.dataSourceOnLoadToggle = document.querySelector(
-			"#load-user-data-on-program-load-toggle",
-		);
 		this.dataSourceOnLoadToggle.addEventListener(
 			"click",
 			this.toggleDataSourceOnLoad.bind(this),
-		);
-		this.clearSearchbarOnFocusToggle = document.querySelector(
-			"#clear-searchbar-on-focus-toggle",
 		);
 		this.clearSearchbarOnFocusToggle.addEventListener(
 			"click",
 			this.toggleClearingSearchbarOnFocus.bind(this),
 		);
+
 		document.addEventListener(
 			"keydown",
 			this.processKeyboardInput.bind(this),
 		);
+
+		this.enterSettingsButton.addEventListener(
+			"click",
+			this.openSettingsMenu.bind(this),
+		);
+		this.contentContainer.addEventListener("dragover", (event) => {
+			event.preventDefault();
+		});
+		this.contentContainer.addEventListener(
+			"drop",
+			this.dropChampionIntoVoid.bind(this),
+		);
+		this.leaveSettingsButton.addEventListener(
+			"click",
+			this.closeMenu.bind(this),
+		);
+		this.openManualButton.addEventListener(
+			"click",
+			this.openManual.bind(this),
+		);
+		this.closeManualButton.addEventListener(
+			"click",
+			this.closeManual.bind(this),
+		);
+		this.toggleDarkmodeButton.addEventListener(
+			"click",
+			this.toggleDarkmode.bind(this),
+		);
+
+		if (
+			localStorage.getItem("darkmode") !=
+				document.documentElement.dataset.theme &&
+			localStorage.getItem("darkmode") != null
+		) {
+			this.toggleDarkmode();
+		}
+
+		this.goToTopOfManualButton.addEventListener("click", () => {
+			this.manualText.scrollTop = 0;
+		});
+
+		this.togglePickBanModeButton.addEventListener(
+			"click",
+			this.togglePickBanMode.bind(this),
+		);
+		this.toggleSearchModeButton.addEventListener(
+			"click",
+			this.toggleSearchMode.bind(this),
+		);
+
 		this.dragFunction = this.dragChampion.bind(this);
 		this.stopDrag = (event) => {
 			event.preventDefault();
@@ -151,79 +232,6 @@ export class UserInterface {
 			e.preventDefault();
 			this.currentlyHoveredChampion = "";
 		}.bind(this);
-		this.settingsMenu = document.querySelector("#settings-menu");
-		this.enterSettingsButton = document.querySelector(
-			"#enter-settings-button",
-		);
-		this.enterSettingsButton.addEventListener(
-			"click",
-			this.openSettingsMenu.bind(this),
-		);
-		this.contentContainer = document.querySelector("#content-container");
-		this.contentContainer.addEventListener("dragover", (event) => {
-			event.preventDefault();
-		});
-		this.contentContainer.addEventListener(
-			"drop",
-			this.dropChampionIntoVoid.bind(this),
-		);
-		this.contentContainer.add;
-		this.leaveSettingsButton = document.querySelector(
-			"#leave-settings-button",
-		);
-		this.leaveSettingsButton.addEventListener(
-			"click",
-			this.closeMenu.bind(this),
-		);
-		this.openManualButton = document.querySelector("#open-manual-button");
-		this.openManualButton.addEventListener(
-			"click",
-			this.openManual.bind(this),
-		);
-		this.closeManualButton = document.querySelector("#close-manual-button");
-		this.closeManualButton.addEventListener(
-			"click",
-			this.closeManual.bind(this),
-		);
-
-		this.currentlyHoveredChampion = "";
-		this.userInputContainer = null;
-		this.currentMode = "pick";
-		this.toggleDarkmodeButton = document.querySelector(
-			"#toggle-darkmode-button",
-		);
-		this.toggleDarkmodeButton.addEventListener(
-			"click",
-			this.toggleDarkmode.bind(this),
-		);
-		if (
-			localStorage.getItem("darkmode") !=
-				document.documentElement.dataset.theme &&
-			localStorage.getItem("darkmode") != null
-		) {
-			this.toggleDarkmode();
-		}
-		this.manualContainer = document.querySelector("#manual-container");
-		this.manualText = document.querySelector("#manual-text");
-		this.goToTopOfManualButton =
-			document.querySelector("#go-to-top-button");
-		this.goToTopOfManualButton.addEventListener("click", () => {
-			this.manualText.scrollTop = 0;
-		});
-		this.togglePickBanModeButton = document.querySelector(
-			"#toggle-pick-ban-mode",
-		);
-		this.togglePickBanModeButton.addEventListener(
-			"click",
-			this.togglePickBanMode.bind(this),
-		);
-		this.toggleSearchModeButton = document.querySelector(
-			"#search-mode-toggle",
-		);
-		this.toggleSearchModeButton.addEventListener(
-			"click",
-			this.toggleSearchMode.bind(this),
-		);
 	}
 	toggleSearchMode() {
 		this.config.useLegacySearch = !this.config.useLegacySearch;
