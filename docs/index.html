@@ -42,6 +42,361 @@
 
 
 
+    <section>
+        <article><h1>Foreword</h1>
+<p>This program is aiming to build on top of the currently available drafting tools, such as drafting.gg, Prodraft, Draftlol and Pick Ban, improving upon their UI, UX and adding new features. Basic navigation should pose no trouble to an experienced drafter, and to learn about new or advanced features you can consult the manual</p>
+<h1>Manual</h1>
+<table>
+<thead>
+<tr>
+<th>Table of contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#running-the-program">Running the program</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#picking-and-banning-champions">Picking and banning champions</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#keyboard-shortcuts">Keyboard shortcuts</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#personalisation-and-configuration">Personalisation and configuration</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input">Custom data input</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Running the program</h2>
+<h3>On the website</h3>
+<p>Head over to https://acertainprogrammer.github.io/UnnamedDraftingTool/ and you're good to go.</p>
+<h3>Local installation</h3>
+<p>The program can be used locally, as it has no backend.</p>
+<pre class="prettyprint source"><code>git clone https://github.com/aCertainProgrammer/UnnamedDraftingTool.git
+</code></pre>
+<p>Then run it with something like <code>live-server</code> or <code>vite</code></p>
+<pre class="prettyprint source"><code>cd UnnamedDraftingTool
+live-server
+</code></pre>
+<p>This will open the app in localhost.</p>
+<p>There is no build step required.
+To install the live server:</p>
+<pre class="prettyprint source"><code>npm install -g live-server
+</code></pre>
+<p>To update the program, run</p>
+<pre class="prettyprint source"><code>git pull
+npm ci
+</code></pre>
+<p>Running the program locally makes the performance better since images (the main bottleneck) are on your disk and don't need to be downloaded on the fly.
+You will also occasionally get access to new features before they are published on the website.</p>
+<h2>Picking and banning champions</h2>
+<p>You can pick or ban a champion in four ways:</p>
+<ul>
+<li>
+<p>Click a champion, then click a pick/ban slot</p>
+</li>
+<li>
+<p>Drag and drop the champion</p>
+</li>
+<li>
+<p>Hover over a champion, then press a number on your keyboard (1 to 10, with 10 being represented by 0 to keep consistency left-to-right).</p>
+<p>This will either pick or ban the champion, depending on your current mode (pick or ban, toggled with <code>Shift</code> +<code>P</code> and <code>Shift</code> + <code>B</code> respectively).</p>
+<p>This also works on already picked/banned champions. There is, however, a limitation to it: if you want to use this method while hovering over the same pick/ban slot twice, you need to leave and reenter it with your mouse.</p>
+</li>
+<li>
+<p>Search for a champion until it is the first result, then use the number method from above</p>
+<p>This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.</p>
+</li>
+</ul>
+<p>Note that there is a special case: if you search for Vi, you will see Vi and possibly other champions, such as Anivia, Viego etc. This does not stop you from picking Vi, as the program additionally checks for an exact match with the search query.</p>
+<h2>Keyboard shortcuts</h2>
+<h3>Picking and banning</h3>
+<ul>
+<li><code>Shift</code> + <code>P</code> to get into <code>pick</code> mode</li>
+<li><code>Shift</code> + <code>B</code> to get into <code>ban</code> mode</li>
+<li>Any number from 1 to 10 (10 being represented by 0) to pick or ban a champion into that slot, depending on the current mode</li>
+<li><code>Backspace</code> to unpick or unban a champion</li>
+<li><code>Delete</code> to clear all picks and bans</li>
+<li><code>Shift</code> + <code>X</code> to clear picks or bans depending on the mode</li>
+</ul>
+<h3>Search bar operations</h3>
+<ul>
+<li>
+<p><code>Spacebar</code> or any letter (<code>a</code> to <code>z</code>, <code>A</code> to <code>Z</code>) to focus the search bar (no need to click it with the mouse)</p>
+<p>If the <a href="#clear-search-bar-on-focus">Clear search bar on focus</a> setting is enabled, every time you refocus the searchbar it will be cleared, regardless of the method used.</p>
+</li>
+</ul>
+<h3>Data management</h3>
+<ul>
+<li><code>Shift</code> + <code>C</code> to load custom data</li>
+<li><code>Shift</code> + <code>D</code> to load default data</li>
+<li><code>Shift</code> + <code>I</code> to open the &quot;Input custom data&quot; input area (note that this disables keyboard input until the input area is hidden)</li>
+<li><code>Shift</code> + <code>F</code> to open the file data input dialog</li>
+</ul>
+<h3>UI navigation</h3>
+<ul>
+<li><code>Shift</code> + <code>M</code> to toggle the manual tab</li>
+<li><code>Shift</code> + <code>S</code> to toggle the settings tab</li>
+<li><code>!, @, #, $, %</code> (meaning <code>Shift</code> + <code>1, 2, 3, 4, 5</code>) to toggle role filtering from top to support</li>
+<li><code>Shift</code> + <code>Q, W, E</code> to toggle team filtering (All, Ally, Enemy respectively)</li>
+</ul>
+<h2>Personalisation and configuration</h2>
+<p>Currently you are given the option to customize the following:</p>
+<h3>Color champion borders</h3>
+<p>This colors the borders of the champions depending on which team they belong to:</p>
+<ul>
+<li>Green for ally champions</li>
+<li>Red for enemy champions</li>
+<li>Orange for champions in both teams</li>
+<li>Champions that are not in either ally or enemy teams are not given a colored border</li>
+</ul>
+<h3>Load user data on page reload</h3>
+<p>This option decides which data source the program loads on startup (or when the page is reloaded).
+If enabled, your custom data will be loaded, provided it is available.</p>
+<h3>Clear search bar on focus</h3>
+<p>If enabled, clears the search bar whenever it is refocused. This enables the following:</p>
+<ol>
+<li>Search a champion</li>
+<li>Pick it with a key</li>
+<li>Start typing the name of the next champion, no need to clear the previous one</li>
+</ol>
+<h3>Use legacy search</h3>
+<ul>
+<li><code>Modern search</code> (default) means that if a word contains the letters from the search query in the same order, it will be matched - for example, &quot;ji&quot; will match &quot;JInx&quot;, &quot;JhIn&quot; and &quot;seJuanI&quot;.</li>
+<li><code>Legacy search</code> means pure substring matching - if a word contains the exact string of the search query, it will be matched - for example, &quot;ji&quot; will match &quot;JInx&quot;.</li>
+</ul>
+<h2>Custom data input</h2>
+<p><strong>Note: if the data doesn't load, it means you made a mistake in your input. Read the error message that is being displayed for you and fix the problem.
+You can also validate your JSON here:
+https://jsonchecker.com/
+or on any other JSON validation website</strong></p>
+<p>The custom data needs to be in the form of valid JSON, as an object containing 3 objects:</p>
+<pre class="prettyprint source"><code>{
+    &quot;all&quot;,
+    &quot;ally&quot;,
+    &quot;enemy&quot;
+}
+</code></pre>
+<p>Each one of the objects contains 5 arrays, one for each role, as follows:</p>
+<pre class="prettyprint source"><code>{
+    &quot;all&quot;: {
+		&quot;top&quot;: [&quot;camille&quot;, &quot;aatrox&quot;, &quot;darius&quot;, &quot;chogath&quot;],
+		&quot;jungle&quot;: [&quot;udyr&quot;, &quot;xinzhao&quot;, &quot;wukong&quot;, &quot;jarvan&quot;],
+		&quot;mid&quot;: [&quot;syndra&quot;, &quot;orianna&quot;, &quot;sylas&quot;, &quot;akali&quot;],
+		&quot;adc&quot;: [&quot;jhin&quot;, &quot;jinx&quot;, &quot;ashe&quot;, &quot;kalista&quot;],
+		&quot;support&quot;: [&quot;leona&quot;, &quot;nautilus&quot;, &quot;sona&quot;, &quot;taric&quot;]
+    },
+    etc...
+}
+</code></pre>
+<p>Together, they define the 3 teams you can select in the tool.</p>
+<p><strong>Note</strong>: You don't need to provide all 3 teams, if you omit a team the data will be pulled from the default data.
+This enables you to not have to bother with pasting the list of all champions for every config.</p>
+<p><code>all</code> is intended to simply be a list of all champions, but there might be other uses for it so I made it customizable. A full list of champions is provided below.</p>
+<p><code>ally</code> and <code>enemy</code> are simply the pools of two teams involved in the draft, use them however you like.</p>
+<p>An example of a full, valid config:</p>
+<pre class="prettyprint source"><code>{
+	&quot;all&quot;: {
+		&quot;top&quot;: [&quot;camille&quot;, &quot;aatrox&quot;, &quot;darius&quot;, &quot;chogath&quot;],
+		&quot;jungle&quot;: [&quot;udyr&quot;, &quot;xinzhao&quot;, &quot;wukong&quot;, &quot;jarvan&quot;],
+		&quot;mid&quot;: [&quot;syndra&quot;, &quot;orianna&quot;, &quot;sylas&quot;, &quot;akali&quot;],
+		&quot;adc&quot;: [&quot;jhin&quot;, &quot;jinx&quot;, &quot;ashe&quot;, &quot;kalista&quot;],
+		&quot;support&quot;: [&quot;leona&quot;, &quot;nautilus&quot;, &quot;sona&quot;, &quot;taric&quot;]
+	},
+	&quot;ally&quot;: {
+		&quot;top&quot;: [&quot;darius&quot;, &quot;chogath&quot;],
+		&quot;jungle&quot;: [&quot;wukong&quot;, &quot;jarvan&quot;],
+		&quot;mid&quot;: [&quot;sylas&quot;, &quot;akali&quot;],
+		&quot;adc&quot;: [&quot;ashe&quot;, &quot;kalista&quot;],
+		&quot;support&quot;: [&quot;sona&quot;, &quot;taric&quot;]
+	},
+	&quot;enemy&quot;: {
+		&quot;top&quot;: [&quot;camille&quot;, &quot;aatrox&quot;],
+		&quot;jungle&quot;: [&quot;udyr&quot;, &quot;xinzhao&quot;],
+		&quot;mid&quot;: [&quot;syndra&quot;, &quot;orianna&quot;],
+		&quot;adc&quot;: [&quot;jhin&quot;, &quot;jinx&quot;],
+		&quot;support&quot;: [&quot;leona&quot;, &quot;nautilus&quot;]
+	}
+}
+</code></pre>
+<p><strong>Pay attention to how some names are changed (xinzhao, jarvan, chogath)</strong>.</p>
+<p>This is to make writing configs more convenient. Consult the list of all champions for the accepted names.</p>
+<h3>All champions</h3>
+<p>The current list of all champions:</p>
+<pre class="prettyprint source"><code>&quot;aatrox&quot;,
+&quot;ahri&quot;,
+&quot;akali&quot;,
+&quot;alistar&quot;,
+&quot;ambessa&quot;,
+&quot;amumu&quot;,
+&quot;anivia&quot;,
+&quot;annie&quot;,
+&quot;aphelios&quot;,
+&quot;ashe&quot;,
+&quot;aurelionsol&quot;,
+&quot;aurora&quot;,
+&quot;azir&quot;,
+&quot;bard&quot;,
+&quot;belveth&quot;,
+&quot;blitzcrank&quot;,
+&quot;brand&quot;,
+&quot;braum&quot;,
+&quot;briar&quot;,
+&quot;caitlyn&quot;,
+&quot;camille&quot;,
+&quot;cassiopeia&quot;,
+&quot;chogath&quot;,
+&quot;corki&quot;,
+&quot;darius&quot;,
+&quot;diana&quot;,
+&quot;draven&quot;,
+&quot;drmundo&quot;,
+&quot;ekko&quot;,
+&quot;elise&quot;,
+&quot;evelynn&quot;,
+&quot;ezreal&quot;,
+&quot;fiddlesticks&quot;,
+&quot;fiora&quot;,
+&quot;fizz&quot;,
+&quot;galio&quot;,
+&quot;gangplank&quot;,
+&quot;garen&quot;,
+&quot;gnar&quot;,
+&quot;gragas&quot;,
+&quot;graves&quot;,
+&quot;gwen&quot;,
+&quot;hecarim&quot;,
+&quot;hwei&quot;,
+&quot;illaoi&quot;,
+&quot;irelia&quot;,
+&quot;ivern&quot;,
+&quot;janna&quot;,
+&quot;jarvan&quot;,
+&quot;jax&quot;,
+&quot;jayce&quot;,
+&quot;jhin&quot;,
+&quot;jinx&quot;,
+&quot;kaisa&quot;,
+&quot;kalista&quot;,
+&quot;karma&quot;,
+&quot;karthus&quot;,
+&quot;kassadin&quot;,
+&quot;katarina&quot;,
+&quot;kayle&quot;,
+&quot;kayn&quot;,
+&quot;kennen&quot;,
+&quot;kindred&quot;,
+&quot;kled&quot;,
+&quot;kogmaw&quot;,
+&quot;ksante&quot;,
+&quot;leblanc&quot;,
+&quot;leesin&quot;,
+&quot;leona&quot;,
+&quot;lillia&quot;,
+&quot;lissandra&quot;,
+&quot;lucian&quot;,
+&quot;lulu&quot;,
+&quot;lux&quot;,
+&quot;malphite&quot;,
+&quot;malzahar&quot;,
+&quot;maokai&quot;,
+&quot;masteryi&quot;,
+&quot;milio&quot;,
+&quot;missfortune&quot;,
+&quot;mordekaiser&quot;,
+&quot;morgana&quot;,
+&quot;naafiri&quot;,
+&quot;nami&quot;,
+&quot;nasus&quot;,
+&quot;nautilus&quot;,
+&quot;neeko&quot;,
+&quot;nidalee&quot;,
+&quot;nilah&quot;,
+&quot;nocturne&quot;,
+&quot;nunu&quot;,
+&quot;olaf&quot;,
+&quot;orianna&quot;,
+&quot;ornn&quot;,
+&quot;pantheon&quot;,
+&quot;poppy&quot;,
+&quot;qiyana&quot;,
+&quot;quinn&quot;,
+&quot;rakan&quot;,
+&quot;rammus&quot;,
+&quot;reksai&quot;,
+&quot;rell&quot;,
+&quot;renata&quot;,
+&quot;renekton&quot;,
+&quot;rengar&quot;,
+&quot;riven&quot;,
+&quot;rumble&quot;,
+&quot;ryze&quot;,
+&quot;samira&quot;,
+&quot;sejuani&quot;,
+&quot;senna&quot;,
+&quot;seraphine&quot;,
+&quot;sett&quot;,
+&quot;shaco&quot;,
+&quot;shen&quot;,
+&quot;shyvana&quot;,
+&quot;singed&quot;,
+&quot;sion&quot;,
+&quot;sivir&quot;,
+&quot;skarner&quot;,
+&quot;smolder&quot;,
+&quot;sona&quot;,
+&quot;soraka&quot;,
+&quot;swain&quot;,
+&quot;sylas&quot;,
+&quot;syndra&quot;,
+&quot;tahmkench&quot;,
+&quot;taliyah&quot;,
+&quot;talon&quot;,
+&quot;taric&quot;,
+&quot;teemo&quot;,
+&quot;thresh&quot;,
+&quot;tristana&quot;,
+&quot;trundle&quot;,
+&quot;tryndamere&quot;,
+&quot;twistedfate&quot;,
+&quot;twitch&quot;,
+&quot;udyr&quot;,
+&quot;urgot&quot;,
+&quot;varus&quot;,
+&quot;vayne&quot;,
+&quot;veigar&quot;,
+&quot;velkoz&quot;,
+&quot;vex&quot;,
+&quot;vi&quot;,
+&quot;viego&quot;,
+&quot;viktor&quot;,
+&quot;vladimir&quot;,
+&quot;volibear&quot;,
+&quot;warwick&quot;,
+&quot;wukong&quot;,
+&quot;xayah&quot;,
+&quot;xerath&quot;,
+&quot;xinzhao&quot;,
+&quot;yasuo&quot;,
+&quot;yone&quot;,
+&quot;yorick&quot;,
+&quot;yuumi&quot;,
+&quot;zac&quot;,
+&quot;zed&quot;,
+&quot;zeri&quot;,
+&quot;ziggs&quot;,
+&quot;zilean&quot;,
+&quot;zoe&quot;,
+&quot;zyra&quot;
+</code></pre>
+<hr>
+<p>UnnamedDraftingTool isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc.
+UnnamedDraftingTool was created under Riot Games' &quot;Legal Jibber Jabber&quot; policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.</p></article>
+    </section>
+
 
 
 
@@ -50,13 +405,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Scraper.html">Scraper</a></li></ul><h3>Global</h3><ul><li><a href="global.html#capitalize">capitalize</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Nov 21 2024 14:56:15 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Nov 21 2024 15:28:54 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

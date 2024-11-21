@@ -1,8 +1,15 @@
+/**
+ * This is a scraper
+ */
 export class Scraper {
 	constructor(picksSelector, banSelector) {
 		this.picks = document.querySelectorAll(picksSelector);
 		this.bans = document.querySelectorAll(banSelector);
 	}
+	/**
+	 * Scrapes picks and bans
+	 * @returns {object}
+	 */
 	getPicksAndBans() {
 		let data = {
 			picks: [],

@@ -2,10 +2,9 @@
 	"name": "unnameddraftingtool",
 	"version": "1.0.0",
 	"description": "https://acertainprogrammer.github.io/UnnamedDraftingTool/index.html",
-	"main": "index.js",
 	"scripts": {
 		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-		"doc": "jsdoc js/* --destination docs"
+		"doc": "jsdoc --readme ./README.md js -r -d docs --pedantic"
 	},
 	"type": "module",
 	"author": "",

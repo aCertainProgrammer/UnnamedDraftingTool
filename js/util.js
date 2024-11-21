@@ -1,3 +1,7 @@
+/** Capitalizes a string
+ * @param {string} uncapitalizedString
+ * @returns {string} capitalizedString
+ */
 export function capitalize(string) {
 	let newString = "";
 	newString += string[0].toUpperCase();
