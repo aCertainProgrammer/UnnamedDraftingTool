@@ -561,6 +561,7 @@ export class UserInterface {
 					event.preventDefault();
 					const selector = `[data-champion=${this.currentlyHoveredChampion}]`;
 					const hoveredImg = document.querySelector(selector);
+					if (hoveredImg == null) return;
 					if (hoveredImg.dataset.champion != "")
 						hoveredImg.dataset.champion = "";
 					this.sendProcessSignal();
@@ -794,6 +795,9 @@ export class UserInterface {
 		// Render champions (central part)
 		for (let i = 0; i < renderingData.visibleChampions.length; i++) {
 			const championName = renderingData.visibleChampions[i];
+			if (championName == this.searchBar.value) {
+				this.currentlyHoveredChampion = championName;
+			}
 			let enemy = 0,
 				ally = 0,
 				team = "none";
