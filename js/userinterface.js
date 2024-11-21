@@ -331,7 +331,6 @@ export class UserInterface {
 			selected.classList.remove("selected");
 		}
 	}
-
 	selectChampion(event) {
 		const championIcon = event.target;
 		this.clearSelectedChampions();
@@ -396,7 +395,7 @@ export class UserInterface {
 
 			const json = DataController.loadData(this.getDataSource(), "none");
 			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
-		} else form_container.classList.add("hidden");
+		} else this.rightOverlay.classList.add("hidden");
 	}
 
 	searchChampion() {
@@ -536,9 +535,13 @@ export class UserInterface {
 		}
 	}
 	processKeyboardInput(event) {
-		if (!this.rightOverlay.classList.contains("hidden")) return;
 		const key = event.key;
 		const shiftKeyPressed = event.shiftKey;
+		if ((key == "I" || key == "i") && shiftKeyPressed) {
+			this.searchBar.blur();
+			this.userDataInput.click();
+		}
+		if (!this.rightOverlay.classList.contains("hidden")) return;
 		if (key == " ") {
 			this.searchBar.focus();
 		}
@@ -590,10 +593,6 @@ export class UserInterface {
 				this.searchBar.blur();
 				this.dataSource = "default_data";
 				this.sendProcessSignal();
-			}
-			if (key == "I" || key == "i") {
-				this.searchBar.blur();
-				this.userDataInput.click();
 			}
 			if (key == "F" || key == "f") {
 				this.searchBar.blur();
@@ -783,7 +782,10 @@ export class UserInterface {
 				this.currentlyHoveredChampion = "";
 			});
 		}
-		if (exactlyMatchingChampion == null) {
+		if (
+			exactlyMatchingChampion == null &&
+			this.championsContainer.hasChildNodes()
+		) {
 			this.currentlyHoveredChampion =
 				this.championsContainer.childNodes[0].childNodes[0].dataset.champion;
 		} else {
