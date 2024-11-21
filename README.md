@@ -56,9 +56,9 @@ You can pick or ban a champion in four ways:
 
     This also works on already picked/banned champions. There is, however, a limitation to it: if you want to use this method while hovering over the same pick/ban slot twice, you need to leave and reenter it with your mouse.
 
-- Search for a champion until there is only one available to be picked, then use the number method from above
+- Search for a champion until it is the first result, then use the number method from above
 
-This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
+    This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
 
 Note that there is a special case: if you search for Vi, you will see Vi and possibly other champions, such as Anivia, Viego etc. This does not stop you from picking Vi, as the program additionally checks for an exact match with the search query.
 
@@ -359,4 +359,3 @@ The current list of all champions:
 
 UnnamedDraftingTool isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc.
 UnnamedDraftingTool was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.
-
