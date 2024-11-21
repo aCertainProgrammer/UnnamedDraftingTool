@@ -60,6 +60,8 @@ You can pick or ban a champion in four ways:
 
 This method has the advantage of not requiring a hover to work, which will certainly be appreciated by the Vim enthusiast.
 
+Note that there is a special case: if you search for Vi, you will see Vi and possibly other champions, such as Anivia, Viego etc. This does not stop you from picking Vi, as the program additionally checks for an exact match with the search query.
+
 ## Keyboard shortcuts
 
 ### Picking and banning
