@@ -240,34 +240,26 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 	colorSettingsButtons() {
-		if (this.config.colorBorders == false) {
-			this.colorBordersToggle.classList.remove("on");
-			this.colorBordersToggle.classList.add("off");
-		} else {
-			this.colorBordersToggle.classList.remove("off");
-			this.colorBordersToggle.classList.add("on");
-		}
-
-		if (this.config.loadUserDataOnProgramStart == false) {
-			this.dataSourceOnLoadToggle.classList.remove("on");
-			this.dataSourceOnLoadToggle.classList.add("off");
-		} else {
-			this.dataSourceOnLoadToggle.classList.remove("off");
-			this.dataSourceOnLoadToggle.classList.add("on");
-		}
-		if (this.config.clearSearchBarOnFocus === false) {
-			this.clearSearchbarOnFocusToggle.classList.remove("on");
-			this.clearSearchbarOnFocusToggle.classList.add("off");
-		} else {
-			this.clearSearchbarOnFocusToggle.classList.remove("off");
-			this.clearSearchbarOnFocusToggle.classList.add("on");
-		}
-		if (this.config.useLegacySearch == false) {
-			this.toggleSearchModeButton.classList.remove("on");
-			this.toggleSearchModeButton.classList.add("off");
-		} else {
-			this.toggleSearchModeButton.classList.remove("off");
-			this.toggleSearchModeButton.classList.add("on");
+		const buttons = [
+			this.colorBordersToggle,
+			this.dataSourceOnLoadToggle,
+			this.clearSearchbarOnFocusToggle,
+			this.toggleSearchModeButton,
+		];
+		const config_settings = [
+			this.config.colorBorders,
+			this.config.loadUserDataOnProgramStart,
+			this.config.clearSearchBarOnFocus,
+			this.config.useLegacySearch,
+		];
+		for (let i = 0; i < buttons.length; i++) {
+			if (config_settings[i] == true) {
+				buttons[i].classList.remove("off");
+				buttons[i].classList.add("on");
+			} else {
+				buttons[i].classList.remove("on");
+				buttons[i].classList.add("off");
+			}
 		}
 	}
 	openManual() {
