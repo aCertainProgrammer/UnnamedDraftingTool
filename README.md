@@ -41,7 +41,6 @@ npm install -g live-server
 To update the program, run 
 ```
 git pull
-npm ci
 ```
 
 Running the program locally makes the performance better since images (the main bottleneck) are on your disk and don't need to be downloaded on the fly.
