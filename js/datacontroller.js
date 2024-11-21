@@ -59,7 +59,7 @@ export class DataController {
 				colorBorders: false,
 				loadUserDataOnProgramStart: false,
 				clearSearchBarOnFocus: true,
-				useLegacySearch: false,
+				useLegacySearch: true,
 			};
 		}
 		return JSON.parse(config);
