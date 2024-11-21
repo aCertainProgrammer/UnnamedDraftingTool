@@ -9,6 +9,51 @@
 	</head>
 
 	<body>
+		<div id="right-overlay" class="hidden">
+			<div id="user_data_form_container">
+				<label for="user_data_input">
+					Read the
+					<a
+						href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input"
+						target="_blank"
+						>input data specification</a
+					>
+				</label>
+				<textarea
+					id="user_data_input"
+					cols="40"
+					rows="40"
+					class="custom-data-input-textarea"
+				>
+				</textarea>
+				<div id="input-error-box" class="hidden"></div>
+				<div class="input-buttons-container">
+					<input
+						class="source-button"
+						id="save-user-data"
+						value="Save and load"
+						type="button"
+					/>
+					<input
+						class="source-button"
+						id="hide-user-data-form"
+						value="Hide"
+						type="button"
+					/>
+					<input
+						class="hidden"
+						id="user-data-file-input"
+						type="file"
+					/>
+					<input
+						class="source-button"
+						id="user-data-file-input-button"
+						value="Load from file"
+						type="button"
+					/>
+				</div>
+			</div>
+		</div>
 		<div id="manual-container" class="hidden">
 			<input
 				class="source-button"

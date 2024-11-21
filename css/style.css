@@ -41,6 +41,7 @@
 	--invalidBackgroundColor: red;
 	--validBackgroundColor: lightgreen;
 	--scrollbarColor: #aaaaaa var(--bodyBackgroundColor);
+	--overlayBackgroundColor: #131313;
 }
 
 :root[data-theme="dark"] {
@@ -64,6 +65,7 @@
 	--invalidBackgroundColor: #640d0d;
 	--validBackgroundColor: darkgreen;
 	--scrollbarColor: gray var(--bodyBackgroundColor);
+	--overlayBackgroundColor: #131313;
 }
 
 * {
@@ -328,11 +330,27 @@ body {
 	color: var(--sourceButtonTextColor);
 }
 
+#right-overlay {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
+	height: 100%;
+	opacity: 0.95;
+}
 #user_data_form_container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	background-color: var(--overlayBackgroundColor);
+	padding: 0px 10px;
+	border-radius: var(--generalBorderRadius);
+	height: 100%;
 }
 
 #user_data_form_container > textarea {
@@ -504,4 +522,11 @@ label {
 #toggle-pick-ban-mode {
 	min-width: 194px;
 	text-align: left;
+}
+
+.input-buttons-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }

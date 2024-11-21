@@ -2,6 +2,28 @@ import { DataController } from "./datacontroller.js";
 import { capitalize } from "./util.js";
 export class UserInterface {
 	constructor(defaultPickIconPath, defaultBanIconPath, championIconPath) {
+		this.rightOverlay = document.querySelector("#right-overlay");
+		this.userDataInputTextarea = document.querySelector("#user_data_input");
+		this.saveUserDataButton = document.querySelector("#save-user-data");
+		this.saveUserDataButton.addEventListener(
+			"click",
+			this.saveUserData.bind(this, this.userDataInputTextarea),
+		);
+		this.hideUserInputTextarea = document.querySelector(
+			"#hide-user-data-form",
+		);
+		this.hideUserInputTextarea.addEventListener("click", () => {
+			this.rightOverlay.classList += "hidden";
+		});
+		this.fileInput = document.querySelector("#user-data-file-input");
+		this.fileInput.addEventListener("input", this.takeFileInput.bind(this));
+		this.fileInputButton = document.querySelector(
+			"#user-data-file-input-button",
+		);
+		this.fileInputButton.addEventListener(
+			"click",
+			this.clickInput.bind(this, this.fileInput),
+		);
 		this.sendProcessSignal = null;
 		this.dataSource = null;
 		this.config = null;
@@ -164,7 +186,6 @@ export class UserInterface {
 			this.closeManual.bind(this),
 		);
 
-		this.fileInput = null;
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
 		this.currentMode = "pick";
@@ -370,26 +391,11 @@ export class UserInterface {
 	}
 
 	toggleUserDataForm() {
-		let form_container = document.querySelector(
-			"#user_data_form_container",
-		);
-		if (form_container === null) {
-			this.createUserDataForm();
-			form_container = document.querySelector(
-				"#user_data_form_container",
-			);
-		}
-		if (form_container.classList.contains("hidden")) {
-			form_container.classList.remove("hidden");
+		if (this.rightOverlay.classList.contains("hidden")) {
+			this.rightOverlay.classList.remove("hidden");
 
-			const textarea = document.querySelector("#user_data_input");
-			if (textarea != null) {
-				const json = DataController.loadData(
-					this.getDataSource(),
-					"none",
-				);
-				textarea.value = JSON.stringify(json, null, 4);
-			}
+			const json = DataController.loadData(this.getDataSource(), "none");
+			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		} else form_container.classList.add("hidden");
 	}
 
@@ -399,20 +405,14 @@ export class UserInterface {
 	}
 	loadDefaultData() {
 		this.dataSource = "default_data";
-		const textarea = document.querySelector("#user_data_input");
-		if (textarea != null) {
-			const json = DataController.loadData(this.getDataSource(), "none");
-			textarea.value = JSON.stringify(json, null, 4);
-		}
+		const json = DataController.loadData(this.getDataSource(), "none");
+		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		this.sendProcessSignal();
 	}
 	loadUserData() {
 		this.dataSource = "user_data";
-		const textarea = document.querySelector("#user_data_input");
-		if (textarea != null) {
-			const json = DataController.loadData(this.getDataSource(), "none");
-			textarea.value = JSON.stringify(json, null, 4);
-		}
+		const json = DataController.loadData(this.getDataSource(), "none");
+		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		this.sendProcessSignal();
 	}
 	validateUserData(data) {
@@ -457,8 +457,7 @@ export class UserInterface {
 		DataController.saveData("user_data", JSON.stringify(validatedData));
 		this.dataSource = "user_data";
 		const json = JSON.parse(data);
-		const textarea = document.querySelector("#user_data_input");
-		if (textarea != null) textarea.value = JSON.stringify(json, null, 4);
+		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		this.sendProcessSignal();
 	}
 	clickInput(input) {
@@ -537,9 +536,7 @@ export class UserInterface {
 		}
 	}
 	processKeyboardInput(event) {
-		const container = document.querySelector("#user_data_form_container");
-		if (container !== null)
-			if (!container.classList.contains("hidden")) return;
+		if (!this.rightOverlay.classList.contains("hidden")) return;
 		const key = event.key;
 		const shiftKeyPressed = event.shiftKey;
 		if (key == " ") {
@@ -600,10 +597,6 @@ export class UserInterface {
 			}
 			if (key == "F" || key == "f") {
 				this.searchBar.blur();
-				if (this.fileInput == null) {
-					this.createUserDataForm();
-					this.userInputContainer.classList.add("hidden");
-				}
 				this.clickInput(this.fileInput);
 			}
 			if (key == "P" || key == "p") {
@@ -718,63 +711,6 @@ export class UserInterface {
 	closeMenu() {
 		this.settingsMenu.classList.add("hidden");
 		this.contentContainer.classList.remove("hidden");
-	}
-	createUserDataForm() {
-		const container = document.querySelector("#data");
-		const form_container = document.createElement("div");
-		form_container.id = "user_data_form_container";
-		form_container.classList.add("hidden");
-		this.userInputContainer = form_container;
-		const textarea = document.createElement("textarea");
-		textarea.name = "user_data_input";
-		textarea.id = "user_data_input";
-		textarea.cols = "80";
-		textarea.rows = "10";
-		textarea.classList.add("custom-data-input-textarea");
-		const json = DataController.loadData(this.dataSource, "none");
-		textarea.value = JSON.stringify(json, null, 4);
-		const label = document.createElement("label");
-		label.innerHTML =
-			'Read the <a href="https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input" target="_blank">input data specification</a>';
-		label.for = "user_data_input";
-		const error_box = document.createElement("div");
-		error_box.classList.add("hidden");
-		error_box.id = "input-error-box";
-		const button_container = document.createElement("div");
-		button_container.style.display = "flex";
-		button_container.style.flexDirection = "row";
-		const save = document.createElement("button");
-		save.innerText = "Save and load";
-		save.classList += "source-button";
-		const hide = document.createElement("button");
-		hide.innerText = "Hide";
-		hide.classList += "source-button";
-		const file_input = document.createElement("input");
-		file_input.type = "file";
-		file_input.name = "user_file_input";
-		file_input.style.display = "none";
-		const file_input_button = document.createElement("button");
-		file_input_button.innerText = "Load from file";
-		file_input_button.classList.add("source-button");
-		button_container.appendChild(save);
-		button_container.appendChild(hide);
-		button_container.appendChild(file_input);
-		button_container.appendChild(file_input_button);
-		form_container.appendChild(label);
-		form_container.appendChild(textarea);
-		form_container.appendChild(error_box);
-		form_container.appendChild(button_container);
-		container.appendChild(form_container);
-		save.addEventListener("click", this.saveUserData.bind(this, textarea));
-		hide.addEventListener("click", () => {
-			form_container.classList += "hidden";
-		});
-		file_input.addEventListener("input", this.takeFileInput.bind(this));
-		file_input_button.addEventListener(
-			"click",
-			this.clickInput.bind(this, file_input),
-		);
-		this.fileInput = file_input;
 	}
 	render(renderingData) {
 		if (this.dataSource === "default_data") {
