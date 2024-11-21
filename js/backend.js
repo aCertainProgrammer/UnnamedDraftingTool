@@ -17,7 +17,17 @@ export class Backend {
 		} else {
 			data = this.sortAndRemoveDuplicates(data[request.role]);
 		}
-		data = this.filterDataBySearchQuery(data, request.searchQuery);
+		if (request.mode == "modern")
+			data = this.filterDataBySearchQueryModern(
+				data,
+				request.searchQuery,
+			);
+		else if (request.mode == "legacy")
+			data = this.filterDataBySearchQueryLegacy(
+				data,
+				request.searchQuery,
+			);
+		else console.log("Bad data filtering mode!");
 		if (data.length == 0 && request.role != "all") {
 			const allRolesData = this.requestVisibleChampions({
 				dataSource: request.dataSource,
@@ -40,13 +50,31 @@ export class Backend {
 		}
 		return newData;
 	}
-	filterDataBySearchQuery(data, searchQuery) {
+	filterDataBySearchQueryModern(data, searchQuery) {
 		if (searchQuery == "") return data;
 		const newData = [];
+		let query_index = 0;
 		for (let i = 0; i < data.length; i++) {
-			if (data[i].toLowerCase().includes(searchQuery.toLowerCase())) {
-				newData.push(data[i]);
+			query_index = 0;
+			for (let j = 0; j < data[i].length; j++) {
+				if (searchQuery[query_index] === data[i][j]) {
+					query_index += 1;
+				}
+				if (query_index === searchQuery.length) {
+					newData.push(data[i]);
+					query_index = 0;
+					break;
+				}
 			}
+		}
+		return newData;
+	}
+	filterDataBySearchQueryLegacy(data, searchQuery) {
+		if (searchQuery == "") return data;
+		console.log(searchQuery);
+		const newData = [];
+		for (let i = 0; i < data.length; i++) {
+			if (data[i].includes(searchQuery)) newData.push(data[i]);
 		}
 		return newData;
 	}

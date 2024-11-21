@@ -196,6 +196,19 @@ export class UserInterface {
 			"click",
 			this.togglePickBanMode.bind(this),
 		);
+		this.toggleSearchModeButton = document.querySelector(
+			"#search-mode-toggle",
+		);
+		this.toggleSearchModeButton.addEventListener(
+			"click",
+			this.toggleSearchMode.bind(this),
+		);
+	}
+	toggleSearchMode() {
+		this.config.useLegacySearch = !this.config.useLegacySearch;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+		this.sendProcessSignal();
 	}
 	colorSettingsButtons() {
 		if (this.config.colorBorders == false) {
@@ -219,6 +232,13 @@ export class UserInterface {
 		} else {
 			this.clearSearchbarOnFocusToggle.classList.remove("off");
 			this.clearSearchbarOnFocusToggle.classList.add("on");
+		}
+		if (this.config.useLegacySearch == false) {
+			this.toggleSearchModeButton.classList.remove("on");
+			this.toggleSearchModeButton.classList.add("off");
+		} else {
+			this.toggleSearchModeButton.classList.remove("off");
+			this.toggleSearchModeButton.classList.add("on");
 		}
 	}
 	openManual() {

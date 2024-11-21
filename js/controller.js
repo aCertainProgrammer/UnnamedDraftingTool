@@ -23,11 +23,17 @@ export class Controller {
 		DataController.saveData("default_data", default_data);
 	}
 	process() {
+		const config = DataController.readConfig();
+		if (config.useLegacySearch == null)
+			console.log("Can't find search mode in config!");
+		const mode = config.useLegacySearch ? "legacy" : "modern";
+
 		const request = {
 			dataSource: this.userInterface.getDataSource(),
 			team: this.userInterface.getTeam(),
 			role: this.userInterface.getRole(),
 			searchQuery: this.userInterface.getSearchQuery(),
+			mode: mode,
 		};
 		const visibleChampions = this.backend.requestVisibleChampions(request);
 		let picksAndBans;

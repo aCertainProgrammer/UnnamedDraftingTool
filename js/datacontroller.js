@@ -59,6 +59,7 @@ export class DataController {
 				colorBorders: false,
 				loadUserDataOnProgramStart: false,
 				clearSearchBarOnFocus: true,
+				useLegacySearch: false,
 			};
 		}
 		return JSON.parse(config);
@@ -79,6 +80,9 @@ export class DataController {
 		else
 			config.clearSearchBarOnFocus =
 				configToValidate.clearSearchBarOnFocus;
+		if (configToValidate.useLegacySearch == undefined)
+			config.useLegacySearch = false;
+		else config.useLegacySearch = configToValidate.useLegacySearch;
 		return config;
 	}
 	static loadPicksAndBans() {

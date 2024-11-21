@@ -75,7 +75,7 @@
 				</p>
 				<p>
 					If enabled, your custom data will be loaded, provided it is
-					available
+					available.
 				</p>
 			</div>
 			<input
@@ -84,6 +84,31 @@
 				type="button"
 				value="Clear search bar on focus"
 			/>
+			<div class="settings-tooltip">
+				<p>
+					If enabled clears the search bar whenever it is refocused by
+					pressing spacebar or typing a letter
+				</p>
+			</div>
+			<input
+				class="source-button"
+				id="search-mode-toggle"
+				type="button"
+				value="Use legacy search"
+			/>
+			<div class="settings-tooltip">
+				<p>
+					Legacy search means pure substring matching - if a word
+					contains the exact string of the search query, it will be
+					matched - for example, "ji" will match "JInx"
+				</p>
+				<p>
+					Modern search (default) means that if a word contains the
+					letters from the search query in the same order, it will be
+					matched - for example, "ji" will match "JInx", "JhIn" and
+					"seJuanI".
+				</p>
+			</div>
 		</div>
 		<div id="content-container" class="container">
 			<div id="header">
