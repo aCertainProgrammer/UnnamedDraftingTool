@@ -10,8 +10,6 @@ SHORT IDEAS:
 
 - fix form styling
 
-- consider data input placement (to the side?)
-
 - a welcome screen to explain biggest features
 
 - allow toggling centered vs tiles for picks
