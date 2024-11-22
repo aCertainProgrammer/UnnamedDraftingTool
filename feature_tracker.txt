@@ -4,12 +4,6 @@ THEN:
 
 SHORT IDEAS:
 
-- Testing
-
-- GUI for making champion pools
-
-- fix form styling
-
 - a welcome screen to explain biggest features
 
 - allow toggling centered vs tiles for picks
@@ -17,6 +11,8 @@ SHORT IDEAS:
 - fix binds for weird keyboards
 
 LONG IDEAS:
+
+- GUI for making champion pools
 
 - Data presets 
 
