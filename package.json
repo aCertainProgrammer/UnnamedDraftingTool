@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "https://acertainprogrammer.github.io/UnnamedDraftingTool/index.html",
 	"scripts": {
-		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
 		"doc": "jsdoc --readme ./README.md js -r -d docs --pedantic"
 	},
 	"type": "module",
