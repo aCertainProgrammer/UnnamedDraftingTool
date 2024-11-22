@@ -37,6 +37,7 @@ export class Backend {
 				team: request.team,
 				role: "all",
 				searchQuery: request.searchQuery,
+				mode: request.mode,
 			});
 			if (allRolesData != []) return allRolesData;
 		}
