@@ -98,17 +98,11 @@ export class UserInterface {
 		this.picks.forEach((current) => {
 			current.addEventListener("click", this.placeChampion.bind(this));
 			current.addEventListener("drop", this.dropChampion.bind(this));
-			current.addEventListener("dragover", (event) => {
-				event.preventDefault();
-			});
 			current.childNodes[1].dataset.champion = "";
 		});
 		this.bans.forEach((current) => {
 			current.addEventListener("click", this.placeChampion.bind(this));
 			current.addEventListener("drop", this.dropChampion.bind(this));
-			current.addEventListener("dragover", (event) => {
-				event.preventDefault();
-			});
 			current.childNodes[1].dataset.champion = "";
 		});
 
