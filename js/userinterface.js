@@ -128,11 +128,6 @@ export class UserInterface {
 			"input",
 			this.searchChampion.bind(this),
 		);
-		this.searchBar.addEventListener("dragstart", (event) => {
-			event.preventDefault();
-		});
-		this.searchBar.draggable = "false";
-
 		this.defaultDataSwitch.addEventListener(
 			"click",
 			this.loadDefaultData.bind(this),
