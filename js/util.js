@@ -1,6 +1,6 @@
 /** Capitalizes a string
- * @param {string} uncapitalizedString
- * @returns {string} capitalizedString
+ * @param {string}
+ * @returns {string}
  */
 export function capitalize(string) {
 	let newString = "";

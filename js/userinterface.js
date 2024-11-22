@@ -446,7 +446,7 @@ export class UserInterface {
 	}
 	async takeFileInput(event) {
 		const file = event.target.files[0];
-		const data = await DataController.loadFileData(file);
+		const data = await DataController.readFile(file);
 		const unvalidatedJSON = JSON.parse(data);
 		const validatedData = this.validateUserData(unvalidatedJSON);
 		DataController.saveData("user_data", JSON.stringify(validatedData));
