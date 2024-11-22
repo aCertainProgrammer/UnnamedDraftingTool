@@ -19,6 +19,10 @@ Head over to https://acertainprogrammer.github.io/UnnamedDraftingTool/ and you'r
 ### Local installation
 The program can be used locally, as it has no backend.
 
+#### Windows:
+Open the website, then search for an installation prompt. Note that your browser must support PWAs (Firefox requires add-ons for this, Chromium browsers generally support PWAs)
+
+#### Linux/WSL/Git bash:
 ```
 git clone https://github.com/aCertainProgrammer/UnnamedDraftingTool.git
 ```
