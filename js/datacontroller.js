@@ -62,8 +62,15 @@ export class DataController {
 		return string;
 	}
 	/**
+	 * @typedef Config
+	 * @property {bool} colorBorders
+	 * @property {bool} loadUserDataOnProgramStart
+	 * @property {bool} clearSearchBarOnFocus
+	 * @property {bool} useLegacySearch
+	 */
+	/**
 	 * Saves a config object to localStorage
-	 * @param {object} config
+	 * @param {Config} config
 	 */
 	static saveConfig(config) {
 		localStorage.setItem("config", JSON.stringify(config));
@@ -71,7 +78,7 @@ export class DataController {
 
 	/**
 	 * Reads the config from localStorage and returns it as an object
-	 * @returns {object}
+	 * @returns {Config}
 	 */
 	static readConfig() {
 		const config = localStorage.getItem("config");
@@ -87,8 +94,8 @@ export class DataController {
 	}
 	/**
 	 * Validates each option in the config and fills out the missing parts
-	 * @param {config} configToValidate
-	 * @returns {object}
+	 * @param {Config} configToValidate
+	 * @returns {Config}
 	 */
 	static validateConfig(configToValidate) {
 		let config = {};

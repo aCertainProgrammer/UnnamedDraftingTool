@@ -1,4 +1,32 @@
-import { DataController } from "./datacontroller.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: userinterface.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: userinterface.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { DataController } from "./datacontroller.js";
 import { capitalize } from "./util.js";
 /**
  * A container for all UI-related events and rendering
@@ -192,7 +220,7 @@ export class UserInterface {
 
 		if (
 			localStorage.getItem("darkmode") !=
-				document.documentElement.dataset.theme &&
+				document.documentElement.dataset.theme &amp;&amp;
 			localStorage.getItem("darkmode") != null
 		) {
 			this.toggleDarkmode();
@@ -251,7 +279,7 @@ export class UserInterface {
 			this.config.clearSearchBarOnFocus,
 			this.config.useLegacySearch,
 		];
-		for (let i = 0; i < buttons.length; i++) {
+		for (let i = 0; i &lt; buttons.length; i++) {
 			if (config_settings[i] == true) {
 				buttons[i].classList.remove("off");
 				buttons[i].classList.add("on");
@@ -486,7 +514,7 @@ export class UserInterface {
 				index = number - 1;
 				break;
 		}
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i &lt; 10; i++) {
 			if (
 				this.picks[i].childNodes[1].dataset.champion ==
 				this.currentlyHoveredChampion
@@ -507,7 +535,7 @@ export class UserInterface {
 			}
 		}
 		//swap champs if both are present
-		if (oldIndex != null && data[index] != null) {
+		if (oldIndex != null &amp;&amp; data[index] != null) {
 			pickOrBan[oldIndex].childNodes[1].dataset.champion =
 				data[index].childNodes[1].dataset.champion;
 		}
@@ -536,7 +564,7 @@ export class UserInterface {
 	processKeyboardInput(event) {
 		const key = event.key;
 		const shiftKeyPressed = event.shiftKey;
-		if ((key == "I" || key == "i") && shiftKeyPressed) {
+		if ((key == "I" || key == "i") &amp;&amp; shiftKeyPressed) {
 			this.searchBar.blur();
 			this.userDataInput.click();
 		}
@@ -571,7 +599,7 @@ export class UserInterface {
 			const letterRegex = /^[A-Za-z]$/;
 			if (key.match(letterRegex)) {
 				if (
-					document.activeElement != this.searchBar &&
+					document.activeElement != this.searchBar &amp;&amp;
 					this.config.clearSearchBarOnFocus === true
 				)
 					this.searchBar.value = "";
@@ -692,11 +720,11 @@ export class UserInterface {
 	}
 	clearScreen() {
 		this.championsContainer.innerHTML = "";
-		for (let i = 0; i < this.picks.length; i++) {
+		for (let i = 0; i &lt; this.picks.length; i++) {
 			const img = this.picks[i].childNodes[1];
 			img.src = this.defaultPickIconPath;
 		}
-		for (let i = 0; i < this.bans.length; i++) {
+		for (let i = 0; i &lt; this.bans.length; i++) {
 			const img = this.bans[i].childNodes[1];
 			img.src = this.defaultPickIconPath;
 		}
@@ -726,7 +754,7 @@ export class UserInterface {
 		const config = DataController.readConfig();
 		// Render champions (central part)
 		let exactlyMatchingChampion = null;
-		for (let i = 0; i < renderingData.visibleChampions.length; i++) {
+		for (let i = 0; i &lt; renderingData.visibleChampions.length; i++) {
 			const championName = renderingData.visibleChampions[i];
 			if (championName == this.searchBar.value) {
 				exactlyMatchingChampion = championName;
@@ -735,14 +763,14 @@ export class UserInterface {
 				ally = 0,
 				team = "none";
 			if (config.colorBorders == true) {
-				for (let i = 0; i < roles.length; i++) {
+				for (let i = 0; i &lt; roles.length; i++) {
 					if (championData.ally[roles[i]].includes(championName))
 						ally = 1;
 					if (championData.enemy[roles[i]].includes(championName))
 						enemy = 1;
-					if (ally == 1 && enemy == 1) break;
+					if (ally == 1 &amp;&amp; enemy == 1) break;
 				}
-				if (ally == 1 && enemy == 1) team = "both";
+				if (ally == 1 &amp;&amp; enemy == 1) team = "both";
 				else if (ally == 1) team = "ally";
 				else if (enemy == 1) team = "enemy";
 			}
@@ -780,7 +808,7 @@ export class UserInterface {
 			});
 		}
 		if (
-			exactlyMatchingChampion == null &&
+			exactlyMatchingChampion == null &amp;&amp;
 			this.championsContainer.hasChildNodes()
 		) {
 			this.currentlyHoveredChampion =
@@ -790,7 +818,7 @@ export class UserInterface {
 		}
 
 		// Render picked champions
-		for (let i = 0; i < this.picks.length; i++) {
+		for (let i = 0; i &lt; this.picks.length; i++) {
 			let img = this.picks[i].childNodes[1];
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
@@ -824,7 +852,7 @@ export class UserInterface {
 		}
 
 		// Render banned champions
-		for (let i = 0; i < this.bans.length; i++) {
+		for (let i = 0; i &lt; this.bans.length; i++) {
 			let img = this.bans[i].childNodes[1];
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
@@ -878,3 +906,26 @@ export class UserInterface {
 		return championContainer;
 	}
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Backend.html">Backend</a></li><li><a href="Controller.html">Controller</a></li><li><a href="DataController.html">DataController</a></li><li><a href="Scraper.html">Scraper</a></li><li><a href="UserInterface.html">UserInterface</a></li></ul><h3>Global</h3><ul><li><a href="global.html#capitalize">capitalize</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Nov 22 2024 15:52:45 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
