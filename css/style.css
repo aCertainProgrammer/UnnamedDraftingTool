@@ -43,6 +43,7 @@
 	--validBackgroundColor: lightgreen;
 	--scrollbarColor: #aaaaaa var(--bodyBackgroundColor);
 	--overlayBackgroundColor: #5b5b5b;
+	--overlayTextColor: white;
 }
 
 :root[data-theme="dark"] {
@@ -67,6 +68,7 @@
 	--validBackgroundColor: darkgreen;
 	--scrollbarColor: gray var(--bodyBackgroundColor);
 	--overlayBackgroundColor: #1e1e1e;
+	--overlayTextColor: white;
 }
 
 * {
@@ -332,6 +334,7 @@ body {
 
 #user_data_form_container > textarea {
 	font-size: 15px;
+	scrollbar-color: var(--scrollbarColor);
 }
 
 #user_data_form_container > label {
@@ -450,6 +453,7 @@ body {
 	display: flex;
 	align-items: start;
 	justify-content: center;
+	scrollbar-color: var(--scrollbarColor);
 }
 
 .team-logo {
@@ -500,7 +504,7 @@ label {
 }
 
 .settings-tooltip {
-	color: var(--settingsTooltipColor);
+	color: var(--overlayTextColor);
 }
 
 @media screen and (max-width: 1115px) {
