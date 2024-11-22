@@ -45,6 +45,14 @@ export class Controller {
 			console.log("Can't find search mode in config!");
 		const mode = config.useLegacySearch ? "legacy" : "modern";
 
+		/**
+		 * @typedef Request
+		 * @property {string} dataSource - "user_data" or "default_data"
+		 * @property {string} team - "all", "ally" or "enemy"
+		 * @property {string} role - "top", "jungle", "mid", "adc", "support" or "none"
+		 * @property {string} searchQuery - The search query
+		 * @property {string} mode - "legacy" or "modern"
+		 */
 		const request = {
 			dataSource: this.userInterface.getDataSource(),
 			team: this.userInterface.getTeam(),

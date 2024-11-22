@@ -4,6 +4,10 @@ import { DataController } from "./datacontroller.js";
  */
 export class Backend {
 	constructor() {}
+	/**
+	 * Returns champions that should be displayed in championsContainer (central part of the draft)
+	 * @param {Request} request
+	 */
 	requestVisibleChampions(request) {
 		let data = [];
 		data = DataController.loadData(request.dataSource, request.team);
@@ -30,7 +34,10 @@ export class Backend {
 				data,
 				request.searchQuery,
 			);
-		else console.log("Bad data filtering mode!");
+		else {
+			console.log("Bad data filtering mode!");
+			return;
+		}
 		if (data.length == 0 && request.role != "all") {
 			const allRolesData = this.requestVisibleChampions({
 				dataSource: request.dataSource,
