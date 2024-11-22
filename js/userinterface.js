@@ -23,6 +23,7 @@ export class UserInterface {
 		this.currentMode = "pick";
 
 		this.rightOverlay = document.querySelector("#right-overlay");
+		this.leftOverlay = document.querySelector("#left-overlay");
 		this.userDataInputTextarea = document.querySelector("#user_data_input");
 		this.saveUserDataButton = document.querySelector("#save-user-data");
 		this.hideUserInputTextarea = document.querySelector(
@@ -171,7 +172,7 @@ export class UserInterface {
 		);
 		this.leaveSettingsButton.addEventListener(
 			"click",
-			this.closeMenu.bind(this),
+			this.closeSettingsMenu.bind(this),
 		);
 		this.openManualButton.addEventListener(
 			"click",
@@ -615,19 +616,19 @@ export class UserInterface {
 				this.searchBar.blur();
 				if (!this.contentContainer.classList.contains("hidden"))
 					this.contentContainer.classList.add("hidden");
-				if (!this.settingsMenu.classList.contains("hidden"))
-					this.settingsMenu.classList.add("hidden");
+				if (!this.leftOverlay.classList.contains("hidden"))
+					this.leftOverlay.classList.add("hidden");
 				if (this.manualContainer.classList.contains("hidden"))
 					this.openManualButton.click();
 				else this.closeManualButton.click();
 			}
 			if (key == "S" || key == "s") {
 				this.searchBar.blur();
-				if (!this.contentContainer.classList.contains("hidden"))
-					this.contentContainer.classList.add("hidden");
+				if (this.contentContainer.classList.contains("hidden"))
+					this.contentContainer.classList.remove("hidden");
 				if (!this.manualContainer.classList.contains("hidden"))
 					this.manualContainer.classList.add("hidden");
-				if (this.settingsMenu.classList.contains("hidden"))
+				if (this.leftOverlay.classList.contains("hidden"))
 					this.enterSettingsButton.click();
 				else this.leaveSettingsButton.click();
 			}
@@ -699,12 +700,10 @@ export class UserInterface {
 	}
 
 	openSettingsMenu() {
-		this.settingsMenu.classList.remove("hidden");
-		this.contentContainer.classList.add("hidden");
+		this.leftOverlay.classList.remove("hidden");
 	}
-	closeMenu() {
-		this.settingsMenu.classList.add("hidden");
-		this.contentContainer.classList.remove("hidden");
+	closeSettingsMenu() {
+		this.leftOverlay.classList.add("hidden");
 	}
 	render(renderingData) {
 		if (this.dataSource === "default_data") {
