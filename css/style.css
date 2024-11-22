@@ -66,7 +66,7 @@
 	--invalidBackgroundColor: #640d0d;
 	--validBackgroundColor: darkgreen;
 	--scrollbarColor: gray var(--bodyBackgroundColor);
-	--overlayBackgroundColor: #131313;
+	--overlayBackgroundColor: #1e1e1e;
 }
 
 * {
@@ -330,42 +330,6 @@ body {
 	color: var(--sourceButtonTextColor);
 }
 
-#left-overlay {
-	position: fixed;
-	left: 0px;
-	top: 0px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	z-index: 1;
-	height: 100%;
-	opacity: 0.95;
-}
-
-#right-overlay {
-	position: fixed;
-	right: 0px;
-	top: 0px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	z-index: 1;
-	height: 100%;
-	opacity: 0.95;
-}
-#user_data_form_container {
-	display: flex;
-	flex-direction: column;
-	justify-content: start;
-	align-items: center;
-	background-color: var(--overlayBackgroundColor);
-	padding: 10px 10px;
-	border-radius: var(--overlayBorderRadius) 0 0 var(--overlayBorderRadius);
-	height: 100%;
-}
-
 #user_data_form_container > textarea {
 	font-size: 15px;
 }
@@ -412,6 +376,19 @@ body {
 	border: 0px;
 }
 
+#left-overlay {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
+	height: 100%;
+	opacity: 0.95;
+}
+
 #settings-menu {
 	background-color: var(--overlayBackgroundColor);
 	display: flex;
@@ -419,7 +396,7 @@ body {
 	align-items: start;
 	justify-content: start;
 	padding: 10px 10px;
-	border-radius: var(--overlayBorderRadius) 0 0 var(--overlayBorderRadius);
+	border-radius: 0 var(--overlayBorderRadius) var(--overlayBorderRadius) 0;
 	height: 100%;
 	max-width: 40vw;
 	gap: 3px;
@@ -428,6 +405,30 @@ body {
 #settings-menu > label {
 	color: #eeeeee;
 	padding: 0px 2px;
+}
+
+#right-overlay {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
+	height: 100%;
+	opacity: 0.95;
+}
+#user_data_form_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	background-color: var(--overlayBackgroundColor);
+	padding: 10px 10px;
+	border-radius: var(--overlayBorderRadius) 0 0 var(--overlayBorderRadius);
+	height: 100%;
+	gap: 10px;
 }
 
 #header {

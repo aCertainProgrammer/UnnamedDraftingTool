@@ -88,6 +88,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 - `Shift` + `F` to open the file data input dialog
 
 ### UI navigation
+- `Shift` + `T` to toggle dark/light mode
 - `Shift` + `M` to toggle the manual tab
 - `Shift` + `S` to toggle the settings tab
 - `!, @, #, $, %` (meaning `Shift` + `1, 2, 3, 4, 5`) to toggle role filtering from top to support
