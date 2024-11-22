@@ -10,6 +10,10 @@ SHORT IDEAS:
 
 - fix binds for weird keyboards
 
+- fix chrome ligthhouse problems
+
+- fix alts for champions
+
 LONG IDEAS:
 
 - GUI for making champion pools
