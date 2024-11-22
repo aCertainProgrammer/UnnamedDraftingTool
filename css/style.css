@@ -345,10 +345,10 @@ body {
 #user_data_form_container {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: start;
 	align-items: center;
 	background-color: var(--overlayBackgroundColor);
-	padding: 0px 10px;
+	padding: 10px 10px;
 	border-radius: var(--overlayBorderRadius) 0 0 var(--overlayBorderRadius);
 	height: 100%;
 }
