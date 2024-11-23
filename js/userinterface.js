@@ -29,6 +29,7 @@ export class UserInterface {
 		document.documentElement.dataset.theme =
 			this.themes[this.currentThemeIndex];
 
+		this.welcomeScreen = document.querySelector("#welcome-screen");
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
 		this.userDataInputTextarea = document.querySelector("#user_data_input");
@@ -249,6 +250,14 @@ export class UserInterface {
 				buttons[i].classList.add("off");
 			}
 		}
+	}
+	openWelcomeScreen() {
+		this.contentContainer.classList.add("hidden");
+		this.welcomeScreen.classList.remove("hidden");
+	}
+	closeWelcomeScreen() {
+		this.welcomeScreen.classList.add("hidden");
+		this.contentContainer.classList.remove("hidden");
 	}
 	openManual() {
 		this.manualContainer.classList.remove("hidden");

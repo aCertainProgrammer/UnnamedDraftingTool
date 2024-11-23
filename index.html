@@ -14,6 +14,75 @@
 	</head>
 
 	<body>
+		<div id="welcome-screen">
+			<p id="welcome-screen-title">Welcome to the program!</p>
+			<div id="welcome-screen-text">
+				<p class="text-header">Key features:</p>
+				<ol>
+					<li>
+						<p>Several ways of picking champions:</p>
+						<ul>
+							<li>
+								Click a champion, then click a pick or ban slot
+							</li>
+							<li>
+								Drag champions around and drop them on picks or
+								bans - you can also drag the picks and bans
+								themselves
+							</li>
+							<li>
+								Hover over a champion with your mouse, then
+								press 1-10 (10 is the 0 key) to pick the hovered
+								champion
+							</li>
+							<li>
+								Press 1-10 (10 is the 0 key) to pick the first
+								champion in the list
+							</li>
+							<li>
+								Whether you pick or ban a champion with the
+								shortcut is dependent on your current mode!
+								Toggle it by clicking the button or by using a
+								shortcut
+							</li>
+						</ul>
+					</li>
+					<li>
+						Many keyboard shortcuts, check out the manual in the top
+						left corner of the program to learn about them
+					</li>
+					<li>
+						Multiple color schemes, toggle them with the button in
+						the top-left corner
+					</li>
+					<li>
+						The "All", "Ally" and "Enemy" icons are simply different
+						slots for you to store champion pool data. Learn how to
+						input the data using the manual, then click the input
+						button in the top right corner
+					</li>
+					<li>
+						Your picks and bans are saved, no worries about losing
+						them on page reload
+					</li>
+					<li>You can clear the draft quickly using Shift + X</li>
+				</ol>
+				<div id="welcome-screen-buttons">
+					<input
+						class="source-button"
+						id="close-welcome-screen-never-show-again"
+						value="Close and never show again"
+						type="button"
+					/>
+					<input
+						class="source-button"
+						id="close-welcome-screen"
+						value="Close"
+						type="button"
+					/>
+				</div>
+			</div>
+		</div>
 		<div id="left-overlay" class="hidden">
 			<div id="settings-menu">
 				<input
@@ -163,7 +232,7 @@
 				</zero-md>
 			</div>
 		</div>
-		<div id="content-container" class="container">
+		<div id="content-container" class="container hidden">
 			<div id="header">
 				<div class="control-buttons">
 					<button class="settings-button" id="enter-settings-button">

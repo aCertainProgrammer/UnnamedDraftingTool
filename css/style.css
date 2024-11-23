@@ -632,3 +632,32 @@ label {
 #go-to-top-button {
 	background-color: var(--highlightedBackgroundColor);
 }
+
+#welcome-screen {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: center;
+	padding: 40px;
+	gap: 40px;
+	color: var(--sourceButtonTextColor);
+}
+
+#welcome-screen-title {
+	font-weight: 900;
+	font-size: 2rem;
+}
+
+#welcome-screen-text {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: start;
+	max-width: 70vw;
+	gap: 10px;
+}
+
+.text-header {
+	font-weight: 700;
+	font-size: 1.5rem;
+}
