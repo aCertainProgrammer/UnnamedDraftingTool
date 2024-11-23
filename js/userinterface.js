@@ -510,8 +510,10 @@ export class UserInterface {
 			pickOrBan[oldIndex].childNodes[1].dataset.champion =
 				data[index].childNodes[1].dataset.champion;
 		}
-		data[index].childNodes[1].dataset.champion =
-			this.currentlyHoveredChampion;
+		if (this.currentlyHoveredChampion != null) {
+			data[index].childNodes[1].dataset.champion =
+				this.currentlyHoveredChampion;
+		}
 		this.currentlyHoveredChampion = "";
 		this.sendProcessSignal();
 	}
