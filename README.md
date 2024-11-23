@@ -26,7 +26,7 @@ The prompt looks like this on Chrome: https://imgur.com/a/5HRUsJT
 
 #### Linux/WSL/Git bash:
 ```
-git clone https://github.com/aCertainProgrammer/UnnamedDraftingTool.git
+git clone https://github.com/aCertainProgrammer/UnnamedDraftingTool.git --depth 1
 ```
 
 Then run it with something like `live-server` or `vite`
