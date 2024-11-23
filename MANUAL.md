@@ -116,8 +116,8 @@ If enabled, clears the search bar whenever it is refocused. This enables the fol
 3. Start typing the name of the next champion, no need to clear the previous one
 
 ### Use legacy search
-- `Modern search` (default) means that if a word contains the letters from the search query in the same order, it will be matched - for example, "ji" will match "JInx", "JhIn" and "seJuanI".
 - `Legacy search` means pure substring matching - if a word contains the exact string of the search query, it will be matched - for example, "ji" will match "JInx".
+- `Modern search` means that if a word contains the letters from the search query in the same order, it will be matched - for example, "ji" will match "JInx", "JhIn" and "seJuanI".
 
 ## Custom data input
 
