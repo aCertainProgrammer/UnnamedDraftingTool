@@ -30,6 +30,12 @@ export class UserInterface {
 			this.themes[this.currentThemeIndex];
 
 		this.welcomeScreen = document.querySelector("#welcome-screen");
+		this.closeWelcomeScreenButton = document.querySelector(
+			"#close-welcome-screen",
+		);
+		this.closeWelcomeScreenForeverButton = document.querySelector(
+			"#close-welcome-screen-never-show-again",
+		);
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
 		this.userDataInputTextarea = document.querySelector("#user_data_input");
@@ -87,6 +93,14 @@ export class UserInterface {
 			"#search-mode-toggle",
 		);
 
+		this.closeWelcomeScreenButton.addEventListener(
+			"click",
+			this.closeWelcomeScreen.bind(this),
+		);
+		this.closeWelcomeScreenForeverButton.addEventListener(
+			"click",
+			this.closeWelcomeScreen.bind(this),
+		);
 		this.saveUserDataButton.addEventListener(
 			"click",
 			this.saveUserData.bind(this, this.userDataInputTextarea),
@@ -221,6 +235,9 @@ export class UserInterface {
 			e.preventDefault();
 			this.currentlyHoveredChampion = "";
 		}.bind(this);
+
+		if (!localStorage.getItem("welcome_screen_off"))
+			this.openWelcomeScreen();
 	}
 	toggleSearchMode() {
 		this.config.useLegacySearch = !this.config.useLegacySearch;
@@ -255,9 +272,12 @@ export class UserInterface {
 		this.contentContainer.classList.add("hidden");
 		this.welcomeScreen.classList.remove("hidden");
 	}
-	closeWelcomeScreen() {
+	closeWelcomeScreen(event) {
 		this.welcomeScreen.classList.add("hidden");
 		this.contentContainer.classList.remove("hidden");
+		if (event.target.id == "close-welcome-screen-never-show-again") {
+			localStorage.setItem("welcome_screen_off", "true");
+		}
 	}
 	openManual() {
 		this.manualContainer.classList.remove("hidden");
@@ -316,7 +336,7 @@ export class UserInterface {
 	 */
 	loadSavedTheme() {
 		let theme = localStorage.getItem("theme");
-		if (theme == null) theme = "light";
+		if (theme == null) theme = "dark";
 		for (let i = 0; i < this.themes.length; i++) {
 			if (theme == this.themes[i]) return i;
 		}

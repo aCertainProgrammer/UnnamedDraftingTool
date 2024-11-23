@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,13 +14,15 @@
 	</head>
 
 	<body>
-		<div id="welcome-screen">
+		<div id="welcome-screen" class="hidden">
 			<p id="welcome-screen-title">Welcome to the program!</p>
 			<div id="welcome-screen-text">
 				<p class="text-header">Key features:</p>
 				<ol>
 					<li>
-						<p>Several ways of picking champions:</p>
+						<p class="welcome-screen-key-feature">
+							Several ways of picking champions:
+						</p>
 						<ul>
 							<li>
 								Click a champion, then click a pick or ban slot
@@ -37,7 +39,7 @@
 							</li>
 							<li>
 								Press 1-10 (10 is the 0 key) to pick the first
-								champion in the list
+								champion in the champions list
 							</li>
 							<li>
 								Whether you pick or ban a champion with the
@@ -48,24 +50,55 @@
 						</ul>
 					</li>
 					<li>
-						Many keyboard shortcuts, check out the manual in the top
-						left corner of the program to learn about them
+						<span class="welcome-screen-key-feature"
+							>Many keyboard shortcuts</span
+						>, check out the manual in the top left corner of the
+						program to learn about them
 					</li>
 					<li>
-						Multiple color schemes, toggle them with the button in
-						the top-left corner
+						<span class="welcome-screen-key-feature"
+							>Quick and easy searching</span
+						>
+						with
+
+						<span class="welcome-screen-key-feature">
+							automatic search bar refocusing</span
+						>
+						and other
+
+						<span class="welcome-screen-key-feature">
+							QoL improvements
+						</span>
 					</li>
 					<li>
-						The "All", "Ally" and "Enemy" icons are simply different
-						slots for you to store champion pool data. Learn how to
-						input the data using the manual, then click the input
-						button in the top right corner
+						<span class="welcome-screen-key-feature"
+							>Multiple color schemes</span
+						>, toggle them with the button in the top-left corner
 					</li>
 					<li>
-						Your picks and bans are saved, no worries about losing
-						them on page reload
+						<span class="welcome-screen-key-feature"
+							>The "All", "Ally" and "Enemy"</span
+						>
+						icons are simply different slots for you to store
+						champion pool data. Learn how to input the data using
+						the manual, then click the input button in the top right
+						corner
 					</li>
-					<li>You can clear the draft quickly using Shift + X</li>
+					<li>
+						<span class="welcome-screen-key-feature">
+							Your picks and bans are saved</span
+						>, no worries about losing them on page reload
+					</li>
+					<li>
+						You can
+						<span class="welcome-screen-key-feature">
+							clear the draft quickly
+						</span>
+
+						using
+
+						<span class="welcome-screen-key-feature"> Delete </span>
+					</li>
 				</ol>
 				<div id="welcome-screen-buttons">
 					<input
@@ -232,7 +265,7 @@
 				</zero-md>
 			</div>
 		</div>
-		<div id="content-container" class="container hidden">
+		<div id="content-container" class="container">
 			<div id="header">
 				<div class="control-buttons">
 					<button class="settings-button" id="enter-settings-button">
@@ -248,7 +281,7 @@
 						type="button"
 						class="source-button"
 						id="switch-theme-button"
-						value="Theme: light"
+						value="Theme: dark"
 					/>
 					<input
 						class="source-button"
