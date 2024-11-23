@@ -24,6 +24,10 @@ export class UserInterface {
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
 		this.currentMode = "pick";
+		this.themes = ["light", "dark", "village", "retro"];
+		this.currentThemeIndex = this.loadSavedTheme();
+		document.documentElement.dataset.theme =
+			this.themes[this.currentThemeIndex];
 
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
@@ -68,9 +72,9 @@ export class UserInterface {
 		);
 		this.openManualButton = document.querySelector("#open-manual-button");
 		this.closeManualButton = document.querySelector("#close-manual-button");
-		this.toggleDarkmodeButton = document.querySelector(
-			"#toggle-darkmode-button",
-		);
+		this.switchThemeButton = document.querySelector("#switch-theme-button");
+		this.switchThemeButton.value =
+			"Theme: " + this.themes[this.currentThemeIndex];
 		this.manualContainer = document.querySelector("#manual-container");
 		this.manualText = document.querySelector("#manual-text");
 		this.goToTopOfManualButton =
@@ -179,19 +183,10 @@ export class UserInterface {
 			"click",
 			this.closeManual.bind(this),
 		);
-		this.toggleDarkmodeButton.addEventListener(
+		this.switchThemeButton.addEventListener(
 			"click",
-			this.toggleDarkmode.bind(this),
+			this.switchTheme.bind(this),
 		);
-
-		if (
-			localStorage.getItem("darkmode") !=
-				document.documentElement.dataset.theme &&
-			localStorage.getItem("darkmode") != null
-		) {
-			this.toggleDarkmode();
-		}
-
 		this.goToTopOfManualButton.addEventListener("click", () => {
 			this.manualText.scrollTop = 0;
 		});
@@ -306,17 +301,28 @@ export class UserInterface {
 		}
 		this.sendProcessSignal();
 	}
-	toggleDarkmode() {
-		const root = document.documentElement;
-		if (root.dataset.theme == "light") {
-			root.dataset.theme = "dark";
-			this.toggleDarkmodeButton.childNodes[1].src = "./img/sun.png";
-			DataController.saveData("darkmode", "dark");
-		} else if (root.dataset.theme == "dark") {
-			root.dataset.theme = "light";
-			this.toggleDarkmodeButton.childNodes[1].src = "./img/full_moon.png";
-			DataController.saveData("darkmode", "light");
+	/**
+	 * Finds the index of the saved theme
+	 * @returns {number} The index of the saved theme, or 0 if nothing is found
+	 */
+	loadSavedTheme() {
+		const theme = localStorage.getItem("theme");
+		console.log(theme);
+		if (theme == null) theme = "light";
+		for (let i = 0; i < this.themes.length; i++) {
+			if (theme == this.themes[i]) return i;
 		}
+		console.log("Couldn't find the theme in loadSavedTheme()!");
+		return 0;
+	}
+	switchTheme() {
+		this.currentThemeIndex++;
+		if (this.currentThemeIndex >= this.themes.length)
+			this.currentThemeIndex = 0;
+		const theme = this.themes[this.currentThemeIndex];
+		document.documentElement.dataset.theme = theme;
+		this.switchThemeButton.value = "Theme: " + theme;
+		localStorage.setItem("theme", theme);
 	}
 	clearSelectedChampions() {
 		const selected = this.championsContainer.querySelector(".selected");

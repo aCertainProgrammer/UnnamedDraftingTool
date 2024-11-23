@@ -22,15 +22,73 @@
 }
 
 :root[data-theme="light"] {
+	--bodyBackgroundColor: #696f77;
+	--settingsButtonFilter: brightness(0.01) invert(84%);
+	--sourceButtonBackgroundColor: white;
+	--sourceButtonTextColor: black;
+	--sourceButtonBorder: 1px solid var(--bodyBackgroundColor);
+	--selectionBoxShadow: 0px 0px 2px 2px gold;
+	--searchBarBackground: white;
+	--searchBarBorder: none;
+	--textInputBackgroundColor: white;
+	--textInputPlaceholderColor: #797979;
+	--textInputTextColor: black;
+	--championPickBorder: 1px solid black;
+	--championBanBorder: 1px solid black;
+	--championIconBorder: 2px solid black;
+	--onBackgroundColor: lightgreen;
+	--offBackgroundColor: pink;
+	--labelColor: black;
+	--highlightedBackgroundColor: lightgreen;
+	--settingsTooltipColor: black;
+	--invalidBackgroundColor: red;
+	--validBackgroundColor: lightgreen;
+	--scrollbarColor: #aaaaaa var(--bodyBackgroundColor);
+	--overlayBackgroundColor: #5b5b5b;
+	--overlayTextColor: white;
+	--pickBackgroundColor: lightgreen;
+	--banBackgroundColor: pink;
+}
+
+:root[data-theme="dark"] {
+	--bodyBackgroundColor: #0d1117;
+	--settingsButtonFilter: brightness(0.1) invert(73%);
+	--sourceButtonBackgroundColor: #06145e;
+	--sourceButtonTextColor: #cccccc;
+	--sourceButtonBorder: 1px solid #707070;
+	--selectionBoxShadow: 0px 0px 2px 2px #0b2ee5;
+	--searchBarBackground: none;
+	--searchBarBorder: 1px solid #797979;
+	--textInputBackgroundColor: #0f093e;
+	--textInputPlaceholderColor: #797979;
+	--textInputTextColor: #eeeeee;
+	--championPickBorder: 1px solid #404040;
+	--championBanBorder: 1px solid #404040;
+	--championIconBorder: 2px solid #404040;
+	--onBackgroundColor: darkgreen;
+	--offBackgroundColor: darkred;
+	--labelColor: #eeeeee;
+	--highlightedBackgroundColor: darkgreen;
+	--settingsTooltipColor: #eeeeee;
+	--invalidBackgroundColor: #640d0d;
+	--validBackgroundColor: darkgreen;
+	--scrollbarColor: gray var(--bodyBackgroundColor);
+	--overlayBackgroundColor: #1e1e1e;
+	--overlayTextColor: white;
+	--pickBackgroundColor: darkgreen;
+	--banBackgroundColor: darkred;
+}
+:root[data-theme="village"] {
 	--bodyBackgroundColor: #2c1b1b;
 	--settingsButtonFilter: brightness(0.01) invert(84%);
 	--sourceButtonBackgroundColor: #edc02ad1;
 	--sourceButtonTextColor: black;
 	--sourceButtonBorder: 1px solid #342020;
 	--selectionBoxShadow: 0px 0px 2px 2px gold;
-	--searchBarBackground: #c7aa7100;
+	--searchBarBackground: none;
+	--searchBarBorder: 1px solid #eeeb90de;
 	--textInputBackgroundColor: white;
-	--textInputPlaceholderColor: #797979;
+	--textInputPlaceholderColor: #707070;
 	--textInputTextColor: black;
 	--championPickBorder: 1px solid black;
 	--championBanBorder: 1px solid black;
@@ -49,7 +107,7 @@
 	--banBackgroundColor: #c8a333;
 }
 
-:root[data-theme="dark"] {
+:root[data-theme="retro"] {
 	--bodyBackgroundColor: #0d1117;
 	--settingsButtonFilter: brightness(0.1) invert(73%);
 	--sourceButtonBackgroundColor: #790b0d;
@@ -57,6 +115,7 @@
 	--sourceButtonBorder: 1px solid #707070;
 	--selectionBoxShadow: 0px 0px 2px 2px #0b2ee5;
 	--searchBarBackground: none;
+	--searchBarBorder: 1px solid #707070;
 	--textInputBackgroundColor: #0f093e;
 	--textInputPlaceholderColor: #797979;
 	--textInputTextColor: #eeeeee;
@@ -218,7 +277,7 @@ body {
 	font-size: var(--searchBarFontSize);
 	background: var(--searchBarBackground);
 	color: var(--textInputTextColor);
-	border: var(--sourceButtonBorder);
+	border: var(--searchBarBorder);
 	border-radius: var(--generalBorderRadius);
 	padding: 4px;
 }
@@ -550,8 +609,14 @@ label {
 [data-mode="ban"] {
 	background-color: var(--banBackgroundColor);
 }
+
 #toggle-pick-ban-mode {
 	min-width: 194px;
+	text-align: left;
+}
+
+#switch-theme-button {
+	min-width: 150px;
 	text-align: left;
 }
 
