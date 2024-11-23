@@ -306,7 +306,7 @@ export class UserInterface {
 	 * @returns {number} The index of the saved theme, or 0 if nothing is found
 	 */
 	loadSavedTheme() {
-		const theme = localStorage.getItem("theme");
+		let theme = localStorage.getItem("theme");
 		if (theme == null) theme = "light";
 		for (let i = 0; i < this.themes.length; i++) {
 			if (theme == this.themes[i]) return i;
@@ -636,7 +636,7 @@ export class UserInterface {
 			}
 			if (key === "T" || key == "t") {
 				this.searchBar.blur();
-				this.toggleDarkmodeButton.click();
+				this.switchTheme();
 			}
 			if (key == "!") {
 				this.searchBar.blur();
