@@ -470,7 +470,7 @@ export class UserInterface {
 		) {
 			if (this.championsContainer.childNodes.length == 1) {
 				this.currentlyHoveredChampion =
-					this.championsContainer.firstChild.firstChild.dataset.champion;
+					this.championsContainer.firstChild.dataset.champion;
 			} else return;
 		}
 		let oldIndex = null;
@@ -754,29 +754,28 @@ export class UserInterface {
 			) {
 				isPickedOrBanned = "true";
 			}
-			const championContainer = this.createChampionIcon(
+			const championIcon = this.createChampionIcon(
 				championName,
 				isPickedOrBanned,
 				team,
 			);
-			this.championsContainer.appendChild(championContainer);
-			championContainer.addEventListener(
+			this.championsContainer.appendChild(championIcon);
+			championIcon.addEventListener(
 				"click",
 				this.selectChampion.bind(this),
 			);
-			championContainer.addEventListener(
+			championIcon.addEventListener(
 				"dragstart",
 				this.dragChampion.bind(this),
 			);
-			championContainer.addEventListener(
+			championIcon.addEventListener(
 				"dragend",
 				this.dragendFunction.bind(this),
 			);
-			championContainer.addEventListener("mouseenter", () => {
-				this.currentlyHoveredChampion =
-					championContainer.firstChild.dataset.champion;
+			championIcon.addEventListener("mouseenter", () => {
+				this.currentlyHoveredChampion = championIcon.dataset.champion;
 			});
-			championContainer.addEventListener("mouseleave", () => {
+			championIcon.addEventListener("mouseleave", () => {
 				this.currentlyHoveredChampion = "";
 			});
 		}
@@ -785,7 +784,7 @@ export class UserInterface {
 			this.championsContainer.hasChildNodes()
 		) {
 			this.currentlyHoveredChampion =
-				this.championsContainer.childNodes[0].childNodes[0].dataset.champion;
+				this.championsContainer.childNodes[0].dataset.champion;
 		} else {
 			this.currentlyHoveredChampion = exactlyMatchingChampion;
 		}
@@ -865,8 +864,6 @@ export class UserInterface {
 		}
 	}
 	createChampionIcon(championName, isPickedOrBanned, team) {
-		const championContainer = document.createElement("div");
-		championContainer.classList += "champion-container";
 		const championIcon = document.createElement("img");
 		championIcon.classList += "champion-icon";
 		championIcon.src =
@@ -883,7 +880,6 @@ export class UserInterface {
 		} else {
 			championIcon.dataset.pickedOrBanned = "false";
 		}
-		championContainer.appendChild(championIcon);
-		return championContainer;
+		return championIcon;
 	}
 }
