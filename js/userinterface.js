@@ -307,7 +307,6 @@ export class UserInterface {
 	 */
 	loadSavedTheme() {
 		const theme = localStorage.getItem("theme");
-		console.log(theme);
 		if (theme == null) theme = "light";
 		for (let i = 0; i < this.themes.length; i++) {
 			if (theme == this.themes[i]) return i;
