@@ -795,6 +795,7 @@ export class UserInterface {
 				img.classList.remove("selected");
 			if (renderingData.pickedChampions[i] == "") {
 				img.src = this.defaultPickIconPath;
+				img.alt = "champion-pick-icon";
 				img.dataset.champion = "";
 				img.dataset.type = "pick";
 				img.draggable = "false";
@@ -809,6 +810,8 @@ export class UserInterface {
 					"/centered_minified/" +
 					capitalize(renderingData.pickedChampions[i]) +
 					"_0.jpg";
+				img.alt =
+					"champion-pick-icon-" + renderingData.pickedChampions[i];
 				img.dataset.champion = renderingData.pickedChampions[i];
 				img.draggable = "true";
 				img.removeEventListener("dragstart", this.stopDrag);
