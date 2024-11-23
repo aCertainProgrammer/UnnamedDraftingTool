@@ -43,6 +43,7 @@ export const default_data = JSON.stringify({
 			"trundle",
 			"tryndamere",
 			"twistedfate",
+			"udyr",
 			"urgot",
 			"vayne",
 			"volibear",
