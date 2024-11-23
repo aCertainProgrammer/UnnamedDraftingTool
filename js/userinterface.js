@@ -807,9 +807,9 @@ export class UserInterface {
 			} else {
 				img.src =
 					this.championIconPath +
-					"/centered_minified/" +
+					"/centered_minified_converted_to_webp/" +
 					capitalize(renderingData.pickedChampions[i]) +
-					"_0.jpg";
+					"_0.webp";
 				img.alt =
 					"champion-pick-icon-" + renderingData.pickedChampions[i];
 				img.dataset.champion = renderingData.pickedChampions[i];
