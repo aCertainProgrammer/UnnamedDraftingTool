@@ -807,7 +807,7 @@ export class UserInterface {
 			} else {
 				img.src =
 					this.championIconPath +
-					"/centered_minified_converted_to_webp/" +
+					"/centered_minified_converted_to_webp_scaled/" +
 					capitalize(renderingData.pickedChampions[i]) +
 					"_0.webp";
 				img.alt =
@@ -844,9 +844,9 @@ export class UserInterface {
 			} else {
 				img.src =
 					this.championIconPath +
-					"/tiles/" +
+					"/tiles_converted_to_webp_scaled/" +
 					capitalize(renderingData.bannedChampions[i]) +
-					"_0.jpg";
+					"_0.webp";
 				img.alt =
 					"champion-ban-icon-" + renderingData.bannedChampions[i];
 				img.dataset.champion = renderingData.bannedChampions[i];
@@ -868,7 +868,9 @@ export class UserInterface {
 		const championIcon = document.createElement("img");
 		championIcon.classList += "champion-icon";
 		championIcon.src =
-			"./img/champion_icons/tiles/" + capitalize(championName) + "_0.jpg";
+			"./img/champion_icons/tiles_converted_to_webp_scaled/" +
+			capitalize(championName) +
+			"_0.webp";
 		championIcon.alt = championName;
 		championIcon.dataset.champion = championName;
 		championIcon.dataset.team = team;
