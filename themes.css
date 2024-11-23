@@ -1,0 +1,55 @@
+:root[data-theme="light"] {
+	--bodyBackgroundColor: #2c1b1b;
+	--settingsButtonFilter: brightness(0.01) invert(84%);
+	--sourceButtonBackgroundColor: #edc02ad1;
+	--sourceButtonTextColor: black;
+	--sourceButtonBorder: 1px solid #342020;
+	--selectionBoxShadow: 0px 0px 2px 2px gold;
+	--searchBarBackground: #c7aa7100;
+	--textInputBackgroundColor: white;
+	--textInputPlaceholderColor: #797979;
+	--textInputTextColor: black;
+	--championPickBorder: 1px solid black;
+	--championBanBorder: 1px solid black;
+	--championIconBorder: 2px solid black;
+	--onBackgroundColor: #399339;
+	--offBackgroundColor: #b30000;
+	--labelColor: black;
+	--highlightedBackgroundColor: #eeeb90de;
+	--settingsTooltipColor: black;
+	--invalidBackgroundColor: red;
+	--validBackgroundColor: lightgreen;
+	--scrollbarColor: #aaaaaa var(--bodyBackgroundColor);
+	--overlayBackgroundColor: #5b5b5b;
+	--overlayTextColor: white;
+	--pickBackgroundColor: #d4d083;
+	--banBackgroundColor: #c8a333;
+}
+
+:root[data-theme="dark"] {
+	--bodyBackgroundColor: #0d1117;
+	--settingsButtonFilter: brightness(0.1) invert(73%);
+	--sourceButtonBackgroundColor: #790b0d;
+	--sourceButtonTextColor: #cccccc;
+	--sourceButtonBorder: 1px solid #707070;
+	--selectionBoxShadow: 0px 0px 2px 2px #0b2ee5;
+	--searchBarBackground: none;
+	--textInputBackgroundColor: #0f093e;
+	--textInputPlaceholderColor: #797979;
+	--textInputTextColor: #eeeeee;
+	--championPickBorder: 1px solid #404040;
+	--championBanBorder: 1px solid #404040;
+	--championIconBorder: 2px solid #404040;
+	--onBackgroundColor: darkgreen;
+	--offBackgroundColor: darkred;
+	--labelColor: #eeeeee;
+	--highlightedBackgroundColor: #031d6ade;
+	--settingsTooltipColor: #eeeeee;
+	--invalidBackgroundColor: #640d0d;
+	--validBackgroundColor: darkgreen;
+	--scrollbarColor: gray var(--bodyBackgroundColor);
+	--overlayBackgroundColor: #1e1e1e;
+	--overlayTextColor: white;
+	--pickBackgroundColor: #031d6ade;
+	--banBackgroundColor: #790b0d;
+}
