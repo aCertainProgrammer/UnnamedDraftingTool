@@ -645,6 +645,12 @@ label {
 	scrollbar-color: var(--scrollbarColor);
 }
 
+:root[data-theme="village"] {
+	#welcome-screen {
+		color: white;
+	}
+}
+
 #welcome-screen-title {
 	font-weight: 900;
 	font-size: 2rem;
