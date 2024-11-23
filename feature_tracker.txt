@@ -4,9 +4,9 @@ THEN:
 
 SHORT IDEAS:
 
-- a welcome screen to explain biggest features
-
 - allow toggling centered vs tiles for picks
+
+- add setting to clear champs on page reload
 
 - fix binds for weird keyboards
 
