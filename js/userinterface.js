@@ -832,6 +832,7 @@ export class UserInterface {
 				img.classList.remove("selected");
 			if (renderingData.bannedChampions[i] == "") {
 				img.src = this.defaultBanIconPath;
+				img.alt = "champion-ban-icon";
 				img.dataset.champion = "";
 				img.dataset.type = "ban";
 				img.draggable = "false";
@@ -846,6 +847,8 @@ export class UserInterface {
 					"/tiles/" +
 					capitalize(renderingData.bannedChampions[i]) +
 					"_0.jpg";
+				img.alt =
+					"champion-ban-icon-" + renderingData.bannedChampions[i];
 				img.dataset.champion = renderingData.bannedChampions[i];
 				img.draggable = "true";
 				img.removeEventListener("dragstart", this.stopDrag);
