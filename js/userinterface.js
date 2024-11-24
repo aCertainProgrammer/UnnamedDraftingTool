@@ -560,7 +560,7 @@ export class UserInterface {
 				this.searchBar.focus();
 			}
 			const numberRegex = /[0-9]/;
-			if (key.match(numberRegex)) {
+			if (key.match(numberRegex) && key.length == 1) {
 				this.searchBar.blur();
 				this.pickBanChampionWithKeyInput(key);
 			}
@@ -841,7 +841,7 @@ export class UserInterface {
 			this.selectedChampion = "";
 			return;
 		}
-
+		championIcon.classList.add("selected");
 		this.selectedChampion = event.target.dataset.champion;
 	}
 
