@@ -452,7 +452,7 @@ export class UserInterface {
 	}
 	placeChampion(event) {
 		if (this.selectedChampion == "") {
-			event.target.src = "./img/pick_icon.png";
+			event.target.dataset.champion = "";
 		}
 		event.target.dataset.champion = this.selectedChampion;
 		this.selectedChampion = "";
@@ -902,7 +902,10 @@ export class UserInterface {
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
 			if (renderingData.pickedChampions[i] == "") {
-				img.src = this.defaultPickIconPath;
+				if (this.config.useSmallPickIcons == true)
+					img.src = this.defaultBanIconPath;
+				else img.src = this.defaultPickIconPath;
+
 				img.alt = "champion-pick-icon";
 				img.dataset.champion = "";
 				img.dataset.type = "pick";

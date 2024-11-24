@@ -1,6 +1,8 @@
 :root {
-	--pickMaxWidth: 230px;
-	--pickMaxHeight: 130px;
+	--pickMaxWidthCenteredIcons: 230px;
+	--pickMaxHeightCenteredIcons: 130px;
+	--pickMaxWidthSmallIcons: 100px;
+	--pickMaxHeightSmallIcons: 100px;
 	--championMaxWidth: 100px;
 	--championMaxHeight: var(--championMaxWidth);
 	--banMaxWidth: 100px;
@@ -195,13 +197,6 @@ body {
 	scrollbar-color: var(--scrollbarColor);
 }
 
-.champion-container {
-	display: flex;
-	flex-direction: column;
-	width: var(--championMaxWidth);
-	height: var(--championMaxHeight);
-}
-
 .champion-icon {
 	max-width: var(--championMaxWidth);
 	max-height: var(--championMaxHeight);
@@ -220,23 +215,21 @@ body {
 	aspect-ratio: 1.77;
 	height: 100%;
 	width: 100%;
-	min-height: var(--pickMaxHeight);
-	min-width: var(--pickMaxWidth);
-	max-width: var(--pickMaxWidth);
-	max-height: var(--pickMaxHeight);
-	background-size: cover;
-	background-image: url("./../img/pick_icon.png");
 }
 
 .draft-team > .champion-pick > img {
-	width: var(--pickMaxWidth);
-	height: var(--pickMaxHeight);
-	max-width: var(--pickMaxWidth);
-	max-height: var(--pickMaxHeight);
 	border: var(--championPickBorder);
 }
 
-.draft-team > .champion-pick > img[src*="/img/champion_icons/"] {
+.champion-pick > img[src*="small"] {
+	max-width: var(--pickMaxWidthSmallIcons) !important;
+	max-height: var(--pickMaxHeightSmallIcons) !important;
+	cursor: pointer;
+}
+
+.champion-pick > img[src*="centered"] {
+	width: var(--pickMaxWidthCenteredIcons) !important;
+	height: var(--pickMaxHeightCenteredIcons) !important;
 	cursor: pointer;
 }
 
