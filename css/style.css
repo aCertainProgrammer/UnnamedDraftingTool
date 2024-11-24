@@ -247,16 +247,20 @@ body {
 	border: var(--championPickBorder);
 }
 
-.champion-pick > img[src="./img/pick_icon.png"] {
+.champion-pick > img[src="./img/pick_icon.webp"] {
 	min-width: var(--pickMaxWidthCenteredIcons);
 	min-height: var(--pickMaxHeightCenteredIcons);
+	width: var(--pickMaxWidthCenteredIcons);
+	height: var(--pickMaxHeightCenteredIcons);
 	max-width: var(--pickMaxWidthCenteredIcons);
 	max-height: var(--pickMaxHeightCenteredIcons);
 }
 
-.champion-pick > img[src="./img/ban-icon.png"] {
+.champion-pick > img[src="./img/ban-icon.webp"] {
 	min-width: var(--pickMaxWidthSmallIcons);
 	min-height: var(--pickMaxHeightSmallIcons);
+	width: var(--pickMaxWidthSmallIcons);
+	height: var(--pickMaxHeightSmallIcons);
 	max-width: var(--pickMaxWidthSmallIcons);
 	max-height: var(--pickMaxHeightSmallIcons);
 }
@@ -288,7 +292,7 @@ body {
 	max-height: var(--roleIconMaxHeight);
 	border-radius: var(--generalBorderRadius);
 	width: 100%;
-	height: auto;
+	height: 100%;
 	flex-shrink: 1;
 	min-width: 0px;
 }
@@ -407,7 +411,7 @@ body {
 	object-fit: cover;
 }
 
-.draft-team-bans > .champion-ban > img:not([src="./img/ban-icon.png"]) {
+.draft-team-bans > .champion-ban > img:not([src="./img/ban-icon.webp"]) {
 	cursor: pointer;
 }
 
@@ -455,6 +459,8 @@ body {
 .settings-button > img {
 	max-height: 28px;
 	max-width: 28px;
+	height: 28px;
+	width: 28px;
 }
 
 .settings-button > img {

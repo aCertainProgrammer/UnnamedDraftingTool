@@ -7,8 +7,8 @@ import ZeroMd, { STYLES } from "https://cdn.jsdelivr.net/npm/zero-md@3";
 const controller = new Controller(
 	new Scraper(".champion-pick", ".champion-ban"),
 	new UserInterface(
-		"./img/pick_icon.png",
-		"./img/ban-icon.png",
+		"./img/pick_icon.webp",
+		"./img/ban-icon.webp",
 		"./img/champion_icons",
 	),
 	new Backend(),
