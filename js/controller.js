@@ -28,6 +28,9 @@ export class Controller {
 		this.userInterface.config = validatedConfig;
 		this.userInterface.colorSettingsButtons();
 		this.userInterface.setIcons();
+		if (validatedConfig.useCompactMode == true)
+			document.documentElement.dataset.mode = "compact";
+		else document.documentElement.dataset.mode = "wide";
 		if (validatedConfig.loadUserDataOnProgramStart == true) {
 			const user_data = DataController.loadData("user_data", "none");
 			if (user_data != -1) this.userInterface.dataSource = "user_data";

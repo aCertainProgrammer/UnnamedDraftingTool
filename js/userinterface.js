@@ -79,6 +79,9 @@ export class UserInterface {
 		this.toggleSearchModeButton = document.querySelector(
 			"#search-mode-toggle",
 		);
+		this.useCompactModeToggle = document.querySelector(
+			"#use-compact-mode-toggle",
+		);
 		this.useSmallPickIconsToggle = document.querySelector(
 			"#use-small-picks-toggle",
 		);
@@ -184,6 +187,10 @@ export class UserInterface {
 		this.clearSearchbarOnFocusToggle.addEventListener(
 			"click",
 			this.toggleClearingSearchbarOnFocus.bind(this),
+		);
+		this.useCompactModeToggle.addEventListener(
+			"click",
+			this.toggleCompactMode.bind(this),
 		);
 		this.useSmallPickIconsToggle.addEventListener(
 			"click",
@@ -296,12 +303,21 @@ export class UserInterface {
 		DataController.saveConfig(this.config);
 		this.sendProcessSignal();
 	}
+	toggleCompactMode() {
+		this.config.useCompactMode = !this.config.useCompactMode;
+		if (this.config.useCompactMode == true)
+			document.documentElement.dataset.mode = "compact";
+		else document.documentElement.dataset.mode = "wide";
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+	}
 	colorSettingsButtons() {
 		const buttons = [
 			this.colorBordersToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
 			this.toggleSearchModeButton,
+			this.useCompactModeToggle,
 			this.useSmallPickIconsToggle,
 			this.useSmallChampionIconsToggle,
 			this.useSmallBanIconsToggle,
@@ -311,6 +327,7 @@ export class UserInterface {
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
 			this.config.useLegacySearch,
+			this.config.useCompactMode,
 			this.config.useSmallPickIcons,
 			this.config.useSmallChampionIcons,
 			this.config.useSmallBanIcons,
@@ -691,6 +708,10 @@ export class UserInterface {
 				this.pickBanChampionWithKeyInput(key);
 			}
 		} else {
+			if (key == "A" || key == "a") {
+				this.searchBar.blur();
+				this.toggleCompactMode();
+			}
 			if (key == "C" || key == "c") {
 				this.searchBar.blur();
 				this.dataSource = "user_data";
