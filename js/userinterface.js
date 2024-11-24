@@ -284,6 +284,7 @@ export class UserInterface {
 	closeWelcomeScreen(event) {
 		this.welcomeScreen.classList.add("hidden");
 		this.contentContainer.classList.remove("hidden");
+
 		if (event.target.id == "close-welcome-screen-never-show-again") {
 			localStorage.setItem("welcome_screen_off", "true");
 		}
@@ -291,6 +292,7 @@ export class UserInterface {
 
 	saveUserData(textarea) {
 		const input_error_box = document.querySelector("#input-error-box");
+
 		let data;
 		try {
 			data = JSON.parse(textarea.value);
@@ -305,12 +307,17 @@ export class UserInterface {
 
 			return;
 		}
+
 		textarea.classList.remove("invalid");
 		textarea.classList.add("valid");
+
 		input_error_box.classList.add("hidden");
+
 		const validatedData = this.validateUserData(data);
 		DataController.saveData("user_data", JSON.stringify(validatedData));
+
 		this.dataSource = "user_data";
+
 		this.sendProcessSignal();
 	}
 
@@ -320,10 +327,13 @@ export class UserInterface {
 
 		const unvalidatedJSON = JSON.parse(data);
 		const validatedData = this.validateUserData(unvalidatedJSON);
+
 		DataController.saveData("user_data", JSON.stringify(validatedData));
 		this.dataSource = "user_data";
+
 		const json = JSON.parse(data);
 		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
+
 		this.sendProcessSignal();
 	}
 
@@ -335,40 +345,50 @@ export class UserInterface {
 		if (this.selectedChampion == "") {
 			event.target.dataset.champion = "";
 		}
+
 		event.target.dataset.champion = this.selectedChampion;
 		this.selectedChampion = "";
+
 		this.sendProcessSignal();
 	}
 
 	dropChampion(event) {
 		event.preventDefault();
 		event.stopPropagation();
+
 		const replacedChampion = event.target.dataset.champion;
 		this.recentlyDragged.dataset.champion = replacedChampion;
+
 		this.placeChampion(event);
 	}
 
 	setTeam(team) {
 		this.team = team.id;
+
 		const currentlySelectedTeam =
 			this.teamsContainer.querySelector(".selected");
 		if (currentlySelectedTeam !== null)
 			currentlySelectedTeam.classList.remove("selected");
+
 		team.classList.add("selected");
+
 		this.sendProcessSignal();
 	}
 
 	setRole(roleIcon) {
 		const currentlySelectedIcon =
 			this.rolesContainer.querySelector(".selected");
+
 		if (currentlySelectedIcon !== null)
 			currentlySelectedIcon.classList.remove("selected");
+
 		if (this.role == roleIcon.id) {
 			this.role = "all";
 		} else if (this.role != roleIcon.id) {
 			this.role = roleIcon.id;
 			roleIcon.classList.add("selected");
 		}
+
 		this.sendProcessSignal();
 	}
 
@@ -379,15 +399,19 @@ export class UserInterface {
 
 	loadDefaultData() {
 		this.dataSource = "default_data";
+
 		const json = DataController.loadData(this.getDataSource(), "none");
 		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
+
 		this.sendProcessSignal();
 	}
 
 	loadUserData() {
 		this.dataSource = "user_data";
+
 		const json = DataController.loadData(this.getDataSource(), "none");
 		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
+
 		this.sendProcessSignal();
 	}
 
@@ -403,7 +427,9 @@ export class UserInterface {
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
 		this.colorSettingsButtons();
+
 		DataController.saveConfig(this.config);
+
 		this.sendProcessSignal();
 	}
 
@@ -411,21 +437,25 @@ export class UserInterface {
 		this.config.loadUserDataOnProgramStart =
 			!this.config.loadUserDataOnProgramStart;
 		this.colorSettingsButtons();
+
 		DataController.saveConfig(this.config);
 	}
 
 	toggleClearingSearchbarOnFocus() {
 		this.config.clearSearchBarOnFocus = !this.config.clearSearchBarOnFocus;
 		this.colorSettingsButtons();
+
 		DataController.saveConfig(this.config);
 	}
 
 	toggleCompactMode() {
 		this.config.useCompactMode = !this.config.useCompactMode;
+		this.colorSettingsButtons();
+
 		if (this.config.useCompactMode == true)
 			document.documentElement.dataset.mode = "compact";
 		else document.documentElement.dataset.mode = "wide";
-		this.colorSettingsButtons();
+
 		DataController.saveConfig(this.config);
 	}
 
@@ -452,17 +482,22 @@ export class UserInterface {
 			this.banIconPostfix = "_0.webp";
 		}
 	}
+
 	togglePickIcons() {
 		this.config.useSmallPickIcons = !this.config.useSmallPickIcons;
 		this.colorSettingsButtons();
+
 		DataController.saveConfig(this.config);
+
 		this.setIcons();
 		this.sendProcessSignal();
 	}
 	toggleChampionIcons() {
 		this.config.useSmallChampionIcons = !this.config.useSmallChampionIcons;
 		this.colorSettingsButtons();
+
 		DataController.saveConfig(this.config);
+
 		this.setIcons();
 		this.sendProcessSignal();
 	}
@@ -470,7 +505,9 @@ export class UserInterface {
 	toggleBanIcons() {
 		this.config.useSmallBanIcons = !this.config.useSmallBanIcons;
 		this.colorSettingsButtons();
+
 		DataController.saveConfig(this.config);
+
 		this.setIcons();
 		this.sendProcessSignal();
 	}
@@ -478,11 +515,13 @@ export class UserInterface {
 	processKeyboardInput(event) {
 		const key = event.key;
 		const shiftKeyPressed = event.shiftKey;
+
 		if ((key == "I" || key == "i") && shiftKeyPressed) {
 			this.searchBar.blur();
 			this.userDataInput.click();
 		}
 		if (!this.rightOverlay.classList.contains("hidden")) return;
+
 		if (key == " ") {
 			this.searchBar.focus();
 		}
@@ -623,13 +662,16 @@ export class UserInterface {
 	openSettingsMenu() {
 		this.leftOverlay.classList.remove("hidden");
 	}
+
 	closeSettingsMenu() {
 		this.leftOverlay.classList.add("hidden");
 	}
 
 	dropChampionIntoVoid(event) {
 		event.preventDefault();
+
 		const droppedChampion = this.recentlyDragged;
+
 		if (
 			droppedChampion.dataset.type == "pick" ||
 			droppedChampion.dataset.type == "ban"
@@ -652,42 +694,55 @@ export class UserInterface {
 
 	switchTheme() {
 		this.currentThemeIndex++;
+
 		if (this.currentThemeIndex >= this.themes.length)
 			this.currentThemeIndex = 0;
+
 		const theme = this.themes[this.currentThemeIndex];
 		document.documentElement.dataset.theme = theme;
+
 		this.switchThemeButton.value = "Theme: " + theme;
+
 		localStorage.setItem("theme", theme);
 	}
 
 	togglePickBanMode() {
 		let mode;
+
 		if (this.currentMode == "pick") mode = "ban";
 		else mode = "pick";
+
 		this.setPickBanMode(mode);
 	}
 
 	toggleSearchMode() {
 		this.config.useLegacySearch = !this.config.useLegacySearch;
 		this.colorSettingsButtons();
+
 		DataController.saveConfig(this.config);
+
 		this.sendProcessSignal();
 	}
 
 	dragChampion(event) {
 		this.recentlyDragged = event.target;
+
 		const image = document.createElement("img");
 		const canvas = document.createElement("canvas");
 		const ctx = canvas.getContext("2d");
+
 		image.src = event.target.src;
 		canvas.width = event.target.offsetWidth;
 		canvas.height = event.target.offsetHeight;
+
 		ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
 		event.dataTransfer.setDragImage(
 			canvas,
 			canvas.width / 2,
 			canvas.height / 2,
 		);
+
 		this.selectChampion(event);
 	}
 
@@ -712,6 +767,7 @@ export class UserInterface {
 			this.config.useSmallChampionIcons,
 			this.config.useSmallBanIcons,
 		];
+
 		for (let i = 0; i < buttons.length; i++) {
 			if (config_settings[i] == true) {
 				buttons[i].classList.remove("off");
@@ -722,49 +778,60 @@ export class UserInterface {
 			}
 		}
 	}
+
 	getConfig() {
 		const config = this.config;
 		return config;
 	}
+
 	getDataSource() {
 		const source = this.dataSource;
 		return source;
 	}
+
 	getTeam() {
 		const team = this.team;
 		return team;
 	}
+
 	getRole() {
 		const role = this.role;
 		return role;
 	}
+
 	getSearchQuery() {
 		const searchQuery = this.searchBar.value.toLowerCase();
 		return searchQuery;
 	}
-	setDataSource() {}
+
 	/**
 	 * Finds the index of the saved theme
 	 * @returns {number} The index of the saved theme, or 0 if nothing is found
 	 */
 	loadSavedTheme() {
 		let theme = localStorage.getItem("theme");
+
 		if (theme == null) theme = "dark";
+
 		for (let i = 0; i < this.themes.length; i++) {
 			if (theme == this.themes[i]) return i;
 		}
+
 		console.log("Couldn't find the theme in loadSavedTheme()!");
 		return 0;
 	}
 	clearSelectedChampions() {
 		const selected = this.championsContainer.querySelector(".selected");
+
 		if (selected !== null) {
 			selected.classList.remove("selected");
 		}
 	}
 	selectChampion(event) {
 		const championIcon = event.target;
+
 		this.clearSelectedChampions();
+
 		if (championIcon.dataset.pickedOrBanned == "true") {
 			this.selectedChampion = "";
 			return;
@@ -773,24 +840,29 @@ export class UserInterface {
 			this.selectedChampion = "";
 			return;
 		}
-		const currentlySelectedIcon = championIcon.classList.add("selected");
+
 		this.selectedChampion = event.target.dataset.champion;
 	}
 
 	validateUserData(data) {
 		const teams = ["all", "ally", "enemy"];
 		const defaultData = DataController.loadData("default_data", "none");
+
 		teams.forEach((current) => {
 			if (data[current] == null) {
 				data[current] = defaultData[current];
 			}
 		});
+
 		return data;
 	}
+
 	pickBanChampionWithKeyInput(key) {
 		let data;
+
 		if (this.currentMode == "pick") data = this.picks;
 		if (this.currentMode == "ban") data = this.bans;
+
 		if (
 			this.currentlyHoveredChampion == "" ||
 			this.championsContainer.childNodes.length == 1
@@ -800,10 +872,13 @@ export class UserInterface {
 					this.championsContainer.firstChild.dataset.champion;
 			} else return;
 		}
+
 		let oldIndex = null;
 		let pickOrBan = null;
+
 		const number = parseInt(key);
 		let index;
+
 		switch (number) {
 			case 0:
 				index = 9;
@@ -812,14 +887,17 @@ export class UserInterface {
 				index = number - 1;
 				break;
 		}
+
 		for (let i = 0; i < 10; i++) {
 			if (
 				this.picks[i].childNodes[1].dataset.champion ==
 				this.currentlyHoveredChampion
 			) {
 				this.picks[i].childNodes[1].dataset.champion = "";
+
 				oldIndex = i;
 				pickOrBan = this.picks;
+
 				break;
 			}
 			if (
@@ -827,11 +905,14 @@ export class UserInterface {
 				this.currentlyHoveredChampion
 			) {
 				this.bans[i].childNodes[1].dataset.champion = "";
+
 				oldIndex = i;
 				pickOrBan = this.bans;
+
 				break;
 			}
 		}
+
 		//swap champs if both are present
 		if (oldIndex != null && data[index] != null) {
 			pickOrBan[oldIndex].childNodes[1].dataset.champion =
@@ -841,12 +922,15 @@ export class UserInterface {
 			data[index].childNodes[1].dataset.champion =
 				this.currentlyHoveredChampion;
 		}
+
 		this.currentlyHoveredChampion = "";
+
 		this.sendProcessSignal();
 	}
 
 	setPickBanMode(mode) {
 		this.currentMode = mode;
+
 		if (this.currentMode == "pick") {
 			this.togglePickBanModeButton.dataset.mode = "pick";
 			this.togglePickBanModeButton.value = "Current mode: pick";
@@ -857,10 +941,12 @@ export class UserInterface {
 	}
 	clearScreen() {
 		this.championsContainer.innerHTML = "";
+
 		for (let i = 0; i < this.picks.length; i++) {
 			const img = this.picks[i].childNodes[1];
 			img.src = this.defaultPickIconPath;
 		}
+
 		for (let i = 0; i < this.bans.length; i++) {
 			const img = this.bans[i].childNodes[1];
 			img.src = this.defaultPickIconPath;
@@ -872,6 +958,7 @@ export class UserInterface {
 			this.userDataSwitch.classList.remove("highlighted");
 			this.defaultDataSwitch.classList.add("highlighted");
 		}
+
 		if (this.dataSource === "user_data") {
 			this.defaultDataSwitch.classList.remove("highlighted");
 			this.userDataSwitch.classList.add("highlighted");
@@ -883,16 +970,20 @@ export class UserInterface {
 		);
 		const roles = ["top", "jungle", "mid", "adc", "support"];
 		const config = DataController.readConfig();
+
 		// Render champions (central part)
 		let exactlyMatchingChampion = null;
+
 		for (let i = 0; i < renderingData.visibleChampions.length; i++) {
 			const championName = renderingData.visibleChampions[i];
 			if (championName == this.searchBar.value) {
 				exactlyMatchingChampion = championName;
 			}
+
 			let enemy = 0,
 				ally = 0,
 				team = "none";
+
 			if (config.colorBorders == true) {
 				for (let i = 0; i < roles.length; i++) {
 					if (championData.ally[roles[i]].includes(championName))
@@ -901,10 +992,12 @@ export class UserInterface {
 						enemy = 1;
 					if (ally == 1 && enemy == 1) break;
 				}
+
 				if (ally == 1 && enemy == 1) team = "both";
 				else if (ally == 1) team = "ally";
 				else if (enemy == 1) team = "enemy";
 			}
+
 			let isPickedOrBanned = "false";
 			if (
 				renderingData.pickedChampions.includes(championName) ||
@@ -912,12 +1005,15 @@ export class UserInterface {
 			) {
 				isPickedOrBanned = "true";
 			}
+
 			const championIcon = this.createChampionIcon(
 				championName,
 				isPickedOrBanned,
 				team,
 			);
+
 			this.championsContainer.appendChild(championIcon);
+
 			championIcon.addEventListener(
 				"click",
 				this.selectChampion.bind(this),
@@ -937,6 +1033,7 @@ export class UserInterface {
 				this.currentlyHoveredChampion = "";
 			});
 		}
+
 		if (
 			exactlyMatchingChampion == null &&
 			this.championsContainer.hasChildNodes()
@@ -950,8 +1047,10 @@ export class UserInterface {
 		// Render picked champions
 		for (let i = 0; i < this.picks.length; i++) {
 			let img = this.picks[i].childNodes[1];
+
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
+
 			if (renderingData.pickedChampions[i] == "") {
 				if (this.config.useSmallPickIcons == true)
 					img.src = this.defaultBanIconPath;
@@ -961,6 +1060,7 @@ export class UserInterface {
 				img.dataset.champion = "";
 				img.dataset.type = "pick";
 				img.draggable = "false";
+
 				img.removeEventListener("dragstart", this.dragFunction);
 				img.addEventListener("dragstart", this.stopDrag);
 				img.removeEventListener("dragend", this.dragendFunction);
@@ -976,6 +1076,7 @@ export class UserInterface {
 					"champion-pick-icon-" + renderingData.pickedChampions[i];
 				img.dataset.champion = renderingData.pickedChampions[i];
 				img.draggable = "true";
+
 				img.removeEventListener("dragstart", this.stopDrag);
 				img.addEventListener("dragstart", this.dragFunction);
 				img.removeEventListener("dragend", this.dragendFunction);
@@ -990,14 +1091,17 @@ export class UserInterface {
 		// Render banned champions
 		for (let i = 0; i < this.bans.length; i++) {
 			let img = this.bans[i].childNodes[1];
+
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
+
 			if (renderingData.bannedChampions[i] == "") {
 				img.src = this.defaultBanIconPath;
 				img.alt = "champion-ban-icon";
 				img.dataset.champion = "";
 				img.dataset.type = "ban";
 				img.draggable = "false";
+
 				img.removeEventListener("dragstart", this.dragFunction);
 				img.addEventListener("dragstart", this.stopDrag);
 				img.removeEventListener("dragend", this.dragendFunction);
@@ -1013,6 +1117,7 @@ export class UserInterface {
 					"champion-ban-icon-" + renderingData.bannedChampions[i];
 				img.dataset.champion = renderingData.bannedChampions[i];
 				img.draggable = "true";
+
 				img.removeEventListener("dragstart", this.stopDrag);
 				img.addEventListener("dragstart", this.dragFunction);
 				img.removeEventListener("dragend", this.dragendFunction);
@@ -1024,8 +1129,10 @@ export class UserInterface {
 			}
 		}
 	}
+
 	createChampionIcon(championName, isPickedOrBanned, team) {
 		const championIcon = document.createElement("img");
+
 		championIcon.classList += "champion-icon";
 		championIcon.src =
 			this.imagePath +
@@ -1036,12 +1143,14 @@ export class UserInterface {
 		championIcon.dataset.champion = championName;
 		championIcon.dataset.team = team;
 		championIcon.draggable = "true";
+
 		if (isPickedOrBanned === "true") {
 			championIcon.style.opacity = "0.4";
 			championIcon.dataset.pickedOrBanned = "true";
 		} else {
 			championIcon.dataset.pickedOrBanned = "false";
 		}
+
 		return championIcon;
 	}
 }
