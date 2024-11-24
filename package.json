@@ -4,7 +4,8 @@
 	"description": "https://acertainprogrammer.github.io/UnnamedDraftingTool/index.html",
 	"scripts": {
 		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
-		"doc": "jsdoc --readme ./README.md js -r -d docs --pedantic"
+		"doc": "jsdoc --readme ./README.md js -r -d docs --pedantic",
+		"lint": "eslint js/*"
 	},
 	"type": "module",
 	"author": "",
