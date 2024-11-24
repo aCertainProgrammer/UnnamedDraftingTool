@@ -263,18 +263,20 @@
 			</div>
 		</div>
 		<div id="manual-container" class="hidden">
-			<input
-				class="source-button"
-				id="close-manual-button"
-				value="Close manual"
-				type="button"
-			/>
-			<input
-				class="source-button"
-				id="go-to-top-button"
-				value="Go to top"
-				type="button"
-			/>
+			<div id="manual-buttons">
+				<input
+					class="source-button"
+					id="close-manual-button"
+					value="Close manual"
+					type="button"
+				/>
+				<input
+					class="source-button"
+					id="go-to-top-button"
+					value="Go to top"
+					type="button"
+				/>
+			</div>
 			<div class="manual-contents">
 				<zero-md src="MANUAL.md" id="manual-text">
 					<template data-append>
@@ -305,7 +307,7 @@
 						type="button"
 						class="source-button"
 						id="switch-theme-button"
-						value="Theme: dark"
+						value="Dark"
 					/>
 					<input
 						class="source-button"

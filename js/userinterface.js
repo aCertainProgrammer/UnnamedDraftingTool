@@ -102,8 +102,9 @@ export class UserInterface {
 		this.openManualButton = document.querySelector("#open-manual-button");
 		this.closeManualButton = document.querySelector("#close-manual-button");
 		this.switchThemeButton = document.querySelector("#switch-theme-button");
-		this.switchThemeButton.value =
-			"Theme: " + this.themes[this.currentThemeIndex];
+		this.switchThemeButton.value = capitalize(
+			this.themes[this.currentThemeIndex],
+		);
 		this.manualContainer = document.querySelector("#manual-container");
 		this.manualText = document.querySelector("#manual-text");
 		this.goToTopOfManualButton =
@@ -701,7 +702,7 @@ export class UserInterface {
 		const theme = this.themes[this.currentThemeIndex];
 		document.documentElement.dataset.theme = theme;
 
-		this.switchThemeButton.value = "Theme: " + theme;
+		this.switchThemeButton.value = capitalize(theme);
 
 		localStorage.setItem("theme", theme);
 	}

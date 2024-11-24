@@ -124,7 +124,7 @@ export class DataController {
 		else config.useLegacySearch = configToValidate.useLegacySearch;
 
 		if (configToValidate.useCompactMode == undefined)
-			config.useCompactMode = false;
+			config.useCompactMode = true;
 		else config.useCompactMode = configToValidate.useCompactMode;
 		if (configToValidate.useSmallPickIcons == undefined)
 			config.useSmallPickIcons = false;

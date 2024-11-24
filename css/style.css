@@ -20,24 +20,34 @@
 }
 
 :root[data-mode="compact"] {
-	--championsContainerWidth: 50%;
+	--championsContainerWidth: 100%;
 	--championContainerPadding: 4px 40px;
+	--notBansWidth: 69%;
+	--notBansMinWidth: 940px;
 	--bansWidth: 69%;
+	--headerWidth: 68%;
 	--roleIconMaxWidth: 40px;
 	--roleIconMaxHeight: var(--roleIconMaxWidth);
-	--teamIconMaxWidth: 0px;
-	--teamIconMaxHeight: 0px;
-	--teamIconDisplay: none !important;
+	--teamIconMaxWidth: 40px;
+	--teamIconMaxHeight: 40px;
 }
 
 :root[data-mode="wide"] {
 	--championsContainerWidth: 100%;
-	--championContainerPadding: 4px 100px;
+	--championContainerPadding: 4px 200px;
+	--notBansWidth: 100%;
 	--bansWidth: 100%;
+	--headerWidth: 100%;
 	--roleIconMaxWidth: 100px;
 	--roleIconMaxHeight: var(--roleIconMaxWidth);
 	--teamIconMaxWidth: 100px;
 	--teamIconMaxHeight: var(--teamIconMaxWidth);
+}
+
+@media screen and (width < 961px) {
+	:root[data-mode="wide"] {
+		--championContainerPadding: 4px 0px !important;
+	}
 }
 
 :root[data-theme="light"] {
@@ -228,7 +238,6 @@ body {
 }
 
 .champion-pick {
-	height: fit-content;
 	height: 100%;
 	width: 100%;
 }
@@ -237,6 +246,19 @@ body {
 	border: var(--championPickBorder);
 }
 
+.champion-pick > img[src="./img/pick_icon.png"] {
+	min-width: var(--pickMaxWidthCenteredIcons);
+	min-height: var(--pickMaxHeightCenteredIcons);
+	max-width: var(--pickMaxWidthCenteredIcons);
+	max-height: var(--pickMaxHeightCenteredIcons);
+}
+
+.champion-pick > img[src="./img/ban-icon.png"] {
+	min-width: var(--pickMaxWidthSmallIcons);
+	min-height: var(--pickMaxHeightSmallIcons);
+	max-width: var(--pickMaxWidthSmallIcons);
+	max-height: var(--pickMaxHeightSmallIcons);
+}
 .champion-pick > img[src*="small"] {
 	max-width: var(--pickMaxWidthSmallIcons) !important;
 	max-height: var(--pickMaxHeightSmallIcons) !important;
@@ -320,10 +342,11 @@ body {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
-	justify-content: center;
+	justify-content: space-between;
 	gap: 10px;
 	min-height: 0;
-	width: 100%;
+	width: var(--notBansWidth);
+	min-width: var(--notBansMinWidth);
 	padding: 0px 10px;
 }
 
@@ -335,6 +358,7 @@ body {
 	padding: 0px 10px;
 	gap: 10px;
 	width: var(--bansWidth);
+	min-width: var(--notBansMinWidth);
 }
 
 .draft-team-bans {
@@ -384,17 +408,6 @@ body {
 
 .draft-team-bans > .champion-ban > img:not([src="./img/ban-icon.png"]) {
 	cursor: pointer;
-}
-
-/*1280 × 720 pixels
-* meaning a 1.77 : 1 ratio
-* */
-.draft-team > .champion-pick > img {
-	width: 100%;
-	height: 100%;
-	max-width: var(--pickMaxWidth);
-	max-height: var(--pickMaxHeight);
-	border: var(--championPickBorder);
 }
 
 .source-button {
@@ -517,7 +530,8 @@ body {
 	align-items: start;
 	justify-content: space-between;
 	padding: 4px 4px 0 4px;
-	width: 100%;
+	width: var(--headerWidth);
+	min-width: var(--notBansMinWidth);
 }
 
 #leave-settings-button {
@@ -628,8 +642,8 @@ label {
 }
 
 #switch-theme-button {
-	min-width: 150px;
-	text-align: left;
+	min-width: 81px;
+	text-align: center;
 }
 
 .input-buttons-container {
