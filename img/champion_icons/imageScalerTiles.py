@@ -25,7 +25,7 @@ for filename in os.listdir(input_directory):
                 img = img.resize(target_size, Image.ANTIALIAS)  # Use ANTIALIAS for high-quality resizing
                 
                 # Convert and save to .webp in lossless mode
-                img.save(output_path, format="WEBP", lossless=True)  # Lossless compression
+                img.save(output_path, format="WEBP", quality=85)  # Lossless compression
                 print(f"Converted and resized (lossless): {filename} -> {output_path}")
         except Exception as e:
             print(f"Failed to process {filename}: {e}")

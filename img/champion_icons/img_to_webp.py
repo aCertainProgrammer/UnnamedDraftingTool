@@ -2,8 +2,8 @@ import os
 from PIL import Image
 
 # Define the directory containing images
-input_directory = "./tiles"
-output_directory = "./tiles_converted_to_webp"  # Optional: Specify an output directory
+input_directory = "./small"
+output_directory = "./small_converted_to_webp"  # Optional: Specify an output directory
 
 # Ensure the output directory exists
 os.makedirs(output_directory, exist_ok=True)

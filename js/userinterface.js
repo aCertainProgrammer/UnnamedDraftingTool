@@ -4,10 +4,31 @@ import { capitalize } from "./util.js";
  * A container for all UI-related events and rendering
  */
 export class UserInterface {
-	constructor(defaultPickIconPath, defaultBanIconPath, championIconPath) {
+	constructor(defaultPickIconPath, defaultBanIconPath, imagePath) {
 		this.defaultPickIconPath = defaultPickIconPath;
 		this.defaultBanIconPath = defaultBanIconPath;
-		this.championIconPath = championIconPath;
+		this.imagePath = imagePath;
+
+		this.championIconPath = localStorage.getItem("championIconPath");
+		this.championIconPostfix = localStorage.getItem("championIconPostfix");
+		this.pickIconPath = localStorage.getItem("pickIconPath");
+		this.pickIconPostfix = localStorage.getItem("pickIconPostfix");
+		this.banIconPath = localStorage.getItem("banIconPath");
+		this.banIconPostfix = localStorage.getItem("banIconPostfix");
+
+		if (this.championIconPath == null || this.championIconPostfix == null) {
+			this.championIconPath = "/small_converted_to_webp_scaled/";
+			this.championIconPostfix = ".webp";
+		}
+
+		if (this.pickIconPath == null || this.pickIconPostfix == null) {
+			this.pickIconPath = "/centered_minified_converted_to_webp_scaled/";
+			this.pickIconPostfix = "_0.webp";
+		}
+		if (this.banIconPath == null || this.banIconPostfix == null) {
+			this.banIconPath = "/small_converted_to_webp_scaled/";
+			this.banIconPostfix = ".webp";
+		}
 
 		this.sendProcessSignal = null;
 		this.dataSource = null;
@@ -69,6 +90,18 @@ export class UserInterface {
 		this.clearSearchbarOnFocusToggle = document.querySelector(
 			"#clear-searchbar-on-focus-toggle",
 		);
+		this.toggleSearchModeButton = document.querySelector(
+			"#search-mode-toggle",
+		);
+		this.useSmallPickIconsToggle = document.querySelector(
+			"#use-small-picks-toggle",
+		);
+		this.useSmallChampionIconsToggle = document.querySelector(
+			"#use-small-champions-toggle",
+		);
+		this.useSmallBanIconsToggle = document.querySelector(
+			"#use-small-bans-toggle",
+		);
 		this.settingsMenu = document.querySelector("#settings-menu");
 		this.enterSettingsButton = document.querySelector(
 			"#enter-settings-button",
@@ -88,9 +121,6 @@ export class UserInterface {
 			document.querySelector("#go-to-top-button");
 		this.togglePickBanModeButton = document.querySelector(
 			"#toggle-pick-ban-mode",
-		);
-		this.toggleSearchModeButton = document.querySelector(
-			"#search-mode-toggle",
 		);
 
 		this.closeWelcomeScreenButton.addEventListener(
@@ -168,6 +198,18 @@ export class UserInterface {
 		this.clearSearchbarOnFocusToggle.addEventListener(
 			"click",
 			this.toggleClearingSearchbarOnFocus.bind(this),
+		);
+		this.useSmallPickIconsToggle.addEventListener(
+			"click",
+			this.togglePickIcons.bind(this),
+		);
+		this.useSmallChampionIconsToggle.addEventListener(
+			"click",
+			this.toggleChampionIcons.bind(this),
+		);
+		this.useSmallBanIconsToggle.addEventListener(
+			"click",
+			this.toggleBanIcons.bind(this),
 		);
 
 		document.addEventListener(
@@ -267,6 +309,44 @@ export class UserInterface {
 				buttons[i].classList.add("off");
 			}
 		}
+	}
+	togglePickIcons() {
+		if (
+			this.pickIconPath == "/centered_minified_converted_to_webp_scaled/"
+		) {
+			this.pickIconPath = "/small_converted_to_webp_scaled/";
+			this.pickIconPostfix = ".webp";
+		} else {
+			this.pickIconPath = "/centered_minified_converted_to_webp_scaled/";
+			this.pickIconPostfix = "_0.webp";
+		}
+		localStorage.setItem("pickIconPath", this.pickIconPath);
+		localStorage.setItem("pickIconPostfix", this.pickIconPostfix);
+		this.sendProcessSignal();
+	}
+	toggleChampionIcons() {
+		if (this.championIconPath == "/tiles_converted_to_webp_scaled/") {
+			this.championIconPath = "/small_converted_to_webp_scaled/";
+			this.championIconPostfix = ".webp";
+		} else {
+			this.championIconPath = "/tiles_converted_to_webp_scaled/";
+			this.championIconPostfix = "_0.webp";
+		}
+		localStorage.setItem("championIconPath", this.championIconPath);
+		localStorage.setItem("championIconPostfix", this.championIconPostfix);
+		this.sendProcessSignal();
+	}
+	toggleBanIcons() {
+		if (this.banIconPath == "/tiles_converted_to_webp_scaled/") {
+			this.banIconPath = "/small_converted_to_webp_scaled/";
+			this.banIconPostfix = ".webp";
+		} else {
+			this.banIconPath = "/tiles_converted_to_webp_scaled/";
+			this.banIconPostfix = "_0.webp";
+		}
+		localStorage.setItem("banIconPath", this.banIconPath);
+		localStorage.setItem("banIconPostfix", this.banIconPostfix);
+		this.sendProcessSignal();
 	}
 	openWelcomeScreen() {
 		this.contentContainer.classList.add("hidden");
@@ -836,10 +916,10 @@ export class UserInterface {
 				img.removeEventListener("mouseleave", this.mouseleaveFunction);
 			} else {
 				img.src =
-					this.championIconPath +
-					"/centered_minified_converted_to_webp_scaled/" +
+					this.imagePath +
+					this.pickIconPath +
 					capitalize(renderingData.pickedChampions[i]) +
-					"_0.webp";
+					this.pickIconPostfix;
 				img.alt =
 					"champion-pick-icon-" + renderingData.pickedChampions[i];
 				img.dataset.champion = renderingData.pickedChampions[i];
@@ -873,10 +953,10 @@ export class UserInterface {
 				img.removeEventListener("mouseleave", this.mouseleaveFunction);
 			} else {
 				img.src =
-					this.championIconPath +
-					"/tiles_converted_to_webp_scaled/" +
+					this.imagePath +
+					this.banIconPath +
 					capitalize(renderingData.bannedChampions[i]) +
-					"_0.webp";
+					this.banIconPostfix;
 				img.alt =
 					"champion-ban-icon-" + renderingData.bannedChampions[i];
 				img.dataset.champion = renderingData.bannedChampions[i];
@@ -896,9 +976,10 @@ export class UserInterface {
 		const championIcon = document.createElement("img");
 		championIcon.classList += "champion-icon";
 		championIcon.src =
-			"./img/champion_icons/tiles_converted_to_webp_scaled/" +
+			this.imagePath +
+			this.championIconPath +
 			capitalize(championName) +
-			"_0.webp";
+			this.championIconPostfix;
 		championIcon.alt = championName;
 		championIcon.dataset.champion = championName;
 		championIcon.dataset.team = team;
