@@ -4,15 +4,11 @@ THEN:
 
 SHORT IDEAS:
 
-- allow toggling centered vs tiles for picks
-
 - add setting to clear champs on page reload
 
 - fix binds for weird keyboards
 
 - fix chrome ligthhouse problems
-
-- fix alts for champions
 
 LONG IDEAS:
 
@@ -25,8 +21,6 @@ LONG IDEAS:
 - Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
 
 - add themes with different color palletes
-
-- Self-inputtable team statistics (gather pick stats for enemy team >> input it >> it shows in some way)
 
 BUGS:
 
