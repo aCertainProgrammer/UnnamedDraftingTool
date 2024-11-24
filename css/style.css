@@ -1,8 +1,8 @@
 :root {
 	--pickMaxWidthCenteredIcons: 230px;
 	--pickMaxHeightCenteredIcons: 130px;
-	--pickMaxWidthSmallIcons: 100px;
-	--pickMaxHeightSmallIcons: 100px;
+	--pickMaxWidthSmallIcons: 130px;
+	--pickMaxHeightSmallIcons: 130px;
 	--championMaxWidth: 100px;
 	--championMaxHeight: var(--championMaxWidth);
 	--banMaxWidth: 100px;
