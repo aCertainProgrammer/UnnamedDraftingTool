@@ -79,7 +79,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 ### Search bar operations
 - `Spacebar` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse)
 
-    If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared, unless you use `Spacebar` to focus it.
+    If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared
 
 ### Data management
 - `Shift` + `C` to load custom data

@@ -524,6 +524,11 @@ export class UserInterface {
 		if (!this.rightOverlay.classList.contains("hidden")) return;
 
 		if (key == " ") {
+			if (
+				document.activeElement != this.searchBar &&
+				this.config.clearSearchBarOnFocus == true
+			)
+				this.searchBar.value = "";
 			this.searchBar.focus();
 		}
 		if (key == "Delete") {
