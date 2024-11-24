@@ -10,6 +10,8 @@ SHORT IDEAS:
 
 - fix chrome ligthhouse problems
 
+- fix shortcuts missing in the manual 
+
 LONG IDEAS:
 
 - GUI for making champion pools
