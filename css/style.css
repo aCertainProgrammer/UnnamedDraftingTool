@@ -212,7 +212,6 @@ body {
 
 .champion-pick {
 	height: fit-content;
-	aspect-ratio: 1.77;
 	height: 100%;
 	width: 100%;
 }
@@ -224,6 +223,8 @@ body {
 .champion-pick > img[src*="small"] {
 	max-width: var(--pickMaxWidthSmallIcons) !important;
 	max-height: var(--pickMaxHeightSmallIcons) !important;
+	width: var(--pickMaxWidthSmallIcons) !important;
+	height: var(--pickMaxHeightSmallIcons) !important;
 	cursor: pointer;
 }
 
