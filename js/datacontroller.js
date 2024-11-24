@@ -67,6 +67,9 @@ export class DataController {
 	 * @property {bool} loadUserDataOnProgramStart
 	 * @property {bool} clearSearchBarOnFocus
 	 * @property {bool} useLegacySearch
+	 * @property {bool} useSmallPickIcons
+	 * @property {bool} useSmallChampionIcons
+	 * @property {bool} useSmallBanIcons
 	 */
 	/**
 	 * Saves a config object to localStorage
@@ -116,6 +119,17 @@ export class DataController {
 		if (configToValidate.useLegacySearch == undefined)
 			config.useLegacySearch = true;
 		else config.useLegacySearch = configToValidate.useLegacySearch;
+		if (configToValidate.useSmallPickIcons == undefined)
+			config.useSmallPickIcons = false;
+		else config.useSmallPickIcons = configToValidate.useSmallPickIcons;
+		if (configToValidate.useSmallChampionIcons == undefined)
+			config.useSmallChampionIcons = true;
+		else
+			config.useSmallChampionIcons =
+				configToValidate.useSmallChampionIcons;
+		if (configToValidate.useSmallBanIcons == undefined)
+			config.useSmallBanIcons = true;
+		else config.useSmallBanIcons = configToValidate.useSmallBanIcons;
 		return config;
 	}
 	/**

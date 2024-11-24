@@ -9,26 +9,12 @@ export class UserInterface {
 		this.defaultBanIconPath = defaultBanIconPath;
 		this.imagePath = imagePath;
 
-		this.championIconPath = localStorage.getItem("championIconPath");
-		this.championIconPostfix = localStorage.getItem("championIconPostfix");
-		this.pickIconPath = localStorage.getItem("pickIconPath");
-		this.pickIconPostfix = localStorage.getItem("pickIconPostfix");
-		this.banIconPath = localStorage.getItem("banIconPath");
-		this.banIconPostfix = localStorage.getItem("banIconPostfix");
-
-		if (this.championIconPath == null || this.championIconPostfix == null) {
-			this.championIconPath = "/small_converted_to_webp_scaled/";
-			this.championIconPostfix = ".webp";
-		}
-
-		if (this.pickIconPath == null || this.pickIconPostfix == null) {
-			this.pickIconPath = "/centered_minified_converted_to_webp_scaled/";
-			this.pickIconPostfix = "_0.webp";
-		}
-		if (this.banIconPath == null || this.banIconPostfix == null) {
-			this.banIconPath = "/small_converted_to_webp_scaled/";
-			this.banIconPostfix = ".webp";
-		}
+		this.pickIconPath = null;
+		this.pickIconPostfix = null;
+		this.championIconPath = null;
+		this.championIconPostfix = null;
+		this.banIconPath = null;
+		this.banIconPostfix = null;
 
 		this.sendProcessSignal = null;
 		this.dataSource = null;
@@ -281,6 +267,29 @@ export class UserInterface {
 		if (!localStorage.getItem("welcome_screen_off"))
 			this.openWelcomeScreen();
 	}
+	setIcons() {
+		if (this.config.useSmallPickIcons == true) {
+			this.pickIconPath = "/small_converted_to_webp_scaled/";
+			this.pickIconPostfix = ".webp";
+		} else {
+			this.pickIconPath = "/centered_minified_converted_to_webp_scaled/";
+			this.pickIconPostfix = "_0.webp";
+		}
+		if (this.config.useSmallChampionIcons == true) {
+			this.championIconPath = "/small_converted_to_webp_scaled/";
+			this.championIconPostfix = ".webp";
+		} else {
+			this.championIconPath = "/tiles_converted_to_webp_scaled/";
+			this.championIconPostfix = "_0.webp";
+		}
+		if (this.config.useSmallBanIcons == true) {
+			this.banIconPath = "/small_converted_to_webp_scaled/";
+			this.banIconPostfix = ".webp";
+		} else {
+			this.banIconPath = "/tiles_converted_to_webp_scaled/";
+			this.banIconPostfix = "_0.webp";
+		}
+	}
 	toggleSearchMode() {
 		this.config.useLegacySearch = !this.config.useLegacySearch;
 		this.colorSettingsButtons();
@@ -293,12 +302,18 @@ export class UserInterface {
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
 			this.toggleSearchModeButton,
+			this.useSmallPickIconsToggle,
+			this.useSmallChampionIconsToggle,
+			this.useSmallBanIconsToggle,
 		];
 		const config_settings = [
 			this.config.colorBorders,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
 			this.config.useLegacySearch,
+			this.config.useSmallPickIcons,
+			this.config.useSmallChampionIcons,
+			this.config.useSmallBanIcons,
 		];
 		for (let i = 0; i < buttons.length; i++) {
 			if (config_settings[i] == true) {
@@ -311,41 +326,24 @@ export class UserInterface {
 		}
 	}
 	togglePickIcons() {
-		if (
-			this.pickIconPath == "/centered_minified_converted_to_webp_scaled/"
-		) {
-			this.pickIconPath = "/small_converted_to_webp_scaled/";
-			this.pickIconPostfix = ".webp";
-		} else {
-			this.pickIconPath = "/centered_minified_converted_to_webp_scaled/";
-			this.pickIconPostfix = "_0.webp";
-		}
-		localStorage.setItem("pickIconPath", this.pickIconPath);
-		localStorage.setItem("pickIconPostfix", this.pickIconPostfix);
+		this.config.useSmallPickIcons = !this.config.useSmallPickIcons;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+		this.setIcons();
 		this.sendProcessSignal();
 	}
 	toggleChampionIcons() {
-		if (this.championIconPath == "/tiles_converted_to_webp_scaled/") {
-			this.championIconPath = "/small_converted_to_webp_scaled/";
-			this.championIconPostfix = ".webp";
-		} else {
-			this.championIconPath = "/tiles_converted_to_webp_scaled/";
-			this.championIconPostfix = "_0.webp";
-		}
-		localStorage.setItem("championIconPath", this.championIconPath);
-		localStorage.setItem("championIconPostfix", this.championIconPostfix);
+		this.config.useSmallChampionIcons = !this.config.useSmallChampionIcons;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+		this.setIcons();
 		this.sendProcessSignal();
 	}
 	toggleBanIcons() {
-		if (this.banIconPath == "/tiles_converted_to_webp_scaled/") {
-			this.banIconPath = "/small_converted_to_webp_scaled/";
-			this.banIconPostfix = ".webp";
-		} else {
-			this.banIconPath = "/tiles_converted_to_webp_scaled/";
-			this.banIconPostfix = "_0.webp";
-		}
-		localStorage.setItem("banIconPath", this.banIconPath);
-		localStorage.setItem("banIconPostfix", this.banIconPostfix);
+		this.config.useSmallBanIcons = !this.config.useSmallBanIcons;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+		this.setIcons();
 		this.sendProcessSignal();
 	}
 	openWelcomeScreen() {

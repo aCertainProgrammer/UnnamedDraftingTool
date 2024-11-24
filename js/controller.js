@@ -27,6 +27,7 @@ export class Controller {
 		const validatedConfig = DataController.validateConfig(savedConfig);
 		this.userInterface.config = validatedConfig;
 		this.userInterface.colorSettingsButtons();
+		this.userInterface.setIcons();
 		if (validatedConfig.loadUserDataOnProgramStart == true) {
 			const user_data = DataController.loadData("user_data", "none");
 			if (user_data != -1) this.userInterface.dataSource = "user_data";
