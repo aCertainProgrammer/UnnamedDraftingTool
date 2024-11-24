@@ -18,7 +18,7 @@ export class DataController {
 	static loadData(source, team) {
 		const json = localStorage.getItem(source);
 		if (json == null) {
-			if ((source = "user_data")) {
+			if (source == "user_data") {
 				let data = {
 					all: {
 						top: ["camille", "aatrox", "darius", "chogath"],
