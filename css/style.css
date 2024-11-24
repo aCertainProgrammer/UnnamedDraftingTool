@@ -9,10 +9,6 @@
 	--banMaxHeight: var(--banMaxWidth);
 	--banMinWidth: 50px;
 	--banMinHeight: 50px;
-	--roleIconMaxWidth: 70px;
-	--roleIconMaxHeight: var(--roleIconMaxWidth);
-	--teamIconMaxWidth: 70px;
-	--teamIconMaxHeight: var(--teamIconMaxWidth);
 	--searchBarMaxWidth: 130px;
 	--searchBarMaxHeight: 70px;
 	--searchBarFontSize: 1.9rem;
@@ -21,6 +17,27 @@
 	--dataButtonFontSize: 20px;
 	--generalBorderRadius: 6px;
 	--overlayBorderRadius: 24px;
+}
+
+:root[data-mode="compact"] {
+	--championsContainerWidth: 50%;
+	--championContainerPadding: 4px 40px;
+	--bansWidth: 69%;
+	--roleIconMaxWidth: 40px;
+	--roleIconMaxHeight: var(--roleIconMaxWidth);
+	--teamIconMaxWidth: 0px;
+	--teamIconMaxHeight: 0px;
+	--teamIconDisplay: none !important;
+}
+
+:root[data-mode="wide"] {
+	--championsContainerWidth: 100%;
+	--championContainerPadding: 4px 100px;
+	--bansWidth: 100%;
+	--roleIconMaxWidth: 100px;
+	--roleIconMaxHeight: var(--roleIconMaxWidth);
+	--teamIconMaxWidth: 100px;
+	--teamIconMaxHeight: var(--teamIconMaxWidth);
 }
 
 :root[data-theme="light"] {
@@ -188,10 +205,10 @@ body {
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	padding: 4px;
+	padding: var(--championContainerPadding);
 	gap: 5px;
 	min-height: 0;
-	width: 100%;
+	width: var(--championsContainerWidth);
 	max-height: 80.2vh;
 	overflow-y: auto;
 	scrollbar-color: var(--scrollbarColor);
@@ -261,7 +278,7 @@ body {
 	gap: 11px;
 	flex-shrink: 1;
 	width: 100%;
-	height: 100%;
+	height: var(--roleIconMaxHeight);
 }
 
 .search-bar {
@@ -317,7 +334,7 @@ body {
 	justify-content: space-between;
 	padding: 0px 10px;
 	gap: 10px;
-	width: 100%;
+	width: var(--bansWidth);
 }
 
 .draft-team-bans {
@@ -519,6 +536,7 @@ body {
 .team-logo {
 	filter: var(--teamLogoFilter);
 	border-radius: var(--generalBorderRadius);
+	display: var(--teamIconDisplay);
 }
 
 .custom-data-input-textarea {
