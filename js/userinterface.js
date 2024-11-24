@@ -214,16 +214,13 @@ export class UserInterface {
 			"click",
 			this.openSettingsMenu.bind(this),
 		);
-		this.contentContainer.addEventListener("dragover", (event) => {
-			event.preventDefault();
-		});
-		this.contentContainer.addEventListener(
-			"drop",
-			this.dropChampionIntoVoid.bind(this),
-		);
 		this.leaveSettingsButton.addEventListener(
 			"click",
 			this.closeSettingsMenu.bind(this),
+		);
+		this.contentContainer.addEventListener(
+			"drop",
+			this.dropChampionIntoVoid.bind(this),
 		);
 		this.openManualButton.addEventListener(
 			"click",
@@ -273,100 +270,17 @@ export class UserInterface {
 
 		if (!localStorage.getItem("welcome_screen_off"))
 			this.openWelcomeScreen();
+		this.contentContainer.addEventListener("dragover", (event) => {
+			event.preventDefault();
+		});
 	}
-	setIcons() {
-		if (this.config.useSmallPickIcons == true) {
-			this.pickIconPath = "/small_converted_to_webp_scaled/";
-			this.pickIconPostfix = ".webp";
-		} else {
-			this.pickIconPath = "/centered_minified_converted_to_webp_scaled/";
-			this.pickIconPostfix = "_0.webp";
-		}
-		if (this.config.useSmallChampionIcons == true) {
-			this.championIconPath = "/small_converted_to_webp_scaled/";
-			this.championIconPostfix = ".webp";
-		} else {
-			this.championIconPath = "/tiles_converted_to_webp_scaled/";
-			this.championIconPostfix = "_0.webp";
-		}
-		if (this.config.useSmallBanIcons == true) {
-			this.banIconPath = "/small_converted_to_webp_scaled/";
-			this.banIconPostfix = ".webp";
-		} else {
-			this.banIconPath = "/tiles_converted_to_webp_scaled/";
-			this.banIconPostfix = "_0.webp";
-		}
-	}
-	toggleSearchMode() {
-		this.config.useLegacySearch = !this.config.useLegacySearch;
-		this.colorSettingsButtons();
-		DataController.saveConfig(this.config);
-		this.sendProcessSignal();
-	}
-	toggleCompactMode() {
-		this.config.useCompactMode = !this.config.useCompactMode;
-		if (this.config.useCompactMode == true)
-			document.documentElement.dataset.mode = "compact";
-		else document.documentElement.dataset.mode = "wide";
-		this.colorSettingsButtons();
-		DataController.saveConfig(this.config);
-	}
-	colorSettingsButtons() {
-		const buttons = [
-			this.colorBordersToggle,
-			this.dataSourceOnLoadToggle,
-			this.clearSearchbarOnFocusToggle,
-			this.toggleSearchModeButton,
-			this.useCompactModeToggle,
-			this.useSmallPickIconsToggle,
-			this.useSmallChampionIconsToggle,
-			this.useSmallBanIconsToggle,
-		];
-		const config_settings = [
-			this.config.colorBorders,
-			this.config.loadUserDataOnProgramStart,
-			this.config.clearSearchBarOnFocus,
-			this.config.useLegacySearch,
-			this.config.useCompactMode,
-			this.config.useSmallPickIcons,
-			this.config.useSmallChampionIcons,
-			this.config.useSmallBanIcons,
-		];
-		for (let i = 0; i < buttons.length; i++) {
-			if (config_settings[i] == true) {
-				buttons[i].classList.remove("off");
-				buttons[i].classList.add("on");
-			} else {
-				buttons[i].classList.remove("on");
-				buttons[i].classList.add("off");
-			}
-		}
-	}
-	togglePickIcons() {
-		this.config.useSmallPickIcons = !this.config.useSmallPickIcons;
-		this.colorSettingsButtons();
-		DataController.saveConfig(this.config);
-		this.setIcons();
-		this.sendProcessSignal();
-	}
-	toggleChampionIcons() {
-		this.config.useSmallChampionIcons = !this.config.useSmallChampionIcons;
-		this.colorSettingsButtons();
-		DataController.saveConfig(this.config);
-		this.setIcons();
-		this.sendProcessSignal();
-	}
-	toggleBanIcons() {
-		this.config.useSmallBanIcons = !this.config.useSmallBanIcons;
-		this.colorSettingsButtons();
-		DataController.saveConfig(this.config);
-		this.setIcons();
-		this.sendProcessSignal();
-	}
+
+	//end of constructor
 	openWelcomeScreen() {
 		this.contentContainer.classList.add("hidden");
 		this.welcomeScreen.classList.remove("hidden");
 	}
+
 	closeWelcomeScreen(event) {
 		this.welcomeScreen.classList.add("hidden");
 		this.contentContainer.classList.remove("hidden");
@@ -374,178 +288,7 @@ export class UserInterface {
 			localStorage.setItem("welcome_screen_off", "true");
 		}
 	}
-	openManual() {
-		this.manualContainer.classList.remove("hidden");
-		this.contentContainer.classList.add("hidden");
-	}
-	closeManual() {
-		this.manualContainer.classList.add("hidden");
-		this.contentContainer.classList.remove("hidden");
-	}
-	getConfig() {
-		const config = this.config;
-		return config;
-	}
-	getDataSource() {
-		const source = this.dataSource;
-		return source;
-	}
-	getTeam() {
-		const team = this.team;
-		return team;
-	}
-	getRole() {
-		const role = this.role;
-		return role;
-	}
-	getSearchQuery() {
-		const searchQuery = this.searchBar.value.toLowerCase();
-		return searchQuery;
-	}
-	setDataSource() {}
-	setTeam(team) {
-		this.team = team.id;
-		const currentlySelectedTeam =
-			this.teamsContainer.querySelector(".selected");
-		if (currentlySelectedTeam !== null)
-			currentlySelectedTeam.classList.remove("selected");
-		team.classList.add("selected");
-		this.sendProcessSignal();
-	}
-	setRole(roleIcon) {
-		const currentlySelectedIcon =
-			this.rolesContainer.querySelector(".selected");
-		if (currentlySelectedIcon !== null)
-			currentlySelectedIcon.classList.remove("selected");
-		if (this.role == roleIcon.id) {
-			this.role = "all";
-		} else if (this.role != roleIcon.id) {
-			this.role = roleIcon.id;
-			roleIcon.classList.add("selected");
-		}
-		this.sendProcessSignal();
-	}
-	/**
-	 * Finds the index of the saved theme
-	 * @returns {number} The index of the saved theme, or 0 if nothing is found
-	 */
-	loadSavedTheme() {
-		let theme = localStorage.getItem("theme");
-		if (theme == null) theme = "dark";
-		for (let i = 0; i < this.themes.length; i++) {
-			if (theme == this.themes[i]) return i;
-		}
-		console.log("Couldn't find the theme in loadSavedTheme()!");
-		return 0;
-	}
-	switchTheme() {
-		this.currentThemeIndex++;
-		if (this.currentThemeIndex >= this.themes.length)
-			this.currentThemeIndex = 0;
-		const theme = this.themes[this.currentThemeIndex];
-		document.documentElement.dataset.theme = theme;
-		this.switchThemeButton.value = "Theme: " + theme;
-		localStorage.setItem("theme", theme);
-	}
-	clearSelectedChampions() {
-		const selected = this.championsContainer.querySelector(".selected");
-		if (selected !== null) {
-			selected.classList.remove("selected");
-		}
-	}
-	selectChampion(event) {
-		const championIcon = event.target;
-		this.clearSelectedChampions();
-		if (championIcon.dataset.pickedOrBanned == "true") {
-			this.selectedChampion = "";
-			return;
-		}
-		if (this.selectedChampion == championIcon.dataset.champion) {
-			this.selectedChampion = "";
-			return;
-		}
-		const currentlySelectedIcon = championIcon.classList.add("selected");
-		this.selectedChampion = event.target.dataset.champion;
-	}
-	placeChampion(event) {
-		if (this.selectedChampion == "") {
-			event.target.dataset.champion = "";
-		}
-		event.target.dataset.champion = this.selectedChampion;
-		this.selectedChampion = "";
-		this.sendProcessSignal();
-	}
-	dropChampion(event) {
-		event.preventDefault();
-		event.stopPropagation();
-		const replacedChampion = event.target.dataset.champion;
-		this.recentlyDragged.dataset.champion = replacedChampion;
-		this.placeChampion(event);
-	}
-	dropChampionIntoVoid(event) {
-		event.preventDefault();
-		const droppedChampion = this.recentlyDragged;
-		if (
-			droppedChampion.dataset.type == "pick" ||
-			droppedChampion.dataset.type == "ban"
-		) {
-			droppedChampion.dataset.champion = "";
-			this.selectedChampion = "";
-			this.sendProcessSignal();
-		}
-	}
-	dragChampion(event) {
-		this.recentlyDragged = event.target;
-		const image = document.createElement("img");
-		const canvas = document.createElement("canvas");
-		const ctx = canvas.getContext("2d");
-		image.src = event.target.src;
-		canvas.width = event.target.offsetWidth;
-		canvas.height = event.target.offsetHeight;
-		ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-		event.dataTransfer.setDragImage(
-			canvas,
-			canvas.width / 2,
-			canvas.height / 2,
-		);
-		this.selectChampion(event);
-	}
 
-	toggleUserDataForm() {
-		if (this.rightOverlay.classList.contains("hidden")) {
-			this.rightOverlay.classList.remove("hidden");
-
-			const json = DataController.loadData(this.getDataSource(), "none");
-			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
-		} else this.rightOverlay.classList.add("hidden");
-	}
-
-	searchChampion() {
-		this.searchBar.value = this.searchBar.value.trim();
-		this.sendProcessSignal();
-	}
-	loadDefaultData() {
-		this.dataSource = "default_data";
-		const json = DataController.loadData(this.getDataSource(), "none");
-		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
-		this.sendProcessSignal();
-	}
-	loadUserData() {
-		this.dataSource = "user_data";
-		const json = DataController.loadData(this.getDataSource(), "none");
-		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
-		this.sendProcessSignal();
-	}
-	validateUserData(data) {
-		const teams = ["all", "ally", "enemy"];
-		const defaultData = DataController.loadData("default_data", "none");
-		teams.forEach((current) => {
-			if (data[current] == null) {
-				data[current] = defaultData[current];
-			}
-		});
-		return data;
-	}
 	saveUserData(textarea) {
 		const input_error_box = document.querySelector("#input-error-box");
 		let data;
@@ -570,9 +313,11 @@ export class UserInterface {
 		this.dataSource = "user_data";
 		this.sendProcessSignal();
 	}
+
 	async takeFileInput(event) {
 		const file = event.target.files[0];
 		const data = await DataController.readFile(file);
+
 		const unvalidatedJSON = JSON.parse(data);
 		const validatedData = this.validateUserData(unvalidatedJSON);
 		DataController.saveData("user_data", JSON.stringify(validatedData));
@@ -581,83 +326,155 @@ export class UserInterface {
 		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		this.sendProcessSignal();
 	}
+
 	clickInput(input) {
 		input.click();
 	}
-	pickBanChampionWithKeyInput(key) {
-		let data;
-		if (this.currentMode == "pick") data = this.picks;
-		if (this.currentMode == "ban") data = this.bans;
-		if (
-			this.currentlyHoveredChampion == "" ||
-			this.championsContainer.childNodes.length == 1
-		) {
-			if (this.championsContainer.childNodes.length == 1) {
-				this.currentlyHoveredChampion =
-					this.championsContainer.firstChild.dataset.champion;
-			} else return;
+
+	placeChampion(event) {
+		if (this.selectedChampion == "") {
+			event.target.dataset.champion = "";
 		}
-		let oldIndex = null;
-		let pickOrBan = null;
-		const number = parseInt(key);
-		let index;
-		switch (number) {
-			case 0:
-				index = 9;
-				break;
-			default:
-				index = number - 1;
-				break;
-		}
-		for (let i = 0; i < 10; i++) {
-			if (
-				this.picks[i].childNodes[1].dataset.champion ==
-				this.currentlyHoveredChampion
-			) {
-				this.picks[i].childNodes[1].dataset.champion = "";
-				oldIndex = i;
-				pickOrBan = this.picks;
-				break;
-			}
-			if (
-				this.bans[i].childNodes[1].dataset.champion ==
-				this.currentlyHoveredChampion
-			) {
-				this.bans[i].childNodes[1].dataset.champion = "";
-				oldIndex = i;
-				pickOrBan = this.bans;
-				break;
-			}
-		}
-		//swap champs if both are present
-		if (oldIndex != null && data[index] != null) {
-			pickOrBan[oldIndex].childNodes[1].dataset.champion =
-				data[index].childNodes[1].dataset.champion;
-		}
-		if (this.currentlyHoveredChampion != null) {
-			data[index].childNodes[1].dataset.champion =
-				this.currentlyHoveredChampion;
-		}
-		this.currentlyHoveredChampion = "";
+		event.target.dataset.champion = this.selectedChampion;
+		this.selectedChampion = "";
 		this.sendProcessSignal();
 	}
 
-	togglePickBanMode() {
-		let mode;
-		if (this.currentMode == "pick") mode = "ban";
-		else mode = "pick";
-		this.setPickBanMode(mode);
+	dropChampion(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		const replacedChampion = event.target.dataset.champion;
+		this.recentlyDragged.dataset.champion = replacedChampion;
+		this.placeChampion(event);
 	}
-	setPickBanMode(mode) {
-		this.currentMode = mode;
-		if (this.currentMode == "pick") {
-			this.togglePickBanModeButton.dataset.mode = "pick";
-			this.togglePickBanModeButton.value = "Current mode: pick";
+
+	setTeam(team) {
+		this.team = team.id;
+		const currentlySelectedTeam =
+			this.teamsContainer.querySelector(".selected");
+		if (currentlySelectedTeam !== null)
+			currentlySelectedTeam.classList.remove("selected");
+		team.classList.add("selected");
+		this.sendProcessSignal();
+	}
+
+	setRole(roleIcon) {
+		const currentlySelectedIcon =
+			this.rolesContainer.querySelector(".selected");
+		if (currentlySelectedIcon !== null)
+			currentlySelectedIcon.classList.remove("selected");
+		if (this.role == roleIcon.id) {
+			this.role = "all";
+		} else if (this.role != roleIcon.id) {
+			this.role = roleIcon.id;
+			roleIcon.classList.add("selected");
+		}
+		this.sendProcessSignal();
+	}
+
+	searchChampion() {
+		this.searchBar.value = this.searchBar.value.trim();
+		this.sendProcessSignal();
+	}
+
+	loadDefaultData() {
+		this.dataSource = "default_data";
+		const json = DataController.loadData(this.getDataSource(), "none");
+		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
+		this.sendProcessSignal();
+	}
+
+	loadUserData() {
+		this.dataSource = "user_data";
+		const json = DataController.loadData(this.getDataSource(), "none");
+		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
+		this.sendProcessSignal();
+	}
+
+	toggleUserDataForm() {
+		if (this.rightOverlay.classList.contains("hidden")) {
+			this.rightOverlay.classList.remove("hidden");
+
+			const json = DataController.loadData(this.getDataSource(), "none");
+			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
+		} else this.rightOverlay.classList.add("hidden");
+	}
+
+	toggleBorderColor() {
+		this.config.colorBorders = !this.config.colorBorders;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+		this.sendProcessSignal();
+	}
+
+	toggleDataSourceOnLoad() {
+		this.config.loadUserDataOnProgramStart =
+			!this.config.loadUserDataOnProgramStart;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+	}
+
+	toggleClearingSearchbarOnFocus() {
+		this.config.clearSearchBarOnFocus = !this.config.clearSearchBarOnFocus;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+	}
+
+	toggleCompactMode() {
+		this.config.useCompactMode = !this.config.useCompactMode;
+		if (this.config.useCompactMode == true)
+			document.documentElement.dataset.mode = "compact";
+		else document.documentElement.dataset.mode = "wide";
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+	}
+
+	setIcons() {
+		if (this.config.useSmallPickIcons == true) {
+			this.pickIconPath = "/small_converted_to_webp_scaled/";
+			this.pickIconPostfix = ".webp";
 		} else {
-			this.togglePickBanModeButton.dataset.mode = "ban";
-			this.togglePickBanModeButton.value = "Current mode: ban";
+			this.pickIconPath = "/centered_minified_converted_to_webp_scaled/";
+			this.pickIconPostfix = "_0.webp";
+		}
+		if (this.config.useSmallChampionIcons == true) {
+			this.championIconPath = "/small_converted_to_webp_scaled/";
+			this.championIconPostfix = ".webp";
+		} else {
+			this.championIconPath = "/tiles_converted_to_webp_scaled/";
+			this.championIconPostfix = "_0.webp";
+		}
+		if (this.config.useSmallBanIcons == true) {
+			this.banIconPath = "/small_converted_to_webp_scaled/";
+			this.banIconPostfix = ".webp";
+		} else {
+			this.banIconPath = "/tiles_converted_to_webp_scaled/";
+			this.banIconPostfix = "_0.webp";
 		}
 	}
+	togglePickIcons() {
+		this.config.useSmallPickIcons = !this.config.useSmallPickIcons;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+		this.setIcons();
+		this.sendProcessSignal();
+	}
+	toggleChampionIcons() {
+		this.config.useSmallChampionIcons = !this.config.useSmallChampionIcons;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+		this.setIcons();
+		this.sendProcessSignal();
+	}
+
+	toggleBanIcons() {
+		this.config.useSmallBanIcons = !this.config.useSmallBanIcons;
+		this.colorSettingsButtons();
+		DataController.saveConfig(this.config);
+		this.setIcons();
+		this.sendProcessSignal();
+	}
+
 	processKeyboardInput(event) {
 		const key = event.key;
 		const shiftKeyPressed = event.shiftKey;
@@ -802,22 +619,241 @@ export class UserInterface {
 			}
 		}
 	}
-	toggleBorderColor() {
-		this.config.colorBorders = !this.config.colorBorders;
+
+	openSettingsMenu() {
+		this.leftOverlay.classList.remove("hidden");
+	}
+	closeSettingsMenu() {
+		this.leftOverlay.classList.add("hidden");
+	}
+
+	dropChampionIntoVoid(event) {
+		event.preventDefault();
+		const droppedChampion = this.recentlyDragged;
+		if (
+			droppedChampion.dataset.type == "pick" ||
+			droppedChampion.dataset.type == "ban"
+		) {
+			droppedChampion.dataset.champion = "";
+			this.selectedChampion = "";
+			this.sendProcessSignal();
+		}
+	}
+
+	openManual() {
+		this.manualContainer.classList.remove("hidden");
+		this.contentContainer.classList.add("hidden");
+	}
+
+	closeManual() {
+		this.manualContainer.classList.add("hidden");
+		this.contentContainer.classList.remove("hidden");
+	}
+
+	switchTheme() {
+		this.currentThemeIndex++;
+		if (this.currentThemeIndex >= this.themes.length)
+			this.currentThemeIndex = 0;
+		const theme = this.themes[this.currentThemeIndex];
+		document.documentElement.dataset.theme = theme;
+		this.switchThemeButton.value = "Theme: " + theme;
+		localStorage.setItem("theme", theme);
+	}
+
+	togglePickBanMode() {
+		let mode;
+		if (this.currentMode == "pick") mode = "ban";
+		else mode = "pick";
+		this.setPickBanMode(mode);
+	}
+
+	toggleSearchMode() {
+		this.config.useLegacySearch = !this.config.useLegacySearch;
 		this.colorSettingsButtons();
 		DataController.saveConfig(this.config);
 		this.sendProcessSignal();
 	}
-	toggleDataSourceOnLoad() {
-		this.config.loadUserDataOnProgramStart =
-			!this.config.loadUserDataOnProgramStart;
-		this.colorSettingsButtons();
-		DataController.saveConfig(this.config);
+
+	dragChampion(event) {
+		this.recentlyDragged = event.target;
+		const image = document.createElement("img");
+		const canvas = document.createElement("canvas");
+		const ctx = canvas.getContext("2d");
+		image.src = event.target.src;
+		canvas.width = event.target.offsetWidth;
+		canvas.height = event.target.offsetHeight;
+		ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+		event.dataTransfer.setDragImage(
+			canvas,
+			canvas.width / 2,
+			canvas.height / 2,
+		);
+		this.selectChampion(event);
 	}
-	toggleClearingSearchbarOnFocus() {
-		this.config.clearSearchBarOnFocus = !this.config.clearSearchBarOnFocus;
-		this.colorSettingsButtons();
-		DataController.saveConfig(this.config);
+
+	colorSettingsButtons() {
+		const buttons = [
+			this.colorBordersToggle,
+			this.dataSourceOnLoadToggle,
+			this.clearSearchbarOnFocusToggle,
+			this.toggleSearchModeButton,
+			this.useCompactModeToggle,
+			this.useSmallPickIconsToggle,
+			this.useSmallChampionIconsToggle,
+			this.useSmallBanIconsToggle,
+		];
+		const config_settings = [
+			this.config.colorBorders,
+			this.config.loadUserDataOnProgramStart,
+			this.config.clearSearchBarOnFocus,
+			this.config.useLegacySearch,
+			this.config.useCompactMode,
+			this.config.useSmallPickIcons,
+			this.config.useSmallChampionIcons,
+			this.config.useSmallBanIcons,
+		];
+		for (let i = 0; i < buttons.length; i++) {
+			if (config_settings[i] == true) {
+				buttons[i].classList.remove("off");
+				buttons[i].classList.add("on");
+			} else {
+				buttons[i].classList.remove("on");
+				buttons[i].classList.add("off");
+			}
+		}
+	}
+	getConfig() {
+		const config = this.config;
+		return config;
+	}
+	getDataSource() {
+		const source = this.dataSource;
+		return source;
+	}
+	getTeam() {
+		const team = this.team;
+		return team;
+	}
+	getRole() {
+		const role = this.role;
+		return role;
+	}
+	getSearchQuery() {
+		const searchQuery = this.searchBar.value.toLowerCase();
+		return searchQuery;
+	}
+	setDataSource() {}
+	/**
+	 * Finds the index of the saved theme
+	 * @returns {number} The index of the saved theme, or 0 if nothing is found
+	 */
+	loadSavedTheme() {
+		let theme = localStorage.getItem("theme");
+		if (theme == null) theme = "dark";
+		for (let i = 0; i < this.themes.length; i++) {
+			if (theme == this.themes[i]) return i;
+		}
+		console.log("Couldn't find the theme in loadSavedTheme()!");
+		return 0;
+	}
+	clearSelectedChampions() {
+		const selected = this.championsContainer.querySelector(".selected");
+		if (selected !== null) {
+			selected.classList.remove("selected");
+		}
+	}
+	selectChampion(event) {
+		const championIcon = event.target;
+		this.clearSelectedChampions();
+		if (championIcon.dataset.pickedOrBanned == "true") {
+			this.selectedChampion = "";
+			return;
+		}
+		if (this.selectedChampion == championIcon.dataset.champion) {
+			this.selectedChampion = "";
+			return;
+		}
+		const currentlySelectedIcon = championIcon.classList.add("selected");
+		this.selectedChampion = event.target.dataset.champion;
+	}
+
+	validateUserData(data) {
+		const teams = ["all", "ally", "enemy"];
+		const defaultData = DataController.loadData("default_data", "none");
+		teams.forEach((current) => {
+			if (data[current] == null) {
+				data[current] = defaultData[current];
+			}
+		});
+		return data;
+	}
+	pickBanChampionWithKeyInput(key) {
+		let data;
+		if (this.currentMode == "pick") data = this.picks;
+		if (this.currentMode == "ban") data = this.bans;
+		if (
+			this.currentlyHoveredChampion == "" ||
+			this.championsContainer.childNodes.length == 1
+		) {
+			if (this.championsContainer.childNodes.length == 1) {
+				this.currentlyHoveredChampion =
+					this.championsContainer.firstChild.dataset.champion;
+			} else return;
+		}
+		let oldIndex = null;
+		let pickOrBan = null;
+		const number = parseInt(key);
+		let index;
+		switch (number) {
+			case 0:
+				index = 9;
+				break;
+			default:
+				index = number - 1;
+				break;
+		}
+		for (let i = 0; i < 10; i++) {
+			if (
+				this.picks[i].childNodes[1].dataset.champion ==
+				this.currentlyHoveredChampion
+			) {
+				this.picks[i].childNodes[1].dataset.champion = "";
+				oldIndex = i;
+				pickOrBan = this.picks;
+				break;
+			}
+			if (
+				this.bans[i].childNodes[1].dataset.champion ==
+				this.currentlyHoveredChampion
+			) {
+				this.bans[i].childNodes[1].dataset.champion = "";
+				oldIndex = i;
+				pickOrBan = this.bans;
+				break;
+			}
+		}
+		//swap champs if both are present
+		if (oldIndex != null && data[index] != null) {
+			pickOrBan[oldIndex].childNodes[1].dataset.champion =
+				data[index].childNodes[1].dataset.champion;
+		}
+		if (this.currentlyHoveredChampion != null) {
+			data[index].childNodes[1].dataset.champion =
+				this.currentlyHoveredChampion;
+		}
+		this.currentlyHoveredChampion = "";
+		this.sendProcessSignal();
+	}
+
+	setPickBanMode(mode) {
+		this.currentMode = mode;
+		if (this.currentMode == "pick") {
+			this.togglePickBanModeButton.dataset.mode = "pick";
+			this.togglePickBanModeButton.value = "Current mode: pick";
+		} else {
+			this.togglePickBanModeButton.dataset.mode = "ban";
+			this.togglePickBanModeButton.value = "Current mode: ban";
+		}
 	}
 	clearScreen() {
 		this.championsContainer.innerHTML = "";
@@ -831,12 +867,6 @@ export class UserInterface {
 		}
 	}
 
-	openSettingsMenu() {
-		this.leftOverlay.classList.remove("hidden");
-	}
-	closeSettingsMenu() {
-		this.leftOverlay.classList.add("hidden");
-	}
 	render(renderingData) {
 		if (this.dataSource === "default_data") {
 			this.userDataSwitch.classList.remove("highlighted");
