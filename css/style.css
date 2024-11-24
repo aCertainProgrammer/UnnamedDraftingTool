@@ -463,6 +463,11 @@ body {
 	width: 28px;
 }
 
+.settings-button > img[src="./img/question-mark.webp"] {
+	height: 28px;
+	width: 22px;
+}
+
 .settings-button > img {
 	filter: var(--settingsButtonFilter);
 }
