@@ -186,6 +186,7 @@ body {
 	gap: 10px;
 	height: 100vh;
 	width: 100vw;
+	padding-top: 10px;
 }
 
 .draft-area {
