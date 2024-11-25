@@ -8,7 +8,7 @@ SHORT IDEAS:
 
 - fix binds for weird keyboards
 
-- fix chrome ligthhouse problems
+- figure out bundling etc
 
 - fix shortcuts missing in the manual 
 
