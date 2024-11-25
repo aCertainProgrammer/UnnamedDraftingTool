@@ -12,6 +12,8 @@ SHORT IDEAS:
 
 - fix shortcuts missing in the manual 
 
+-fix the bug with dragging many things on opera
+
 LONG IDEAS:
 
 - GUI for making champion pools

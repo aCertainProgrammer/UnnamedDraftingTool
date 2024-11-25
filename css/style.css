@@ -30,6 +30,7 @@
 	--roleIconMaxHeight: var(--roleIconMaxWidth);
 	--teamIconMaxWidth: 40px;
 	--teamIconMaxHeight: 40px;
+	--width: 1115px;
 }
 
 :root[data-mode="wide"] {
@@ -42,6 +43,38 @@
 	--roleIconMaxHeight: var(--roleIconMaxWidth);
 	--teamIconMaxWidth: 100px;
 	--teamIconMaxHeight: var(--teamIconMaxWidth);
+}
+
+@media screen and (max-width: 1115px) {
+	:root[data-mode="wide"] {
+		.team-selection#teams-container {
+			display: none !important;
+		}
+	}
+}
+
+@media screen and (max-width: 960px) {
+	:root[data-mode="wide"] {
+		.role-selection {
+			display: none !important;
+		}
+	}
+}
+
+@media screen and (max-width: 1626px) {
+	:root[data-mode="compact"] {
+		.team-selection#teams-container {
+			display: none !important;
+		}
+	}
+}
+
+@media screen and (max-width: 1394px) {
+	:root[data-mode="compact"] {
+		.role-selection {
+			display: none !important;
+		}
+	}
 }
 
 @media screen and (width < 961px) {
@@ -301,7 +334,7 @@ body {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	gap: 11px;
 	flex-shrink: 1;
 	width: 100%;
@@ -610,18 +643,6 @@ label {
 .settings-tooltip {
 	width: 70%;
 	color: var(--overlayTextColor);
-}
-
-@media screen and (max-width: 1115px) {
-	.team-selection#teams-container {
-		display: none !important;
-	}
-}
-
-@media screen and (max-width: 960px) {
-	.role-selection {
-		display: none !important;
-	}
 }
 
 .invalid {
