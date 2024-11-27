@@ -64,6 +64,7 @@ export class DataController {
 	/**
 	 * @typedef Config
 	 * @property {bool} colorBorders
+	 * @property {bool} saveDraftState
 	 * @property {bool} loadUserDataOnProgramStart
 	 * @property {bool} clearSearchBarOnFocus
 	 * @property {bool} useLegacySearch
@@ -86,12 +87,7 @@ export class DataController {
 	static readConfig() {
 		const config = localStorage.getItem("config");
 		if (config == null) {
-			return {
-				colorBorders: false,
-				loadUserDataOnProgramStart: false,
-				clearSearchBarOnFocus: true,
-				useLegacySearch: true,
-			};
+			return {};
 		}
 		return JSON.parse(config);
 	}
@@ -106,6 +102,10 @@ export class DataController {
 		if (configToValidate.colorBorders == undefined)
 			config.colorBorders = false;
 		else config.colorBorders = configToValidate.colorBorders;
+
+		if (configToValidate.saveDraftState == undefined)
+			config.saveDraftState = true;
+		else config.saveDraftState = configToValidate.saveDraftState;
 
 		if (configToValidate.loadUserDataOnProgramStart == undefined)
 			config.loadUserDataOnProgramStart = false;

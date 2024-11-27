@@ -67,8 +67,11 @@ export class UserInterface {
 		this.defaultDataSwitch = document.querySelector("#default_data");
 		this.userDataSwitch = document.querySelector("#load_user_data");
 		this.userDataInput = document.querySelector("#input_user_data");
-		this.colorBordersToggle = document.getElementById(
-			"color-borders-toggle",
+		this.colorBordersToggle = document.querySelector(
+			"#color-borders-toggle",
+		);
+		this.saveDraftStateToggle = document.querySelector(
+			"#save-draft-state-toggle",
 		);
 		this.dataSourceOnLoadToggle = document.querySelector(
 			"#load-user-data-on-program-load-toggle",
@@ -147,18 +150,10 @@ export class UserInterface {
 
 		this.logos.forEach((current) => {
 			current.addEventListener("click", this.setTeam.bind(this, current));
-			current.addEventListener("dragstart", (event) => {
-				event.preventDefault();
-			});
-			current.draggable = "false";
 		});
 
 		this.roleIcons.forEach((current) => {
 			current.addEventListener("click", this.setRole.bind(this, current));
-			current.addEventListener("dragstart", (event) => {
-				event.preventDefault();
-			});
-			current.draggable = "false";
 		});
 
 		this.searchBar.addEventListener(
@@ -180,6 +175,10 @@ export class UserInterface {
 		this.colorBordersToggle.addEventListener(
 			"click",
 			this.toggleBorderColor.bind(this),
+		);
+		this.saveDraftStateToggle.addEventListener(
+			"click",
+			this.toggleSavingDraftState.bind(this),
 		);
 		this.dataSourceOnLoadToggle.addEventListener(
 			"click",
@@ -252,8 +251,8 @@ export class UserInterface {
 		this.stopDrag = (event) => {
 			event.preventDefault();
 		};
-		this.dragendFunction = function (e) {
-			e.preventDefault();
+		this.dragendFunction = function (event) {
+			event.preventDefault();
 			this.selectedChampion = "";
 			const currentlySelectedIcon =
 				this.championsContainer.querySelector(".selected");
@@ -274,6 +273,8 @@ export class UserInterface {
 		this.contentContainer.addEventListener("dragover", (event) => {
 			event.preventDefault();
 		});
+
+		this.handleDrag();
 	}
 
 	//end of constructor
@@ -427,6 +428,15 @@ export class UserInterface {
 
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+
+		this.sendProcessSignal();
+	}
+
+	toggleSavingDraftState() {
+		this.config.saveDraftState = !this.config.saveDraftState;
 		this.colorSettingsButtons();
 
 		DataController.saveConfig(this.config);
@@ -755,6 +765,7 @@ export class UserInterface {
 	colorSettingsButtons() {
 		const buttons = [
 			this.colorBordersToggle,
+			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
 			this.toggleSearchModeButton,
@@ -765,6 +776,7 @@ export class UserInterface {
 		];
 		const config_settings = [
 			this.config.colorBorders,
+			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
 			this.config.useLegacySearch,
@@ -1158,5 +1170,11 @@ export class UserInterface {
 		}
 
 		return championIcon;
+	}
+
+	handleDrag() {
+		document.documentElement.addEventListener("dragstart", () => {
+			if (!event.target.draggable == true) event.preventDefault();
+		});
 	}
 }

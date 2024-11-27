@@ -4,15 +4,9 @@ THEN:
 
 SHORT IDEAS:
 
-- add setting to clear champs on page reload
-
-- fix binds for weird keyboards
-
 - figure out bundling etc
 
-- fix shortcuts missing in the manual 
-
--fix the bug with dragging many things on opera
+- fix the bug with dragging many things on opera
 
 LONG IDEAS:
 
@@ -23,8 +17,6 @@ LONG IDEAS:
 - Comfort level indicator for champions (border coloring repurposed?)
 
 - Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
-
-- add themes with different color palletes
 
 BUGS:
 

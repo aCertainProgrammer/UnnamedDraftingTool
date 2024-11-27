@@ -66,8 +66,9 @@ export class Controller {
 		};
 		const visibleChampions = this.backend.requestVisibleChampions(request);
 		let picksAndBans;
-		if (this.firstProcess) picksAndBans = DataController.loadPicksAndBans();
-		if (!this.firstProcess || picksAndBans === null)
+		if (this.firstProcess && config.saveDraftState == true)
+			picksAndBans = DataController.loadPicksAndBans();
+		if (!this.firstProcess || picksAndBans == null)
 			picksAndBans = this.scraper.getPicksAndBans();
 		const renderingData = {
 			dataSource: this.userInterface.getDataSource(),
