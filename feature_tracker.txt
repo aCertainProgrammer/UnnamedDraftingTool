@@ -1,8 +1,10 @@
 CURRENT WORK:
 
-- Draft snapshots (fuzzy find snaphots based on the current draft state)
+- fix fonts
 
 THEN:
+
+- Draft snapshots (fuzzy find snaphots based on the current draft state)
 
 SHORT IDEAS:
 
