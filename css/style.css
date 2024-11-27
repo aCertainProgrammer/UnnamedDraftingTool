@@ -536,13 +536,30 @@ body {
 	border-radius: 0 var(--overlayBorderRadius) var(--overlayBorderRadius) 0;
 	height: 100%;
 	max-width: 40vw;
-	gap: 3px;
+	gap: 30px;
 	overflow: auto;
 }
 
 #settings-menu > label {
 	color: #eeeeee;
 	padding: 0px 2px;
+}
+
+.setting-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 2px;
+}
+
+.setting-container > input {
+	width: fit-content;
+	text-align: left;
+}
+
+.settings-tooltip {
+	width: 100%;
+	color: var(--overlayTextColor);
 }
 
 #right-overlay {
@@ -638,11 +655,6 @@ label {
 
 .highlighted {
 	background-color: var(--highlightedBackgroundColor);
-}
-
-.settings-tooltip {
-	width: 70%;
-	color: var(--overlayTextColor);
 }
 
 .invalid {

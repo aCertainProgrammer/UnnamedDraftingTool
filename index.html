@@ -125,108 +125,127 @@
 					type="button"
 				/>
 				<div class="pick-separator"></div>
-				<input
-					class="source-button"
-					id="color-borders-toggle"
-					type="button"
-					value="Color champion borders"
-				/>
-				<div class="settings-tooltip">
-					<p>
-						This colors the borders of the champions depending on
-						which team they belong to:
-					</p>
-					<p>- green for ally champions</p>
-					<p>- red for enemy champions</p>
-					<p>- orange for champions in both teams</p>
-					<p>
-						- champions that are not in either ally or enemy teams
-						are not given a colored border
-					</p>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="color-borders-toggle"
+						type="button"
+						value="Color champion borders"
+					/>
+					<div class="settings-tooltip">
+						<p>
+							This colors the borders of the champions depending
+							on which team they belong to:
+						</p>
+						<p>- green for ally champions</p>
+						<p>- red for enemy champions</p>
+						<p>- orange for champions in both teams</p>
+						<p>
+							- champions that are not in either ally or enemy
+							teams are not given a colored border
+						</p>
+					</div>
 				</div>
-				<input
-					class="source-button"
-					id="save-draft-state-toggle"
-					value="Save the draft"
-					type="button"
-				/>
-				<div class="settings-tooltip">
-					<p>
-						If enabled, keeps the draft saved, meaning you won't
-						lose it on page reload
-					</p>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="save-draft-state-toggle"
+						value="Save the draft"
+						type="button"
+					/>
+					<div class="settings-tooltip">
+						<p>
+							If enabled, keeps the draft saved, meaning you won't
+							lose it on page reload
+						</p>
+					</div>
 				</div>
-				<input
-					class="source-button"
-					id="load-user-data-on-program-load-toggle"
-					type="button"
-					value="Load user data on page load"
-				/>
-				<div class="settings-tooltip">
-					<p>
-						This option decides which data source the program loads
-						on startup (or when the page is reloaded).
-					</p>
-					<p>
-						If enabled, your custom data will be loaded, provided it
-						is available.
-					</p>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="load-user-data-on-program-load-toggle"
+						type="button"
+						value="Load user data on page load"
+					/>
+					<div class="settings-tooltip">
+						<p>
+							This option decides which data source the program
+							loads on startup (or when the page is reloaded).
+						</p>
+						<p>
+							If enabled, your custom data will be loaded,
+							provided it is available.
+						</p>
+					</div>
 				</div>
-				<input
-					class="source-button"
-					id="clear-searchbar-on-focus-toggle"
-					type="button"
-					value="Clear search bar on focus"
-				/>
-				<div class="settings-tooltip">
-					<p>
-						If enabled clears the search bar whenever it is
-						refocused by pressing spacebar or typing a letter
-					</p>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="clear-searchbar-on-focus-toggle"
+						type="button"
+						value="Clear search bar on focus"
+					/>
+					<div class="settings-tooltip">
+						<p>
+							If enabled clears the search bar whenever it is
+							refocused by pressing spacebar or typing a letter
+						</p>
+					</div>
 				</div>
-				<input
-					class="source-button"
-					id="search-mode-toggle"
-					type="button"
-					value="Use legacy search"
-				/>
-				<div class="settings-tooltip">
-					<p>
-						Legacy search means pure substring matching - if a word
-						contains the exact string of the search query, it will
-						be matched - for example, "ji" will match "JInx"
-					</p>
-					<p>
-						Modern search means that if a word contains the letters
-						from the search query in the same order, it will be
-						matched - for example, "ji" will match "JInx", "JhIn"
-						and "seJuanI".
-					</p>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="search-mode-toggle"
+						type="button"
+						value="Use legacy search"
+					/>
+					<div class="settings-tooltip">
+						<p>
+							Legacy search means pure substring matching - if a
+							word contains the exact string of the search query,
+							it will be matched - for example, "ji" will match
+							"JInx"
+						</p>
+						<p>
+							Modern search means that if a word contains the
+							letters from the search query in the same order, it
+							will be matched - for example, "ji" will match
+							"JInx", "JhIn" and "seJuanI".
+						</p>
+					</div>
 				</div>
-				<input
-					class="source-button"
-					id="use-compact-mode-toggle"
-					type="button"
-					value="Use compact mode"
-				/>
-				<input
-					class="source-button"
-					id="use-small-picks-toggle"
-					type="button"
-					value="Use small pick icons"
-				/>
-				<input
-					class="source-button"
-					id="use-small-champions-toggle"
-					type="button"
-					value="Use small champion icons"
-				/>
-				<input
-					class="source-button"
-					id="use-small-bans-toggle"
-					type="button"
-					value="Use small ban icons"
-				/>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="use-compact-mode-toggle"
+						type="button"
+						value="Use compact mode"
+					/>
+				</div>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="use-small-picks-toggle"
+						type="button"
+						value="Use small pick icons"
+					/>
+				</div>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="use-small-champions-toggle"
+						type="button"
+						value="Use small champion icons"
+					/>
+				</div>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="use-small-bans-toggle"
+						type="button"
+						value="Use small ban icons"
+					/>
+				</div>
 			</div>
 		</div>
 		<div id="right-overlay" class="hidden">
