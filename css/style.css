@@ -672,6 +672,7 @@ label {
 	background-color: var(--sourceButtonBackgroundColor);
 	border-radius: var(--generalBorderRadius);
 	padding: 2px 4px;
+	max-width: 400px;
 }
 
 [data-mode="pick"] {
