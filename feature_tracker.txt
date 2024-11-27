@@ -4,17 +4,7 @@ THEN:
 
 SHORT IDEAS:
 
-- figure out bundling etc
-
 LONG IDEAS:
-
-- GUI for making champion pools
-
-- Data presets 
-
-- Comfort level indicator for champions (border coloring repurposed?)
-
-- Add a pickbanggwebapp-like minimap with picked champions (on another screen like menu/manual?)
 
 BUGS:
 
