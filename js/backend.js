@@ -20,9 +20,8 @@ export class Backend {
 				data["adc"],
 				data["support"],
 			);
-			data = this.sortAndRemoveDuplicates(data);
 		} else {
-			data = this.sortAndRemoveDuplicates(data[request.role]);
+			data = data[request.role];
 		}
 		if (request.mode == "modern")
 			data = this.filterDataBySearchQueryModern(
@@ -38,6 +37,9 @@ export class Backend {
 			console.log("Bad data filtering mode!");
 			return;
 		}
+
+		data = this.removeDuplicates(data);
+
 		if (data.length == 0 && request.role != "all") {
 			const allRolesData = this.requestVisibleChampions({
 				dataSource: request.dataSource,
@@ -50,20 +52,23 @@ export class Backend {
 		}
 		return data;
 	}
-	sortAndRemoveDuplicates(data) {
-		data.sort();
+	removeDuplicates(data) {
 		const newData = [];
 		newData.push(data[0]);
 		for (let i = 1; i < data.length; i++) {
-			if (data[i - 1] != data[i]) {
+			if (!newData.includes(data[i])) {
 				newData.push(data[i]);
 			}
 		}
 		return newData;
 	}
+
 	filterDataBySearchQueryModern(data, searchQuery) {
 		if (searchQuery == "") return data;
 		const newData = [];
+		for (let i = 0; i < data.length; i++) {
+			if (data[i].includes(searchQuery)) newData.push(data[i]);
+		}
 		let query_index = 0;
 		for (let i = 0; i < data.length; i++) {
 			query_index = 0;
@@ -79,7 +84,10 @@ export class Backend {
 		}
 		return newData;
 	}
+
 	filterDataBySearchQueryLegacy(data, searchQuery) {
+		data = data.sort();
+
 		if (searchQuery == "") return data;
 		const newData = [];
 		for (let i = 0; i < data.length; i++) {

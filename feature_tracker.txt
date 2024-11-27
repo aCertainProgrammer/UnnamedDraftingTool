@@ -6,8 +6,6 @@ SHORT IDEAS:
 
 - figure out bundling etc
 
-- fix the bug with dragging many things on opera
-
 LONG IDEAS:
 
 - GUI for making champion pools
