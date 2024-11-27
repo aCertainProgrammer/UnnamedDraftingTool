@@ -1,5 +1,7 @@
 CURRENT WORK:
 
+- Draft snapshots (fuzzy find snaphots based on the current draft state)
+
 THEN:
 
 SHORT IDEAS:
