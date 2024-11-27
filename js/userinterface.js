@@ -253,6 +253,8 @@ export class UserInterface {
 		};
 		this.dragendFunction = function (event) {
 			event.preventDefault();
+			const dragImage = document.querySelector("#drag-image");
+			document.body.removeChild(dragImage);
 			this.selectedChampion = "";
 			const currentlySelectedIcon =
 				this.championsContainer.querySelector(".selected");
@@ -743,21 +745,24 @@ export class UserInterface {
 	dragChampion(event) {
 		this.recentlyDragged = event.target;
 
-		const image = document.createElement("img");
-		const canvas = document.createElement("canvas");
-		const ctx = canvas.getContext("2d");
+		//const image = document.createElement("img");
+		//const canvas = document.createElement("canvas");
+		//const ctx = canvas.getContext("2d");
+		//
+		//image.src = event.target.src;
+		//canvas.width = event.target.offsetWidth;
+		//canvas.height = event.target.offsetHeight;
+		//
+		//ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-		image.src = event.target.src;
-		canvas.width = event.target.offsetWidth;
-		canvas.height = event.target.offsetHeight;
+		let dragImage = document.createElement("img");
+		dragImage.src = event.target.src;
+		dragImage.id = "drag-image";
+		let width = event.target.offsetWidth;
+		let height = event.target.offsetHeight;
+		document.body.appendChild(dragImage);
 
-		ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-		event.dataTransfer.setDragImage(
-			canvas,
-			canvas.width / 2,
-			canvas.height / 2,
-		);
+		event.dataTransfer.setDragImage(dragImage, width / 2, height / 2);
 
 		this.selectChampion(event);
 	}
