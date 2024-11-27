@@ -95,8 +95,11 @@ export class UserInterface {
 		this.defaultDataSwitch = document.querySelector("#default_data");
 		this.userDataSwitch = document.querySelector("#load_user_data");
 		this.userDataInput = document.querySelector("#input_user_data");
-		this.colorBordersToggle = document.getElementById(
-			"color-borders-toggle",
+		this.colorBordersToggle = document.querySelector(
+			"#color-borders-toggle",
+		);
+		this.saveDraftStateToggle = document.querySelector(
+			"#save-draft-state-toggle",
 		);
 		this.dataSourceOnLoadToggle = document.querySelector(
 			"#load-user-data-on-program-load-toggle",
@@ -130,8 +133,9 @@ export class UserInterface {
 		this.openManualButton = document.querySelector("#open-manual-button");
 		this.closeManualButton = document.querySelector("#close-manual-button");
 		this.switchThemeButton = document.querySelector("#switch-theme-button");
-		this.switchThemeButton.value =
-			"Theme: " + this.themes[this.currentThemeIndex];
+		this.switchThemeButton.value = capitalize(
+			this.themes[this.currentThemeIndex],
+		);
 		this.manualContainer = document.querySelector("#manual-container");
 		this.manualText = document.querySelector("#manual-text");
 		this.goToTopOfManualButton =
@@ -174,18 +178,10 @@ export class UserInterface {
 
 		this.logos.forEach((current) => {
 			current.addEventListener("click", this.setTeam.bind(this, current));
-			current.addEventListener("dragstart", (event) => {
-				event.preventDefault();
-			});
-			current.draggable = "false";
 		});
 
 		this.roleIcons.forEach((current) => {
 			current.addEventListener("click", this.setRole.bind(this, current));
-			current.addEventListener("dragstart", (event) => {
-				event.preventDefault();
-			});
-			current.draggable = "false";
 		});
 
 		this.searchBar.addEventListener(
@@ -207,6 +203,10 @@ export class UserInterface {
 		this.colorBordersToggle.addEventListener(
 			"click",
 			this.toggleBorderColor.bind(this),
+		);
+		this.saveDraftStateToggle.addEventListener(
+			"click",
+			this.toggleSavingDraftState.bind(this),
 		);
 		this.dataSourceOnLoadToggle.addEventListener(
 			"click",
@@ -279,8 +279,8 @@ export class UserInterface {
 		this.stopDrag = (event) => {
 			event.preventDefault();
 		};
-		this.dragendFunction = function (e) {
-			e.preventDefault();
+		this.dragendFunction = function (event) {
+			event.preventDefault();
 			this.selectedChampion = "";
 			const currentlySelectedIcon =
 				this.championsContainer.querySelector(".selected");
@@ -301,6 +301,8 @@ export class UserInterface {
 		this.contentContainer.addEventListener("dragover", (event) => {
 			event.preventDefault();
 		});
+
+		this.handleDrag();
 	}
 
 	//end of constructor
@@ -461,6 +463,15 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 
+	toggleSavingDraftState() {
+		this.config.saveDraftState = !this.config.saveDraftState;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+
+		this.sendProcessSignal();
+	}
+
 	toggleDataSourceOnLoad() {
 		this.config.loadUserDataOnProgramStart =
 			!this.config.loadUserDataOnProgramStart;
@@ -551,6 +562,11 @@ export class UserInterface {
 		if (!this.rightOverlay.classList.contains("hidden")) return;
 
 		if (key == " ") {
+			if (
+				document.activeElement != this.searchBar &amp;&amp;
+				this.config.clearSearchBarOnFocus == true
+			)
+				this.searchBar.value = "";
 			this.searchBar.focus();
 		}
 		if (key == "Delete") {
@@ -587,7 +603,7 @@ export class UserInterface {
 				this.searchBar.focus();
 			}
 			const numberRegex = /[0-9]/;
-			if (key.match(numberRegex)) {
+			if (key.match(numberRegex) &amp;&amp; key.length == 1) {
 				this.searchBar.blur();
 				this.pickBanChampionWithKeyInput(key);
 			}
@@ -729,7 +745,7 @@ export class UserInterface {
 		const theme = this.themes[this.currentThemeIndex];
 		document.documentElement.dataset.theme = theme;
 
-		this.switchThemeButton.value = "Theme: " + theme;
+		this.switchThemeButton.value = capitalize(theme);
 
 		localStorage.setItem("theme", theme);
 	}
@@ -777,6 +793,7 @@ export class UserInterface {
 	colorSettingsButtons() {
 		const buttons = [
 			this.colorBordersToggle,
+			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
 			this.toggleSearchModeButton,
@@ -787,6 +804,7 @@ export class UserInterface {
 		];
 		const config_settings = [
 			this.config.colorBorders,
+			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
 			this.config.useLegacySearch,
@@ -868,7 +886,7 @@ export class UserInterface {
 			this.selectedChampion = "";
 			return;
 		}
-
+		championIcon.classList.add("selected");
 		this.selectedChampion = event.target.dataset.champion;
 	}
 
@@ -1181,6 +1199,12 @@ export class UserInterface {
 
 		return championIcon;
 	}
+
+	handleDrag() {
+		document.documentElement.addEventListener("dragstart", () => {
+			if (!event.target.draggable == true) event.preventDefault();
+		});
+	}
 }
 </code></pre>
         </article>
@@ -1198,7 +1222,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Nov 24 2024 17:14:39 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Nov 27 2024 17:26:34 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
