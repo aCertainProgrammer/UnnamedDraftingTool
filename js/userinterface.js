@@ -1178,6 +1178,7 @@ export class UserInterface {
 		let exactlyMatchingChampion = null;
 
 		for (let i = 0; i < renderingData.visibleChampions.length; i++) {
+			if (renderingData.visibleChampions[i] == undefined) break;
 			const championName = renderingData.visibleChampions[i];
 			if (championName == this.searchBar.value) {
 				exactlyMatchingChampion = championName;
