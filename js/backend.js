@@ -105,6 +105,7 @@ export class Backend {
 	static filterDrafts(drafts, searchQuery) {
 		const pick_order = [0, 5, 6, 1, 2, 7, 8, 4, 5, 9];
 		searchQuery = searchQuery.replace(/\s/g, "");
+		searchQuery = searchQuery.toLowerCase();
 		let filteredDrafts = [];
 		for (let j = 0; j < drafts.length; j++) {
 			let draft = "";
