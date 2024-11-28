@@ -15,6 +15,9 @@ test("Search with a non-empty query", () => {
 		"jinx",
 		"jhin",
 		"sejuani",
+		"jinx",
+		"jhin",
+		"sejuani",
 	]);
 });
 
