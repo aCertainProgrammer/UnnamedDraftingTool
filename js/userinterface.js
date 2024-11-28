@@ -643,11 +643,22 @@ export class UserInterface {
 				this.searchBar.blur();
 				if (this.currentlyHoveredChampion) {
 					event.preventDefault();
-					const selector = `[data-champion=${this.currentlyHoveredChampion}]`;
-					const hoveredImg = document.querySelector(selector);
-					if (hoveredImg == null) return;
-					if (hoveredImg.dataset.champion != "")
-						hoveredImg.dataset.champion = "";
+
+					for (let i = 0; i < this.picks.length; i++) {
+						if (
+							this.picks[i].childNodes[1].dataset.champion ==
+							this.currentlyHoveredChampion
+						)
+							this.picks[i].childNodes[1].dataset.champion = "";
+					}
+					for (let i = 0; i < this.bans.length; i++) {
+						if (
+							this.bans[i].childNodes[1].dataset.champion ==
+							this.currentlyHoveredChampion
+						)
+							this.bans[i].childNodes[1].dataset.champion = "";
+					}
+
 					this.sendProcessSignal();
 				}
 			}
