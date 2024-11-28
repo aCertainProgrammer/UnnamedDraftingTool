@@ -710,12 +710,32 @@ export class UserInterface {
 				this.searchBar.blur();
 				this.logos[2].click();
 			}
+			if (key == "g" || key == "G") {
+				this.searchBar.blur();
+				this.toggleMiddleOverlay();
+				return;
+			}
+			if (key == "v" || key == "V") {
+				this.searchBar.blur();
+				this.saveDraftSnapshot();
+			}
 		}
 	}
 	processMiddleOverlayInput(key) {
 		const letterRegex = /^[A-Za-z]$/;
+		const shiftKeyPressed = event.shiftKey;
 		if (key.match(letterRegex)) {
+			if (
+				document.activeElement != this.middleOverlaySearchBar &&
+				this.config.clearSearchBarOnFocus
+			)
+				this.middleOverlaySearchBar.value = "";
 			this.middleOverlaySearchBar.focus();
+		}
+		if ((key == "g" || key == "G") && shiftKeyPressed) {
+			this.middleOverlaySearchBar.blur();
+			this.hideMiddleOverlay();
+			return;
 		}
 	}
 

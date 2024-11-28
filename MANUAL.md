@@ -82,6 +82,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
     If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared
 
 ### Data management
+- `Shift` + `V` to save a draft snapshot
 - `Shift` + `C` to load custom data
 - `Shift` + `D` to load default data 
 - `Shift` + `I` to toggle the "Input custom data" input area - this disables keyboard input until the input area is hidden, with the sole exception of being able to `Shift` + `I` again to close the input area
@@ -91,6 +92,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 - `Shift` + `T` to toggle between themes
 - `Shift` + `M` to toggle the manual tab
 - `Shift` + `S` to toggle the settings tab
+- `Shift` + `G` to toggle the draft snapshots tab
 - `Shift` + `A` to toggle compact/wide mode
 - `!, @, #, $, %` (meaning `Shift` + `1, 2, 3, 4, 5`) to toggle role filtering from top to support
 - `Shift` + `Q, W, E` to toggle team filtering (All, Ally, Enemy respectively)
@@ -119,6 +121,17 @@ If enabled, clears the search bar whenever it is refocused. This enables the fol
 ### Use legacy search
 - `Legacy search` means pure substring matching - if a word contains the exact string of the search query, it will be matched - for example, "ji" will match "JInx".
 - `Modern search` means that if a word contains the letters from the search query in the same order, it will be matched - for example, "ji" will match "JInx", "JhIn" and "seJuanI".
+
+## Draft snapshots
+You can save your drafts for later and come back to them easily by using draft snapshots.
+
+1. Simply `Shift` + `V` to save your current draft state
+2. `Shift` + `G` to open the snapshot menu
+3. Start typing to filter the drafts - type chamions in pick order, so B1 > R1 > R2 etc.
+4. Click on the desired draft to load it or press enter to load the first draft in the list 
+5. `Shift` + `G` to close the snapshot overlay
+
+You can also use the buttons for navigation.
 
 ## Custom data input
 
