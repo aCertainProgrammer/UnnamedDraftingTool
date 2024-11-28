@@ -98,9 +98,9 @@ export class Backend {
 
 	/**
 	 * Takes in drafts, a search query and returns filtered drafts
-	 * @param {[Draft]} drafts
+	 * @param {Draft[]} drafts
 	 * @param {string} searchQuery
-	 * @returns {[Draft]}
+	 * @returns {Draft[]}
 	 */
 	static filterDrafts(drafts, searchQuery) {
 		const pick_order = [0, 5, 6, 1, 2, 7, 8, 4, 5, 9];

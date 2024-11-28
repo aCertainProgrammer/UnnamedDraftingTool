@@ -27,6 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { DataController } from "./datacontroller.js";
+import { Backend } from "./backend.js";
 import { capitalize } from "./util.js";
 /**
  * A container for all UI-related events and rendering
@@ -71,6 +72,7 @@ export class UserInterface {
 		this.closeWelcomeScreenForeverButton = document.querySelector(
 			"#close-welcome-screen-never-show-again",
 		);
+		this.middleOverlay = document.querySelector("#middle-overlay");
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
 		this.userDataInputTextarea = document.querySelector("#user_data_input");
@@ -91,7 +93,7 @@ export class UserInterface {
 		this.logos = document.querySelectorAll(".team-logo");
 		this.rolesContainer = document.querySelector("#roles");
 		this.roleIcons = document.querySelectorAll(".role-icon");
-		this.searchBar = document.querySelector(".search-bar");
+		this.searchBar = document.querySelector("#search-bar");
 		this.defaultDataSwitch = document.querySelector("#default_data");
 		this.userDataSwitch = document.querySelector("#load_user_data");
 		this.userDataInput = document.querySelector("#input_user_data");
@@ -142,6 +144,19 @@ export class UserInterface {
 			document.querySelector("#go-to-top-button");
 		this.togglePickBanModeButton = document.querySelector(
 			"#toggle-pick-ban-mode",
+		);
+		this.clearAllDraftSnapshotsButton = document.querySelector(
+			"#clear-all-draft-snapshots-button",
+		);
+		this.middleOverlaySearchBar = document.querySelector(
+			"#middle-overlay-search-bar",
+		);
+		this.draftSnapshotsContainer = document.querySelector(
+			"#draft-snapshots-container",
+		);
+		this.saveDraftButton = document.querySelector("#save-draft-button");
+		this.browseSavedDraftsButton = document.querySelector(
+			"#browse-saved-drafts-button",
 		);
 
 		this.closeWelcomeScreenButton.addEventListener(
@@ -270,6 +285,22 @@ export class UserInterface {
 			"click",
 			this.togglePickBanMode.bind(this),
 		);
+		this.clearAllDraftSnapshotsButton.addEventListener(
+			"click",
+			this.clearAllDraftSnapshots.bind(this),
+		);
+		this.middleOverlaySearchBar.addEventListener(
+			"input",
+			this.browseSavedDrafts.bind(this),
+		);
+		this.saveDraftButton.addEventListener(
+			"click",
+			this.saveDraftSnapshot.bind(this),
+		);
+		this.browseSavedDraftsButton.addEventListener(
+			"click",
+			this.toggleMiddleOverlay.bind(this),
+		);
 		this.toggleSearchModeButton.addEventListener(
 			"click",
 			this.toggleSearchMode.bind(this),
@@ -281,6 +312,8 @@ export class UserInterface {
 		};
 		this.dragendFunction = function (event) {
 			event.preventDefault();
+			const dragImage = document.querySelector("#drag-image");
+			document.body.removeChild(dragImage);
 			this.selectedChampion = "";
 			const currentlySelectedIcon =
 				this.championsContainer.querySelector(".selected");
@@ -554,7 +587,12 @@ export class UserInterface {
 	processKeyboardInput(event) {
 		const key = event.key;
 		const shiftKeyPressed = event.shiftKey;
-
+		if (this.middleOverlay.classList.contains("hidden"))
+			this.processMainScreenInput(key);
+		else this.processMiddleOverlayInput(key);
+	}
+	processMainScreenInput(key) {
+		const shiftKeyPressed = event.shiftKey;
 		if ((key == "I" || key == "i") &amp;&amp; shiftKeyPressed) {
 			this.searchBar.blur();
 			this.userDataInput.click();
@@ -702,6 +740,12 @@ export class UserInterface {
 			}
 		}
 	}
+	processMiddleOverlayInput(key) {
+		const letterRegex = /^[A-Za-z]$/;
+		if (key.match(letterRegex)) {
+			this.middleOverlaySearchBar.focus();
+		}
+	}
 
 	openSettingsMenu() {
 		this.leftOverlay.classList.remove("hidden");
@@ -759,6 +803,90 @@ export class UserInterface {
 		this.setPickBanMode(mode);
 	}
 
+	hideMiddleOverlay() {
+		if (!this.middleOverlay.classList.contains("hidden"))
+			this.middleOverlay.classList.add("hidden");
+		this.draftSnapshotsContainer.innerHTML = "";
+	}
+
+	toggleMiddleOverlay() {
+		if (this.middleOverlay.classList.contains("hidden")) {
+			this.middleOverlay.classList.remove("hidden");
+			this.browseSavedDrafts();
+		} else {
+			this.middleOverlay.classList.add("hidden");
+			this.draftSnapshotsContainer.innerHTML = "";
+		}
+	}
+
+	clearAllDraftSnapshots() {
+		localStorage.removeItem("savedDrafts");
+		this.hideMiddleOverlay();
+	}
+
+	saveDraftSnapshot() {
+		const picks = DataController.loadPicksAndBans();
+		const saved_drafts = DataController.loadSavedDrafts();
+		saved_drafts.push(picks);
+		DataController.saveData("savedDrafts", saved_drafts);
+		if (!this.middleOverlay.classList.contains("hidden")) {
+			this.hideMiddleOverlay();
+			this.browseSavedDrafts();
+		}
+	}
+
+	browseSavedDrafts() {
+		this.draftSnapshotsContainer.innerHTML = "";
+		let saved_drafts = DataController.loadSavedDrafts();
+		const query = this.middleOverlaySearchBar.value;
+		if (query != "")
+			saved_drafts = Backend.filterDrafts(saved_drafts, query);
+		for (let i = 0; i &lt; saved_drafts.length; i++) {
+			const draft = saved_drafts[i];
+			if (draft == null) continue;
+			const draftPreview = this.createDraftSnapshotPreview(draft);
+			draftPreview.addEventListener(
+				"click",
+				this.loadDraftSnapshot.bind(this, draft),
+			);
+			this.draftSnapshotsContainer.appendChild(draftPreview);
+		}
+	}
+
+	createDraftSnapshotPreview(draft) {
+		const container = document.createElement("div");
+		container.classList.add("draft-snapshot-container");
+
+		for (let i = 0; i &lt; draft.picks.length; i++) {
+			const champion = draft.picks[i];
+			const div = document.createElement("div");
+			div.classList = "draft-preview-icon-container";
+			const img = document.createElement("img");
+			if (champion == "") img.src = this.defaultBanIconPath;
+			else
+				img.src =
+					this.imagePath +
+					"/small_converted_to_webp_scaled/" +
+					capitalize(champion) +
+					".webp";
+			div.appendChild(img);
+			container.appendChild(div);
+			div.draggable = false;
+			div.addEventListener("dragstart", this.stopDrag);
+		}
+		return container;
+	}
+
+	loadDraftSnapshot(draft) {
+		for (let i = 0; i &lt; draft.picks.length; i++) {
+			this.picks[i].childNodes[1].dataset.champion = draft.picks[i];
+		}
+		for (let i = 0; i &lt; draft.picks.length; i++) {
+			this.bans[i].childNodes[1].dataset.champion = draft.bans[i];
+		}
+		this.sendProcessSignal();
+	}
+
 	toggleSearchMode() {
 		this.config.useLegacySearch = !this.config.useLegacySearch;
 		this.colorSettingsButtons();
@@ -771,21 +899,24 @@ export class UserInterface {
 	dragChampion(event) {
 		this.recentlyDragged = event.target;
 
-		const image = document.createElement("img");
-		const canvas = document.createElement("canvas");
-		const ctx = canvas.getContext("2d");
+		//const image = document.createElement("img");
+		//const canvas = document.createElement("canvas");
+		//const ctx = canvas.getContext("2d");
+		//
+		//image.src = event.target.src;
+		//canvas.width = event.target.offsetWidth;
+		//canvas.height = event.target.offsetHeight;
+		//
+		//ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-		image.src = event.target.src;
-		canvas.width = event.target.offsetWidth;
-		canvas.height = event.target.offsetHeight;
+		let dragImage = document.createElement("img");
+		dragImage.src = event.target.src;
+		dragImage.id = "drag-image";
+		let width = event.target.offsetWidth;
+		let height = event.target.offsetHeight;
+		document.body.appendChild(dragImage);
 
-		ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-		event.dataTransfer.setDragImage(
-			canvas,
-			canvas.width / 2,
-			canvas.height / 2,
-		);
+		event.dataTransfer.setDragImage(dragImage, width / 2, height / 2);
 
 		this.selectChampion(event);
 	}
@@ -979,10 +1110,10 @@ export class UserInterface {
 
 		if (this.currentMode == "pick") {
 			this.togglePickBanModeButton.dataset.mode = "pick";
-			this.togglePickBanModeButton.value = "Current mode: pick";
+			this.togglePickBanModeButton.value = "Mode: pick";
 		} else {
 			this.togglePickBanModeButton.dataset.mode = "ban";
-			this.togglePickBanModeButton.value = "Current mode: ban";
+			this.togglePickBanModeButton.value = "Mode: ban";
 		}
 	}
 	clearScreen() {
@@ -1222,7 +1353,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Nov 27 2024 17:26:34 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Nov 28 2024 19:10:13 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

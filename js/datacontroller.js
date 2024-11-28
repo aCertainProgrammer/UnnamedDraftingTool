@@ -153,8 +153,14 @@ export class DataController {
 	}
 
 	/**
+	 * @typedef Draft
+	 * @property {string[]} picks
+	 * @property {string[]} bans
+	 */
+
+	/**
 	 * Retrieves saved draft snapshots from localStorage, then returns them as an array
-	 * @returns {array}
+	 * @returns {Draft[]}
 	 */
 	static loadSavedDrafts() {
 		let savedDrafts = localStorage.getItem("savedDrafts");
