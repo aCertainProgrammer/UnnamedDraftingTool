@@ -877,7 +877,7 @@ export class UserInterface {
 			div.addEventListener("dragstart", this.stopDrag);
 		}
 		const remove_button = document.createElement("img");
-		remove_button.src = "./../img/trash.png";
+		remove_button.src = "./img/trash.png";
 		remove_button.classList += "draft-snapshot-remove-button";
 		container.appendChild(remove_button);
 		remove_button.addEventListener(
