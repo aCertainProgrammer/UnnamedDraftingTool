@@ -64,7 +64,7 @@ export class Backend {
 	}
 
 	filterDataBySearchQueryModern(data, searchQuery) {
-		if (searchQuery == "") return data;
+		if (searchQuery == "") return data.sort();
 		const newData = [];
 		for (let i = 0; i < data.length; i++) {
 			if (data[i].includes(searchQuery)) newData.push(data[i]);
