@@ -808,7 +808,7 @@ label {
 	flex-wrap: wrap;
 	gap: 10px;
 	height: 91%;
-	overflow: scroll;
+	overflow: auto;
 	scrollbar-color: var(--scrollbarColor);
 }
 
