@@ -1,6 +1,6 @@
 CURRENT WORK:
 
-- cmma search query nukes the draft
+- Refactor champion picking
 
 THEN:
 
