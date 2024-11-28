@@ -1,7 +1,5 @@
 CURRENT WORK:
 
-- Refactor champion picking
-
 THEN:
 
 SHORT IDEAS:
