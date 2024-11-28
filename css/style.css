@@ -68,10 +68,10 @@
 			display: none !important;
 		}
 	}
-	/*#save-draft-button,*/
-	/*#browse-saved-drafts-button {*/
-	/*	display: none;*/
-	/*}*/
+	#save-draft-button,
+	#browse-saved-drafts-button {
+		display: none;
+	}
 }
 
 @media screen and (max-width: 1394px) {
