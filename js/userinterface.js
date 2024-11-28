@@ -117,6 +117,9 @@ export class UserInterface {
 		this.togglePickBanModeButton = document.querySelector(
 			"#toggle-pick-ban-mode",
 		);
+		this.closeMiddleOverlayButton = document.querySelector(
+			"#close-middle-overlay-button",
+		);
 		this.clearAllDraftSnapshotsButton = document.querySelector(
 			"#clear-all-draft-snapshots-button",
 		);
@@ -256,6 +259,10 @@ export class UserInterface {
 		this.togglePickBanModeButton.addEventListener(
 			"click",
 			this.togglePickBanMode.bind(this),
+		);
+		this.closeMiddleOverlayButton.addEventListener(
+			"click",
+			this.hideMiddleOverlay.bind(this),
 		);
 		this.clearAllDraftSnapshotsButton.addEventListener(
 			"click",
@@ -736,6 +743,9 @@ export class UserInterface {
 			this.middleOverlaySearchBar.blur();
 			this.hideMiddleOverlay();
 			return;
+		}
+		if (key == "Enter") {
+			this.draftSnapshotsContainer.firstChild.click();
 		}
 	}
 
