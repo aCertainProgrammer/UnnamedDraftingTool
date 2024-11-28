@@ -819,6 +819,7 @@ label {
 }
 
 .draft-snapshot-container {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
@@ -829,4 +830,11 @@ label {
 	min-width: calc(var(--draftPreviewIconSize) * 3);
 	min-height: calc(var(--draftPreviewIconSize) * 6);
 	border: var(--championPickBorder);
+}
+
+.draft-snapshot-remove-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	filter: invert(80%);
 }

@@ -849,13 +849,13 @@ export class UserInterface {
 			const draftPreview = this.createDraftSnapshotPreview(draft);
 			draftPreview.addEventListener(
 				"click",
-				this.loadDraftSnapshot.bind(this, draft),
+				this.loadDraftSnapshot.bind(this, draft, i),
 			);
 			this.draftSnapshotsContainer.appendChild(draftPreview);
 		}
 	}
 
-	createDraftSnapshotPreview(draft) {
+	createDraftSnapshotPreview(draft, id) {
 		const container = document.createElement("div");
 		container.classList.add("draft-snapshot-container");
 
@@ -872,11 +872,26 @@ export class UserInterface {
 					capitalize(champion) +
 					".webp";
 			div.appendChild(img);
-			container.appendChild(div);
 			div.draggable = false;
+			container.appendChild(div);
 			div.addEventListener("dragstart", this.stopDrag);
 		}
+		const remove_button = document.createElement("img");
+		remove_button.src = "./../img/trash.png";
+		remove_button.classList += "draft-snapshot-remove-button";
+		container.appendChild(remove_button);
+		remove_button.addEventListener(
+			"click",
+			this.removeDraftSnapshot.bind(this, container, id),
+		);
 		return container;
+	}
+
+	removeDraftSnapshot(container, id) {
+		container.remove();
+		let savedDrafts = DataController.loadSavedDrafts();
+		savedDrafts.splice(id, 1);
+		DataController.saveData("savedDrafts", savedDrafts);
 	}
 
 	loadDraftSnapshot(draft) {
@@ -900,16 +915,6 @@ export class UserInterface {
 
 	dragChampion(event) {
 		this.recentlyDragged = event.target;
-
-		//const image = document.createElement("img");
-		//const canvas = document.createElement("canvas");
-		//const ctx = canvas.getContext("2d");
-		//
-		//image.src = event.target.src;
-		//canvas.width = event.target.offsetWidth;
-		//canvas.height = event.target.offsetHeight;
-		//
-		//ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
 		let dragImage = document.createElement("img");
 		dragImage.src = event.target.src;
