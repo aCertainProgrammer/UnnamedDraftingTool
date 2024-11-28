@@ -151,4 +151,15 @@ export class DataController {
 		const picksAndBans = JSON.parse(json);
 		return picksAndBans;
 	}
+
+	/**
+	 * Retrieves saved draft snapshots from localStorage, then returns them as an array
+	 * @returns {array}
+	 */
+	static loadSavedDrafts() {
+		let savedDrafts = localStorage.getItem("savedDrafts");
+		if (savedDrafts == null) savedDrafts = [];
+		else savedDrafts = JSON.parse(savedDrafts);
+		return savedDrafts;
+	}
 }

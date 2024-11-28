@@ -322,6 +322,23 @@
 				</zero-md>
 			</div>
 		</div>
+		<div class="hidden" id="middle-overlay">
+			<div id="middle-overlay-utils">
+				<input
+					class="source-button"
+					id="clear-all-draft-snapshots-button"
+					type="button"
+					value="Clear all draft snapshots"
+				/>
+				<input
+					id="middle-overlay-search-bar"
+					type="text"
+					class="search-bar"
+					placeholder="Search..."
+				/>
+			</div>
+			<div id="draft-snapshots-container"></div>
+		</div>
 		<div id="content-container" class="container">
 			<div id="header">
 				<div class="control-buttons">
@@ -347,8 +364,20 @@
 						class="source-button"
 						id="toggle-pick-ban-mode"
 						type="button"
-						value="Current mode: pick"
+						value="Mode: pick"
 						data-mode="pick"
+					/>
+					<input
+						type="button"
+						class="source-button"
+						id="save-draft-button"
+						value="Save draft"
+					/>
+					<input
+						class="source-button"
+						id="browse-saved-drafts-button"
+						type="button"
+						value="Browse saved drafts"
 					/>
 				</div>
 				<div id="data" class="data">
@@ -357,19 +386,19 @@
 							class="source-button"
 							id="default_data"
 							type="button"
-							value="Use default data"
+							value="Default data"
 						/>
 						<input
 							class="source-button"
 							id="load_user_data"
 							type="button"
-							value="Use custom data"
+							value="Custom data"
 						/>
 						<input
 							class="source-button"
 							id="input_user_data"
 							type="button"
-							value="Input custom data"
+							value="Change custom data"
 						/>
 					</div>
 				</div>
