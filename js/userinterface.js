@@ -22,7 +22,11 @@ export class UserInterface {
 		this.config = null;
 		this.team = "all";
 		this.role = "all";
-		this.selectedChampion = "";
+		this.selectionData = {
+			selectedChampion: "",
+			oldSlot: null,
+			data: null,
+		};
 		this.recentlyDragged = null;
 		this.renderingData = {
 			visibleChampions: [],
@@ -155,16 +159,29 @@ export class UserInterface {
 			this.clickInput.bind(this, this.fileInput),
 		);
 
-		this.picks.forEach((current) => {
-			current.addEventListener("click", this.placeChampion.bind(this));
-			current.addEventListener("drop", this.dropChampion.bind(this));
-			current.childNodes[1].dataset.champion = "";
-		});
-		this.bans.forEach((current) => {
-			current.addEventListener("click", this.placeChampion.bind(this));
-			current.addEventListener("drop", this.dropChampion.bind(this));
-			current.childNodes[1].dataset.champion = "";
-		});
+		for (let i = 0; i < this.picks.length; i++) {
+			this.picks[i].addEventListener(
+				"click",
+				this.placeChampion.bind(this),
+			);
+			this.picks[i].addEventListener(
+				"drop",
+				this.dropChampion.bind(this),
+			);
+			this.picks[i].childNodes[1].dataset.champion = "";
+			this.picks[i].childNodes[1].dataset.slot = i.toString();
+			this.picks[i].childNodes[1].dataset.slotType = "pick";
+		}
+		for (let i = 0; i < this.bans.length; i++) {
+			this.bans[i].addEventListener(
+				"click",
+				this.placeChampion.bind(this),
+			);
+			this.bans[i].addEventListener("drop", this.dropChampion.bind(this));
+			this.bans[i].childNodes[1].dataset.champion = "";
+			this.bans[i].childNodes[1].dataset.slot = i.toString();
+			this.bans[i].childNodes[1].dataset.slotType = "ban";
+		}
 
 		this.logos.forEach((current) => {
 			current.addEventListener("click", this.setTeam.bind(this, current));
@@ -293,7 +310,9 @@ export class UserInterface {
 			event.preventDefault();
 			const dragImage = document.querySelector("#drag-image");
 			document.body.removeChild(dragImage);
-			this.selectedChampion = "";
+			this.selectionData.selectedChampion = "";
+			this.selectionData.data = null;
+			this.selectionData.oldSlot = null;
 			const currentlySelectedIcon =
 				this.championsContainer.querySelector(".selected");
 			if (currentlySelectedIcon !== null)
@@ -384,13 +403,38 @@ export class UserInterface {
 	}
 
 	placeChampion(event) {
-		if (this.selectedChampion == "") {
+		if (this.selectionData.selectedChampion == "") {
 			event.target.dataset.champion = "";
 		}
+		const replacedChampion = event.target.dataset.champion;
 
-		event.target.dataset.champion = this.selectedChampion;
-		this.selectedChampion = "";
+		for (let i = 0; i < this.picks.length; i++) {
+			if (
+				this.picks[i].childNodes[1].dataset.champion ==
+					this.selectionData.selectedChampion &&
+				this.selectionData.selectedChampion != ""
+			)
+				this.picks[i].childNodes[1].dataset.champion = "";
+			if (
+				this.bans[i].childNodes[1].dataset.champion ==
+					this.selectionData.selectedChampion &&
+				this.selectionData.selectedChampion != ""
+			)
+				this.bans[i].childNodes[1].dataset.champion = "";
+		}
+		event.target.dataset.champion = this.selectionData.selectedChampion;
+		this.selectionData.selectedChampion = "";
 
+		if (
+			replacedChampion != null &&
+			replacedChampion != "" &&
+			this.selectionData.oldSlot != null &&
+			this.selectionData.data != null
+		) {
+			this.selectionData.data[
+				this.selectionData.oldSlot
+			].childNodes[1].dataset.champion = replacedChampion;
+		}
 		this.sendProcessSignal();
 	}
 
@@ -768,7 +812,9 @@ export class UserInterface {
 			droppedChampion.dataset.type == "ban"
 		) {
 			droppedChampion.dataset.champion = "";
-			this.selectedChampion = "";
+			this.selectionData.selectedChampion = "";
+			this.selectionData.data = null;
+			this.selectionData.oldSlot = null;
 			this.sendProcessSignal();
 		}
 	}
@@ -1035,16 +1081,20 @@ export class UserInterface {
 
 		this.clearSelectedChampions();
 
-		if (championIcon.dataset.pickedOrBanned == "true") {
-			this.selectedChampion = "";
-			return;
-		}
-		if (this.selectedChampion == championIcon.dataset.champion) {
-			this.selectedChampion = "";
+		if (
+			this.selectionData.selectedChampion == championIcon.dataset.champion
+		) {
+			this.selectionData.selectedChampion = "";
+			this.selectionData.oldSlot = null;
+			this.selectionData.data = null;
 			return;
 		}
 		championIcon.classList.add("selected");
-		this.selectedChampion = event.target.dataset.champion;
+		this.selectionData.selectedChampion = event.target.dataset.champion;
+		this.selectionData.data = event.target.dataset.slotType = "pick"
+			? this.picks
+			: this.bans;
+		this.selectionData.oldSlot = event.target.dataset.slot;
 	}
 
 	validateUserData(data) {
