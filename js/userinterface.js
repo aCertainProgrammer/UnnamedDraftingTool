@@ -565,7 +565,6 @@ export class UserInterface {
 
 	processKeyboardInput(event) {
 		const key = event.key;
-		const shiftKeyPressed = event.shiftKey;
 		if (this.middleOverlay.classList.contains("hidden"))
 			this.processMainScreenInput(key);
 		else this.processMiddleOverlayInput(key);
@@ -728,6 +727,7 @@ export class UserInterface {
 			}
 		}
 	}
+
 	processMiddleOverlayInput(key) {
 		const letterRegex = /^[A-Za-z]$/;
 		const shiftKeyPressed = event.shiftKey;
@@ -739,6 +739,7 @@ export class UserInterface {
 				this.middleOverlaySearchBar.value = "";
 			this.middleOverlaySearchBar.focus();
 		}
+
 		if ((key == "g" || key == "G") && shiftKeyPressed) {
 			this.middleOverlaySearchBar.blur();
 			this.hideMiddleOverlay();
@@ -814,6 +815,7 @@ export class UserInterface {
 	toggleMiddleOverlay() {
 		if (this.middleOverlay.classList.contains("hidden")) {
 			this.middleOverlay.classList.remove("hidden");
+
 			this.browseSavedDrafts();
 		} else {
 			this.middleOverlay.classList.add("hidden");
@@ -829,8 +831,10 @@ export class UserInterface {
 	saveDraftSnapshot() {
 		const picks = DataController.loadPicksAndBans();
 		const saved_drafts = DataController.loadSavedDrafts();
+
 		saved_drafts.push(picks);
 		DataController.saveData("savedDrafts", saved_drafts);
+
 		if (!this.middleOverlay.classList.contains("hidden")) {
 			this.hideMiddleOverlay();
 			this.browseSavedDrafts();
@@ -839,18 +843,23 @@ export class UserInterface {
 
 	browseSavedDrafts() {
 		this.draftSnapshotsContainer.innerHTML = "";
+
 		let saved_drafts = DataController.loadSavedDrafts();
+
 		const query = this.middleOverlaySearchBar.value;
 		if (query != "")
 			saved_drafts = Backend.filterDrafts(saved_drafts, query);
+
 		for (let i = 0; i < saved_drafts.length; i++) {
 			const draft = saved_drafts[i];
 			if (draft == null) continue;
+
 			const draftPreview = this.createDraftSnapshotPreview(draft);
 			draftPreview.addEventListener(
 				"click",
 				this.loadDraftSnapshot.bind(this, draft, i),
 			);
+
 			this.draftSnapshotsContainer.appendChild(draftPreview);
 		}
 	}
@@ -861,8 +870,11 @@ export class UserInterface {
 
 		for (let i = 0; i < draft.picks.length; i++) {
 			const champion = draft.picks[i];
+
 			const div = document.createElement("div");
 			div.classList = "draft-preview-icon-container";
+			div.draggable = false;
+
 			const img = document.createElement("img");
 			if (champion == "") img.src = this.defaultBanIconPath;
 			else
@@ -871,26 +883,33 @@ export class UserInterface {
 					"/small_converted_to_webp_scaled/" +
 					capitalize(champion) +
 					".webp";
+
 			div.appendChild(img);
-			div.draggable = false;
 			container.appendChild(div);
+
 			div.addEventListener("dragstart", this.stopDrag);
 		}
+
 		const remove_button = document.createElement("img");
 		remove_button.src = "./img/trash.png";
 		remove_button.classList += "draft-snapshot-remove-button";
+
 		container.appendChild(remove_button);
+
 		remove_button.addEventListener(
 			"click",
 			this.removeDraftSnapshot.bind(this, container, id),
 		);
+
 		return container;
 	}
 
 	removeDraftSnapshot(container, id) {
 		container.remove();
+
 		let savedDrafts = DataController.loadSavedDrafts();
 		savedDrafts.splice(id, 1);
+
 		DataController.saveData("savedDrafts", savedDrafts);
 	}
 
