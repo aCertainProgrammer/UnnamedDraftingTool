@@ -413,15 +413,22 @@ export class UserInterface {
 				this.picks[i].childNodes[1].dataset.champion ==
 					this.selectionData.selectedChampion &&
 				this.selectionData.selectedChampion != ""
-			)
+			) {
+				this.selectionData.oldSlot = i;
 				this.picks[i].childNodes[1].dataset.champion = "";
+				break;
+			}
 			if (
 				this.bans[i].childNodes[1].dataset.champion ==
 					this.selectionData.selectedChampion &&
 				this.selectionData.selectedChampion != ""
-			)
+			) {
+				this.selectionData.oldSlot = i;
 				this.bans[i].childNodes[1].dataset.champion = "";
+				break;
+			}
 		}
+		console.log(this.selectionData);
 		event.target.dataset.champion = this.selectionData.selectedChampion;
 		this.selectionData.selectedChampion = "";
 
@@ -1106,6 +1113,7 @@ export class UserInterface {
 			? this.picks
 			: this.bans;
 		this.selectionData.oldSlot = event.target.dataset.slot;
+		console.log(this.selectionData);
 	}
 
 	validateUserData(data) {
