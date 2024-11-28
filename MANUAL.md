@@ -125,7 +125,7 @@ If enabled, clears the search bar whenever it is refocused. This enables the fol
 ## Draft snapshots
 You can save your drafts for later and come back to them easily by using draft snapshots.
 
-1. Simply `Shift` + `V` to save your current draft state
+1. `Shift` + `V` to save your current draft state
 2. `Shift` + `G` to open the snapshot menu
 3. Start typing to filter the drafts - type chamions in pick order, so B1 > R1 > R2 etc.
 4. Click on the desired draft to load it or press enter to load the first draft in the list 
