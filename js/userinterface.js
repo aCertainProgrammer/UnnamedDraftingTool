@@ -337,8 +337,9 @@ export class UserInterface {
 			this.selectionData.selectedChampion = "";
 			this.selectionData.data = null;
 			this.selectionData.oldSlot = null;
-			const currentlySelectedIcon =
-				this.championsContainer.querySelector(".selected");
+			const currentlySelectedIcon = document.querySelector(
+				".selected[draggable='true']",
+			);
 			if (currentlySelectedIcon !== null)
 				currentlySelectedIcon.classList.remove("selected");
 		}.bind(this);
@@ -847,7 +848,6 @@ export class UserInterface {
 		event.preventDefault();
 
 		const droppedChampion = this.recentlyDragged;
-		console.log(droppedChampion);
 
 		if (
 			droppedChampion.dataset.slotType == "pick" ||
