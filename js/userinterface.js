@@ -428,7 +428,6 @@ export class UserInterface {
 				break;
 			}
 		}
-		console.log(this.selectionData);
 		event.target.dataset.champion = this.selectionData.selectedChampion;
 		this.selectionData.selectedChampion = "";
 
@@ -1113,7 +1112,6 @@ export class UserInterface {
 			? this.picks
 			: this.bans;
 		this.selectionData.oldSlot = event.target.dataset.slot;
-		console.log(this.selectionData);
 	}
 
 	validateUserData(data) {
