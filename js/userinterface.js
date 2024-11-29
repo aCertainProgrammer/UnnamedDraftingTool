@@ -1028,11 +1028,11 @@ export class UserInterface {
 		const file = event.target.files[0];
 		const data = await DataController.readFile(file);
 
-		let unvalidatedJSON;
 		try {
-			unvalidatedJSON = JSON.parse(data);
+			JSON.parse(data);
 		} catch (e) {
 			console.log("Bad snapshot import file!");
+			console.log(e.toString());
 			return;
 		}
 
