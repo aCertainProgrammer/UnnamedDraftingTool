@@ -1164,9 +1164,8 @@ export class UserInterface {
 		}
 		championIcon.classList.add("selected");
 		this.selectionData.selectedChampion = event.target.dataset.champion;
-		this.selectionData.data = event.target.dataset.slotType = "pick"
-			? this.picks
-			: this.bans;
+		this.selectionData.data =
+			event.target.dataset.slotType == "pick" ? this.picks : this.bans;
 		this.selectionData.oldSlot = event.target.dataset.slot;
 	}
 
