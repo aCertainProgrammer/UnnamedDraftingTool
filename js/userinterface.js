@@ -139,6 +139,9 @@ export class UserInterface {
 		this.snapshotsFileInput = document.querySelector(
 			"#snapshots-file-input",
 		);
+		this.snapshotsInputErrorBox = document.querySelector(
+			"#snapshots-input-error-box",
+		);
 		this.draftSnapshotsContainer = document.querySelector(
 			"#draft-snapshots-container",
 		);
@@ -1031,12 +1034,15 @@ export class UserInterface {
 		try {
 			JSON.parse(data);
 		} catch (e) {
-			console.log("Bad snapshot import file!");
-			console.log(e.toString());
+			this.snapshotsInputErrorBox.classList.remove("hidden");
+			this.snapshotsInputErrorBox.innerHTML = e.toString();
 			return;
 		}
 
 		DataController.saveData("savedDrafts", data);
+
+		if (!this.snapshotsInputErrorBox.classList.contains("hidden"))
+			this.snapshotsInputErrorBox.classList.add("hidden");
 
 		this.hideMiddleOverlay();
 		this.toggleMiddleOverlay();

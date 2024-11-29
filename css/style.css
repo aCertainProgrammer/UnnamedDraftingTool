@@ -838,3 +838,13 @@ label {
 	right: 10px;
 	filter: invert(80%);
 }
+
+#snapshots-input-error-box {
+	color: var(--textInputTextColor);
+	font-size: var(--dataButtonFontSize);
+	border: var(--sourceButtonBorder);
+	background-color: var(--sourceButtonBackgroundColor);
+	border-radius: var(--generalBorderRadius);
+	padding: 2px 4px;
+	max-width: 700px;
+}
