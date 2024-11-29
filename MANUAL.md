@@ -1,5 +1,17 @@
 # Manual
 
+If you:
+1. Notice any bugs
+2. Dislike a feature 
+3. Want to suggest a change 
+4. Want to talk about anything else
+
+Feel free to contact me by:
+
+1. [Opening an issue](https://github.com/aCertainProgrammer/UnnamedDraftingTool/issues/new)
+2. Adding me on discord: rycer__
+3. Sending me an email: a_certain_programmer@proton.me
+
 |Table of contents|
 |-----------------|
 |[Running the program](#running-the-program)|

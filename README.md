@@ -1,6 +1,18 @@
 # Foreword
 This program is aiming to build on top of the currently available drafting tools, such as drafting.gg, Prodraft, Draftlol and Pick Ban, improving upon their UI, UX and adding new features. Basic navigation should pose no trouble to an experienced drafter, and to learn about new or advanced features you can consult the manual
 
+If you:
+1. Notice any bugs
+2. Dislike a feature 
+3. Want to suggest a change 
+4. Want to talk about anything else
+
+Feel free to contact me by:
+
+1. [Opening an issue](https://github.com/aCertainProgrammer/UnnamedDraftingTool/issues/new)
+2. Adding me on discord: rycer__
+3. Sending me an email: a_certain_programmer@proton.me
+
 # Manual
 
 |Table of contents|
