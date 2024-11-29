@@ -9,7 +9,9 @@ This program is aiming to build on top of the currently available drafting tools
 |[Picking and banning champions](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#picking-and-banning-champions)|
 |[Keyboard shortcuts](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#keyboard-shortcuts)|
 |[Personalisation and configuration](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#personalisation-and-configuration)|
+|[Draft snapshots](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#draft-snapshots)|
 |[Custom data input](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input)|
+
 
 
 ## Running the program 
@@ -123,7 +125,7 @@ If enabled, clears the search bar whenever it is refocused. This enables the fol
 3. Start typing the name of the next champion, no need to clear the previous one
 
 ### Use legacy search
-- `Legacy search` means pure substring matching - if a word contains the exact string of the search query, it will be matched - for example, "ji" will match "JInx".
+- `Legacy search` is pure substring matching - if a word contains the exact string of the search query, it will be matched - for example, "ji" will match "JInx".
 - `Modern search` uses both substring matching and checks for letter order ("ji" matches "seJuanI") to deliver an experience more similar to league client search
 
 ## Draft snapshots
@@ -136,6 +138,66 @@ You can save your drafts for later and come back to them easily by using draft s
 5. `Shift` + `G` to close the snapshot overlay
 
 You can also use the buttons for navigation.
+
+You can export and import the snapshot data, making it possible to share drafts with your team. This also allows them to edit the draft quickly and send you back a snapshot.
+
+The snapshot data must be in the form of valid JSON, as an array of draft objects containing picks and bans as arrays:
+```
+[
+    {
+        "picks": [
+            "chogath",
+            "annie",
+            "aatrox",
+            "elise",
+            "cassiopeia",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "bans": [
+            "",
+            "",
+            "camille",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    {
+        "picks": [
+            "",
+            "annie",
+            "aatrox",
+            "elise",
+            "cassiopeia",
+            "chogath",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "bans": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "briar",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+]
+```
 
 ## Custom data input
 
@@ -381,3 +443,4 @@ The current list of all champions:
 
 UnnamedDraftingTool isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc.
 UnnamedDraftingTool was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.
+

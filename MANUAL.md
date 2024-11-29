@@ -6,6 +6,7 @@
 |[Picking and banning champions](#picking-and-banning-champions)|
 |[Keyboard shortcuts](#keyboard-shortcuts)|
 |[Personalisation and configuration](#personalisation-and-configuration)|
+|[Draft snapshots](#draft-snapshots)|
 |[Custom data input](#custom-data-input)|
 
 ## Running the program 
@@ -132,6 +133,66 @@ You can save your drafts for later and come back to them easily by using draft s
 5. `Shift` + `G` to close the snapshot overlay
 
 You can also use the buttons for navigation.
+
+You can export and import the snapshot data, making it possible to share drafts with your team. This also allows them to edit the draft quickly and send you back a snapshot.
+
+The snapshot data must be in the form of valid JSON, as an array of draft objects containing picks and bans as arrays:
+```
+[
+    {
+        "picks": [
+            "chogath",
+            "annie",
+            "aatrox",
+            "elise",
+            "cassiopeia",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "bans": [
+            "",
+            "",
+            "camille",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    {
+        "picks": [
+            "",
+            "annie",
+            "aatrox",
+            "elise",
+            "cassiopeia",
+            "chogath",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "bans": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "briar",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+]
+```
 
 ## Custom data input
 

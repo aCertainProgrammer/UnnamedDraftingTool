@@ -130,6 +130,15 @@ export class UserInterface {
 		this.middleOverlaySearchBar = document.querySelector(
 			"#middle-overlay-search-bar",
 		);
+		this.exportDraftSnapshotsButton = document.querySelector(
+			"#export-draft-snapshots-button",
+		);
+		this.importDraftSnapshotsButton = document.querySelector(
+			"#import-draft-snapshots-button",
+		);
+		this.snapshotsFileInput = document.querySelector(
+			"#snapshots-file-input",
+		);
 		this.draftSnapshotsContainer = document.querySelector(
 			"#draft-snapshots-container",
 		);
@@ -288,6 +297,18 @@ export class UserInterface {
 		this.middleOverlaySearchBar.addEventListener(
 			"input",
 			this.browseSavedDrafts.bind(this),
+		);
+		this.exportDraftSnapshotsButton.addEventListener(
+			"click",
+			this.exportDraftSnapshots.bind(this),
+		);
+		this.snapshotsFileInput.addEventListener(
+			"change",
+			this.importDraftSnapshots.bind(this),
+		);
+		this.importDraftSnapshotsButton.addEventListener(
+			"click",
+			this.clickInput.bind(this, this.snapshotsFileInput),
 		);
 		this.saveDraftButton.addEventListener(
 			"click",
@@ -968,6 +989,7 @@ export class UserInterface {
 	}
 
 	removeDraftSnapshot(container, id) {
+		event.stopPropagation();
 		container.remove();
 
 		let savedDrafts = DataController.loadSavedDrafts();
@@ -984,6 +1006,40 @@ export class UserInterface {
 			this.bans[i].childNodes[1].dataset.champion = draft.bans[i];
 		}
 		this.sendProcessSignal();
+	}
+
+	exportDraftSnapshots() {
+		const snapshots = DataController.loadSavedDrafts();
+
+		const blob = new Blob([JSON.stringify(snapshots, null, 4)], {
+			type: "plain/text",
+		});
+		const fileUrl = URL.createObjectURL(blob);
+		const downloadElement = document.createElement("a");
+		downloadElement.href = fileUrl;
+		downloadElement.download = "snapshots.txt";
+		downloadElement.style.display = "none";
+		document.body.appendChild(downloadElement);
+		downloadElement.click();
+		document.body.removeChild(downloadElement);
+	}
+
+	async importDraftSnapshots() {
+		const file = event.target.files[0];
+		const data = await DataController.readFile(file);
+
+		let unvalidatedJSON;
+		try {
+			unvalidatedJSON = JSON.parse(data);
+		} catch (e) {
+			console.log("Bad snapshot import file!");
+			return;
+		}
+
+		DataController.saveData("savedDrafts", data);
+
+		this.hideMiddleOverlay();
+		this.toggleMiddleOverlay();
 	}
 
 	toggleSearchMode() {

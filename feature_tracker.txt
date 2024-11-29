@@ -1,6 +1,10 @@
 CURRENT WORK:
 
+- draft snapshots export import
+
 THEN:
+
+- bind menu
 
 SHORT IDEAS:
 
