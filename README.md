@@ -1,5 +1,5 @@
 # Foreword
-This program is aiming to build on top of the currently available drafting tools, such as drafting.gg, Prodraft, Draftlol and Pick Ban, improving upon their UI, UX and adding new features. Basic navigation should pose no trouble to an experienced drafter, and to learn about new or advanced features you can consult the manual
+This program is aiming to build on top of the currently available drafting tools, such as drafting.gg, Prodraft, Draftlol and Pick Ban, improving upon their UI, UX and adding new features. Basic navigation should pose no trouble to an experienced drafter, and to learn about new or advanced features you can consult the manual.
 
 If you:
 1. Notice any bugs
