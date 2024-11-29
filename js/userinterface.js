@@ -671,6 +671,7 @@ export class UserInterface {
 		}
 		if (key == "Backspace") {
 			if (document.activeElement != this.searchBar) {
+				event.preventDefault();
 				this.searchBar.blur();
 				if (this.currentlyHoveredChampion) {
 					event.preventDefault();
