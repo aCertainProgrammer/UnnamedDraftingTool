@@ -847,10 +847,11 @@ export class UserInterface {
 		event.preventDefault();
 
 		const droppedChampion = this.recentlyDragged;
+		console.log(droppedChampion);
 
 		if (
-			droppedChampion.dataset.type == "pick" ||
-			droppedChampion.dataset.type == "ban"
+			droppedChampion.dataset.slotType == "pick" ||
+			droppedChampion.dataset.slotType == "ban"
 		) {
 			droppedChampion.dataset.champion = "";
 			this.selectionData.selectedChampion = "";
