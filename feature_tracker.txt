@@ -1,8 +1,10 @@
 CURRENT WORK:
 
+- bind menu
+
 THEN:
 
-- bind menu
+- draft snapshot pagination 
 
 SHORT IDEAS:
 

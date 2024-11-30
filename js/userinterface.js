@@ -656,6 +656,18 @@ export class UserInterface {
 		}
 		if (!this.rightOverlay.classList.contains("hidden")) return;
 
+		if ((key == "S" || key == "s") && shiftKeyPressed) {
+			this.searchBar.blur();
+			if (this.contentContainer.classList.contains("hidden"))
+				this.contentContainer.classList.remove("hidden");
+			if (!this.manualContainer.classList.contains("hidden"))
+				this.manualContainer.classList.add("hidden");
+			if (this.leftOverlay.classList.contains("hidden"))
+				this.enterSettingsButton.click();
+			else this.leaveSettingsButton.click();
+		}
+		if (!this.leftOverlay.classList.contains("hidden")) return;
+
 		if (key == " ") {
 			if (
 				document.activeElement != this.searchBar &&
@@ -760,16 +772,6 @@ export class UserInterface {
 				if (this.manualContainer.classList.contains("hidden"))
 					this.openManualButton.click();
 				else this.closeManualButton.click();
-			}
-			if (key == "S" || key == "s") {
-				this.searchBar.blur();
-				if (this.contentContainer.classList.contains("hidden"))
-					this.contentContainer.classList.remove("hidden");
-				if (!this.manualContainer.classList.contains("hidden"))
-					this.manualContainer.classList.add("hidden");
-				if (this.leftOverlay.classList.contains("hidden"))
-					this.enterSettingsButton.click();
-				else this.leaveSettingsButton.click();
 			}
 			if (key === "T" || key == "t") {
 				this.searchBar.blur();

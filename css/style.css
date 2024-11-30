@@ -530,6 +530,7 @@ body {
 	z-index: 1;
 	height: 100%;
 	opacity: 0.95;
+	font-size: 1.3rem;
 }
 
 #settings-menu {
@@ -554,7 +555,7 @@ body {
 .setting-container {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	width: 80%;
 	gap: 2px;
 }
 
@@ -847,4 +848,27 @@ label {
 	border-radius: var(--generalBorderRadius);
 	padding: 2px 4px;
 	max-width: 700px;
+}
+
+#bind-menu {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: center;
+	gap: 6px;
+	width: 100%;
+	max-width: 450px;
+}
+
+.bind-menu-item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.bind-menu-input {
+	max-width: 2rem;
+	text-align: center;
 }
