@@ -428,10 +428,14 @@ export class UserInterface {
 	}
 
 	placeChampion(event) {
+		const replacedChampion = event.target.dataset.champion;
+		if (replacedChampion == this.selectionData.selectedChampion) {
+			return;
+		}
+
 		if (this.selectionData.selectedChampion == "") {
 			event.target.dataset.champion = "";
 		}
-		const replacedChampion = event.target.dataset.champion;
 
 		for (let i = 0; i < this.picks.length; i++) {
 			if (
