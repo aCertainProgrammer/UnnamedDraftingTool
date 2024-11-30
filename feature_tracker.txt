@@ -1,6 +1,6 @@
 CURRENT WORK:
 
-- bind menu
+- bind menu display binds on load
 
 THEN:
 

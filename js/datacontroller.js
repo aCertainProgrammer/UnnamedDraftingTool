@@ -168,4 +168,70 @@ export class DataController {
 		else savedDrafts = JSON.parse(savedDrafts);
 		return savedDrafts;
 	}
+
+	/**
+    * @typedef Binds
+    * @property {string} pickModeBind
+    * @property {string} banModeBind
+    * @property {string} clearPicksOrBansBind
+    * @property {string} saveDraftSnapshotBind
+    * @property {string} browseDraftSnapshotsBind
+    * @property {string} loadCustomDataBind
+    * @property {string} loadDefaultDataBind
+    * @property {string} inputCustomDataBind
+    * @property {string} importCustomDataFromFileBind
+    * @property {string} toggleThemeBind
+    * @property {string} toggleManualBind
+    * @property {string} toggleSettingsTabBind
+    * @property {string} toggleCompactModeBind
+    * @property {string} toggleToplaneFilteringBind
+    * @property {string} toggleJungleFilteringBind
+    * @property {string} toggleMidlaneFilteringBind
+    * @property {string} toggleADCFilteringBind
+    * @property {string} toggleSupportFilteringBind
+    * @property {string} toggleAllFilteringBind
+    * @property {string} toggleAllyFilteringBind
+    * @property {string} toggleEnemyFilteringBind
+
+    /**
+    * @param {Binds} binds 
+    */
+	static saveBinds(binds) {
+		localStorage.setItem("keybinds", JSON.stringify(binds));
+	}
+
+	static loadBinds() {
+		let binds = localStorage.getItem("keybinds");
+		const defaultBinds = {
+			pickModeBind: "P",
+			banModeBind: "B",
+			clearPicksOrBansBind: "X",
+			saveDraftSnapshotBind: "V",
+			browseDraftSnapshotsBind: "G",
+			loadCustomDataBind: "C",
+			loadDefaultDataBind: "D",
+			inputCustomDataBind: "I",
+			importCustomDataFromFileBind: "F",
+			toggleThemeBind: "T",
+			toggleManualBind: "M",
+			toggleSettingsTabBind: "S",
+			toggleCompactModeBind: "A",
+			toggleToplaneFilteringBind: "!",
+			toggleJungleFilteringBind: "@",
+			toggleMidlaneFilteringBind: "#",
+			toggleADCFilteringBind: "$",
+			toggleSupportFilteringBind: "%",
+			toggleAllFilteringBind: "Q",
+			toggleAllyFilteringBind: "W",
+			toggleEnemyFilteringBind: "E",
+		};
+		try {
+			binds = JSON.parse(binds);
+		} catch (e) {
+			console.log(e);
+			return defaultBinds;
+		}
+		if (binds == null) return defaultBinds;
+		return binds;
+	}
 }

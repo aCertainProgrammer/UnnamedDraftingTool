@@ -61,6 +61,7 @@ export class UserInterface {
 			pickedChampions: [],
 			bannedChampions: [],
 		};
+		this.binds = DataController.loadBinds();
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
 		this.currentMode = "pick";
@@ -79,6 +80,8 @@ export class UserInterface {
 		this.middleOverlay = document.querySelector("#middle-overlay");
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
+		this.bindMenu = document.querySelector("#bind-menu");
+		this.resetBindsButton = document.querySelector("#reset-binds-button");
 		this.userDataInputTextarea = document.querySelector("#user_data_input");
 		this.saveUserDataButton = document.querySelector("#save-user-data");
 		this.hideUserInputTextarea = document.querySelector(
@@ -190,6 +193,11 @@ export class UserInterface {
 			"click",
 			this.saveUserData.bind(this, this.userDataInputTextarea),
 		);
+		this.bindMenu.addEventListener("input", this.changeBinds.bind(this));
+		this.resetBindsButton.addEventListener(
+			"click",
+			this.resetBinds.bind(this),
+		);
 		this.hideUserInputTextarea.addEventListener("click", () => {
 			this.rightOverlay.classList += "hidden";
 		});
@@ -279,7 +287,6 @@ export class UserInterface {
 			"click",
 			this.toggleBanIcons.bind(this),
 		);
-
 		document.addEventListener(
 			"keydown",
 			this.processKeyboardInput.bind(this),
@@ -435,6 +442,88 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 
+	changeBinds(event) {
+		const bindId = event.target.id;
+		const bindKey = event.target.value;
+
+		switch (bindId) {
+			case "pick-mode-bind":
+				this.binds.pickModeBind = bindKey;
+				break;
+			case "ban-mode-bind":
+				this.binds.banModeBind = bindKey;
+				break;
+			case "clear-picks-or-bans-bind":
+				this.binds.clearPicksOrBansBind = bindKey;
+				break;
+			case "save-draft-snapshot-bind":
+				this.binds.saveDraftSnapshotBind = bindKey;
+				break;
+			case "browse-draft-snapshots-bind":
+				this.binds.browseDraftSnapshotsBind = bindKey;
+				break;
+			case "load-custom-data-bind":
+				this.binds.loadCustomDataBind = bindKey;
+				break;
+			case "load-default-data-bind":
+				this.binds.loadDefaultDataBind = bindKey;
+				break;
+			case "input-custom-data-bind":
+				this.binds.loadCustomDataBind = bindKey;
+				break;
+			case "import-custom-data-bind":
+				this.binds.importCustomDataFromFileBind = bindKey;
+				break;
+			case "toggle-theme-bind":
+				this.binds.toggleThemeBind = bindKey;
+				break;
+			case "toggle-manual-bind":
+				this.binds.toggleManualBind = bindKey;
+				break;
+			case "toggle-settings-bind":
+				this.binds.toggleSettingsTabBind = bindKey;
+				break;
+			case "toggle-compact-mode-bind":
+				this.binds.toggleCompactModeBind = bindKey;
+				break;
+			case "toggle-toplane-filtering-bind":
+				this.binds.toggleToplaneFilteringBind = bindKey;
+				break;
+			case "toggle-jungle-filtering-bind":
+				this.binds.toggleJungleFilteringBind = bindKey;
+				break;
+			case "toggle-midlane-filtering-bind":
+				this.binds.toggleMidlaneFilteringBind = bindKey;
+				break;
+			case "toggle-adc-filtering-bind":
+				this.binds.toggleADCFilteringBind = bindKey;
+				break;
+			case "toggle-support-filtering-bind":
+				this.binds.toggleSupportFilteringBind = bindKey;
+				break;
+			case "toggle-all-filtering-bind":
+				this.binds.toggleAllFilteringBind = bindKey;
+				break;
+			case "toggle-ally-filtering-bind":
+				this.binds.toggleAllyFilteringBind = bindKey;
+				break;
+			case "toggle-enemy-filtering-bind":
+				this.binds.toggleEnemyFilteringBind = bindKey;
+				break;
+			case "reset-binds-button":
+				break;
+			default:
+				console.log("Bad ID!");
+				return;
+		}
+		DataController.saveBinds(this.binds);
+	}
+	resetBinds() {
+		localStorage.removeItem("keybinds");
+		this.binds = DataController.loadBinds();
+		DataController.saveBinds(this.binds);
+	}
+
 	async takeFileInput(event) {
 		const file = event.target.files[0];
 		const data = await DataController.readFile(file);
@@ -456,10 +545,14 @@ export class UserInterface {
 	}
 
 	placeChampion(event) {
+		const replacedChampion = event.target.dataset.champion;
+		if (replacedChampion == this.selectionData.selectedChampion) {
+			return;
+		}
+
 		if (this.selectionData.selectedChampion == "") {
 			event.target.dataset.champion = "";
 		}
-		const replacedChampion = event.target.dataset.champion;
 
 		for (let i = 0; i &lt; this.picks.length; i++) {
 			if (
@@ -674,11 +767,31 @@ export class UserInterface {
 	}
 	processMainScreenInput(key) {
 		const shiftKeyPressed = event.shiftKey;
-		if ((key == "I" || key == "i") &amp;&amp; shiftKeyPressed) {
+		console.log(this.binds);
+		if (
+			key.toLowerCase() == this.binds.inputCustomDataBind.toLowerCase() &amp;&amp;
+			shiftKeyPressed
+		) {
 			this.searchBar.blur();
 			this.userDataInput.click();
 		}
 		if (!this.rightOverlay.classList.contains("hidden")) return;
+
+		if (
+			key.toLowerCase() ==
+				this.binds.toggleSettingsTabBind.toLowerCase() &amp;&amp;
+			shiftKeyPressed
+		) {
+			this.searchBar.blur();
+			if (this.contentContainer.classList.contains("hidden"))
+				this.contentContainer.classList.remove("hidden");
+			if (!this.manualContainer.classList.contains("hidden"))
+				this.manualContainer.classList.add("hidden");
+			if (this.leftOverlay.classList.contains("hidden"))
+				this.enterSettingsButton.click();
+			else this.leaveSettingsButton.click();
+		}
+		if (!this.leftOverlay.classList.contains("hidden")) return;
 
 		if (key == " ") {
 			if (
@@ -739,33 +852,47 @@ export class UserInterface {
 				this.pickBanChampionWithKeyInput(key);
 			}
 		} else {
-			if (key == "A" || key == "a") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleCompactModeBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.toggleCompactMode();
 			}
-			if (key == "C" || key == "c") {
+			if (
+				key.toLowerCase() == this.binds.loadCustomDataBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.dataSource = "user_data";
 				this.sendProcessSignal();
 			}
-			if (key == "D" || key == "d") {
+			if (
+				key.toLowerCase() ==
+				this.binds.loadDefaultDataBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.dataSource = "default_data";
 				this.sendProcessSignal();
 			}
-			if (key == "F" || key == "f") {
+			if (
+				key.toLowerCase() ==
+				this.binds.importCustomDataFromFileBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.clickInput(this.fileInput);
 			}
-			if (key == "P" || key == "p") {
+			if (key.toLowerCase() == this.binds.pickModeBind.toLowerCase()) {
 				this.searchBar.blur();
 				this.setPickBanMode("pick");
 			}
-			if (key == "B" || key == "b") {
+			if (key.toLowerCase() == this.binds.banModeBind.toLowerCase()) {
 				this.searchBar.blur();
 				this.setPickBanMode("ban");
 			}
-			if (key == "X" || key == "x") {
+			if (
+				key.toLowerCase() ==
+				this.binds.clearPicksOrBansBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				let data;
 				if (this.currentMode == "pick") data = this.picks;
@@ -775,7 +902,9 @@ export class UserInterface {
 				});
 				this.sendProcessSignal();
 			}
-			if (key == "M" || key == "m") {
+			if (
+				key.toLowerCase() == this.binds.toggleManualBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				if (!this.contentContainer.classList.contains("hidden"))
 					this.contentContainer.classList.add("hidden");
@@ -785,58 +914,78 @@ export class UserInterface {
 					this.openManualButton.click();
 				else this.closeManualButton.click();
 			}
-			if (key == "S" || key == "s") {
-				this.searchBar.blur();
-				if (this.contentContainer.classList.contains("hidden"))
-					this.contentContainer.classList.remove("hidden");
-				if (!this.manualContainer.classList.contains("hidden"))
-					this.manualContainer.classList.add("hidden");
-				if (this.leftOverlay.classList.contains("hidden"))
-					this.enterSettingsButton.click();
-				else this.leaveSettingsButton.click();
-			}
-			if (key === "T" || key == "t") {
+			if (key.toLowerCase() == this.binds.toggleThemeBind.toLowerCase()) {
 				this.searchBar.blur();
 				this.switchTheme();
 			}
-			if (key == "!") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleToplaneFilteringBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.roleIcons[0].click();
 			}
-			if (key == "@") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleJungleFilteringBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.roleIcons[1].click();
 			}
-			if (key == "#") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleMidlaneFilteringBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.roleIcons[2].click();
 			}
-			if (key == "$") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleADCFilteringBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.roleIcons[3].click();
 			}
-			if (key == "%") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleSupportFilteringBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.roleIcons[4].click();
 			}
-			if (key == "Q" || key == "q") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleAllFilteringBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.logos[0].click();
 			}
-			if (key == "W" || key == "w") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleAllyFilteringBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.logos[1].click();
 			}
-			if (key == "E" || key == "e") {
+			if (
+				key.toLowerCase() ==
+				this.binds.toggleEnemyFilteringBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.logos[2].click();
 			}
-			if (key == "g" || key == "G") {
+			if (
+				key.toLowerCase() ==
+				this.binds.browseDraftSnapshotsBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.toggleMiddleOverlay();
 				return;
 			}
-			if (key == "v" || key == "V") {
+			if (
+				key.toLowerCase() ==
+				this.binds.saveDraftSnapshotBind.toLowerCase()
+			) {
 				this.searchBar.blur();
 				this.saveDraftSnapshot();
 			}
@@ -1538,7 +1687,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Nov 29 2024 18:37:38 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Nov 30 2024 17:05:47 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
