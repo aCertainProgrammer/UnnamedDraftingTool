@@ -85,11 +85,20 @@ export class DataController {
 	 * @returns {Config}
 	 */
 	static readConfig() {
-		const config = localStorage.getItem("config");
+		let config = localStorage.getItem("config");
 		if (config == null) {
-			return {};
+			const default_config = this.validateConfig({});
+			return default_config;
 		}
-		return JSON.parse(config);
+		try {
+			config = JSON.parse(config);
+		} catch (e) {
+			console.log(e);
+			const default_config = this.validateConfig({});
+			return default_config;
+		}
+		config = this.validateConfig(config);
+		return config;
 	}
 	/**
 	 * Validates each option in the config and fills out the missing parts
