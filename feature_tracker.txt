@@ -1,7 +1,5 @@
 CURRENT WORK:
 
-- bind menu display binds on load
-
 THEN:
 
 - draft snapshot pagination 
