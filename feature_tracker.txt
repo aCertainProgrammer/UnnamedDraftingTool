@@ -1,8 +1,8 @@
 CURRENT WORK:
 
-THEN:
-
 - draft snapshot pagination 
+
+THEN:
 
 SHORT IDEAS:
 
