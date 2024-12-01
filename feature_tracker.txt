@@ -1,8 +1,10 @@
 CURRENT WORK:
 
-- draft snapshot pagination 
+- draft snapshot shortcuts (I think type the ID then enter?)
 
 THEN:
+
+- draft snapshot pagination 
 
 SHORT IDEAS:
 
