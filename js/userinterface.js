@@ -841,7 +841,6 @@ export class UserInterface {
 	}
 	processMainScreenInput(key) {
 		const shiftKeyPressed = event.shiftKey;
-		console.log(this.binds);
 		if (
 			key.toLowerCase() == this.binds.inputCustomDataBind.toLowerCase() &&
 			shiftKeyPressed
