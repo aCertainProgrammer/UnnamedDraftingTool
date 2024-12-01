@@ -53,6 +53,64 @@ export class UserInterface {
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
 		this.bindMenu = document.querySelector("#bind-menu");
+		this.pickModeBindInput = document.querySelector("#pick-mode-bind");
+		this.banModeBindInput = document.querySelector("#ban-mode-bind");
+		this.clearPicksOrBansBindInput = document.querySelector(
+			"#clear-picks-or-bans-bind",
+		);
+		this.saveDraftSnapshotBindInput = document.querySelector(
+			"#save-draft-snapshot-bind",
+		);
+		this.browseDraftSnapshotsBindInput = document.querySelector(
+			"#browse-draft-snapshots-bind",
+		);
+		this.loadCustomDataBindInput = document.querySelector(
+			"#load-custom-data-bind",
+		);
+		this.loadDefaultDataBindInput = document.querySelector(
+			"#load-default-data-bind",
+		);
+		this.inputCustomDataBindInput = document.querySelector(
+			"#input-custom-data-bind",
+		);
+		this.importCustomDataFromFileBindInput = document.querySelector(
+			"#import-custom-data-bind",
+		);
+		this.toggleThemeBindInput =
+			document.querySelector("#toggle-theme-bind");
+		this.toggleManualBindInput = document.querySelector(
+			"#toggle-manual-bind",
+		);
+		this.toggleSettingsTabBindInput = document.querySelector(
+			"#toggle-settings-bind",
+		);
+		this.toggleCompactModeBindInput = document.querySelector(
+			"#toggle-compact-mode-bind",
+		);
+		this.toggleToplaneFilteringBindInput = document.querySelector(
+			"#toggle-toplane-filtering-bind",
+		);
+		this.toggleJungleFilteringBindInput = document.querySelector(
+			"#toggle-jungle-filtering-bind",
+		);
+		this.toggleMidlaneFilteringBindInput = document.querySelector(
+			"#toggle-midlane-filtering-bind",
+		);
+		this.toggleADCFilteringBindInput = document.querySelector(
+			"#toggle-adc-filtering-bind",
+		);
+		this.toggleSupportFilteringBindInput = document.querySelector(
+			"#toggle-support-filtering-bind",
+		);
+		this.toggleAllFilteringBindInput = document.querySelector(
+			"#toggle-all-filtering-bind",
+		);
+		this.toggleAllyFilteringBindInput = document.querySelector(
+			"#toggle-ally-filtering-bind",
+		);
+		this.toggleEnemyFilteringBindInput = document.querySelector(
+			"#toggle-enemy-filtering-bind",
+		);
 		this.resetBindsButton = document.querySelector("#reset-binds-button");
 		this.userDataInputTextarea = document.querySelector("#user_data_input");
 		this.saveUserDataButton = document.querySelector("#save-user-data");
@@ -365,6 +423,7 @@ export class UserInterface {
 			event.preventDefault();
 		});
 
+		this.setBindInputValues();
 		this.handleDrag();
 	}
 
@@ -441,7 +500,7 @@ export class UserInterface {
 				this.binds.loadDefaultDataBind = bindKey;
 				break;
 			case "input-custom-data-bind":
-				this.binds.loadCustomDataBind = bindKey;
+				this.binds.inputCustomDataBind = bindKey;
 				break;
 			case "import-custom-data-bind":
 				this.binds.importCustomDataFromFileBind = bindKey;
@@ -489,11 +548,54 @@ export class UserInterface {
 				return;
 		}
 		DataController.saveBinds(this.binds);
+		this.setBindInputValues();
 	}
 	resetBinds() {
 		localStorage.removeItem("keybinds");
 		this.binds = DataController.loadBinds();
 		DataController.saveBinds(this.binds);
+		this.setBindInputValues();
+	}
+
+	setBindInputValues() {
+		this.pickModeBindInput.value = this.binds.pickModeBind || "";
+		this.banModeBindInput.value = this.binds.banModeBind || "";
+		this.clearPicksOrBansBindInput.value =
+			this.binds.clearPicksOrBansBind || "";
+		this.saveDraftSnapshotBindInput.value =
+			this.binds.saveDraftSnapshotBind || "";
+		this.browseDraftSnapshotsBindInput.value =
+			this.binds.browseDraftSnapshotsBind || "";
+		this.loadCustomDataBindInput.value =
+			this.binds.loadCustomDataBind || "";
+		this.loadDefaultDataBindInput.value =
+			this.binds.loadDefaultDataBind || "";
+		this.inputCustomDataBindInput.value =
+			this.binds.inputCustomDataBind || "";
+		this.importCustomDataFromFileBindInput.value =
+			this.binds.importCustomDataFromFileBind || "";
+		this.toggleThemeBindInput.value = this.binds.toggleThemeBind || "";
+		this.toggleManualBindInput.value = this.binds.toggleManualBind || "";
+		this.toggleSettingsTabBindInput.value =
+			this.binds.toggleSettingsTabBind || "";
+		this.toggleCompactModeBindInput.value =
+			this.binds.toggleCompactModeBind || "";
+		this.toggleToplaneFilteringBindInput.value =
+			this.binds.toggleToplaneFilteringBind || "";
+		this.toggleJungleFilteringBindInput.value =
+			this.binds.toggleJungleFilteringBind || "";
+		this.toggleMidlaneFilteringBindInput.value =
+			this.binds.toggleMidlaneFilteringBind || "";
+		this.toggleADCFilteringBindInput.value =
+			this.binds.toggleADCFilteringBind || "";
+		this.toggleSupportFilteringBindInput.value =
+			this.binds.toggleSupportFilteringBind || "";
+		this.toggleAllFilteringBindInput.value =
+			this.binds.toggleAllFilteringBind || "";
+		this.toggleAllyFilteringBindInput.value =
+			this.binds.toggleAllyFilteringBind || "";
+		this.toggleEnemyFilteringBindInput.value =
+			this.binds.toggleEnemyFilteringBind || "";
 	}
 
 	async takeFileInput(event) {
