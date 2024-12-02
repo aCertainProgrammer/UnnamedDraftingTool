@@ -789,6 +789,7 @@ body {
 	overflow: hidden;
 	border-radius: var(--overlayBorderRadius);
 	color: var(--overlayTextColor);
+	font-size: 1.3rem;
 }
 
 #middle-overlay-utils {
@@ -880,7 +881,23 @@ body {
 	text-align: center;
 }
 
+#snapshots-pagination-container > label {
+	font-size: inherit;
+	padding-top: 4px;
+}
+
 #snapshots-pagination-page-counter {
 	max-width: var(--dataButtonMaxWidth);
 	text-align: center;
+}
+
+#draft-snapshots-per-page {
+	background: none;
+	color: inherit;
+	border: var(--sourceButtonBorder);
+	border-radius: var(--generalBorderRadius);
+	height: var(--dataButtonMaxHeight);
+	padding: 0px 4px;
+	padding-bottom: 4px;
+	font-size: inherit;
 }
