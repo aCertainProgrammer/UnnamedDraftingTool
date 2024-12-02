@@ -639,6 +639,7 @@ export class UserInterface {
 				this.selectionData.selectedChampion != ""
 			) {
 				this.selectionData.oldSlot = i;
+				this.selectionData.data = this.picks;
 				this.picks[i].childNodes[1].dataset.champion = "";
 				break;
 			}
@@ -649,6 +650,7 @@ export class UserInterface {
 			) {
 				this.selectionData.oldSlot = i;
 				this.bans[i].childNodes[1].dataset.champion = "";
+				this.selectionData.data = this.bans;
 				break;
 			}
 		}
@@ -1430,9 +1432,6 @@ export class UserInterface {
 		}
 		championIcon.classList.add("selected");
 		this.selectionData.selectedChampion = event.target.dataset.champion;
-		this.selectionData.data =
-			event.target.dataset.slotType == "pick" ? this.picks : this.bans;
-		this.selectionData.oldSlot = event.target.dataset.slot;
 	}
 
 	validateUserData(data) {
