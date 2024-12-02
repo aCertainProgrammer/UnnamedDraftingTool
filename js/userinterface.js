@@ -206,6 +206,18 @@ export class UserInterface {
 		this.draftSnapshotsContainer = document.querySelector(
 			"#draft-snapshots-container",
 		);
+		this.draftSnapshotsPaginationLeftArrow = document.querySelector(
+			"#snapshots-pagination-left-arrow",
+		);
+		this.draftSnapshotsPaginationPageCounter = document.querySelector(
+			"#snapshots-pagination-page-counter",
+		);
+		this.draftSnapshotsPaginationRightArrow = document.querySelector(
+			"#snapshots-pagination-right-arrow",
+		);
+		this.draftSnapshotsPaginationItemCount = document.querySelector(
+			"#draft-snapshots-per-page",
+		);
 		this.saveDraftButton = document.querySelector("#save-draft-button");
 		this.browseSavedDraftsButton = document.querySelector(
 			"#browse-saved-drafts-button",
@@ -378,6 +390,22 @@ export class UserInterface {
 			"click",
 			this.clickInput.bind(this, this.snapshotsFileInput),
 		);
+		this.draftSnapshotsPaginationLeftArrow.addEventListener(
+			"click",
+			this.changeDraftPaginationPage.bind(this, -1),
+		);
+		this.draftSnapshotsPaginationPageCounter.addEventListener(
+			"input",
+			this.browseSavedDrafts.bind(this),
+		);
+		this.draftSnapshotsPaginationRightArrow.addEventListener(
+			"click",
+			this.changeDraftPaginationPage.bind(this, 1),
+		);
+		this.draftSnapshotsPaginationItemCount.addEventListener(
+			"change",
+			this.inputDraftSnapshotPaginationItemCount.bind(this),
+		);
 		this.saveDraftButton.addEventListener(
 			"click",
 			this.saveDraftSnapshot.bind(this),
@@ -425,6 +453,7 @@ export class UserInterface {
 
 		this.setBindInputValues();
 		this.handleDrag();
+		this.toggleMiddleOverlay();
 	}
 
 	//end of constructor
@@ -1093,7 +1122,8 @@ export class UserInterface {
 			return;
 		}
 		if (key == "Enter") {
-			this.draftSnapshotsContainer.firstChild.click();
+			if (this.draftSnapshotsContainer.firstChild != null)
+				this.draftSnapshotsContainer.firstChild.click();
 		}
 	}
 
@@ -1176,7 +1206,11 @@ export class UserInterface {
 		localStorage.removeItem("savedDrafts");
 		this.hideMiddleOverlay();
 	}
-
+	inputDraftSnapshotPaginationItemCount() {
+		if (this.draftSnapshotsPaginationItemCount.value == -1)
+			this.changeDraftPaginationPage();
+		this.browseSavedDrafts();
+	}
 	saveDraftSnapshot() {
 		const picks = DataController.loadPicksAndBans();
 		const saved_drafts = DataController.loadSavedDrafts();
@@ -1194,12 +1228,29 @@ export class UserInterface {
 		this.draftSnapshotsContainer.innerHTML = "";
 
 		let saved_drafts = DataController.loadSavedDrafts();
+		let item_count = parseInt(this.draftSnapshotsPaginationItemCount.value);
+		let page_number = parseInt(
+			this.draftSnapshotsPaginationPageCounter.value,
+		);
+		if (item_count == -1) item_count = saved_drafts.length;
+		if (isNaN(page_number)) {
+			page_number = 1;
+		}
+
+		const lower_index =
+			item_count == saved_drafts.length
+				? 0
+				: item_count * (page_number - 1);
+		const upperIndex =
+			item_count == saved_drafts.length
+				? item_count
+				: item_count * page_number;
 
 		const query = this.middleOverlaySearchBar.value;
 		if (query != "")
 			saved_drafts = Backend.filterDrafts(saved_drafts, query);
 
-		for (let i = 0; i < saved_drafts.length; i++) {
+		for (let i = lower_index; i < upperIndex; i++) {
 			const draft = saved_drafts[i];
 			if (draft == null) continue;
 
@@ -1308,6 +1359,35 @@ export class UserInterface {
 
 		this.hideMiddleOverlay();
 		this.toggleMiddleOverlay();
+	}
+
+	changeDraftPaginationPage(amount) {
+		this.draftSnapshotsContainer.scrollTop = 0;
+		let saved_drafts = DataController.loadSavedDrafts();
+		const query = this.middleOverlaySearchBar.value;
+		if (query != "")
+			saved_drafts = Backend.filterDrafts(saved_drafts, query);
+		let value =
+			parseInt(this.draftSnapshotsPaginationPageCounter.value) +
+			parseInt(amount);
+
+		if (isNaN(value)) value = 1 + parseInt(amount);
+		if (value < 1) value = 1;
+		if (
+			value >
+				1 +
+					saved_drafts.length /
+						this.draftSnapshotsPaginationItemCount.value &&
+			value > 1
+		) {
+			value -= 1;
+		}
+
+		this.draftSnapshotsPaginationPageCounter.value = value;
+
+		if (this.draftSnapshotsPaginationItemCount.value == -1)
+			this.draftSnapshotsPaginationPageCounter.value = 1;
+		this.browseSavedDrafts();
 	}
 
 	toggleSearchMode() {

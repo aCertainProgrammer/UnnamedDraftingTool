@@ -663,6 +663,33 @@
 			</div>
 			<div id="snapshots-input-error-box" class="hidden"></div>
 			<div id="draft-snapshots-container"></div>
+			<div id="snapshots-pagination-container">
+				<label for="draft-snapshots-per-page">Show amount</label>
+				<select id="draft-snapshots-per-page">
+					<option value="30">30</option>
+					<option value="60">60</option>
+					<option value="120">120</option>
+					<option value="-1">Unlimited (may lag)</option>
+				</select>
+				<input
+					id="snapshots-pagination-left-arrow"
+					class="source-button"
+					value="<"
+					type="button"
+				/>
+				<input
+					id="snapshots-pagination-page-counter"
+					class="source-button"
+					value="1"
+					type="text"
+				/>
+				<input
+					id="snapshots-pagination-right-arrow"
+					class="source-button"
+					value=">"
+					type="button"
+				/>
+			</div>
 		</div>
 		<div id="content-container" class="container">
 			<div id="header">

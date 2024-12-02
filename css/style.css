@@ -774,21 +774,21 @@ body {
 	position: fixed;
 	padding: 10px;
 	right: 20vw;
-	top: 5vh;
+	top: 3vh;
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: start;
-	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
 	z-index: 1;
 	width: 60vw;
-	height: 90vh;
+	height: 94vh;
 	min-width: 600px;
 	opacity: 0.9;
 	gap: 15px;
 	background: var(--bodyBackgroundColor);
 	overflow: hidden;
 	border-radius: var(--overlayBorderRadius);
+	color: var(--overlayTextColor);
 }
 
 #middle-overlay-utils {
@@ -806,7 +806,7 @@ body {
 	align-items: start;
 	flex-wrap: wrap;
 	gap: 10px;
-	height: 91%;
+	height: 87%;
 	overflow: auto;
 	scrollbar-color: var(--scrollbarColor);
 }
@@ -867,5 +867,20 @@ body {
 
 .bind-menu-input {
 	max-width: 2rem;
+	text-align: center;
+}
+
+#snapshots-pagination-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+	text-align: center;
+}
+
+#snapshots-pagination-page-counter {
+	max-width: var(--dataButtonMaxWidth);
 	text-align: center;
 }
