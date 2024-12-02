@@ -1,12 +1,13 @@
 CURRENT WORK:
 
-- draft snapshot shortcuts (I think type the ID then enter?)
+- draft snapshot pagination 
 
 THEN:
 
-- draft snapshot pagination 
+- proper PWA offline mode
 
 SHORT IDEAS:
+
 
 LONG IDEAS:
 
