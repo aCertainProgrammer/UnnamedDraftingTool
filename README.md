@@ -146,7 +146,7 @@ You can save your drafts for later and come back to them easily by using draft s
 1. `Shift` + `V` to save your current draft state
 2. `Shift` + `G` to open the snapshot menu
 3. Start typing to filter the drafts - type champion names in pick order, so B1 > R1 > R2 etc. Don't use punctuation. An example search query would be `camille ahri varus` (you can omit the spaces)
-4. Click on the desired draft to load it or press enter to load the first draft in the list 
+4. Press `Enter` to load the first draft in the list, or click on the desired draft
 5. `Shift` + `G` to close the snapshot overlay
 
 You can also use the buttons for navigation.
