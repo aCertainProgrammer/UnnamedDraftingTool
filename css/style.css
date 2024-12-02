@@ -883,7 +883,6 @@ body {
 
 #snapshots-pagination-container > label {
 	font-size: inherit;
-	padding-top: 4px;
 }
 
 #snapshots-pagination-page-counter {
@@ -898,6 +897,10 @@ body {
 	border-radius: var(--generalBorderRadius);
 	height: var(--dataButtonMaxHeight);
 	padding: 0px 4px;
-	padding-bottom: 4px;
 	font-size: inherit;
+}
+
+#draft-snapshots-per-page > option {
+	background-color: var(--overlayBackgroundColor);
+	color: inherit;
 }
