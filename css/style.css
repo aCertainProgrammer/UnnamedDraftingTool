@@ -113,7 +113,7 @@
 	--validBackgroundColor: lightgreen;
 	--scrollbarColor: #aaaaaa var(--bodyBackgroundColor);
 	--overlayBackgroundColor: #5b5b5b;
-	--overlayTextColor: white;
+	--overlayTextColor: black;
 	--pickBackgroundColor: lightgreen;
 	--banBackgroundColor: pink;
 }
@@ -472,6 +472,7 @@ body {
 
 #user_data_form_container > label {
 	font-size: 30px;
+	color: var(--overlayTextColor);
 }
 
 #user_data_form_container > label > a {
@@ -545,10 +546,10 @@ body {
 	max-width: 40vw;
 	gap: 30px;
 	overflow: auto;
+	color: var(--overlayTextColor);
 }
 
 #settings-menu > label {
-	color: #eeeeee;
 	padding: 0px 2px;
 }
 
@@ -562,6 +563,7 @@ body {
 .setting-container > input {
 	width: fit-content;
 	text-align: left;
+	color: inherit;
 }
 
 .settings-tooltip {
@@ -638,10 +640,6 @@ body {
 
 .off {
 	background-color: var(--offBackgroundColor);
-}
-
-label {
-	color: var(--labelColor);
 }
 
 .data {
@@ -841,7 +839,6 @@ label {
 }
 
 #snapshots-input-error-box {
-	color: var(--textInputTextColor);
 	font-size: var(--dataButtonFontSize);
 	border: var(--sourceButtonBorder);
 	background-color: var(--sourceButtonBackgroundColor);
