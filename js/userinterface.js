@@ -621,6 +621,10 @@ export class UserInterface {
 	placeChampion(event) {
 		const replacedChampion = event.target.dataset.champion;
 		if (replacedChampion == this.selectionData.selectedChampion) {
+			this.selectionData.selectedChampion = "";
+			this.selectionData.oldSlot = null;
+			this.selectionData.data = null;
+			this.clearSelectedChampions();
 			return;
 		}
 
@@ -661,6 +665,10 @@ export class UserInterface {
 				this.selectionData.oldSlot
 			].childNodes[1].dataset.champion = replacedChampion;
 		}
+		this.selectionData.data = null;
+		this.selectionData.selectedChampion = "";
+		this.selectionData.oldSlot = null;
+		this.clearSelectedChampions();
 		this.sendProcessSignal();
 	}
 
