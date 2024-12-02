@@ -453,7 +453,6 @@ export class UserInterface {
 
 		this.setBindInputValues();
 		this.handleDrag();
-		this.toggleMiddleOverlay();
 	}
 
 	//end of constructor
