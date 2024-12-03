@@ -81,6 +81,64 @@ export class UserInterface {
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
 		this.bindMenu = document.querySelector("#bind-menu");
+		this.pickModeBindInput = document.querySelector("#pick-mode-bind");
+		this.banModeBindInput = document.querySelector("#ban-mode-bind");
+		this.clearPicksOrBansBindInput = document.querySelector(
+			"#clear-picks-or-bans-bind",
+		);
+		this.saveDraftSnapshotBindInput = document.querySelector(
+			"#save-draft-snapshot-bind",
+		);
+		this.browseDraftSnapshotsBindInput = document.querySelector(
+			"#browse-draft-snapshots-bind",
+		);
+		this.loadCustomDataBindInput = document.querySelector(
+			"#load-custom-data-bind",
+		);
+		this.loadDefaultDataBindInput = document.querySelector(
+			"#load-default-data-bind",
+		);
+		this.inputCustomDataBindInput = document.querySelector(
+			"#input-custom-data-bind",
+		);
+		this.importCustomDataFromFileBindInput = document.querySelector(
+			"#import-custom-data-bind",
+		);
+		this.toggleThemeBindInput =
+			document.querySelector("#toggle-theme-bind");
+		this.toggleManualBindInput = document.querySelector(
+			"#toggle-manual-bind",
+		);
+		this.toggleSettingsTabBindInput = document.querySelector(
+			"#toggle-settings-bind",
+		);
+		this.toggleCompactModeBindInput = document.querySelector(
+			"#toggle-compact-mode-bind",
+		);
+		this.toggleToplaneFilteringBindInput = document.querySelector(
+			"#toggle-toplane-filtering-bind",
+		);
+		this.toggleJungleFilteringBindInput = document.querySelector(
+			"#toggle-jungle-filtering-bind",
+		);
+		this.toggleMidlaneFilteringBindInput = document.querySelector(
+			"#toggle-midlane-filtering-bind",
+		);
+		this.toggleADCFilteringBindInput = document.querySelector(
+			"#toggle-adc-filtering-bind",
+		);
+		this.toggleSupportFilteringBindInput = document.querySelector(
+			"#toggle-support-filtering-bind",
+		);
+		this.toggleAllFilteringBindInput = document.querySelector(
+			"#toggle-all-filtering-bind",
+		);
+		this.toggleAllyFilteringBindInput = document.querySelector(
+			"#toggle-ally-filtering-bind",
+		);
+		this.toggleEnemyFilteringBindInput = document.querySelector(
+			"#toggle-enemy-filtering-bind",
+		);
 		this.resetBindsButton = document.querySelector("#reset-binds-button");
 		this.userDataInputTextarea = document.querySelector("#user_data_input");
 		this.saveUserDataButton = document.querySelector("#save-user-data");
@@ -175,6 +233,18 @@ export class UserInterface {
 		);
 		this.draftSnapshotsContainer = document.querySelector(
 			"#draft-snapshots-container",
+		);
+		this.draftSnapshotsPaginationLeftArrow = document.querySelector(
+			"#snapshots-pagination-left-arrow",
+		);
+		this.draftSnapshotsPaginationPageCounter = document.querySelector(
+			"#snapshots-pagination-page-counter",
+		);
+		this.draftSnapshotsPaginationRightArrow = document.querySelector(
+			"#snapshots-pagination-right-arrow",
+		);
+		this.draftSnapshotsPaginationItemCount = document.querySelector(
+			"#draft-snapshots-per-page",
 		);
 		this.saveDraftButton = document.querySelector("#save-draft-button");
 		this.browseSavedDraftsButton = document.querySelector(
@@ -348,6 +418,22 @@ export class UserInterface {
 			"click",
 			this.clickInput.bind(this, this.snapshotsFileInput),
 		);
+		this.draftSnapshotsPaginationLeftArrow.addEventListener(
+			"click",
+			this.changeDraftPaginationPage.bind(this, -1),
+		);
+		this.draftSnapshotsPaginationPageCounter.addEventListener(
+			"input",
+			this.browseSavedDrafts.bind(this),
+		);
+		this.draftSnapshotsPaginationRightArrow.addEventListener(
+			"click",
+			this.changeDraftPaginationPage.bind(this, 1),
+		);
+		this.draftSnapshotsPaginationItemCount.addEventListener(
+			"change",
+			this.inputDraftSnapshotPaginationItemCount.bind(this),
+		);
 		this.saveDraftButton.addEventListener(
 			"click",
 			this.saveDraftSnapshot.bind(this),
@@ -393,6 +479,7 @@ export class UserInterface {
 			event.preventDefault();
 		});
 
+		this.setBindInputValues();
 		this.handleDrag();
 	}
 
@@ -469,7 +556,7 @@ export class UserInterface {
 				this.binds.loadDefaultDataBind = bindKey;
 				break;
 			case "input-custom-data-bind":
-				this.binds.loadCustomDataBind = bindKey;
+				this.binds.inputCustomDataBind = bindKey;
 				break;
 			case "import-custom-data-bind":
 				this.binds.importCustomDataFromFileBind = bindKey;
@@ -517,11 +604,54 @@ export class UserInterface {
 				return;
 		}
 		DataController.saveBinds(this.binds);
+		this.setBindInputValues();
 	}
 	resetBinds() {
 		localStorage.removeItem("keybinds");
 		this.binds = DataController.loadBinds();
 		DataController.saveBinds(this.binds);
+		this.setBindInputValues();
+	}
+
+	setBindInputValues() {
+		this.pickModeBindInput.value = this.binds.pickModeBind || "";
+		this.banModeBindInput.value = this.binds.banModeBind || "";
+		this.clearPicksOrBansBindInput.value =
+			this.binds.clearPicksOrBansBind || "";
+		this.saveDraftSnapshotBindInput.value =
+			this.binds.saveDraftSnapshotBind || "";
+		this.browseDraftSnapshotsBindInput.value =
+			this.binds.browseDraftSnapshotsBind || "";
+		this.loadCustomDataBindInput.value =
+			this.binds.loadCustomDataBind || "";
+		this.loadDefaultDataBindInput.value =
+			this.binds.loadDefaultDataBind || "";
+		this.inputCustomDataBindInput.value =
+			this.binds.inputCustomDataBind || "";
+		this.importCustomDataFromFileBindInput.value =
+			this.binds.importCustomDataFromFileBind || "";
+		this.toggleThemeBindInput.value = this.binds.toggleThemeBind || "";
+		this.toggleManualBindInput.value = this.binds.toggleManualBind || "";
+		this.toggleSettingsTabBindInput.value =
+			this.binds.toggleSettingsTabBind || "";
+		this.toggleCompactModeBindInput.value =
+			this.binds.toggleCompactModeBind || "";
+		this.toggleToplaneFilteringBindInput.value =
+			this.binds.toggleToplaneFilteringBind || "";
+		this.toggleJungleFilteringBindInput.value =
+			this.binds.toggleJungleFilteringBind || "";
+		this.toggleMidlaneFilteringBindInput.value =
+			this.binds.toggleMidlaneFilteringBind || "";
+		this.toggleADCFilteringBindInput.value =
+			this.binds.toggleADCFilteringBind || "";
+		this.toggleSupportFilteringBindInput.value =
+			this.binds.toggleSupportFilteringBind || "";
+		this.toggleAllFilteringBindInput.value =
+			this.binds.toggleAllFilteringBind || "";
+		this.toggleAllyFilteringBindInput.value =
+			this.binds.toggleAllyFilteringBind || "";
+		this.toggleEnemyFilteringBindInput.value =
+			this.binds.toggleEnemyFilteringBind || "";
 	}
 
 	async takeFileInput(event) {
@@ -547,6 +677,10 @@ export class UserInterface {
 	placeChampion(event) {
 		const replacedChampion = event.target.dataset.champion;
 		if (replacedChampion == this.selectionData.selectedChampion) {
+			this.selectionData.selectedChampion = "";
+			this.selectionData.oldSlot = null;
+			this.selectionData.data = null;
+			this.clearSelectedChampions();
 			return;
 		}
 
@@ -561,6 +695,7 @@ export class UserInterface {
 				this.selectionData.selectedChampion != ""
 			) {
 				this.selectionData.oldSlot = i;
+				this.selectionData.data = this.picks;
 				this.picks[i].childNodes[1].dataset.champion = "";
 				break;
 			}
@@ -571,6 +706,7 @@ export class UserInterface {
 			) {
 				this.selectionData.oldSlot = i;
 				this.bans[i].childNodes[1].dataset.champion = "";
+				this.selectionData.data = this.bans;
 				break;
 			}
 		}
@@ -587,6 +723,10 @@ export class UserInterface {
 				this.selectionData.oldSlot
 			].childNodes[1].dataset.champion = replacedChampion;
 		}
+		this.selectionData.data = null;
+		this.selectionData.selectedChampion = "";
+		this.selectionData.oldSlot = null;
+		this.clearSelectedChampions();
 		this.sendProcessSignal();
 	}
 
@@ -767,7 +907,6 @@ export class UserInterface {
 	}
 	processMainScreenInput(key) {
 		const shiftKeyPressed = event.shiftKey;
-		console.log(this.binds);
 		if (
 			key.toLowerCase() == this.binds.inputCustomDataBind.toLowerCase() &amp;&amp;
 			shiftKeyPressed
@@ -1010,7 +1149,8 @@ export class UserInterface {
 			return;
 		}
 		if (key == "Enter") {
-			this.draftSnapshotsContainer.firstChild.click();
+			if (this.draftSnapshotsContainer.firstChild != null)
+				this.draftSnapshotsContainer.firstChild.click();
 		}
 	}
 
@@ -1093,7 +1233,11 @@ export class UserInterface {
 		localStorage.removeItem("savedDrafts");
 		this.hideMiddleOverlay();
 	}
-
+	inputDraftSnapshotPaginationItemCount() {
+		if (this.draftSnapshotsPaginationItemCount.value == -1)
+			this.changeDraftPaginationPage();
+		this.browseSavedDrafts();
+	}
 	saveDraftSnapshot() {
 		const picks = DataController.loadPicksAndBans();
 		const saved_drafts = DataController.loadSavedDrafts();
@@ -1111,12 +1255,29 @@ export class UserInterface {
 		this.draftSnapshotsContainer.innerHTML = "";
 
 		let saved_drafts = DataController.loadSavedDrafts();
+		let item_count = parseInt(this.draftSnapshotsPaginationItemCount.value);
+		let page_number = parseInt(
+			this.draftSnapshotsPaginationPageCounter.value,
+		);
+		if (item_count == -1) item_count = saved_drafts.length;
+		if (isNaN(page_number)) {
+			page_number = 1;
+		}
+
+		const lower_index =
+			item_count == saved_drafts.length
+				? 0
+				: item_count * (page_number - 1);
+		const upperIndex =
+			item_count == saved_drafts.length
+				? item_count
+				: item_count * page_number;
 
 		const query = this.middleOverlaySearchBar.value;
 		if (query != "")
 			saved_drafts = Backend.filterDrafts(saved_drafts, query);
 
-		for (let i = 0; i &lt; saved_drafts.length; i++) {
+		for (let i = lower_index; i &lt; upperIndex; i++) {
 			const draft = saved_drafts[i];
 			if (draft == null) continue;
 
@@ -1225,6 +1386,35 @@ export class UserInterface {
 
 		this.hideMiddleOverlay();
 		this.toggleMiddleOverlay();
+	}
+
+	changeDraftPaginationPage(amount) {
+		this.draftSnapshotsContainer.scrollTop = 0;
+		let saved_drafts = DataController.loadSavedDrafts();
+		const query = this.middleOverlaySearchBar.value;
+		if (query != "")
+			saved_drafts = Backend.filterDrafts(saved_drafts, query);
+		let value =
+			parseInt(this.draftSnapshotsPaginationPageCounter.value) +
+			parseInt(amount);
+
+		if (isNaN(value)) value = 1 + parseInt(amount);
+		if (value &lt; 1) value = 1;
+		if (
+			value >
+				1 +
+					saved_drafts.length /
+						this.draftSnapshotsPaginationItemCount.value &amp;&amp;
+			value > 1
+		) {
+			value -= 1;
+		}
+
+		this.draftSnapshotsPaginationPageCounter.value = value;
+
+		if (this.draftSnapshotsPaginationItemCount.value == -1)
+			this.draftSnapshotsPaginationPageCounter.value = 1;
+		this.browseSavedDrafts();
 	}
 
 	toggleSearchMode() {
@@ -1349,9 +1539,6 @@ export class UserInterface {
 		}
 		championIcon.classList.add("selected");
 		this.selectionData.selectedChampion = event.target.dataset.champion;
-		this.selectionData.data =
-			event.target.dataset.slotType == "pick" ? this.picks : this.bans;
-		this.selectionData.oldSlot = event.target.dataset.slot;
 	}
 
 	validateUserData(data) {
@@ -1687,7 +1874,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Nov 30 2024 17:05:47 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Dec 03 2024 17:50:41 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
