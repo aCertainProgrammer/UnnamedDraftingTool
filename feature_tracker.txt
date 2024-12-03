@@ -1,13 +1,12 @@
 CURRENT WORK:
 
-- draft snapshot pagination 
-
 THEN:
-
-- proper PWA offline mode
 
 SHORT IDEAS:
 
+- remake closing buttons into Xs
+
+- consider tooltips or something like that for binds
 
 LONG IDEAS:
 
