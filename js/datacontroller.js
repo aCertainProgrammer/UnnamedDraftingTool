@@ -129,7 +129,7 @@ export class DataController {
 				configToValidate.clearSearchBarOnFocus;
 
 		if (configToValidate.useLegacySearch == undefined)
-			config.useLegacySearch = true;
+			config.useLegacySearch = false;
 		else config.useLegacySearch = configToValidate.useLegacySearch;
 
 		if (configToValidate.useCompactMode == undefined)
