@@ -37,7 +37,7 @@
 
 :root[data-mode="wide"] {
 	--championsContainerWidth: 100%;
-	--championContainerPadding: 4px 200px;
+	--championContainerPadding: 4px 5vw;
 	--notBansWidth: 100%;
 	--bansWidth: 100%;
 	--headerWidth: 100%;
