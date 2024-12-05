@@ -6,6 +6,18 @@ SHORT IDEAS:
 
 - consider tooltips or something like that for binds
 
+- be more explicit about requiring shift for shortcuts?
+
+- add confirmation to clear all snapshots button
+
+- give visual indication the buttons are pressable
+
+- allow data presets for snapshots and data
+
+- speed up big icon loading
+
+- allow naming drafts
+
 LONG IDEAS:
 
 BUGS:
