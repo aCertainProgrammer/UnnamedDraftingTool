@@ -1413,6 +1413,21 @@ export class UserInterface {
 		this.selectChampion(event);
 	}
 
+	loadImageToCache(event) {
+		let cacheImage = document.createElement("img");
+		cacheImage.src = event.target.src.includes(
+			"/tiles_converted_to_webp_scaled/",
+		)
+			? this.imagePath +
+				"/centered_minified_converted_to_webp_scaled/" +
+				capitalize(event.target.dataset.champion) +
+				"_0.webp"
+			: this.imagePath +
+				"/small_converted_to_webp_scaled/" +
+				capitalize(event.target.dataset.champion) +
+				".webp";
+	}
+
 	colorSettingsButtons() {
 		const buttons = [
 			this.colorBordersToggle,
@@ -1511,6 +1526,7 @@ export class UserInterface {
 		}
 		championIcon.classList.add("selected");
 		this.selectionData.selectedChampion = event.target.dataset.champion;
+		this.loadImageToCache(event);
 	}
 
 	validateUserData(data) {
