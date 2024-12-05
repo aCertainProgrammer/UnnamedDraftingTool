@@ -1415,17 +1415,17 @@ export class UserInterface {
 
 	loadImageToCache(event) {
 		let cacheImage = document.createElement("img");
-		cacheImage.src = event.target.src.includes(
-			"/tiles_converted_to_webp_scaled/",
-		)
-			? this.imagePath +
-				"/centered_minified_converted_to_webp_scaled/" +
-				capitalize(event.target.dataset.champion) +
-				"_0.webp"
-			: this.imagePath +
-				"/small_converted_to_webp_scaled/" +
-				capitalize(event.target.dataset.champion) +
-				".webp";
+		cacheImage.src =
+			event.target.src.includes("/tiles_converted_to_webp_scaled/") ||
+			event.target.src.includes("/small_converted_to_webp_scaled/")
+				? this.imagePath +
+					"/centered_minified_converted_to_webp_scaled/" +
+					capitalize(event.target.dataset.champion) +
+					"_0.webp"
+				: this.imagePath +
+					"/small_converted_to_webp_scaled/" +
+					capitalize(event.target.dataset.champion) +
+					".webp";
 	}
 
 	colorSettingsButtons() {
