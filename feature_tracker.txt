@@ -1,5 +1,6 @@
 CURRENT WORK:
 
+- style hiding buttons better
 THEN:
 
 SHORT IDEAS:
@@ -8,15 +9,15 @@ SHORT IDEAS:
 
 - be more explicit about requiring shift for shortcuts?
 
-- allow data presets for snapshots and data
-
 - allow naming drafts
 
-- add togglable colors to ally/enemy
+- find better colors for team/enemy redblue
 
 LONG IDEAS:
 
 - fearless
+
+- allow data presets for snapshots and data
 
 BUGS:
 

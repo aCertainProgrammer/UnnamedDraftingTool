@@ -63,7 +63,7 @@
 	}
 }
 
-@media screen and (max-width: 1626px) {
+@media screen and (max-width: 1710px) {
 	:root[data-mode="compact"] {
 		.team-selection#teams-container {
 			display: none !important;
@@ -145,6 +145,8 @@
 	--overlayTextColor: white;
 	--pickBackgroundColor: darkgreen;
 	--banBackgroundColor: darkred;
+	--bluesideBackground: blue;
+	--redsideBackground: red;
 }
 :root[data-theme="village"] {
 	--bodyBackgroundColor: #2c1b1b;
@@ -908,4 +910,26 @@ body {
 #draft-snapshots-per-page > option {
 	background-color: var(--overlayBackgroundColor);
 	color: inherit;
+}
+
+:root[data-ally-enemy-colors="none"] {
+	--allyBackground: none;
+	--enemyBackground: none;
+}
+
+:root[data-ally-enemy-colors="B/R"] {
+	--allyBackground: blue;
+	--enemyBackground: red;
+}
+
+:root[data-ally-enemy-colors="R/B"] {
+	--allyBackground: red;
+	--enemyBackground: blue;
+}
+
+#ally {
+	background: var(--allyBackground);
+}
+#enemy {
+	background: var(--enemyBackground);
 }

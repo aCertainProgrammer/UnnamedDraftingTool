@@ -42,6 +42,11 @@ export class UserInterface {
 		document.documentElement.dataset.theme =
 			this.themes[this.currentThemeIndex];
 
+		this.allyEnemyColors = ["none", "B/R", "R/B"];
+		this.currentAllyEnemyColorsIndex = this.loadSavedAllyEnemyColors();
+		document.documentElement.dataset.allyEnemyColors =
+			this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+
 		this.welcomeScreen = document.querySelector("#welcome-screen");
 		this.closeWelcomeScreenButton = document.querySelector(
 			"#close-welcome-screen",
@@ -222,6 +227,12 @@ export class UserInterface {
 		this.browseSavedDraftsButton = document.querySelector(
 			"#browse-saved-drafts-button",
 		);
+		this.toggleAllyEnemyColorsButton = document.querySelector(
+			"#toggle-ally-enemy-coloring-button",
+		);
+		this.toggleAllyEnemyColorsButton.value =
+			"Team colors: " +
+			this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
 
 		this.closeWelcomeScreenButton.addEventListener(
 			"click",
@@ -413,6 +424,10 @@ export class UserInterface {
 		this.browseSavedDraftsButton.addEventListener(
 			"click",
 			this.toggleMiddleOverlay.bind(this),
+		);
+		this.toggleAllyEnemyColorsButton.addEventListener(
+			"click",
+			this.toggleAllyEnemyColors.bind(this),
 		);
 		this.toggleSearchModeButton.addEventListener(
 			"click",
@@ -1390,6 +1405,32 @@ export class UserInterface {
 		if (this.draftSnapshotsPaginationItemCount.value == -1)
 			this.draftSnapshotsPaginationPageCounter.value = 1;
 		this.browseSavedDrafts();
+	}
+
+	toggleAllyEnemyColors() {
+		this.currentAllyEnemyColorsIndex++;
+
+		if (this.currentAllyEnemyColorsIndex >= this.allyEnemyColors.length)
+			this.currentAllyEnemyColorsIndex = 0;
+
+		const colors = this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+		document.documentElement.dataset.allyEnemyColors = colors;
+		this.toggleAllyEnemyColorsButton.value = "Team colors: " + colors;
+
+		localStorage.setItem("ally_enemy_colors", colors);
+	}
+
+	loadSavedAllyEnemyColors() {
+		let colors = localStorage.getItem("ally_enemy_colors");
+
+		if (colors == null) colors = "none";
+
+		for (let i = 0; i < this.allyEnemyColors.length; i++) {
+			if (colors == this.allyEnemyColors[i]) return i;
+		}
+
+		console.log("Couldn't find the theme in loadSavedTheme()!");
+		return 0;
 	}
 
 	toggleSearchMode() {
