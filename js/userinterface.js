@@ -1764,22 +1764,21 @@ export class UserInterface {
 			});
 		}
 
-		if (
-			exactlyMatchingChampion == null &&
-			this.championsContainer.hasChildNodes()
-		) {
-			this.currentlyHoveredChampion =
-				this.championsContainer.childNodes[0].dataset.champion;
-			this.loadImageToCache(
-				this.championsContainer.firstChild.src,
-				this.championsContainer.firstChild.dataset.champion,
-			);
-		} else {
-			this.currentlyHoveredChampion = exactlyMatchingChampion;
-			this.loadImageToCache(
-				this.championsContainer.firstChild.src,
-				exactlyMatchingChampion,
-			);
+		if (this.championsContainer.hasChildNodes()) {
+			if (exactlyMatchingChampion == null) {
+				this.currentlyHoveredChampion =
+					this.championsContainer.childNodes[0].dataset.champion;
+				this.loadImageToCache(
+					this.championsContainer.firstChild.src,
+					this.championsContainer.firstChild.dataset.champion,
+				);
+			} else {
+				this.currentlyHoveredChampion = exactlyMatchingChampion;
+				this.loadImageToCache(
+					this.championsContainer.firstChild.src,
+					exactlyMatchingChampion,
+				);
+			}
 		}
 
 		// Render picked champions
