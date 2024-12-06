@@ -52,8 +52,8 @@
 		.team-selection#teams-container {
 			display: none !important;
 		}
-		#save-draft-button,
-		#browse-saved-drafts-button {
+		#toggle-ally-enemy-coloring-button,
+		#save-draft-button {
 			display: none;
 		}
 	}
@@ -73,7 +73,7 @@
 			display: none !important;
 		}
 		#save-draft-button,
-		#browse-saved-drafts-button {
+		#toggle-ally-enemy-coloring-button {
 			display: none;
 		}
 	}
@@ -93,6 +93,13 @@
 	}
 }
 
+@media screen and (width < 911px) {
+	:root[data-mode="wide"] {
+		#browse-saved-drafts-button {
+			display: none;
+		}
+	}
+}
 :root[data-theme="light"] {
 	--bodyBackgroundColor: #696f77;
 	--settingsButtonFilter: brightness(0.01) invert(84%);
