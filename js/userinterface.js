@@ -1416,18 +1416,18 @@ export class UserInterface {
 		this.selectChampion(event);
 	}
 
-	loadImageToCache(event) {
+	loadImageToCache(src, champion) {
 		let cacheImage = document.createElement("img");
 		cacheImage.src =
-			event.target.src.includes("/tiles_converted_to_webp_scaled/") ||
-			event.target.src.includes("/small_converted_to_webp_scaled/")
+			src.includes("/tiles_converted_to_webp_scaled/") ||
+			src.includes("/small_converted_to_webp_scaled/")
 				? this.imagePath +
 					"/centered_minified_converted_to_webp_scaled/" +
-					capitalize(event.target.dataset.champion) +
+					capitalize(champion) +
 					"_0.webp"
 				: this.imagePath +
 					"/small_converted_to_webp_scaled/" +
-					capitalize(event.target.dataset.champion) +
+					capitalize(champion) +
 					".webp";
 	}
 
@@ -1529,7 +1529,7 @@ export class UserInterface {
 		}
 		championIcon.classList.add("selected");
 		this.selectionData.selectedChampion = event.target.dataset.champion;
-		this.loadImageToCache(event);
+		this.loadImageToCache(event.target.src, event.target.dataset.champion);
 	}
 
 	validateUserData(data) {
@@ -1729,8 +1729,16 @@ export class UserInterface {
 		) {
 			this.currentlyHoveredChampion =
 				this.championsContainer.childNodes[0].dataset.champion;
+			this.loadImageToCache(
+				this.championsContainer.firstChild.src,
+				this.championsContainer.firstChild.dataset.champion,
+			);
 		} else {
 			this.currentlyHoveredChampion = exactlyMatchingChampion;
+			this.loadImageToCache(
+				this.championsContainer.firstChild.src,
+				exactlyMatchingChampion,
+			);
 		}
 
 		// Render picked champions

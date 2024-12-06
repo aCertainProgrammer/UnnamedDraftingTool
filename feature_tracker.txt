@@ -10,8 +10,6 @@ SHORT IDEAS:
 
 - allow data presets for snapshots and data
 
-- speed up big icon loading
-
 - allow naming drafts
 
 - add togglable colors to ally/enemy
