@@ -47,10 +47,14 @@
 	--teamIconMaxHeight: var(--teamIconMaxWidth);
 }
 
-@media screen and (max-width: 1115px) {
+@media screen and (max-width: 1175px) {
 	:root[data-mode="wide"] {
 		.team-selection#teams-container {
 			display: none !important;
+		}
+		#save-draft-button,
+		#browse-saved-drafts-button {
+			display: none;
 		}
 	}
 }
@@ -63,15 +67,15 @@
 	}
 }
 
-@media screen and (max-width: 1710px) {
+@media screen and (max-width: 1728px) {
 	:root[data-mode="compact"] {
 		.team-selection#teams-container {
 			display: none !important;
 		}
-	}
-	#save-draft-button,
-	#browse-saved-drafts-button {
-		display: none;
+		#save-draft-button,
+		#browse-saved-drafts-button {
+			display: none;
+		}
 	}
 }
 
@@ -504,6 +508,7 @@ body {
 	max-width: 28px;
 	height: 28px;
 	width: 28px;
+	cursor: pointer;
 }
 
 .settings-button > img[src="./img/question-mark.webp"] {
