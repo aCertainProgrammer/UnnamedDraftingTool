@@ -1202,8 +1202,11 @@ export class UserInterface {
 	}
 
 	clearAllDraftSnapshots() {
-		localStorage.removeItem("savedDrafts");
-		this.hideMiddleOverlay();
+		const ok = window.confirm("Do you want to clear all drafts?");
+		if (ok) {
+			localStorage.removeItem("savedDrafts");
+			this.hideMiddleOverlay();
+		}
 	}
 	inputDraftSnapshotPaginationItemCount() {
 		if (this.draftSnapshotsPaginationItemCount.value == -1)
