@@ -12,6 +12,8 @@ SHORT IDEAS:
 
 - find better colors for team/enemy redblue
 
+- add toggle to clear/append to snapshot data on import
+
 LONG IDEAS:
 
 - fearless

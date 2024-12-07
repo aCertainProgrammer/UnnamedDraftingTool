@@ -23,6 +23,9 @@ export class Backend {
 		} else {
 			data = data[request.role];
 		}
+		for (let i = 0; i < data.length; i++) {
+			data[i] = data[i].toLowerCase();
+		}
 		if (request.mode == "modern")
 			data = this.filterDataBySearchQueryModern(
 				data,
@@ -54,10 +57,10 @@ export class Backend {
 	}
 	removeDuplicates(data) {
 		const newData = [];
-		newData.push(data[0]);
+		newData.push(data[0].toLowerCase());
 		for (let i = 1; i < data.length; i++) {
-			if (!newData.includes(data[i])) {
-				newData.push(data[i]);
+			if (!newData.includes(data[i].toLowerCase())) {
+				newData.push(data[i].toLowerCase());
 			}
 		}
 		return newData;
