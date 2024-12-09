@@ -1376,9 +1376,8 @@ export class UserInterface {
 			return;
 		}
 
-		if (this.config.appendToDraftSnapshots == true) {
-			const old_data = localStorage.getItem("savedDrafts");
-
+		const old_data = localStorage.getItem("savedDrafts");
+		if (this.config.appendToDraftSnapshots == true && old_data != null) {
 			const old_array = JSON.parse(old_data);
 			const new_array = JSON.parse(data);
 
