@@ -397,7 +397,7 @@ export class UserInterface {
 			this.exportDraftSnapshots.bind(this),
 		);
 		this.snapshotsFileInput.addEventListener(
-			"change",
+			"input",
 			this.importDraftSnapshots.bind(this),
 		);
 		this.importDraftSnapshotsButton.addEventListener(
