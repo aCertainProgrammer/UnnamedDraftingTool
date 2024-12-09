@@ -56,6 +56,7 @@ export class Backend {
 		return data;
 	}
 	removeDuplicates(data) {
+		if (data.length == 0) return [];
 		const newData = [];
 		newData.push(data[0].toLowerCase());
 		for (let i = 1; i < data.length; i++) {
