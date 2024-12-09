@@ -70,6 +70,11 @@ export class UserInterface {
 		document.documentElement.dataset.theme =
 			this.themes[this.currentThemeIndex];
 
+		this.allyEnemyColors = ["none", "B/R", "R/B"];
+		this.currentAllyEnemyColorsIndex = this.loadSavedAllyEnemyColors();
+		document.documentElement.dataset.allyEnemyColors =
+			this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+
 		this.welcomeScreen = document.querySelector("#welcome-screen");
 		this.closeWelcomeScreenButton = document.querySelector(
 			"#close-welcome-screen",
@@ -177,6 +182,9 @@ export class UserInterface {
 		this.toggleSearchModeButton = document.querySelector(
 			"#search-mode-toggle",
 		);
+		this.toggleAppendingToDraftSnapshotsButton = document.querySelector(
+			"#append-to-snapshots-on-import-toggle",
+		);
 		this.useCompactModeToggle = document.querySelector(
 			"#use-compact-mode-toggle",
 		);
@@ -250,6 +258,12 @@ export class UserInterface {
 		this.browseSavedDraftsButton = document.querySelector(
 			"#browse-saved-drafts-button",
 		);
+		this.toggleAllyEnemyColorsButton = document.querySelector(
+			"#toggle-ally-enemy-coloring-button",
+		);
+		this.toggleAllyEnemyColorsButton.value =
+			"Team colors: " +
+			this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
 
 		this.closeWelcomeScreenButton.addEventListener(
 			"click",
@@ -442,9 +456,17 @@ export class UserInterface {
 			"click",
 			this.toggleMiddleOverlay.bind(this),
 		);
+		this.toggleAllyEnemyColorsButton.addEventListener(
+			"click",
+			this.toggleAllyEnemyColors.bind(this),
+		);
 		this.toggleSearchModeButton.addEventListener(
 			"click",
 			this.toggleSearchMode.bind(this),
+		);
+		this.toggleAppendingToDraftSnapshotsButton.addEventListener(
+			"click",
+			this.toggleAppendingToDraftSnapshots.bind(this),
 		);
 
 		this.dragFunction = this.dragChampion.bind(this);
@@ -1230,8 +1252,11 @@ export class UserInterface {
 	}
 
 	clearAllDraftSnapshots() {
-		localStorage.removeItem("savedDrafts");
-		this.hideMiddleOverlay();
+		const ok = window.confirm("Do you want to clear all drafts?");
+		if (ok) {
+			localStorage.removeItem("savedDrafts");
+			this.hideMiddleOverlay();
+		}
 	}
 	inputDraftSnapshotPaginationItemCount() {
 		if (this.draftSnapshotsPaginationItemCount.value == -1)
@@ -1379,7 +1404,19 @@ export class UserInterface {
 			return;
 		}
 
-		DataController.saveData("savedDrafts", data);
+		if (this.config.appendToDraftSnapshots == true) {
+			const old_data = localStorage.getItem("savedDrafts");
+
+			const old_array = JSON.parse(old_data);
+			const new_array = JSON.parse(data);
+
+			const joined_array = old_array.concat(new_array);
+
+			DataController.saveData(
+				"savedDrafts",
+				JSON.stringify(joined_array),
+			);
+		} else DataController.saveData("savedDrafts", data);
 
 		if (!this.snapshotsInputErrorBox.classList.contains("hidden"))
 			this.snapshotsInputErrorBox.classList.add("hidden");
@@ -1417,6 +1454,40 @@ export class UserInterface {
 		this.browseSavedDrafts();
 	}
 
+	toggleAllyEnemyColors() {
+		this.currentAllyEnemyColorsIndex++;
+
+		if (this.currentAllyEnemyColorsIndex >= this.allyEnemyColors.length)
+			this.currentAllyEnemyColorsIndex = 0;
+
+		const colors = this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+		document.documentElement.dataset.allyEnemyColors = colors;
+		this.toggleAllyEnemyColorsButton.value = "Team colors: " + colors;
+
+		localStorage.setItem("ally_enemy_colors", colors);
+	}
+
+	loadSavedAllyEnemyColors() {
+		let colors = localStorage.getItem("ally_enemy_colors");
+
+		if (colors == null) colors = "none";
+
+		for (let i = 0; i &lt; this.allyEnemyColors.length; i++) {
+			if (colors == this.allyEnemyColors[i]) return i;
+		}
+
+		console.log("Couldn't find the theme in loadSavedTheme()!");
+		return 0;
+	}
+
+	toggleAppendingToDraftSnapshots() {
+		this.config.appendToDraftSnapshots =
+			!this.config.appendToDraftSnapshots;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+	}
+
 	toggleSearchMode() {
 		this.config.useLegacySearch = !this.config.useLegacySearch;
 		this.colorSettingsButtons();
@@ -1441,12 +1512,28 @@ export class UserInterface {
 		this.selectChampion(event);
 	}
 
+	loadImageToCache(src, champion) {
+		let cacheImage = document.createElement("img");
+		cacheImage.src =
+			src.includes("/tiles_converted_to_webp_scaled/") ||
+			src.includes("/small_converted_to_webp_scaled/")
+				? this.imagePath +
+					"/centered_minified_converted_to_webp_scaled/" +
+					capitalize(champion) +
+					"_0.webp"
+				: this.imagePath +
+					"/small_converted_to_webp_scaled/" +
+					capitalize(champion) +
+					".webp";
+	}
+
 	colorSettingsButtons() {
 		const buttons = [
 			this.colorBordersToggle,
 			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
+			this.toggleAppendingToDraftSnapshotsButton,
 			this.toggleSearchModeButton,
 			this.useCompactModeToggle,
 			this.useSmallPickIconsToggle,
@@ -1458,6 +1545,7 @@ export class UserInterface {
 			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
+			this.config.appendToDraftSnapshots,
 			this.config.useLegacySearch,
 			this.config.useCompactMode,
 			this.config.useSmallPickIcons,
@@ -1539,6 +1627,7 @@ export class UserInterface {
 		}
 		championIcon.classList.add("selected");
 		this.selectionData.selectedChampion = event.target.dataset.champion;
+		this.loadImageToCache(event.target.src, event.target.dataset.champion);
 	}
 
 	validateUserData(data) {
@@ -1732,14 +1821,21 @@ export class UserInterface {
 			});
 		}
 
-		if (
-			exactlyMatchingChampion == null &amp;&amp;
-			this.championsContainer.hasChildNodes()
-		) {
-			this.currentlyHoveredChampion =
-				this.championsContainer.childNodes[0].dataset.champion;
-		} else {
-			this.currentlyHoveredChampion = exactlyMatchingChampion;
+		if (this.championsContainer.hasChildNodes()) {
+			if (exactlyMatchingChampion == null) {
+				this.currentlyHoveredChampion =
+					this.championsContainer.childNodes[0].dataset.champion;
+				this.loadImageToCache(
+					this.championsContainer.firstChild.src,
+					this.championsContainer.firstChild.dataset.champion,
+				);
+			} else {
+				this.currentlyHoveredChampion = exactlyMatchingChampion;
+				this.loadImageToCache(
+					this.championsContainer.firstChild.src,
+					exactlyMatchingChampion,
+				);
+			}
 		}
 
 		// Render picked champions
@@ -1874,7 +1970,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 04 2024 12:43:08 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Dec 09 2024 12:20:58 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
