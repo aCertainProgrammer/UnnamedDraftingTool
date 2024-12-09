@@ -154,6 +154,9 @@ export class UserInterface {
 		this.toggleSearchModeButton = document.querySelector(
 			"#search-mode-toggle",
 		);
+		this.toggleAppendingToDraftSnapshotsButton = document.querySelector(
+			"#append-to-snapshots-on-import-toggle",
+		);
 		this.useCompactModeToggle = document.querySelector(
 			"#use-compact-mode-toggle",
 		);
@@ -432,6 +435,10 @@ export class UserInterface {
 		this.toggleSearchModeButton.addEventListener(
 			"click",
 			this.toggleSearchMode.bind(this),
+		);
+		this.toggleAppendingToDraftSnapshotsButton.addEventListener(
+			"click",
+			this.toggleAppendingToDraftSnapshots.bind(this),
 		);
 
 		this.dragFunction = this.dragChampion.bind(this);
@@ -1369,7 +1376,19 @@ export class UserInterface {
 			return;
 		}
 
-		DataController.saveData("savedDrafts", data);
+		if (this.config.appendToDraftSnapshots == true) {
+			const old_data = localStorage.getItem("savedDrafts");
+
+			const old_array = JSON.parse(old_data);
+			const new_array = JSON.parse(data);
+
+			const joined_array = old_array.concat(new_array);
+
+			DataController.saveData(
+				"savedDrafts",
+				JSON.stringify(joined_array),
+			);
+		} else DataController.saveData("savedDrafts", data);
 
 		if (!this.snapshotsInputErrorBox.classList.contains("hidden"))
 			this.snapshotsInputErrorBox.classList.add("hidden");
@@ -1433,6 +1452,14 @@ export class UserInterface {
 		return 0;
 	}
 
+	toggleAppendingToDraftSnapshots() {
+		this.config.appendToDraftSnapshots =
+			!this.config.appendToDraftSnapshots;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+	}
+
 	toggleSearchMode() {
 		this.config.useLegacySearch = !this.config.useLegacySearch;
 		this.colorSettingsButtons();
@@ -1478,6 +1505,7 @@ export class UserInterface {
 			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
+			this.toggleAppendingToDraftSnapshotsButton,
 			this.toggleSearchModeButton,
 			this.useCompactModeToggle,
 			this.useSmallPickIconsToggle,
@@ -1489,6 +1517,7 @@ export class UserInterface {
 			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
+			this.config.appendToDraftSnapshots,
 			this.config.useLegacySearch,
 			this.config.useCompactMode,
 			this.config.useSmallPickIcons,

@@ -14,6 +14,8 @@ SHORT IDEAS:
 
 - add toggle to clear/append to snapshot data on import
 
+- close overlays when there is a click outside of them
+
 LONG IDEAS:
 
 - fearless
