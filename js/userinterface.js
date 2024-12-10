@@ -1133,6 +1133,9 @@ export class UserInterface {
 	processMiddleOverlayInput(key) {
 		const letterRegex = /^[A-Za-z]$/;
 		const shiftKeyPressed = event.shiftKey;
+		if (document.activeElement.classList.contains("draft-name")) {
+			return;
+		}
 		if (key.match(letterRegex)) {
 			if (
 				document.activeElement != this.middleOverlaySearchBar &&
@@ -1244,9 +1247,14 @@ export class UserInterface {
 	}
 	saveDraftSnapshot() {
 		const picks = DataController.loadPicksAndBans();
+		const draft = {
+			name: "",
+			picks: picks.picks,
+			bans: picks.bans,
+		};
 		const saved_drafts = DataController.loadSavedDrafts();
 
-		saved_drafts.push(picks);
+		saved_drafts.push(draft);
 		DataController.saveData("savedDrafts", saved_drafts);
 
 		if (!this.middleOverlay.classList.contains("hidden")) {
@@ -1285,7 +1293,7 @@ export class UserInterface {
 			const draft = saved_drafts[i];
 			if (draft == null) continue;
 
-			const draftPreview = this.createDraftSnapshotPreview(draft);
+			const draftPreview = this.createDraftSnapshotPreview(draft, i);
 			draftPreview.addEventListener(
 				"click",
 				this.loadDraftSnapshot.bind(this, draft, i),
@@ -1298,6 +1306,23 @@ export class UserInterface {
 	createDraftSnapshotPreview(draft, id) {
 		const container = document.createElement("div");
 		container.classList.add("draft-snapshot-container");
+		container.dataset.draft = JSON.stringify(draft);
+
+		const draft_name = document.createElement("input");
+		draft_name.type = "text";
+		draft_name.classList.add("draft-name");
+		draft_name.value = draft.name == null ? "" : draft.name;
+
+		container.appendChild(draft_name);
+
+		draft_name.addEventListener("click", () => {
+			event.stopPropagation();
+		});
+
+		draft_name.addEventListener(
+			"input",
+			this.changeDraftName.bind(this, id),
+		);
 
 		for (let i = 0; i < draft.picks.length; i++) {
 			const champion = draft.picks[i];
@@ -1333,6 +1358,14 @@ export class UserInterface {
 		);
 
 		return container;
+	}
+
+	changeDraftName(id) {
+		let drafts = DataController.loadSavedDrafts();
+
+		drafts[id].name = event.target.value;
+
+		DataController.saveData("savedDrafts", drafts);
 	}
 
 	removeDraftSnapshot(container, id) {

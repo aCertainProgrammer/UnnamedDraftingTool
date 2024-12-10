@@ -153,6 +153,7 @@ export class DataController {
 
 	/**
 	 * @typedef Draft
+	 * @property {string} name
 	 * @property {string[]} picks
 	 * @property {string[]} bans
 	 */

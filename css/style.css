@@ -820,11 +820,13 @@ body {
 }
 
 #draft-snapshots-container {
+	padding-top: 25px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: start;
 	flex-wrap: wrap;
+	row-gap: 25px;
 	gap: 10px;
 	height: 87%;
 	overflow: auto;
@@ -856,6 +858,18 @@ body {
 	top: 10px;
 	right: 10px;
 	filter: invert(80%);
+}
+
+.draft-name {
+	position: absolute;
+	top: -20px;
+	min-width: calc(var(--draftPreviewIconSize) * 3);
+	max-width: calc(var(--draftPreviewIconSize) * 3);
+	background: var(--textInputBackgroundColor);
+	border: var(--searchBarBorder);
+	color: inherit;
+	text-align: center;
+	font-size: var(--dataButtonFontSize);
 }
 
 #snapshots-input-error-box {
