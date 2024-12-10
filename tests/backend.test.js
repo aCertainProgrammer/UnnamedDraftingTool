@@ -37,3 +37,14 @@ test("Search with a non-empty query - find letters that are spaced out2", () => 
 		"kennen",
 	]);
 });
+
+test("Remove whitespace from data", () => {
+	const data = ["a    atrox", "dian  a", "ken nen", "cho gath", "camille"];
+	expect(backend.removeWhitespace(data)).toEqual([
+		"aatrox",
+		"diana",
+		"kennen",
+		"chogath",
+		"camille",
+	]);
+});

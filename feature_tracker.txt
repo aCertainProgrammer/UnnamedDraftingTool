@@ -1,7 +1,5 @@
 CURRENT WORK:
 
-- close overlays when there is a click outside of them
-
 THEN:
 
 SHORT IDEAS:

@@ -42,6 +42,7 @@ export class Backend {
 		}
 
 		data = this.removeDuplicates(data);
+		data = this.removeWhitespace(data);
 
 		if (data.length == 0 && request.role != "all") {
 			const allRolesData = this.requestVisibleChampions({
@@ -63,6 +64,16 @@ export class Backend {
 			if (!newData.includes(data[i].toLowerCase())) {
 				newData.push(data[i].toLowerCase());
 			}
+		}
+		return newData;
+	}
+
+	removeWhitespace(data) {
+		if (data.length == 0) return [];
+		const newData = [];
+		for (let i = 0; i < data.length; i++) {
+			data[i] = data[i].replace(/\s/g, "");
+			newData.push(data[i]);
 		}
 		return newData;
 	}
