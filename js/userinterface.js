@@ -1933,7 +1933,6 @@ export class UserInterface {
 	}
 
 	closeOverlaysIfClickIsOutside(event) {
-		console.log(event.target);
 		const overlays = [
 			this.middleOverlay,
 			this.leftOverlay,
@@ -1946,7 +1945,6 @@ export class UserInterface {
 				!current.classList.contains("hidden")
 			) {
 				current.classList.add("hidden");
-				console.log("ok");
 			}
 		});
 	}
