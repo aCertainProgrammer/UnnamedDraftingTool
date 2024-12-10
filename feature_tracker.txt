@@ -1,5 +1,7 @@
 CURRENT WORK:
 
+- close overlays when there is a click outside of them
+
 THEN:
 
 SHORT IDEAS:
@@ -11,10 +13,6 @@ SHORT IDEAS:
 - allow naming drafts
 
 - find better colors for team/enemy redblue
-
-- add toggle to clear/append to snapshot data on import
-
-- close overlays when there is a click outside of them
 
 LONG IDEAS:
 

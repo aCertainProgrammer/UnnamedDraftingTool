@@ -475,6 +475,10 @@ export class UserInterface {
 
 		this.setBindInputValues();
 		this.handleDrag();
+		document.body.addEventListener(
+			"click",
+			this.closeOverlaysIfClickIsOutside.bind(this),
+		);
 	}
 
 	//end of constructor
@@ -794,6 +798,7 @@ export class UserInterface {
 			const json = DataController.loadData(this.getDataSource(), "none");
 			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		} else this.rightOverlay.classList.add("hidden");
+		event.stopPropagation();
 	}
 
 	toggleBorderColor() {
@@ -1150,6 +1155,7 @@ export class UserInterface {
 
 	openSettingsMenu() {
 		this.leftOverlay.classList.remove("hidden");
+		event.stopPropagation();
 	}
 
 	closeSettingsMenu() {
@@ -1221,6 +1227,7 @@ export class UserInterface {
 			this.middleOverlay.classList.add("hidden");
 			this.draftSnapshotsContainer.innerHTML = "";
 		}
+		event.stopPropagation();
 	}
 
 	clearAllDraftSnapshots() {
@@ -1922,6 +1929,25 @@ export class UserInterface {
 	handleDrag() {
 		document.documentElement.addEventListener("dragstart", () => {
 			if (!event.target.draggable == true) event.preventDefault();
+		});
+	}
+
+	closeOverlaysIfClickIsOutside(event) {
+		console.log(event.target);
+		const overlays = [
+			this.middleOverlay,
+			this.leftOverlay,
+			this.rightOverlay,
+		];
+
+		overlays.forEach((current) => {
+			if (
+				!current.contains(event.target) &&
+				!current.classList.contains("hidden")
+			) {
+				current.classList.add("hidden");
+				console.log("ok");
+			}
 		});
 	}
 }
