@@ -1230,7 +1230,7 @@ export class UserInterface {
 			this.middleOverlay.classList.add("hidden");
 			this.draftSnapshotsContainer.innerHTML = "";
 		}
-		event.stopPropagation();
+		if (event != undefined) event.stopPropagation();
 	}
 
 	clearAllDraftSnapshots() {
