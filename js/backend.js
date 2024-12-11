@@ -124,10 +124,16 @@ export class Backend {
 		let filteredDrafts = [];
 		for (let j = 0; j < drafts.length; j++) {
 			let draft = "";
+			let draft_name = "";
+			if (drafts[j].name != undefined)
+				draft_name = drafts[j].name.replace(/\s/g, "").toLowerCase();
+
 			for (let i = 0; i < 10; i++) {
 				draft += drafts[j].picks[pick_order[i]];
 			}
 			if (draft.includes(searchQuery)) filteredDrafts.push(drafts[j]);
+			else if (draft_name.includes(searchQuery))
+				filteredDrafts.push(drafts[j]);
 		}
 		return filteredDrafts;
 	}
