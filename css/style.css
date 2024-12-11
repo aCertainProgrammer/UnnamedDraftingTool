@@ -745,6 +745,9 @@ body {
 	.search-bar {
 		color: white;
 	}
+	.draft-name {
+		color: black;
+	}
 }
 
 #welcome-screen-title {
@@ -865,8 +868,9 @@ body {
 	top: -20px;
 	min-width: calc(var(--draftPreviewIconSize) * 3);
 	max-width: calc(var(--draftPreviewIconSize) * 3);
-	background: var(--textInputBackgroundColor);
-	border: var(--searchBarBorder);
+	background: var(--sourceButtonBackgroundColor);
+	border: var(--sourceButtonBorder);
+	border-radius: var(--generalBorderRadius);
 	color: inherit;
 	text-align: center;
 	font-size: var(--dataButtonFontSize);
