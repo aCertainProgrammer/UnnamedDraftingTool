@@ -8,8 +8,6 @@ SHORT IDEAS:
 
 - be more explicit about requiring shift for shortcuts?
 
-- allow naming drafts
-
 - find better colors for team/enemy redblue
 
 LONG IDEAS:
