@@ -1045,3 +1045,9 @@ body {
 	color: lightgreen;
 	font-weight: 900;
 }
+
+.source-button:hover,
+.role-icon:hover,
+.team-logo:hover {
+	filter: brightness(120%);
+}
