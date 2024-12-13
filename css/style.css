@@ -1047,7 +1047,10 @@ body {
 }
 
 .source-button:hover,
-.role-icon:hover,
-.team-logo:hover {
+.role-icon:hover {
 	filter: brightness(120%);
+}
+
+.team-logo:hover {
+	filter: invert(20%);
 }
