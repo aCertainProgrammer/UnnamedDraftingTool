@@ -135,6 +135,9 @@ If enabled, clears the search bar whenever it is refocused. This enables the fol
 - `Legacy search` is pure substring matching - if a word contains the exact string of the search query, it will be matched - for example, "ji" will match "JInx".
 - `Modern search` uses both substring matching and checks for letter order ("ji" matches "seJuanI") to deliver an experience more similar to league client search
 
+### Use simple draft display 
+If disabled, uses a leaguepedia-like display for draft snapshots with more information
+
 ### Append to draft snapshots on import
 If enabled, appends to draft snapshots when you import them instead of replacing them entirely  
 
