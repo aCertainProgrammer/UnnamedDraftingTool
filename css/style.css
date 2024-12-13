@@ -823,7 +823,7 @@ body {
 }
 
 #draft-snapshots-container {
-	padding-top: 25px;
+	padding-top: 30px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -933,6 +933,13 @@ body {
 	filter: invert(80%);
 }
 
+.complex-draft-snapshot-container > .draft-snapshot-remove-button {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	filter: invert(90%);
+}
+
 .draft-name {
 	position: absolute;
 	top: -20px;
@@ -1032,4 +1039,9 @@ body {
 }
 #enemy {
 	background: var(--enemyBackground);
+}
+
+.greentext {
+	color: lightgreen;
+	font-weight: 900;
 }
