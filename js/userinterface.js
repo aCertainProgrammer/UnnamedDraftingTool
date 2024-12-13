@@ -157,6 +157,9 @@ export class UserInterface {
 		this.toggleAppendingToDraftSnapshotsButton = document.querySelector(
 			"#append-to-snapshots-on-import-toggle",
 		);
+		this.draftSnapshotDisplayToggle = document.querySelector(
+			"#draft-snapshot-display-toggle",
+		);
 		this.useCompactModeToggle = document.querySelector(
 			"#use-compact-mode-toggle",
 		);
@@ -326,6 +329,10 @@ export class UserInterface {
 		this.clearSearchbarOnFocusToggle.addEventListener(
 			"click",
 			this.toggleClearingSearchbarOnFocus.bind(this),
+		);
+		this.draftSnapshotDisplayToggle.addEventListener(
+			"click",
+			this.toggleDraftSnapshotDisplay.bind(this),
 		);
 		this.useCompactModeToggle.addEventListener(
 			"click",
@@ -1133,7 +1140,10 @@ export class UserInterface {
 	processMiddleOverlayInput(key) {
 		const letterRegex = /^[A-Za-z]$/;
 		const shiftKeyPressed = event.shiftKey;
-		if (document.activeElement.classList.contains("draft-name")) {
+		if (
+			document.activeElement.classList.contains("draft-name") ||
+			document.activeElement.classList.contains("complex-draft-name")
+		) {
 			return;
 		}
 		if (key.match(letterRegex)) {
@@ -1293,7 +1303,11 @@ export class UserInterface {
 			const draft = saved_drafts[i];
 			if (draft == null) continue;
 
-			const draftPreview = this.createDraftSnapshotPreview(draft, i);
+			let draftPreview;
+			if (this.config.useSimpleSnapshotDisplay == true)
+				draftPreview = this.createSimpleDraftSnapshotPreview(draft, i);
+			else
+				draftPreview = this.createComplexDraftSnapshotPreview(draft, i);
 			draftPreview.addEventListener(
 				"click",
 				this.loadDraftSnapshot.bind(this, draft, i),
@@ -1303,7 +1317,7 @@ export class UserInterface {
 		}
 	}
 
-	createDraftSnapshotPreview(draft, id) {
+	createSimpleDraftSnapshotPreview(draft, id) {
 		const container = document.createElement("div");
 		container.classList.add("draft-snapshot-container");
 		container.dataset.draft = JSON.stringify(draft);
@@ -1358,6 +1372,98 @@ export class UserInterface {
 		);
 
 		return container;
+	}
+
+	createComplexDraftSnapshotPreview(draft, id) {
+		const container = document.createElement("div");
+		container.classList.add("complex-draft-snapshot-container");
+		container.dataset.draft = JSON.stringify(draft);
+
+		const draft_name = document.createElement("input");
+		draft_name.type = "text";
+		draft_name.classList.add("complex-draft-name");
+		draft_name.value = draft.name == null ? "" : draft.name;
+
+		container.appendChild(draft_name);
+
+		draft_name.addEventListener("click", () => {
+			event.stopPropagation();
+		});
+
+		draft_name.addEventListener(
+			"input",
+			this.changeDraftName.bind(this, id),
+		);
+		const icon_order = [
+			draft.bans[0],
+			draft.bans[1],
+			draft.bans[2],
+			draft.picks[0],
+			draft.picks[1],
+			draft.picks[2],
+			draft.bans[3],
+			draft.bans[4],
+			draft.picks[3],
+			draft.picks[4],
+			draft.bans[5],
+			draft.bans[6],
+			draft.bans[7],
+			draft.picks[5],
+			draft.picks[6],
+			draft.picks[7],
+			draft.bans[8],
+			draft.bans[9],
+			draft.picks[8],
+			draft.picks[9],
+		];
+		for (let i = 0; i < 20; i++) {
+			this.createDraftSnapshotIcon(container, icon_order[i], i);
+		}
+
+		const remove_button = document.createElement("img");
+		remove_button.src = "./img/trash.png";
+		remove_button.classList += "draft-snapshot-remove-button";
+
+		container.appendChild(remove_button);
+
+		remove_button.addEventListener(
+			"click",
+			this.removeDraftSnapshot.bind(this, container, id),
+		);
+
+		return container;
+	}
+
+	createDraftSnapshotIcon(container, champion, index) {
+		const div = document.createElement("div");
+		if (index < 10) div.classList = "complex-draft-preview-icon-container";
+		else div.classList = "reverse-complex-draft-preview-icon-container";
+		div.draggable = false;
+
+		const champ_name = document.createElement("label");
+		if (champion != "") {
+			champ_name.innerHTML = capitalize(champion);
+			div.appendChild(champ_name);
+		}
+
+		const ban_indexes = [0, 1, 2, 6, 7, 10, 11, 12, 16, 17];
+		if (ban_indexes.includes(index))
+			div.classList.add("snapshot-ban-container");
+		else div.classList.add("snapshot-pick-container");
+
+		const img = document.createElement("img");
+		if (champion == "") img.src = this.defaultBanIconPath;
+		else
+			img.src =
+				this.imagePath +
+				"/small_converted_to_webp_scaled/" +
+				capitalize(champion) +
+				".webp";
+
+		div.appendChild(img);
+		container.appendChild(div);
+
+		div.addEventListener("dragstart", this.stopDrag);
 	}
 
 	changeDraftName(id) {
@@ -1491,6 +1597,14 @@ export class UserInterface {
 		return 0;
 	}
 
+	toggleDraftSnapshotDisplay() {
+		this.config.useSimpleSnapshotDisplay =
+			!this.config.useSimpleSnapshotDisplay;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+	}
+
 	toggleAppendingToDraftSnapshots() {
 		this.config.appendToDraftSnapshots =
 			!this.config.appendToDraftSnapshots;
@@ -1544,6 +1658,7 @@ export class UserInterface {
 			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
+			this.draftSnapshotDisplayToggle,
 			this.toggleAppendingToDraftSnapshotsButton,
 			this.toggleSearchModeButton,
 			this.useCompactModeToggle,
@@ -1556,6 +1671,7 @@ export class UserInterface {
 			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
+			this.config.useSimpleSnapshotDisplay,
 			this.config.appendToDraftSnapshots,
 			this.config.useLegacySearch,
 			this.config.useCompactMode,

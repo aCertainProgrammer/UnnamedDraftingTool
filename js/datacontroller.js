@@ -1,4 +1,4 @@
-/**
+/**data
  * Manages IO operations on files, localStorage etc.
  */
 export class DataController {
@@ -67,6 +67,7 @@ export class DataController {
 	 * @property {bool} saveDraftState
 	 * @property {bool} loadUserDataOnProgramStart
 	 * @property {bool} clearSearchBarOnFocus
+	 * @property {bool} useSimpleSnapshotDisplay
 	 * @property {bool} appendToDraftSnapshots
 	 * @property {bool} useLegacySearch
 	 * @property {bool} useSmallPickIcons
@@ -112,6 +113,7 @@ export class DataController {
 			saveDraftState: true,
 			loadUserDataOnProgramStart: false,
 			clearSearchBarOnFocus: true,
+			useSimpleSnapshotDisplay: false,
 			appendToDraftSnapshots: true,
 			useLegacySearch: false,
 			useCompactMode: true,
@@ -124,6 +126,7 @@ export class DataController {
 			"saveDraftState",
 			"loadUserDataOnProgramStart",
 			"clearSearchBarOnFocus",
+			"useSimpleSnapshotDisplay",
 			"appendToDraftSnapshots",
 			"useLegacySearch",
 			"useCompactMode",
