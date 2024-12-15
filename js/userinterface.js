@@ -136,8 +136,7 @@ export class UserInterface {
 		this.rolesContainer = document.querySelector("#roles");
 		this.roleIcons = document.querySelectorAll(".role-icon");
 		this.searchBar = document.querySelector("#search-bar");
-		this.defaultDataSwitch = document.querySelector("#default_data");
-		this.userDataSwitch = document.querySelector("#load_user_data");
+		this.dataSourceSwitch = document.querySelector("#default_data");
 		this.userDataInput = document.querySelector("#input_user_data");
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
@@ -302,13 +301,9 @@ export class UserInterface {
 			"input",
 			this.searchChampion.bind(this),
 		);
-		this.defaultDataSwitch.addEventListener(
+		this.dataSourceSwitch.addEventListener(
 			"click",
-			this.loadDefaultData.bind(this),
-		);
-		this.userDataSwitch.addEventListener(
-			"click",
-			this.loadUserData.bind(this),
+			this.toggleDataSource.bind(this),
 		);
 		this.userDataInput.addEventListener(
 			"click",
@@ -780,6 +775,16 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 
+	toggleDataSource() {
+		if (this.dataSource == "default_data") {
+			this.dataSourceSwitch.value = "Custom data";
+			this.loadUserData();
+		} else {
+			this.dataSourceSwitch.value = "Default data";
+			this.loadDefaultData();
+		}
+	}
+
 	loadDefaultData() {
 		this.dataSource = "default_data";
 
@@ -1009,6 +1014,7 @@ export class UserInterface {
 			) {
 				this.searchBar.blur();
 				this.dataSource = "user_data";
+				this.dataSourceSwitch.value = "Custom data";
 				this.sendProcessSignal();
 			}
 			if (
@@ -1017,6 +1023,7 @@ export class UserInterface {
 			) {
 				this.searchBar.blur();
 				this.dataSource = "default_data";
+				this.dataSourceSwitch.value = "Default data";
 				this.sendProcessSignal();
 			}
 			if (
@@ -1869,16 +1876,6 @@ export class UserInterface {
 	}
 
 	render(renderingData) {
-		if (this.dataSource === "default_data") {
-			this.userDataSwitch.classList.remove("highlighted");
-			this.defaultDataSwitch.classList.add("highlighted");
-		}
-
-		if (this.dataSource === "user_data") {
-			this.defaultDataSwitch.classList.remove("highlighted");
-			this.userDataSwitch.classList.add("highlighted");
-		}
-
 		const championData = DataController.loadData(
 			renderingData.dataSource,
 			"none",

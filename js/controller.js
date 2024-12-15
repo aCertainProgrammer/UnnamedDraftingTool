@@ -32,7 +32,10 @@ export class Controller {
 		else document.documentElement.dataset.mode = "wide";
 		if (config.loadUserDataOnProgramStart == true) {
 			const user_data = DataController.loadData("user_data", "none");
-			if (user_data != -1) this.userInterface.dataSource = "user_data";
+			if (user_data != -1) {
+				this.userInterface.dataSource = "user_data";
+				this.userInterface.dataSourceSwitch.value = "Custom data";
+			}
 		}
 		DataController.saveConfig(config);
 		DataController.saveData("default_data", default_data);
