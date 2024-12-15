@@ -1247,6 +1247,8 @@ export class UserInterface {
 		const ok = window.confirm("Do you want to clear all drafts?");
 		if (ok) {
 			localStorage.removeItem("savedDrafts");
+			this.draftSnapshotsPaginationPageCounter.value = 1;
+
 			this.hideMiddleOverlay();
 		}
 	}
