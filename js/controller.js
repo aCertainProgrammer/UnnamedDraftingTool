@@ -16,6 +16,7 @@ export class Controller {
 		this.userInterface = userInterface;
 		this.backend = backend;
 		this.firstProcess = true;
+		this.oldDraftNumber = 0;
 	}
 	/**
 	 * Always call this once at the start of the program
@@ -50,6 +51,7 @@ export class Controller {
 		if (config.useLegacySearch == null)
 			console.log("Can't find search mode in config!");
 		const mode = config.useLegacySearch ? "legacy" : "modern";
+		const draftNumber = this.userInterface.getDraftNumber();
 
 		/**
 		 * @typedef Request
@@ -58,6 +60,7 @@ export class Controller {
 		 * @property {string} role - "top", "jungle", "mid", "adc", "support" or "none"
 		 * @property {string} searchQuery - The search query
 		 * @property {string} mode - "legacy" or "modern"
+		 * @property {number} draftNumber - Draft number, starting from 0 (the number displayed to the user is the current draftNumber + 1)
 		 */
 		const request = {
 			dataSource: this.userInterface.getDataSource(),
@@ -67,18 +70,35 @@ export class Controller {
 			mode: mode,
 		};
 		const visibleChampions = this.backend.requestVisibleChampions(request);
-		let picksAndBans;
-		if (this.firstProcess && config.saveDraftState == true)
-			picksAndBans = DataController.loadPicksAndBans();
-		if (!this.firstProcess || picksAndBans == null)
-			picksAndBans = this.scraper.getPicksAndBans();
+
+		let picksAndBans = DataController.loadPicksAndBans();
+		if (picksAndBans.picks != undefined) picksAndBans = [];
+
+		if (this.oldDraftNumber == draftNumber && !this.firstProcess) {
+			picksAndBans[draftNumber] = this.scraper.getPicksAndBans();
+		} else {
+			this.oldDraftNumber = draftNumber;
+		}
+
+		if (picksAndBans[draftNumber] == undefined) {
+			picksAndBans.push(this.scraper.getPicksAndBans());
+			console.log("picks and bans: " + picksAndBans[draftNumber]);
+		}
+
+		if (config.saveDraftState == true) {
+			DataController.saveData("picksAndBans", picksAndBans);
+		} else {
+			DataController.saveData("picksAndBans", JSON.stringify([]));
+		}
+
 		const renderingData = {
 			dataSource: this.userInterface.getDataSource(),
-			pickedChampions: picksAndBans.picks,
-			bannedChampions: picksAndBans.bans,
+			pickedChampions: picksAndBans[draftNumber].picks,
+			bannedChampions: picksAndBans[draftNumber].bans,
 			visibleChampions: visibleChampions,
+			draftNumber: draftNumber,
 		};
-		DataController.saveData("picksAndBans", picksAndBans);
+
 		this.userInterface.clearScreen();
 		this.userInterface.render(renderingData);
 	}

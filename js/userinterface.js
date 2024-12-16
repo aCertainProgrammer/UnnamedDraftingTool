@@ -232,6 +232,14 @@ export class UserInterface {
 		this.browseSavedDraftsButton = document.querySelector(
 			"#browse-saved-drafts-button",
 		);
+		this.draftCounterLeftArrow = document.querySelector(
+			"#draft-counter-left-arrow",
+		);
+		this.draftCounterRightArrow = document.querySelector(
+			"#draft-counter-right-arrow",
+		);
+		this.draftCounter = document.querySelector("#draft-counter");
+		this.draftCounter.value = 1;
 		this.toggleAllyEnemyColorsButton = document.querySelector(
 			"#toggle-ally-enemy-coloring-button",
 		);
@@ -430,6 +438,15 @@ export class UserInterface {
 			"click",
 			this.toggleMiddleOverlay.bind(this),
 		);
+		this.draftCounterLeftArrow.addEventListener(
+			"click",
+			this.changeDraftNumber.bind(this, -1),
+		);
+		this.draftCounterRightArrow.addEventListener(
+			"click",
+			this.changeDraftNumber.bind(this, 1),
+		);
+		this.draftCounter.addEventListener("input", this.openDraft.bind(this));
 		this.toggleAllyEnemyColorsButton.addEventListener(
 			"click",
 			this.toggleAllyEnemyColors.bind(this),
@@ -918,6 +935,7 @@ export class UserInterface {
 	}
 	processMainScreenInput(key) {
 		const shiftKeyPressed = event.shiftKey;
+
 		if (
 			key.toLowerCase() == this.binds.inputCustomDataBind.toLowerCase() &&
 			shiftKeyPressed
@@ -925,6 +943,7 @@ export class UserInterface {
 			this.searchBar.blur();
 			this.userDataInput.click();
 		}
+
 		if (!this.rightOverlay.classList.contains("hidden")) return;
 
 		if (
@@ -942,6 +961,10 @@ export class UserInterface {
 			else this.leaveSettingsButton.click();
 		}
 		if (!this.leftOverlay.classList.contains("hidden")) return;
+
+		if (document.activeElement == this.draftCounter) {
+			return;
+		}
 
 		if (key == " ") {
 			if (
@@ -1232,6 +1255,23 @@ export class UserInterface {
 		this.setPickBanMode(mode);
 	}
 
+	changeDraftNumber(amount) {
+		let value = parseInt(this.draftCounter.value) + parseInt(amount);
+
+		if (isNaN(value)) value = 1 + parseInt(amount);
+		if (value < 1) value = 1;
+
+		this.draftCounter.value = value;
+
+		this.openDraft();
+	}
+
+	openDraft() {
+		if (isNaN(this.draftCounter.value) || this.draftCounter.value == "")
+			return;
+		else this.sendProcessSignal();
+	}
+
 	hideMiddleOverlay() {
 		if (!this.middleOverlay.classList.contains("hidden"))
 			this.middleOverlay.classList.add("hidden");
@@ -1265,7 +1305,8 @@ export class UserInterface {
 		this.browseSavedDrafts();
 	}
 	saveDraftSnapshot() {
-		const picks = DataController.loadPicksAndBans();
+		const drafts = DataController.loadPicksAndBans();
+		const picks = drafts[this.draftCounter.value - 1];
 		const draft = {
 			name: "",
 			picks: picks.picks,
@@ -1286,6 +1327,7 @@ export class UserInterface {
 		this.draftSnapshotsContainer.innerHTML = "";
 
 		let saved_drafts = DataController.loadSavedDrafts();
+		console.log(saved_drafts);
 		let item_count = parseInt(this.draftSnapshotsPaginationItemCount.value);
 		let page_number = parseInt(
 			this.draftSnapshotsPaginationPageCounter.value,
@@ -1723,6 +1765,11 @@ export class UserInterface {
 	getSearchQuery() {
 		const searchQuery = this.searchBar.value.toLowerCase();
 		return searchQuery;
+	}
+
+	getDraftNumber() {
+		const draftNumber = this.draftCounter.value - 1;
+		return draftNumber;
 	}
 
 	/**

@@ -150,7 +150,8 @@ export class DataController {
 	 */
 	static loadPicksAndBans() {
 		const json = localStorage.getItem("picksAndBans");
-		const picksAndBans = JSON.parse(json);
+		if (json == null) return [];
+		let picksAndBans = JSON.parse(json);
 		return picksAndBans;
 	}
 

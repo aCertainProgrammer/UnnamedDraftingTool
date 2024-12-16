@@ -18,6 +18,7 @@
 	--generalBorderRadius: 6px;
 	--overlayBorderRadius: 24px;
 	--draftPreviewIconSize: 60px;
+	--arrowButtonMaxWidth: 50px;
 	font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -65,6 +66,9 @@
 			display: none !important;
 		}
 	}
+	#welcome-screen {
+		padding-top: 700px !important;
+	}
 }
 
 @media screen and (max-width: 1728px) {
@@ -84,6 +88,9 @@
 		.role-selection {
 			display: none !important;
 		}
+	}
+	#welcome-screen {
+		padding-top: 200px;
 	}
 }
 
@@ -999,7 +1006,8 @@ body {
 	font-size: inherit;
 }
 
-#snapshots-pagination-page-counter {
+#snapshots-pagination-page-counter,
+#draft-counter {
 	max-width: var(--dataButtonMaxWidth);
 	text-align: center;
 }
@@ -1053,4 +1061,10 @@ body {
 
 .team-logo:hover {
 	filter: invert(20%);
+}
+
+.arrow-button {
+	max-width: var(--arrowButtonMaxWidth);
+	width: var(--arrowButtonMaxWidth);
+	min-width: 10px !important;
 }
