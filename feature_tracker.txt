@@ -1,5 +1,12 @@
 CURRENT WORK:
 
+- fearless:
+    a) make draft state saving into an array
+    b) allow having several drafts open
+    c) add a fearless toggle to disable picks
+        - have a disabledChampions array for every draft based on the drafts that came before it (in the backend probably)
+    d) add a toggle to allow all champions for last draft
+
 THEN:
 
 SHORT IDEAS:
@@ -11,8 +18,6 @@ SHORT IDEAS:
 - find better colors for team/enemy redblue
 
 LONG IDEAS:
-
-- fearless
 
 - allow data presets for snapshots and data
 
