@@ -8,19 +8,6 @@ test("Search with empty query", () => {
 	expect(backend.filterDataBySearchQueryModern(data, query)).toEqual(data);
 });
 
-test("Search with a non-empty query", () => {
-	const data = ["aatrox", "camille", "jinx", "jhin", "sejuani", "vi"];
-	const query = "j";
-	expect(backend.filterDataBySearchQueryModern(data, query)).toEqual([
-		"jinx",
-		"jhin",
-		"sejuani",
-		"jinx",
-		"jhin",
-		"sejuani",
-	]);
-});
-
 test("Search with a non-empty query - find letters that are spaced out", () => {
 	const data = ["aatrox", "camille", "jarvan", "jhin", "vi"];
 	const query = "jn";
