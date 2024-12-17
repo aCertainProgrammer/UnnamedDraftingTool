@@ -1357,7 +1357,6 @@ export class UserInterface {
 		this.draftSnapshotsContainer.innerHTML = "";
 
 		let saved_drafts = DataController.loadSavedDrafts();
-		console.log(saved_drafts);
 		let item_count = parseInt(this.draftSnapshotsPaginationItemCount.value);
 		let page_number = parseInt(
 			this.draftSnapshotsPaginationPageCounter.value,
@@ -1563,6 +1562,9 @@ export class UserInterface {
 		savedDrafts.splice(id, 1);
 
 		DataController.saveData("savedDrafts", savedDrafts);
+
+		this.hideMiddleOverlay();
+		this.toggleMiddleOverlay();
 	}
 
 	loadDraftSnapshot(draft) {

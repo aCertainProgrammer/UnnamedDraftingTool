@@ -4,10 +4,11 @@ CURRENT WORK:
     a) make draft state saving into an array << DONE
     b) allow having several drafts open << DONE
         - toggle copying the last draft into the new slot button << DONE
-    c) add a fearless toggle to disable picks
-        - have a disabledChampions array for every draft based on the drafts that came before it (in the backend probably)
+    c) add a fearless toggle to disable picks << DONE
+        - have a disabledChampions array for every draft based on the drafts that came before it (in the backend probably) << DONE
     d) add a toggle to allow all champions for last draft
     e) switch team colors for each subsequent draft (make it togglable)
+    f) remove invalid champions from subsequent drafts
 
 THEN:
 
