@@ -71,6 +71,10 @@ export class Controller {
 			else picksAndBans.push(this.scraper.getPicksAndBans());
 		}
 
+		if (config.useFearlessMode == true) {
+			picksAndBans = this.backend.validateFearlessDrafts(picksAndBans);
+		}
+
 		if (config.saveDraftState == true) {
 			DataController.saveData("picksAndBans", picksAndBans);
 		} else {

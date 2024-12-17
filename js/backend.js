@@ -166,4 +166,25 @@ export class Backend {
 		}
 		return newData;
 	}
+
+	validateFearlessDrafts(picksAndBans) {
+		const invalidChampions = [];
+
+		for (let i = 0; i < picksAndBans.length; i++) {
+			for (let j = 0; j < 10; j++) {
+				if (invalidChampions.includes(picksAndBans[i].picks[j])) {
+					picksAndBans[i].picks[j] = "";
+				}
+				if (invalidChampions.includes(picksAndBans[i].bans[j])) {
+					picksAndBans[i].bans[j] = "";
+				}
+
+				if (picksAndBans[i].picks[j] != "")
+					invalidChampions.push(picksAndBans[i].picks[j]);
+				if (picksAndBans[i].bans[j] != "")
+					invalidChampions.push(picksAndBans[i].bans[j]);
+			}
+		}
+		return picksAndBans;
+	}
 }
