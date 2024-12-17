@@ -117,6 +117,7 @@ Currently you are given the option to customize the following:
 ### Make new drafts blank
 If enabled, makes the new drafts blank when creating them
 If disabled, the current draft is copied into the newly created draft
+Note that the existing drafts will not be overriden
 
 ### Color champion borders
 This colors the borders of the champions depending on which team they belong to:

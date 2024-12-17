@@ -137,6 +137,22 @@
 				<div class="setting-container">
 					<input
 						class="source-button"
+						id="use-fearless-mode-toggle"
+						type="button"
+						value="Use fearless mode"
+					/>
+					<div class="settings-tooltip">
+						<p>
+							If enabled, disables champions that were picked or
+							banned in the previous draft
+						</p>
+
+						<p></p>
+					</div>
+				</div>
+				<div class="setting-container">
+					<input
+						class="source-button"
 						id="blank-new-drafts-toggle"
 						type="button"
 						value="Make new drafts blank"
@@ -150,7 +166,12 @@
 							If disabled, the current draft is copied into the
 							newly created draft
 						</p>
+						<p>
+							Note that the existing drafts will not be overriden
+						</p>
 					</div>
+				</div>
+				<div class="setting-container">
 					<input
 						class="source-button"
 						id="color-borders-toggle"

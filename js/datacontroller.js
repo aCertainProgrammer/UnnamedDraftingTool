@@ -63,6 +63,7 @@ export class DataController {
 	}
 	/**
 	 * @typedef Config
+	 * @property {bool} useFearlessMode
 	 * @property {bool} makeNewDraftsBlank
 	 * @property {bool} colorBorders
 	 * @property {bool} saveDraftState
@@ -110,6 +111,7 @@ export class DataController {
 	 */
 	static validateConfig(configToValidate) {
 		const default_config = {
+			useFearlessMode: false,
 			makeNewDraftsBlank: true,
 			colorBorders: false,
 			saveDraftState: true,
@@ -124,6 +126,7 @@ export class DataController {
 			useSmallChampionIcons: true,
 		};
 		const properties = [
+			"useFearlessMode",
 			"makeNewDraftsBlank",
 			"colorBorders",
 			"saveDraftState",

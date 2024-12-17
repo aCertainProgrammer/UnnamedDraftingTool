@@ -53,24 +53,6 @@ export class Controller {
 		const mode = config.useLegacySearch ? "legacy" : "modern";
 		const draftNumber = this.userInterface.getDraftNumber();
 
-		/**
-		 * @typedef Request
-		 * @property {string} dataSource - "user_data" or "default_data"
-		 * @property {string} team - "all", "ally" or "enemy"
-		 * @property {string} role - "top", "jungle", "mid", "adc", "support" or "none"
-		 * @property {string} searchQuery - The search query
-		 * @property {string} mode - "legacy" or "modern"
-		 * @property {number} draftNumber - Draft number, starting from 0 (the number displayed to the user is the current draftNumber + 1)
-		 */
-		const request = {
-			dataSource: this.userInterface.getDataSource(),
-			team: this.userInterface.getTeam(),
-			role: this.userInterface.getRole(),
-			searchQuery: this.userInterface.getSearchQuery(),
-			mode: mode,
-		};
-		const visibleChampions = this.backend.requestVisibleChampions(request);
-
 		let picksAndBans = DataController.loadPicksAndBans();
 		if (picksAndBans.picks != undefined) picksAndBans = [];
 
@@ -94,6 +76,27 @@ export class Controller {
 		} else {
 			DataController.saveData("picksAndBans", JSON.stringify([]));
 		}
+
+		/**
+		 * @typedef Request
+		 * @property {string} dataSource - "user_data" or "default_data"
+		 * @property {string} team - "all", "ally" or "enemy"
+		 * @property {string} role - "top", "jungle", "mid", "adc", "support" or "none"
+		 * @property {string} searchQuery - The search query
+		 * @property {string} mode - "legacy" or "modern"
+		 * @property {number} draftNumber - Draft number, starting from 0 (the number displayed to the user is the current draftNumber + 1)
+		 * @property {object} picksAndBans - All the current drafts that are in memory
+		 */
+		const request = {
+			dataSource: this.userInterface.getDataSource(),
+			team: this.userInterface.getTeam(),
+			role: this.userInterface.getRole(),
+			searchQuery: this.userInterface.getSearchQuery(),
+			mode: mode,
+			draftNumber: draftNumber,
+			picksAndBans: picksAndBans,
+		};
+		const visibleChampions = this.backend.requestVisibleChampions(request);
 
 		const renderingData = {
 			dataSource: this.userInterface.getDataSource(),

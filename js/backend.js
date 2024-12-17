@@ -10,6 +10,8 @@ export class Backend {
 	 */
 	requestVisibleChampions(request) {
 		let data = [];
+		const config = DataController.readConfig();
+
 		data = DataController.loadData(request.dataSource, request.team);
 		if (data == null || data == undefined)
 			data = DataController.loadData("default_data", request.team);
@@ -26,6 +28,14 @@ export class Backend {
 		for (let i = 0; i < data.length; i++) {
 			data[i] = data[i].toLowerCase();
 		}
+
+		if (config.useFearlessMode == true)
+			data = this.filterFearlessMode(
+				request.draftNumber,
+				request.picksAndBans,
+				data,
+			);
+
 		if (request.mode == "modern")
 			data = this.filterDataBySearchQueryModern(
 				data,
@@ -136,5 +146,24 @@ export class Backend {
 				filteredDrafts.push(drafts[j]);
 		}
 		return filteredDrafts;
+	}
+
+	filterFearlessMode(draftNumber, picksAndBans, data) {
+		const newData = [];
+		const invalidChampions = [];
+
+		for (let i = 0; i < picksAndBans.length; i++) {
+			for (let j = 0; j < 10; j++) {
+				if (picksAndBans[i].picks[j] != "")
+					invalidChampions.push(picksAndBans[i].picks[j]);
+				if (picksAndBans[i].bans[j] != "")
+					invalidChampions.push(picksAndBans[i].bans[j]);
+			}
+		}
+
+		for (let i = 0; i < data.length; i++) {
+			if (!invalidChampions.includes(data[i])) newData.push(data[i]);
+		}
+		return newData;
 	}
 }

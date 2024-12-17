@@ -3,7 +3,7 @@ CURRENT WORK:
 - fearless:
     a) make draft state saving into an array << DONE
     b) allow having several drafts open << DONE
-        - toggle copying the last draft into the new slot button
+        - toggle copying the last draft into the new slot button << DONE
     c) add a fearless toggle to disable picks
         - have a disabledChampions array for every draft based on the drafts that came before it (in the backend probably)
     d) add a toggle to allow all champions for last draft

@@ -138,6 +138,9 @@ export class UserInterface {
 		this.searchBar = document.querySelector("#search-bar");
 		this.dataSourceSwitch = document.querySelector("#default_data");
 		this.userDataInput = document.querySelector("#input_user_data");
+		this.useFearlessModeToggle = document.querySelector(
+			"#use-fearless-mode-toggle",
+		);
 		this.makeNewDraftsBlankToggle = document.querySelector(
 			"#blank-new-drafts-toggle",
 		);
@@ -319,6 +322,10 @@ export class UserInterface {
 		this.userDataInput.addEventListener(
 			"click",
 			this.toggleUserDataForm.bind(this),
+		);
+		this.useFearlessModeToggle.addEventListener(
+			"click",
+			this.toggleFearlessMode.bind(this),
 		);
 		this.makeNewDraftsBlankToggle.addEventListener(
 			"click",
@@ -835,6 +842,15 @@ export class UserInterface {
 			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		} else this.rightOverlay.classList.add("hidden");
 		event.stopPropagation();
+	}
+
+	toggleFearlessMode() {
+		this.config.useFearlessMode = !this.config.useFearlessMode;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+
+		this.sendProcessSignal();
 	}
 
 	toggleMakingBlankDrafts() {
@@ -1719,6 +1735,7 @@ export class UserInterface {
 
 	colorSettingsButtons() {
 		const buttons = [
+			this.useFearlessModeToggle,
 			this.makeNewDraftsBlankToggle,
 			this.colorBordersToggle,
 			this.saveDraftStateToggle,
@@ -1733,6 +1750,7 @@ export class UserInterface {
 			this.useSmallBanIconsToggle,
 		];
 		const config_settings = [
+			this.config.useFearlessMode,
 			this.config.makeNewDraftsBlank,
 			this.config.colorBorders,
 			this.config.saveDraftState,
