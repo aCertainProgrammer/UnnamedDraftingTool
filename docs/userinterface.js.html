@@ -164,9 +164,14 @@ export class UserInterface {
 		this.rolesContainer = document.querySelector("#roles");
 		this.roleIcons = document.querySelectorAll(".role-icon");
 		this.searchBar = document.querySelector("#search-bar");
-		this.defaultDataSwitch = document.querySelector("#default_data");
-		this.userDataSwitch = document.querySelector("#load_user_data");
+		this.dataSourceSwitch = document.querySelector("#default_data");
 		this.userDataInput = document.querySelector("#input_user_data");
+		this.useFearlessModeToggle = document.querySelector(
+			"#use-fearless-mode-toggle",
+		);
+		this.makeNewDraftsBlankToggle = document.querySelector(
+			"#blank-new-drafts-toggle",
+		);
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -184,6 +189,9 @@ export class UserInterface {
 		);
 		this.toggleAppendingToDraftSnapshotsButton = document.querySelector(
 			"#append-to-snapshots-on-import-toggle",
+		);
+		this.draftSnapshotDisplayToggle = document.querySelector(
+			"#draft-snapshot-display-toggle",
 		);
 		this.useCompactModeToggle = document.querySelector(
 			"#use-compact-mode-toggle",
@@ -258,6 +266,14 @@ export class UserInterface {
 		this.browseSavedDraftsButton = document.querySelector(
 			"#browse-saved-drafts-button",
 		);
+		this.draftCounterLeftArrow = document.querySelector(
+			"#draft-counter-left-arrow",
+		);
+		this.draftCounterRightArrow = document.querySelector(
+			"#draft-counter-right-arrow",
+		);
+		this.draftCounter = document.querySelector("#draft-counter");
+		this.draftCounter.value = 1;
 		this.toggleAllyEnemyColorsButton = document.querySelector(
 			"#toggle-ally-enemy-coloring-button",
 		);
@@ -327,17 +343,21 @@ export class UserInterface {
 			"input",
 			this.searchChampion.bind(this),
 		);
-		this.defaultDataSwitch.addEventListener(
+		this.dataSourceSwitch.addEventListener(
 			"click",
-			this.loadDefaultData.bind(this),
-		);
-		this.userDataSwitch.addEventListener(
-			"click",
-			this.loadUserData.bind(this),
+			this.toggleDataSource.bind(this),
 		);
 		this.userDataInput.addEventListener(
 			"click",
 			this.toggleUserDataForm.bind(this),
+		);
+		this.useFearlessModeToggle.addEventListener(
+			"click",
+			this.toggleFearlessMode.bind(this),
+		);
+		this.makeNewDraftsBlankToggle.addEventListener(
+			"click",
+			this.toggleMakingBlankDrafts.bind(this),
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
@@ -354,6 +374,10 @@ export class UserInterface {
 		this.clearSearchbarOnFocusToggle.addEventListener(
 			"click",
 			this.toggleClearingSearchbarOnFocus.bind(this),
+		);
+		this.draftSnapshotDisplayToggle.addEventListener(
+			"click",
+			this.toggleDraftSnapshotDisplay.bind(this),
 		);
 		this.useCompactModeToggle.addEventListener(
 			"click",
@@ -425,7 +449,7 @@ export class UserInterface {
 			this.exportDraftSnapshots.bind(this),
 		);
 		this.snapshotsFileInput.addEventListener(
-			"change",
+			"input",
 			this.importDraftSnapshots.bind(this),
 		);
 		this.importDraftSnapshotsButton.addEventListener(
@@ -456,6 +480,15 @@ export class UserInterface {
 			"click",
 			this.toggleMiddleOverlay.bind(this),
 		);
+		this.draftCounterLeftArrow.addEventListener(
+			"click",
+			this.changeDraftNumber.bind(this, -1),
+		);
+		this.draftCounterRightArrow.addEventListener(
+			"click",
+			this.changeDraftNumber.bind(this, 1),
+		);
+		this.draftCounter.addEventListener("input", this.openDraft.bind(this));
 		this.toggleAllyEnemyColorsButton.addEventListener(
 			"click",
 			this.toggleAllyEnemyColors.bind(this),
@@ -495,19 +528,20 @@ export class UserInterface {
 			this.currentlyHoveredChampion = "";
 		}.bind(this);
 
-		if (!localStorage.getItem("welcome_screen_off"))
-			this.openWelcomeScreen();
 		this.contentContainer.addEventListener("dragover", (event) => {
 			event.preventDefault();
 		});
 
 		this.setBindInputValues();
 		this.handleDrag();
+		document.body.addEventListener(
+			"click",
+			this.closeOverlaysIfClickIsOutside.bind(this),
+		);
 	}
 
 	//end of constructor
 	openWelcomeScreen() {
-		this.contentContainer.classList.add("hidden");
 		this.welcomeScreen.classList.remove("hidden");
 	}
 
@@ -515,7 +549,10 @@ export class UserInterface {
 		this.welcomeScreen.classList.add("hidden");
 		this.contentContainer.classList.remove("hidden");
 
-		if (event.target.id == "close-welcome-screen-never-show-again") {
+		if (
+			event != undefined &amp;&amp;
+			event.target.id == "close-welcome-screen-never-show-again"
+		) {
 			localStorage.setItem("welcome_screen_off", "true");
 		}
 	}
@@ -797,6 +834,16 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 
+	toggleDataSource() {
+		if (this.dataSource == "default_data") {
+			this.dataSourceSwitch.value = "Custom data";
+			this.loadUserData();
+		} else {
+			this.dataSourceSwitch.value = "Default data";
+			this.loadDefaultData();
+		}
+	}
+
 	loadDefaultData() {
 		this.dataSource = "default_data";
 
@@ -822,6 +869,23 @@ export class UserInterface {
 			const json = DataController.loadData(this.getDataSource(), "none");
 			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		} else this.rightOverlay.classList.add("hidden");
+		event.stopPropagation();
+	}
+
+	toggleFearlessMode() {
+		this.config.useFearlessMode = !this.config.useFearlessMode;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+
+		this.sendProcessSignal();
+	}
+
+	toggleMakingBlankDrafts() {
+		this.config.makeNewDraftsBlank = !this.config.makeNewDraftsBlank;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
 	}
 
 	toggleBorderColor() {
@@ -929,6 +993,7 @@ export class UserInterface {
 	}
 	processMainScreenInput(key) {
 		const shiftKeyPressed = event.shiftKey;
+
 		if (
 			key.toLowerCase() == this.binds.inputCustomDataBind.toLowerCase() &amp;&amp;
 			shiftKeyPressed
@@ -936,6 +1001,7 @@ export class UserInterface {
 			this.searchBar.blur();
 			this.userDataInput.click();
 		}
+
 		if (!this.rightOverlay.classList.contains("hidden")) return;
 
 		if (
@@ -953,6 +1019,10 @@ export class UserInterface {
 			else this.leaveSettingsButton.click();
 		}
 		if (!this.leftOverlay.classList.contains("hidden")) return;
+
+		if (document.activeElement == this.draftCounter) {
+			return;
+		}
 
 		if (key == " ") {
 			if (
@@ -1025,6 +1095,7 @@ export class UserInterface {
 			) {
 				this.searchBar.blur();
 				this.dataSource = "user_data";
+				this.dataSourceSwitch.value = "Custom data";
 				this.sendProcessSignal();
 			}
 			if (
@@ -1033,6 +1104,7 @@ export class UserInterface {
 			) {
 				this.searchBar.blur();
 				this.dataSource = "default_data";
+				this.dataSourceSwitch.value = "Default data";
 				this.sendProcessSignal();
 			}
 			if (
@@ -1156,6 +1228,12 @@ export class UserInterface {
 	processMiddleOverlayInput(key) {
 		const letterRegex = /^[A-Za-z]$/;
 		const shiftKeyPressed = event.shiftKey;
+		if (
+			document.activeElement.classList.contains("draft-name") ||
+			document.activeElement.classList.contains("complex-draft-name")
+		) {
+			return;
+		}
 		if (key.match(letterRegex)) {
 			if (
 				document.activeElement != this.middleOverlaySearchBar &amp;&amp;
@@ -1178,6 +1256,7 @@ export class UserInterface {
 
 	openSettingsMenu() {
 		this.leftOverlay.classList.remove("hidden");
+		event.stopPropagation();
 	}
 
 	closeSettingsMenu() {
@@ -1234,6 +1313,23 @@ export class UserInterface {
 		this.setPickBanMode(mode);
 	}
 
+	changeDraftNumber(amount) {
+		let value = parseInt(this.draftCounter.value) + parseInt(amount);
+
+		if (isNaN(value)) value = 1 + parseInt(amount);
+		if (value &lt; 1) value = 1;
+
+		this.draftCounter.value = value;
+
+		this.openDraft();
+	}
+
+	openDraft() {
+		if (isNaN(this.draftCounter.value) || this.draftCounter.value == "")
+			return;
+		else this.sendProcessSignal();
+	}
+
 	hideMiddleOverlay() {
 		if (!this.middleOverlay.classList.contains("hidden"))
 			this.middleOverlay.classList.add("hidden");
@@ -1249,12 +1345,15 @@ export class UserInterface {
 			this.middleOverlay.classList.add("hidden");
 			this.draftSnapshotsContainer.innerHTML = "";
 		}
+		if (event != undefined) event.stopPropagation();
 	}
 
 	clearAllDraftSnapshots() {
 		const ok = window.confirm("Do you want to clear all drafts?");
 		if (ok) {
 			localStorage.removeItem("savedDrafts");
+			this.draftSnapshotsPaginationPageCounter.value = 1;
+
 			this.hideMiddleOverlay();
 		}
 	}
@@ -1264,10 +1363,16 @@ export class UserInterface {
 		this.browseSavedDrafts();
 	}
 	saveDraftSnapshot() {
-		const picks = DataController.loadPicksAndBans();
+		const drafts = DataController.loadPicksAndBans();
+		const picks = drafts[this.draftCounter.value - 1];
+		const draft = {
+			name: "",
+			picks: picks.picks,
+			bans: picks.bans,
+		};
 		const saved_drafts = DataController.loadSavedDrafts();
 
-		saved_drafts.push(picks);
+		saved_drafts.push(draft);
 		DataController.saveData("savedDrafts", saved_drafts);
 
 		if (!this.middleOverlay.classList.contains("hidden")) {
@@ -1306,7 +1411,11 @@ export class UserInterface {
 			const draft = saved_drafts[i];
 			if (draft == null) continue;
 
-			const draftPreview = this.createDraftSnapshotPreview(draft);
+			let draftPreview;
+			if (this.config.useSimpleSnapshotDisplay == true)
+				draftPreview = this.createSimpleDraftSnapshotPreview(draft, i);
+			else
+				draftPreview = this.createComplexDraftSnapshotPreview(draft, i);
 			draftPreview.addEventListener(
 				"click",
 				this.loadDraftSnapshot.bind(this, draft, i),
@@ -1316,9 +1425,26 @@ export class UserInterface {
 		}
 	}
 
-	createDraftSnapshotPreview(draft, id) {
+	createSimpleDraftSnapshotPreview(draft, id) {
 		const container = document.createElement("div");
 		container.classList.add("draft-snapshot-container");
+		container.dataset.draft = JSON.stringify(draft);
+
+		const draft_name = document.createElement("input");
+		draft_name.type = "text";
+		draft_name.classList.add("draft-name");
+		draft_name.value = draft.name == null ? "" : draft.name;
+
+		container.appendChild(draft_name);
+
+		draft_name.addEventListener("click", () => {
+			event.stopPropagation();
+		});
+
+		draft_name.addEventListener(
+			"input",
+			this.changeDraftName.bind(this, id),
+		);
 
 		for (let i = 0; i &lt; draft.picks.length; i++) {
 			const champion = draft.picks[i];
@@ -1356,6 +1482,106 @@ export class UserInterface {
 		return container;
 	}
 
+	createComplexDraftSnapshotPreview(draft, id) {
+		const container = document.createElement("div");
+		container.classList.add("complex-draft-snapshot-container");
+		container.dataset.draft = JSON.stringify(draft);
+
+		const draft_name = document.createElement("input");
+		draft_name.type = "text";
+		draft_name.classList.add("complex-draft-name");
+		draft_name.value = draft.name == null ? "" : draft.name;
+
+		container.appendChild(draft_name);
+
+		draft_name.addEventListener("click", () => {
+			event.stopPropagation();
+		});
+
+		draft_name.addEventListener(
+			"input",
+			this.changeDraftName.bind(this, id),
+		);
+		const icon_order = [
+			draft.bans[0],
+			draft.bans[1],
+			draft.bans[2],
+			draft.picks[0],
+			draft.picks[1],
+			draft.picks[2],
+			draft.bans[3],
+			draft.bans[4],
+			draft.picks[3],
+			draft.picks[4],
+			draft.bans[5],
+			draft.bans[6],
+			draft.bans[7],
+			draft.picks[5],
+			draft.picks[6],
+			draft.picks[7],
+			draft.bans[8],
+			draft.bans[9],
+			draft.picks[8],
+			draft.picks[9],
+		];
+		for (let i = 0; i &lt; 20; i++) {
+			this.createDraftSnapshotIcon(container, icon_order[i], i);
+		}
+
+		const remove_button = document.createElement("img");
+		remove_button.src = "./img/trash.png";
+		remove_button.classList += "draft-snapshot-remove-button";
+
+		container.appendChild(remove_button);
+
+		remove_button.addEventListener(
+			"click",
+			this.removeDraftSnapshot.bind(this, container, id),
+		);
+
+		return container;
+	}
+
+	createDraftSnapshotIcon(container, champion, index) {
+		const div = document.createElement("div");
+		if (index &lt; 10) div.classList = "complex-draft-preview-icon-container";
+		else div.classList = "reverse-complex-draft-preview-icon-container";
+		div.draggable = false;
+
+		const champ_name = document.createElement("label");
+		if (champion != "") {
+			champ_name.innerHTML = capitalize(champion);
+			div.appendChild(champ_name);
+		}
+
+		const ban_indexes = [0, 1, 2, 6, 7, 10, 11, 12, 16, 17];
+		if (ban_indexes.includes(index))
+			div.classList.add("snapshot-ban-container");
+		else div.classList.add("snapshot-pick-container");
+
+		const img = document.createElement("img");
+		if (champion == "") img.src = this.defaultBanIconPath;
+		else
+			img.src =
+				this.imagePath +
+				"/small_converted_to_webp_scaled/" +
+				capitalize(champion) +
+				".webp";
+
+		div.appendChild(img);
+		container.appendChild(div);
+
+		div.addEventListener("dragstart", this.stopDrag);
+	}
+
+	changeDraftName(id) {
+		let drafts = DataController.loadSavedDrafts();
+
+		drafts[id].name = event.target.value;
+
+		DataController.saveData("savedDrafts", drafts);
+	}
+
 	removeDraftSnapshot(container, id) {
 		event.stopPropagation();
 		container.remove();
@@ -1364,6 +1590,9 @@ export class UserInterface {
 		savedDrafts.splice(id, 1);
 
 		DataController.saveData("savedDrafts", savedDrafts);
+
+		this.hideMiddleOverlay();
+		this.toggleMiddleOverlay();
 	}
 
 	loadDraftSnapshot(draft) {
@@ -1404,9 +1633,8 @@ export class UserInterface {
 			return;
 		}
 
-		if (this.config.appendToDraftSnapshots == true) {
-			const old_data = localStorage.getItem("savedDrafts");
-
+		const old_data = localStorage.getItem("savedDrafts");
+		if (this.config.appendToDraftSnapshots == true &amp;&amp; old_data != null) {
 			const old_array = JSON.parse(old_data);
 			const new_array = JSON.parse(data);
 
@@ -1480,6 +1708,14 @@ export class UserInterface {
 		return 0;
 	}
 
+	toggleDraftSnapshotDisplay() {
+		this.config.useSimpleSnapshotDisplay =
+			!this.config.useSimpleSnapshotDisplay;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+	}
+
 	toggleAppendingToDraftSnapshots() {
 		this.config.appendToDraftSnapshots =
 			!this.config.appendToDraftSnapshots;
@@ -1529,10 +1765,13 @@ export class UserInterface {
 
 	colorSettingsButtons() {
 		const buttons = [
+			this.useFearlessModeToggle,
+			this.makeNewDraftsBlankToggle,
 			this.colorBordersToggle,
 			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
+			this.draftSnapshotDisplayToggle,
 			this.toggleAppendingToDraftSnapshotsButton,
 			this.toggleSearchModeButton,
 			this.useCompactModeToggle,
@@ -1541,10 +1780,13 @@ export class UserInterface {
 			this.useSmallBanIconsToggle,
 		];
 		const config_settings = [
+			this.config.useFearlessMode,
+			this.config.makeNewDraftsBlank,
 			this.config.colorBorders,
 			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
+			this.config.useSimpleSnapshotDisplay,
 			this.config.appendToDraftSnapshots,
 			this.config.useLegacySearch,
 			this.config.useCompactMode,
@@ -1587,6 +1829,11 @@ export class UserInterface {
 	getSearchQuery() {
 		const searchQuery = this.searchBar.value.toLowerCase();
 		return searchQuery;
+	}
+
+	getDraftNumber() {
+		const draftNumber = this.draftCounter.value - 1;
+		return draftNumber;
 	}
 
 	/**
@@ -1740,16 +1987,6 @@ export class UserInterface {
 	}
 
 	render(renderingData) {
-		if (this.dataSource === "default_data") {
-			this.userDataSwitch.classList.remove("highlighted");
-			this.defaultDataSwitch.classList.add("highlighted");
-		}
-
-		if (this.dataSource === "user_data") {
-			this.defaultDataSwitch.classList.remove("highlighted");
-			this.userDataSwitch.classList.add("highlighted");
-		}
-
 		const championData = DataController.loadData(
 			renderingData.dataSource,
 			"none",
@@ -1845,7 +2082,10 @@ export class UserInterface {
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
 
-			if (renderingData.pickedChampions[i] == "") {
+			if (
+				renderingData.pickedChampions[i] == "" ||
+				renderingData.pickedChampions[i] == "undefined"
+			) {
 				if (this.config.useSmallPickIcons == true)
 					img.src = this.defaultBanIconPath;
 				else img.src = this.defaultPickIconPath;
@@ -1889,7 +2129,10 @@ export class UserInterface {
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
 
-			if (renderingData.bannedChampions[i] == "") {
+			if (
+				renderingData.bannedChampions[i] == "" ||
+				renderingData.bannedChampions[i] == "undefined"
+			) {
 				img.src = this.defaultBanIconPath;
 				img.alt = "champion-ban-icon";
 				img.dataset.champion = "";
@@ -1953,6 +2196,23 @@ export class UserInterface {
 			if (!event.target.draggable == true) event.preventDefault();
 		});
 	}
+
+	closeOverlaysIfClickIsOutside(event) {
+		const overlays = [
+			this.middleOverlay,
+			this.leftOverlay,
+			this.rightOverlay,
+		];
+
+		overlays.forEach((current) => {
+			if (
+				!current.contains(event.target) &amp;&amp;
+				!current.classList.contains("hidden")
+			) {
+				current.classList.add("hidden");
+			}
+		});
+	}
 }
 </code></pre>
         </article>
@@ -1970,7 +2230,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Dec 09 2024 12:20:58 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Dec 17 2024 11:57:40 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
