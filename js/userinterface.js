@@ -138,6 +138,9 @@ export class UserInterface {
 		this.searchBar = document.querySelector("#search-bar");
 		this.dataSourceSwitch = document.querySelector("#default_data");
 		this.userDataInput = document.querySelector("#input_user_data");
+		this.makeNewDraftsBlankToggle = document.querySelector(
+			"#blank-new-drafts-toggle",
+		);
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -316,6 +319,10 @@ export class UserInterface {
 		this.userDataInput.addEventListener(
 			"click",
 			this.toggleUserDataForm.bind(this),
+		);
+		this.makeNewDraftsBlankToggle.addEventListener(
+			"click",
+			this.toggleMakingBlankDrafts.bind(this),
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
@@ -828,6 +835,13 @@ export class UserInterface {
 			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		} else this.rightOverlay.classList.add("hidden");
 		event.stopPropagation();
+	}
+
+	toggleMakingBlankDrafts() {
+		this.config.makeNewDraftsBlank = !this.config.makeNewDraftsBlank;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
 	}
 
 	toggleBorderColor() {
@@ -1705,6 +1719,7 @@ export class UserInterface {
 
 	colorSettingsButtons() {
 		const buttons = [
+			this.makeNewDraftsBlankToggle,
 			this.colorBordersToggle,
 			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
@@ -1718,6 +1733,7 @@ export class UserInterface {
 			this.useSmallBanIconsToggle,
 		];
 		const config_settings = [
+			this.config.makeNewDraftsBlank,
 			this.config.colorBorders,
 			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,

@@ -81,8 +81,12 @@ export class Controller {
 		}
 
 		if (picksAndBans[draftNumber] == undefined) {
-			picksAndBans.push(this.scraper.getPicksAndBans());
-			console.log("picks and bans: " + picksAndBans[draftNumber]);
+			if (config.makeNewDraftsBlank == true)
+				picksAndBans.push({
+					picks: ["", "", "", "", "", "", "", "", "", ""],
+					bans: ["", "", "", "", "", "", "", "", "", ""],
+				});
+			else picksAndBans.push(this.scraper.getPicksAndBans());
 		}
 
 		if (config.saveDraftState == true) {

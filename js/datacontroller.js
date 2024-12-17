@@ -63,6 +63,7 @@ export class DataController {
 	}
 	/**
 	 * @typedef Config
+	 * @property {bool} makeNewDraftsBlank
 	 * @property {bool} colorBorders
 	 * @property {bool} saveDraftState
 	 * @property {bool} loadUserDataOnProgramStart
@@ -109,6 +110,7 @@ export class DataController {
 	 */
 	static validateConfig(configToValidate) {
 		const default_config = {
+			makeNewDraftsBlank: true,
 			colorBorders: false,
 			saveDraftState: true,
 			loadUserDataOnProgramStart: false,
@@ -122,6 +124,7 @@ export class DataController {
 			useSmallChampionIcons: true,
 		};
 		const properties = [
+			"makeNewDraftsBlank",
 			"colorBorders",
 			"saveDraftState",
 			"loadUserDataOnProgramStart",
