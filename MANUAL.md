@@ -114,6 +114,10 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 
 Currently you are given the option to customize the following:
 
+### Make new drafts blank
+If enabled, makes the new drafts blank when creating them
+If disabled, the current draft is copied into the newly created draft
+
 ### Color champion borders
 This colors the borders of the champions depending on which team they belong to:
 - Green for ally champions
