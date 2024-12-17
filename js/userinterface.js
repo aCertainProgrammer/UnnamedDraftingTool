@@ -2018,7 +2018,10 @@ export class UserInterface {
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
 
-			if (renderingData.pickedChampions[i] == "") {
+			if (
+				renderingData.pickedChampions[i] == "" ||
+				renderingData.pickedChampions[i] == "undefined"
+			) {
 				if (this.config.useSmallPickIcons == true)
 					img.src = this.defaultBanIconPath;
 				else img.src = this.defaultPickIconPath;
@@ -2062,7 +2065,10 @@ export class UserInterface {
 			if (img.classList.contains("selected"))
 				img.classList.remove("selected");
 
-			if (renderingData.bannedChampions[i] == "") {
+			if (
+				renderingData.bannedChampions[i] == "" ||
+				renderingData.bannedChampions[i] == "undefined"
+			) {
 				img.src = this.defaultBanIconPath;
 				img.alt = "champion-ban-icon";
 				img.dataset.champion = "";
