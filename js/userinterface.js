@@ -500,8 +500,6 @@ export class UserInterface {
 			this.currentlyHoveredChampion = "";
 		}.bind(this);
 
-		if (!localStorage.getItem("welcome_screen_off"))
-			this.openWelcomeScreen();
 		this.contentContainer.addEventListener("dragover", (event) => {
 			event.preventDefault();
 		});
@@ -516,7 +514,6 @@ export class UserInterface {
 
 	//end of constructor
 	openWelcomeScreen() {
-		this.contentContainer.classList.add("hidden");
 		this.welcomeScreen.classList.remove("hidden");
 	}
 
@@ -524,7 +521,10 @@ export class UserInterface {
 		this.welcomeScreen.classList.add("hidden");
 		this.contentContainer.classList.remove("hidden");
 
-		if (event.target.id == "close-welcome-screen-never-show-again") {
+		if (
+			event != undefined &&
+			event.target.id == "close-welcome-screen-never-show-again"
+		) {
 			localStorage.setItem("welcome_screen_off", "true");
 		}
 	}

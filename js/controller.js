@@ -40,6 +40,12 @@ export class Controller {
 		}
 		DataController.saveConfig(config);
 		DataController.saveData("default_data", default_data);
+
+		if (!localStorage.getItem("welcome_screen_off")) {
+			this.userInterface.openWelcomeScreen();
+		} else {
+			this.userInterface.closeWelcomeScreen();
+		}
 	}
 	/**
 	 * The most important function in the program, it drives everything.
