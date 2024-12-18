@@ -163,8 +163,6 @@ export class Backend {
 			for (let j = 0; j < 10; j++) {
 				if (picksAndBans[i].picks[j] != "")
 					invalidChampions.push(picksAndBans[i].picks[j]);
-				if (picksAndBans[i].bans[j] != "")
-					invalidChampions.push(picksAndBans[i].bans[j]);
 			}
 		}
 
@@ -188,8 +186,6 @@ export class Backend {
 
 				if (picksAndBans[i].picks[j] != "")
 					invalidChampions.push(picksAndBans[i].picks[j]);
-				if (picksAndBans[i].bans[j] != "")
-					invalidChampions.push(picksAndBans[i].bans[j]);
 			}
 		}
 		return picksAndBans;
