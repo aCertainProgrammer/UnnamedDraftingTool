@@ -33,6 +33,7 @@ export class UserInterface {
 			pickedChampions: [],
 			bannedChampions: [],
 		};
+		this.useZenMode = false;
 		this.binds = DataController.loadBinds();
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
@@ -54,6 +55,7 @@ export class UserInterface {
 		this.closeWelcomeScreenForeverButton = document.querySelector(
 			"#close-welcome-screen-never-show-again",
 		);
+		this.header = document.querySelector("#header");
 		this.middleOverlay = document.querySelector("#middle-overlay");
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
@@ -138,6 +140,7 @@ export class UserInterface {
 		this.searchBar = document.querySelector("#search-bar");
 		this.dataSourceSwitch = document.querySelector("#default_data");
 		this.userDataInput = document.querySelector("#input_user_data");
+		this.useZenModeToggle = document.querySelector("#zen-mode-toggle");
 		this.useFearlessModeToggle = document.querySelector(
 			"#use-fearless-mode-toggle",
 		);
@@ -325,6 +328,10 @@ export class UserInterface {
 		this.userDataInput.addEventListener(
 			"click",
 			this.toggleUserDataForm.bind(this),
+		);
+		this.useZenModeToggle.addEventListener(
+			"click",
+			this.toggleZenMode.bind(this),
 		);
 		this.useFearlessModeToggle.addEventListener(
 			"click",
@@ -849,6 +856,27 @@ export class UserInterface {
 			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		} else this.rightOverlay.classList.add("hidden");
 		event.stopPropagation();
+	}
+
+	toggleZenMode() {
+		this.useZenModeToggle.dataset.value =
+			this.useZenModeToggle.dataset.value == "false" ? "true" : "false";
+		this.useZenMode =
+			this.useZenModeToggle.dataset.value == "false" ? false : true;
+
+		if (
+			this.useZenModeToggle.dataset.value == "false" &&
+			this.header.classList.contains("hidden")
+		) {
+			this.header.classList.remove("hidden");
+		} else if (
+			this.useZenModeToggle.dataset.value == "true" &&
+			!this.header.classList.contains("hidden")
+		) {
+			this.header.classList.add("hidden");
+		}
+
+		this.colorSettingsButtons();
 	}
 
 	toggleFearlessMode() {
@@ -1787,6 +1815,7 @@ export class UserInterface {
 
 	colorSettingsButtons() {
 		const buttons = [
+			this.useZenModeToggle,
 			this.useFearlessModeToggle,
 			this.makeNewDraftsBlankToggle,
 			this.colorBordersToggle,
@@ -1802,6 +1831,7 @@ export class UserInterface {
 			this.useSmallBanIconsToggle,
 		];
 		const config_settings = [
+			this.useZenMode,
 			this.config.useFearlessMode,
 			this.config.makeNewDraftsBlank,
 			this.config.colorBorders,
