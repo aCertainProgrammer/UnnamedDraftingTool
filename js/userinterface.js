@@ -144,6 +144,7 @@ export class UserInterface {
 		this.makeNewDraftsBlankToggle = document.querySelector(
 			"#blank-new-drafts-toggle",
 		);
+		this.draftLimitInput = document.querySelector("#draft-limit-input");
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -330,6 +331,10 @@ export class UserInterface {
 		this.makeNewDraftsBlankToggle.addEventListener(
 			"click",
 			this.toggleMakingBlankDrafts.bind(this),
+		);
+		this.draftLimitInput.addEventListener(
+			"input",
+			this.changeMaxDraftNumber.bind(this),
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
@@ -1305,11 +1310,33 @@ export class UserInterface {
 		this.setPickBanMode(mode);
 	}
 
+	changeMaxDraftNumber() {
+		if (
+			!(
+				this.draftLimitInput.value.trim() == "0" ||
+				this.draftLimitInput.value.trim() == ""
+			) &&
+			this.draftCounter.value > this.draftLimitInput.value.trim()
+		)
+			this.draftCounter.value = this.draftLimitInput.value.trim();
+
+		this.sendProcessSignal();
+	}
+
 	changeDraftNumber(amount) {
 		let value = parseInt(this.draftCounter.value) + parseInt(amount);
 
 		if (isNaN(value)) value = 1 + parseInt(amount);
 		if (value < 1) value = 1;
+		if (
+			value > this.draftLimitInput.value &&
+			!(
+				this.draftLimitInput.value == "0" ||
+				this.draftLimitInput.value == ""
+			)
+		) {
+			value = this.draftLimitInput.value;
+		}
 
 		this.draftCounter.value = value;
 

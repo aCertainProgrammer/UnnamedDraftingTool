@@ -127,6 +127,9 @@ If disabled, the current draft is copied into the newly created draft
 
 Note that the existing drafts will not be overriden, also this setting will not work when fearless mode is active
 
+### Max drafts
+If the value is not 0 or empty, does not allow for going beyond the specified number
+
 ### Color champion borders
 This colors the borders of the champions depending on which team they belong to:
 - Green for ally champions
