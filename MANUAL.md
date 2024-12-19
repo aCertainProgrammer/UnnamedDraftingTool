@@ -115,6 +115,11 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 
 Currently you are given the option to customize the following:
 
+### Use zen mode
+If enabled, hides all the top buttons for a cleaner interface. The keyboard shortcuts will still work.
+
+Zen mode only persists until the page is reloaded
+
 ### Use fearless mode
 If enabled, disables champions that were picked or banned in the previous draft
 
