@@ -1068,3 +1068,7 @@ body {
 	width: var(--arrowButtonMaxWidth);
 	min-width: 10px !important;
 }
+
+#toggle-ally-enemy-coloring-button {
+	width: 132px;
+}

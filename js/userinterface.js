@@ -145,6 +145,9 @@ export class UserInterface {
 			"#blank-new-drafts-toggle",
 		);
 		this.draftLimitInput = document.querySelector("#draft-limit-input");
+		let limit = localStorage.getItem("maxDraftNumber");
+		if (limit == null) limit = 0;
+		this.draftLimitInput.value = limit;
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -251,8 +254,7 @@ export class UserInterface {
 			"#toggle-ally-enemy-coloring-button",
 		);
 		this.toggleAllyEnemyColorsButton.value =
-			"Team colors: " +
-			this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+			"Colors: " + this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
 
 		this.closeWelcomeScreenButton.addEventListener(
 			"click",
@@ -1311,14 +1313,12 @@ export class UserInterface {
 	}
 
 	changeMaxDraftNumber() {
-		if (
-			!(
-				this.draftLimitInput.value.trim() == "0" ||
-				this.draftLimitInput.value.trim() == ""
-			) &&
-			this.draftCounter.value > this.draftLimitInput.value.trim()
-		)
-			this.draftCounter.value = this.draftLimitInput.value.trim();
+		const limit = parseInt(this.draftLimitInput.value.trim());
+		DataController.saveData("maxDraftNumber", limit);
+
+		if (!(limit == "0" || limit == "") && this.draftCounter.value > limit) {
+			this.draftCounter.value = limit;
+		}
 
 		this.sendProcessSignal();
 	}
@@ -1346,7 +1346,10 @@ export class UserInterface {
 	openDraft() {
 		if (isNaN(this.draftCounter.value) || this.draftCounter.value == "")
 			return;
-		else this.sendProcessSignal();
+
+		this.changeMaxDraftNumber();
+
+		this.sendProcessSignal();
 	}
 
 	hideMiddleOverlay() {
@@ -1709,7 +1712,7 @@ export class UserInterface {
 
 		const colors = this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
 		document.documentElement.dataset.allyEnemyColors = colors;
-		this.toggleAllyEnemyColorsButton.value = "Team colors: " + colors;
+		this.toggleAllyEnemyColorsButton.value = "Colors: " + colors;
 
 		localStorage.setItem("ally_enemy_colors", colors);
 	}
