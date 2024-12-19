@@ -1055,6 +1055,16 @@ export class UserInterface {
 				this.pickBanChampionWithKeyInput(key);
 			}
 		} else {
+			if (key.toLowerCase() == "arrowleft") {
+				event.preventDefault();
+				this.searchBar.blur();
+				this.draftCounterLeftArrow.click();
+			}
+			if (key.toLowerCase() == "arrowright") {
+				event.preventDefault();
+				this.searchBar.blur();
+				this.draftCounterRightArrow.click();
+			}
 			if (
 				key.toLowerCase() ==
 				this.binds.toggleCompactModeBind.toLowerCase()
@@ -1223,6 +1233,16 @@ export class UserInterface {
 		if (key == "Enter") {
 			if (this.draftSnapshotsContainer.firstChild != null)
 				this.draftSnapshotsContainer.firstChild.click();
+		}
+		if (key.toLowerCase() == "arrowleft") {
+			event.preventDefault();
+			this.middleOverlaySearchBar.blur();
+			this.draftSnapshotsPaginationLeftArrow.click();
+		}
+		if (key.toLowerCase() == "arrowright") {
+			event.preventDefault();
+			this.middleOverlaySearchBar.blur();
+			this.draftSnapshotsPaginationRightArrow.click();
 		}
 	}
 
