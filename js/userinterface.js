@@ -60,6 +60,10 @@ export class UserInterface {
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
 		this.bindMenu = document.querySelector("#bind-menu");
+		this.zenModeBindInput = document.querySelector("#zen-mode-bind");
+		this.fearlessModeBindInput = document.querySelector(
+			"#fearless-mode-bind",
+		);
 		this.pickModeBindInput = document.querySelector("#pick-mode-bind");
 		this.banModeBindInput = document.querySelector("#ban-mode-bind");
 		this.clearPicksOrBansBindInput = document.querySelector(
@@ -579,6 +583,12 @@ export class UserInterface {
 		const bindKey = event.target.value;
 
 		switch (bindId) {
+			case "zen-mode-bind":
+				this.binds.zenModeBind = bindKey;
+				break;
+			case "fearless-mode-bind":
+				this.binds.fearlessModeBind = bindKey;
+				break;
 			case "pick-mode-bind":
 				this.binds.pickModeBind = bindKey;
 				break;
@@ -1090,6 +1100,16 @@ export class UserInterface {
 				this.pickBanChampionWithKeyInput(key);
 			}
 		} else {
+			if (key.toLowerCase() == this.binds.zenModeBind.toLowerCase()) {
+				this.searchBar.blur();
+				this.useZenModeToggle.click();
+			}
+			if (
+				key.toLowerCase() == this.binds.fearlessModeBind.toLowerCase()
+			) {
+				this.searchBar.blur();
+				this.useFearlessModeToggle.click();
+			}
 			if (key.toLowerCase() == "arrowleft") {
 				event.preventDefault();
 				this.searchBar.blur();

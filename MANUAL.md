@@ -95,6 +95,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
     If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared
 
 ### Data management
+- `Shift` + `R` to use fearless mode
 - `Shift` + `V` to save a draft snapshot
 - `Shift` + `C` to load custom data
 - `Shift` + `D` to load default data 
@@ -102,6 +103,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 - `Shift` + `F` to open the file data input dialog
 
 ### UI navigation
+- `Shift` + `Z` to use zen mode
 - `Shift` + `T` to toggle between themes
 - `Shift` + `M` to toggle the manual tab
 - `Shift` + `S` to toggle the settings tab

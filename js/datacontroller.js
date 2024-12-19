@@ -181,6 +181,8 @@ export class DataController {
 
 	/**
     * @typedef Binds
+    * @property {string} zenModeBind
+    * @property {string} fearlessModeBind
     * @property {string} pickModeBind
     * @property {string} banModeBind
     * @property {string} clearPicksOrBansBind
@@ -213,6 +215,8 @@ export class DataController {
 	static loadBinds() {
 		let binds = localStorage.getItem("keybinds");
 		const defaultBinds = {
+			zenModeBind: "Z",
+			fearlessModeBind: "R",
 			pickModeBind: "P",
 			banModeBind: "B",
 			clearPicksOrBansBind: "X",
