@@ -61,6 +61,7 @@ export class UserInterface {
 			pickedChampions: [],
 			bannedChampions: [],
 		};
+		this.useZenMode = false;
 		this.binds = DataController.loadBinds();
 		this.currentlyHoveredChampion = "";
 		this.userInputContainer = null;
@@ -82,10 +83,15 @@ export class UserInterface {
 		this.closeWelcomeScreenForeverButton = document.querySelector(
 			"#close-welcome-screen-never-show-again",
 		);
+		this.header = document.querySelector("#header");
 		this.middleOverlay = document.querySelector("#middle-overlay");
 		this.rightOverlay = document.querySelector("#right-overlay");
 		this.leftOverlay = document.querySelector("#left-overlay");
 		this.bindMenu = document.querySelector("#bind-menu");
+		this.zenModeBindInput = document.querySelector("#zen-mode-bind");
+		this.fearlessModeBindInput = document.querySelector(
+			"#fearless-mode-bind",
+		);
 		this.pickModeBindInput = document.querySelector("#pick-mode-bind");
 		this.banModeBindInput = document.querySelector("#ban-mode-bind");
 		this.clearPicksOrBansBindInput = document.querySelector(
@@ -166,12 +172,17 @@ export class UserInterface {
 		this.searchBar = document.querySelector("#search-bar");
 		this.dataSourceSwitch = document.querySelector("#default_data");
 		this.userDataInput = document.querySelector("#input_user_data");
+		this.useZenModeToggle = document.querySelector("#zen-mode-toggle");
 		this.useFearlessModeToggle = document.querySelector(
 			"#use-fearless-mode-toggle",
 		);
 		this.makeNewDraftsBlankToggle = document.querySelector(
 			"#blank-new-drafts-toggle",
 		);
+		this.draftLimitInput = document.querySelector("#draft-limit-input");
+		let limit = localStorage.getItem("maxDraftNumber");
+		if (limit == null) limit = 0;
+		this.draftLimitInput.value = limit;
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -278,8 +289,7 @@ export class UserInterface {
 			"#toggle-ally-enemy-coloring-button",
 		);
 		this.toggleAllyEnemyColorsButton.value =
-			"Team colors: " +
-			this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+			"Colors: " + this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
 
 		this.closeWelcomeScreenButton.addEventListener(
 			"click",
@@ -351,6 +361,10 @@ export class UserInterface {
 			"click",
 			this.toggleUserDataForm.bind(this),
 		);
+		this.useZenModeToggle.addEventListener(
+			"click",
+			this.toggleZenMode.bind(this),
+		);
 		this.useFearlessModeToggle.addEventListener(
 			"click",
 			this.toggleFearlessMode.bind(this),
@@ -358,6 +372,10 @@ export class UserInterface {
 		this.makeNewDraftsBlankToggle.addEventListener(
 			"click",
 			this.toggleMakingBlankDrafts.bind(this),
+		);
+		this.draftLimitInput.addEventListener(
+			"input",
+			this.changeMaxDraftNumber.bind(this),
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
@@ -593,6 +611,12 @@ export class UserInterface {
 		const bindKey = event.target.value;
 
 		switch (bindId) {
+			case "zen-mode-bind":
+				this.binds.zenModeBind = bindKey;
+				break;
+			case "fearless-mode-bind":
+				this.binds.fearlessModeBind = bindKey;
+				break;
 			case "pick-mode-bind":
 				this.binds.pickModeBind = bindKey;
 				break;
@@ -673,6 +697,8 @@ export class UserInterface {
 	}
 
 	setBindInputValues() {
+		this.zenModeBindInput.value = this.binds.zenModeBind || "";
+		this.fearlessModeBindInput.value = this.binds.fearlessModeBind || "";
 		this.pickModeBindInput.value = this.binds.pickModeBind || "";
 		this.banModeBindInput.value = this.binds.banModeBind || "";
 		this.clearPicksOrBansBindInput.value =
@@ -870,6 +896,27 @@ export class UserInterface {
 			this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
 		} else this.rightOverlay.classList.add("hidden");
 		event.stopPropagation();
+	}
+
+	toggleZenMode() {
+		this.useZenModeToggle.dataset.value =
+			this.useZenModeToggle.dataset.value == "false" ? "true" : "false";
+		this.useZenMode =
+			this.useZenModeToggle.dataset.value == "false" ? false : true;
+
+		if (
+			this.useZenModeToggle.dataset.value == "false" &amp;&amp;
+			this.header.classList.contains("hidden")
+		) {
+			this.header.classList.remove("hidden");
+		} else if (
+			this.useZenModeToggle.dataset.value == "true" &amp;&amp;
+			!this.header.classList.contains("hidden")
+		) {
+			this.header.classList.add("hidden");
+		}
+
+		this.colorSettingsButtons();
 	}
 
 	toggleFearlessMode() {
@@ -1083,6 +1130,26 @@ export class UserInterface {
 				this.pickBanChampionWithKeyInput(key);
 			}
 		} else {
+			if (key.toLowerCase() == this.binds.zenModeBind.toLowerCase()) {
+				this.searchBar.blur();
+				this.useZenModeToggle.click();
+			}
+			if (
+				key.toLowerCase() == this.binds.fearlessModeBind.toLowerCase()
+			) {
+				this.searchBar.blur();
+				this.useFearlessModeToggle.click();
+			}
+			if (key.toLowerCase() == "arrowleft") {
+				event.preventDefault();
+				this.searchBar.blur();
+				this.draftCounterLeftArrow.click();
+			}
+			if (key.toLowerCase() == "arrowright") {
+				event.preventDefault();
+				this.searchBar.blur();
+				this.draftCounterRightArrow.click();
+			}
 			if (
 				key.toLowerCase() ==
 				this.binds.toggleCompactModeBind.toLowerCase()
@@ -1252,6 +1319,16 @@ export class UserInterface {
 			if (this.draftSnapshotsContainer.firstChild != null)
 				this.draftSnapshotsContainer.firstChild.click();
 		}
+		if (key.toLowerCase() == "arrowleft") {
+			event.preventDefault();
+			this.middleOverlaySearchBar.blur();
+			this.draftSnapshotsPaginationLeftArrow.click();
+		}
+		if (key.toLowerCase() == "arrowright") {
+			event.preventDefault();
+			this.middleOverlaySearchBar.blur();
+			this.draftSnapshotsPaginationRightArrow.click();
+		}
 	}
 
 	openSettingsMenu() {
@@ -1313,11 +1390,31 @@ export class UserInterface {
 		this.setPickBanMode(mode);
 	}
 
+	changeMaxDraftNumber() {
+		const limit = parseInt(this.draftLimitInput.value.trim());
+		DataController.saveData("maxDraftNumber", limit);
+
+		if (!(limit == "0" || limit == "") &amp;&amp; this.draftCounter.value > limit) {
+			this.draftCounter.value = limit;
+		}
+
+		this.sendProcessSignal();
+	}
+
 	changeDraftNumber(amount) {
 		let value = parseInt(this.draftCounter.value) + parseInt(amount);
 
 		if (isNaN(value)) value = 1 + parseInt(amount);
 		if (value &lt; 1) value = 1;
+		if (
+			value > this.draftLimitInput.value &amp;&amp;
+			!(
+				this.draftLimitInput.value == "0" ||
+				this.draftLimitInput.value == ""
+			)
+		) {
+			value = this.draftLimitInput.value;
+		}
 
 		this.draftCounter.value = value;
 
@@ -1327,7 +1424,10 @@ export class UserInterface {
 	openDraft() {
 		if (isNaN(this.draftCounter.value) || this.draftCounter.value == "")
 			return;
-		else this.sendProcessSignal();
+
+		this.changeMaxDraftNumber();
+
+		this.sendProcessSignal();
 	}
 
 	hideMiddleOverlay() {
@@ -1690,7 +1790,7 @@ export class UserInterface {
 
 		const colors = this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
 		document.documentElement.dataset.allyEnemyColors = colors;
-		this.toggleAllyEnemyColorsButton.value = "Team colors: " + colors;
+		this.toggleAllyEnemyColorsButton.value = "Colors: " + colors;
 
 		localStorage.setItem("ally_enemy_colors", colors);
 	}
@@ -1765,6 +1865,7 @@ export class UserInterface {
 
 	colorSettingsButtons() {
 		const buttons = [
+			this.useZenModeToggle,
 			this.useFearlessModeToggle,
 			this.makeNewDraftsBlankToggle,
 			this.colorBordersToggle,
@@ -1780,6 +1881,7 @@ export class UserInterface {
 			this.useSmallBanIconsToggle,
 		];
 		const config_settings = [
+			this.useZenMode,
 			this.config.useFearlessMode,
 			this.config.makeNewDraftsBlank,
 			this.config.colorBorders,
@@ -2230,7 +2332,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Dec 17 2024 11:57:40 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Dec 21 2024 08:54:15 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
