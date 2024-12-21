@@ -15,13 +15,7 @@ THEN:
 
 SHORT IDEAS:
 
-- open welcome screen faster
-
 - consider tooltips or something like that for binds
-
-- be more explicit about requiring shift for shortcuts?
-
-- find better colors for team/enemy redblue
 
 LONG IDEAS:
 
