@@ -214,7 +214,18 @@ export class DataController {
 
 	static loadBinds() {
 		let binds = localStorage.getItem("keybinds");
-		const defaultBinds = {
+		try {
+			binds = JSON.parse(binds);
+		} catch (e) {
+			console.log(e);
+			return this.validateBinds({});
+		}
+		if (binds == null) return this.validateBinds({});
+		return this.validateBinds(binds);
+	}
+
+	static validateBinds(bindsToValidate) {
+		const default_binds = {
 			zenModeBind: "Z",
 			fearlessModeBind: "R",
 			pickModeBind: "P",
@@ -239,13 +250,39 @@ export class DataController {
 			toggleAllyFilteringBind: "W",
 			toggleEnemyFilteringBind: "E",
 		};
-		try {
-			binds = JSON.parse(binds);
-		} catch (e) {
-			console.log(e);
-			return defaultBinds;
-		}
-		if (binds == null) return defaultBinds;
-		return binds;
+
+		const bindProperties = [
+			"zenModeBind",
+			"fearlessModeBind",
+			"pickModeBind",
+			"clearPicksOrBansBind",
+			"saveDraftSnapshotBind",
+			"browseDraftSnapshotsBind",
+			"loadCustomDataBind",
+			"loadDefaultDataBind",
+			"inputCustomDataBind",
+			"importCustomDataFromFileBind",
+			"toggleThemeBind",
+			"toggleManualBind",
+			"toggleSettingsTabBind",
+			"toggleCompactModeBind",
+			"toggleToplaneFilteringBind",
+			"toggleJungleFilteringBind",
+			"toggleMidlaneFilteringBind",
+			"toggleADCFilteringBind",
+			"toggleSupportFilteringBind",
+			"toggleAllFilteringBind",
+			"toggleAllyFilteringBind",
+			"toggleEnemyFilteringBind",
+		];
+
+		let validatedBinds = {};
+		bindProperties.forEach((current) => {
+			if (bindsToValidate[current] == undefined) {
+				validatedBinds[current] = default_binds[current];
+			} else validatedBinds[current] = bindsToValidate[current];
+		});
+
+		return validatedBinds;
 	}
 }
