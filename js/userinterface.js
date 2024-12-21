@@ -669,6 +669,8 @@ export class UserInterface {
 	}
 
 	setBindInputValues() {
+		this.zenModeBindInput.value = this.binds.zenModeBind || "";
+		this.fearlessModeBindInput.value = this.binds.fearlessModeBind || "";
 		this.pickModeBindInput.value = this.binds.pickModeBind || "";
 		this.banModeBindInput.value = this.binds.banModeBind || "";
 		this.clearPicksOrBansBindInput.value =

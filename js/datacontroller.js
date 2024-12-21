@@ -255,6 +255,7 @@ export class DataController {
 			"zenModeBind",
 			"fearlessModeBind",
 			"pickModeBind",
+			"banModeBind",
 			"clearPicksOrBansBind",
 			"saveDraftSnapshotBind",
 			"browseDraftSnapshotsBind",
