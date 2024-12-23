@@ -18,6 +18,7 @@ export class UserInterface {
 		this.banIconPostfix = null;
 
 		this.sendProcessSignal = null;
+		this.sendDraftImportSignal = null;
 		this.dataSource = null;
 		this.config = null;
 		this.team = "all";
@@ -155,6 +156,18 @@ export class UserInterface {
 		let limit = localStorage.getItem("maxDraftNumber");
 		if (limit == null) limit = 0;
 		this.draftLimitInput.value = limit;
+		this.exportCurrentDraftsButton = document.querySelector(
+			"#export-current-drafts-button",
+		);
+		this.importDraftsButton = document.querySelector(
+			"#import-drafts-button",
+		);
+		this.importDraftsFileInput = document.querySelector(
+			"#import-drafts-file-input",
+		);
+		this.draftImportInputErrorBox = document.querySelector(
+			"#draft-import-input-error-box",
+		);
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -348,6 +361,18 @@ export class UserInterface {
 		this.draftLimitInput.addEventListener(
 			"input",
 			this.changeMaxDraftNumber.bind(this),
+		);
+		this.exportCurrentDraftsButton.addEventListener(
+			"click",
+			this.exportDrafts.bind(this),
+		);
+		this.importDraftsButton.addEventListener(
+			"click",
+			this.clickInput.bind(this, this.importDraftsFileInput),
+		);
+		this.importDraftsFileInput.addEventListener(
+			"input",
+			this.importDrafts.bind(this),
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
@@ -905,6 +930,44 @@ export class UserInterface {
 		this.colorSettingsButtons();
 
 		DataController.saveConfig(this.config);
+	}
+
+	exportDrafts() {
+		const drafts = DataController.loadPicksAndBans();
+
+		const blob = new Blob([JSON.stringify(drafts, null, 4)], {
+			type: "plain/text",
+		});
+		const fileUrl = URL.createObjectURL(blob);
+		const downloadElement = document.createElement("a");
+		downloadElement.href = fileUrl;
+		downloadElement.download = "drafts.txt";
+		downloadElement.style.display = "none";
+		document.body.appendChild(downloadElement);
+		downloadElement.click();
+		document.body.removeChild(downloadElement);
+	}
+
+	async importDrafts() {
+		const file = event.target.files[0];
+		const data = await DataController.readFile(file);
+
+		try {
+			JSON.parse(data);
+		} catch (e) {
+			this.draftImportInputErrorBox.classList.remove("hidden");
+			this.draftImportInputErrorBox.innerHTML = e.toString();
+			return;
+		}
+
+		DataController.saveData("picksAndBans", data);
+
+		if (this.draftImportInputErrorBox.classList.contains("hidden")) {
+			this.draftImportInputErrorBox.classList.remove("hidden");
+		}
+
+		this.sendDraftImportSignal();
+		this.sendProcessSignal();
 	}
 
 	toggleBorderColor() {

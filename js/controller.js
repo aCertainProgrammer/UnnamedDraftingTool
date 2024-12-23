@@ -17,12 +17,15 @@ export class Controller {
 		this.backend = backend;
 		this.firstProcess = true;
 		this.oldDraftNumber = 0;
+		this.draftsJustImported = false;
 	}
 	/**
 	 * Always call this once at the start of the program
 	 */
 	init() {
 		this.userInterface.sendProcessSignal = this.process.bind(this);
+		this.userInterface.sendDraftImportSignal =
+			this.receiveDraftImportSignal.bind(this);
 		this.userInterface.dataSource = "default_data";
 		const config = DataController.readConfig();
 		this.userInterface.config = config;
@@ -63,7 +66,11 @@ export class Controller {
 		if (picksAndBans.picks != undefined) picksAndBans = [];
 
 		if (this.oldDraftNumber == draftNumber && !this.firstProcess) {
-			picksAndBans[draftNumber] = this.scraper.getPicksAndBans();
+			if (this.draftsJustImported) {
+				this.draftsJustImported = false;
+			} else {
+				picksAndBans[draftNumber] = this.scraper.getPicksAndBans();
+			}
 		} else {
 			this.oldDraftNumber = draftNumber;
 		}
@@ -118,5 +125,9 @@ export class Controller {
 
 		this.userInterface.clearScreen();
 		this.userInterface.render(renderingData);
+	}
+
+	receiveDraftImportSignal() {
+		this.draftsJustImported = true;
 	}
 }
