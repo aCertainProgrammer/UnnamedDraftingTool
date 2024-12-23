@@ -132,6 +132,11 @@ If enabled, disables champions that were picked or banned in the previous draft
 
 Note that this removes invalid champions from already saved drafts - this is irreversible
 
+### Enable all champions in the last draft
+If enabled, the last draft in fearless mode has all champions available
+
+This setting only works when fearless mode is active and when the max draft amount is not 0 (unlimited) 
+
 ### Make new drafts blank
 If enabled, makes the new drafts blank when creating them
 
