@@ -169,29 +169,6 @@
 					</div>
 				</div>
 				<div class="setting-container">
-					<input
-						class="source-button"
-						id="blank-new-drafts-toggle"
-						type="button"
-						value="Make new drafts blank"
-					/>
-					<div class="settings-tooltip">
-						<p>
-							If enabled, makes the new drafts blank when creating
-							them
-						</p>
-						<p>
-							If disabled, the current draft is copied into the
-							newly created draft
-						</p>
-						<p>
-							Note that the existing drafts will not be overriden,
-							also this setting will not work when fearless mode
-							is active
-						</p>
-					</div>
-				</div>
-				<div class="setting-container">
 					<div class="bind-menu-item">
 						<label class="bind-menu-label" for="draft-limit-input"
 							>Max drafts (0 for unlimited)</label
@@ -202,6 +179,22 @@
 							value="0"
 							class="bind-menu-input"
 						/>
+					</div>
+				</div>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="enable-all-champions-in-last-draft-toggle"
+						type="button"
+						value="Enable all champions in the last draft"
+					/>
+					<div class="settings-tooltip">
+						<p>
+							If enabled, the last draft in fearless mode has all
+							champions available. This setting only works when
+							fearless mode is active and when the max draft
+							amount is not 0 (unlimited)
+						</p>
 					</div>
 				</div>
 				<div class="setting-container">
@@ -223,6 +216,29 @@
 						type="file"
 					/>
 					<div id="draft-import-input-error-box" class="hidden"></div>
+				</div>
+				<div class="setting-container">
+					<input
+						class="source-button"
+						id="blank-new-drafts-toggle"
+						type="button"
+						value="Make new drafts blank"
+					/>
+					<div class="settings-tooltip">
+						<p>
+							If enabled, makes the new drafts blank when creating
+							them
+						</p>
+						<p>
+							If disabled, the current draft is copied into the
+							newly created draft
+						</p>
+						<p>
+							Note that the existing drafts will not be overriden,
+							also this setting will not work when fearless mode
+							is active
+						</p>
+					</div>
 				</div>
 				<div class="setting-container">
 					<input

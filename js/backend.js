@@ -158,6 +158,14 @@ export class Backend {
 	filterFearlessMode(draftNumber, picksAndBans, data) {
 		const newData = [];
 		const invalidChampions = [];
+		const maxDrafts = localStorage.getItem("maxDraftNumber");
+		const config = DataController.readConfig();
+		let enableAllChampionsInTheLastDraft =
+			config.enableAllChampionsInTheLastDraft;
+
+		if (maxDrafts == 0 || maxDrafts == "") {
+			enableAllChampionsInTheLastDraft = false;
+		}
 
 		for (let i = 0; i < picksAndBans.length; i++) {
 			for (let j = 0; j < 10; j++) {
@@ -167,15 +175,29 @@ export class Backend {
 		}
 
 		for (let i = 0; i < data.length; i++) {
-			if (!invalidChampions.includes(data[i])) newData.push(data[i]);
+			if (
+				!invalidChampions.includes(data[i]) ||
+				(enableAllChampionsInTheLastDraft &&
+					draftNumber == maxDrafts - 1)
+			)
+				newData.push(data[i]);
 		}
 		return newData;
 	}
 
 	validateFearlessDrafts(picksAndBans) {
 		const invalidChampions = [];
+		const maxDrafts = localStorage.getItem("maxDraftNumber");
+		const config = DataController.readConfig();
+		let enableAllChampionsInTheLastDraft =
+			config.enableAllChampionsInTheLastDraft;
+
+		if (maxDrafts == 0 || maxDrafts == "") {
+			enableAllChampionsInTheLastDraft = false;
+		}
 
 		for (let i = 0; i < picksAndBans.length; i++) {
+			if (enableAllChampionsInTheLastDraft && i == maxDrafts - 1) break;
 			for (let j = 0; j < 10; j++) {
 				if (invalidChampions.includes(picksAndBans[i].picks[j])) {
 					picksAndBans[i].picks[j] = "";

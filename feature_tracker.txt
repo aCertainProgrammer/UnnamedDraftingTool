@@ -6,10 +6,10 @@ CURRENT WORK:
         - toggle copying the last draft into the new slot button << DONE
     c) add a fearless toggle to disable picks << DONE
         - have a disabledChampions array for every draft based on the drafts that came before it (in the backend probably) << DONE
-    d) add a toggle to allow all champions for last draft
+    d) add a toggle to allow all champions for last draft << DONE
     e) switch team colors for each subsequent draft (make it togglable)
     f) remove invalid champions from subsequent drafts << DONE
-    g) Add support for saving all drafts at once
+    g) Add support for saving all drafts at once << DONE?
 
 THEN:
 

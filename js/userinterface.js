@@ -154,8 +154,11 @@ export class UserInterface {
 		);
 		this.draftLimitInput = document.querySelector("#draft-limit-input");
 		let limit = localStorage.getItem("maxDraftNumber");
-		if (limit == null) limit = 0;
+		if (limit == null || limit == "null") limit = 0;
 		this.draftLimitInput.value = limit;
+		this.enableAllChampionsInTheLastDraftToggle = document.querySelector(
+			"#enable-all-champions-in-last-draft-toggle",
+		);
 		this.exportCurrentDraftsButton = document.querySelector(
 			"#export-current-drafts-button",
 		);
@@ -361,6 +364,10 @@ export class UserInterface {
 		this.draftLimitInput.addEventListener(
 			"input",
 			this.changeMaxDraftNumber.bind(this),
+		);
+		this.enableAllChampionsInTheLastDraftToggle.addEventListener(
+			"click",
+			this.toggleEnablingAllChampionsForLastDraft.bind(this),
 		);
 		this.exportCurrentDraftsButton.addEventListener(
 			"click",
@@ -930,6 +937,16 @@ export class UserInterface {
 		this.colorSettingsButtons();
 
 		DataController.saveConfig(this.config);
+	}
+
+	toggleEnablingAllChampionsForLastDraft() {
+		this.config.enableAllChampionsInTheLastDraft =
+			!this.config.enableAllChampionsInTheLastDraft;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+
+		this.sendProcessSignal();
 	}
 
 	exportDrafts() {
@@ -1902,6 +1919,7 @@ export class UserInterface {
 		const buttons = [
 			this.useZenModeToggle,
 			this.useFearlessModeToggle,
+			this.enableAllChampionsInTheLastDraftToggle,
 			this.makeNewDraftsBlankToggle,
 			this.colorBordersToggle,
 			this.saveDraftStateToggle,
@@ -1918,6 +1936,7 @@ export class UserInterface {
 		const config_settings = [
 			this.useZenMode,
 			this.config.useFearlessMode,
+			this.config.enableAllChampionsInTheLastDraft,
 			this.config.makeNewDraftsBlank,
 			this.config.colorBorders,
 			this.config.saveDraftState,
