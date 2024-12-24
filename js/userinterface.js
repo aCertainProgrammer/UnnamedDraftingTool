@@ -171,6 +171,9 @@ export class UserInterface {
 		this.draftImportInputErrorBox = document.querySelector(
 			"#draft-import-input-error-box",
 		);
+		this.clearAllDraftsButton = document.querySelector(
+			"#clear-all-drafts-button",
+		);
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -380,6 +383,10 @@ export class UserInterface {
 		this.importDraftsFileInput.addEventListener(
 			"input",
 			this.importDrafts.bind(this),
+		);
+		this.clearAllDraftsButton.addEventListener(
+			"click",
+			this.clearAllDrafts.bind(this),
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
@@ -1001,6 +1008,24 @@ export class UserInterface {
 		}
 
 		this.sendDraftImportSignal();
+		this.sendProcessSignal();
+	}
+
+	clearAllDrafts() {
+		const ok = window.confirm("Do you want to clear all drafts?");
+		if (!ok) return;
+
+		localStorage.removeItem("picksAndBans");
+
+		this.picks.forEach((current) => {
+			current.childNodes[1].dataset.champion = "";
+		});
+		this.bans.forEach((current) => {
+			current.childNodes[1].dataset.champion = "";
+		});
+
+		this.draftCounter.value = 1;
+
 		this.sendProcessSignal();
 	}
 

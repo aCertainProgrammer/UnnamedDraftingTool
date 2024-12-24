@@ -63,6 +63,7 @@ export class Controller {
 		const draftNumber = this.userInterface.getDraftNumber();
 
 		let picksAndBans = DataController.loadPicksAndBans();
+		if (picksAndBans == null) picksAndBans = [];
 		if (picksAndBans.picks != undefined) picksAndBans = [];
 
 		if (this.oldDraftNumber == draftNumber && !this.firstProcess) {
