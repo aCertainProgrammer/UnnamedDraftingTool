@@ -952,7 +952,24 @@ export class UserInterface {
 	exportDrafts() {
 		const drafts = DataController.loadPicksAndBans();
 
-		const blob = new Blob([JSON.stringify(drafts, null, 4)], {
+		let limited_drafts = [];
+
+		const maxDrafts = localStorage.getItem("maxDraftNumber");
+
+		if (
+			maxDrafts == 0 ||
+			maxDrafts == "" ||
+			maxDrafts == null ||
+			maxDrafts == "null"
+		) {
+			limited_drafts = drafts;
+		} else {
+			for (let i = 0; i < maxDrafts; i++) {
+				limited_drafts.push(drafts[i]);
+			}
+		}
+
+		const blob = new Blob([JSON.stringify(limited_drafts, null, 4)], {
 			type: "plain/text",
 		});
 		const fileUrl = URL.createObjectURL(blob);
