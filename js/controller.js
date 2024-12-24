@@ -76,12 +76,14 @@ export class Controller {
 		}
 
 		if (picksAndBans[draftNumber] == undefined) {
-			if (config.makeNewDraftsBlank == true)
-				picksAndBans.push({
-					picks: ["", "", "", "", "", "", "", "", "", ""],
-					bans: ["", "", "", "", "", "", "", "", "", ""],
-				});
-			else picksAndBans.push(this.scraper.getPicksAndBans());
+			while (picksAndBans[draftNumber] == undefined) {
+				if (config.makeNewDraftsBlank == true)
+					picksAndBans.push({
+						picks: ["", "", "", "", "", "", "", "", "", ""],
+						bans: ["", "", "", "", "", "", "", "", "", ""],
+					});
+				else picksAndBans.push(this.scraper.getPicksAndBans());
+			}
 		}
 
 		if (config.useFearlessMode == true) {
