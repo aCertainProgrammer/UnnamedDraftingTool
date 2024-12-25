@@ -1,6 +1,6 @@
 import { DataController } from "./datacontroller.js";
 import { Backend } from "./backend.js";
-import { capitalize } from "./util.js";
+import { capitalize, prettifyChampionName } from "./util.js";
 /**
  * A container for all UI-related events and rendering
  */
@@ -1744,7 +1744,7 @@ export class UserInterface {
 
 		const champ_name = document.createElement("label");
 		if (champion != "") {
-			champ_name.innerHTML = capitalize(champion);
+			champ_name.innerHTML = prettifyChampionName(champion);
 			div.appendChild(champ_name);
 		}
 

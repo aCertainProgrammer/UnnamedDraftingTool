@@ -867,7 +867,7 @@ body {
 	height: calc(1.1 * var(--complexDraftPreviewIconSize));
 	width: 50%;
 	border: var(--sourceButtonBorder);
-	font-size: 1rem;
+	font-size: 0.94rem;
 }
 
 .reverse-complex-draft-preview-icon-container {
@@ -880,7 +880,7 @@ body {
 	height: calc(1.1 * var(--complexDraftPreviewIconSize));
 	width: 50%;
 	border: var(--sourceButtonBorder);
-	font-size: 1rem;
+	font-size: 0.94rem;
 }
 
 .complex-draft-snapshot-container {
