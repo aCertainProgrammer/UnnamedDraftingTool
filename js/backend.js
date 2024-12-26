@@ -167,7 +167,7 @@ export class Backend {
 			enableAllChampionsInTheLastDraft = false;
 		}
 
-		for (let i = 0; i < picksAndBans.length; i++) {
+		for (let i = 0; i < draftNumber; i++) {
 			for (let j = 0; j < 10; j++) {
 				if (picksAndBans[i].picks[j] != "")
 					invalidChampions.push(picksAndBans[i].picks[j]);
