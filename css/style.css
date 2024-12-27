@@ -733,6 +733,13 @@ body {
 	background-color: var(--highlightedBackgroundColor);
 }
 
+:root[data-theme="dark"] {
+	#close-manual-button,
+	#go-to-top-button {
+		background-color: var(--sourceButtonBackgroundColor);
+	}
+}
+
 #welcome-screen {
 	display: flex;
 	flex-direction: column;
