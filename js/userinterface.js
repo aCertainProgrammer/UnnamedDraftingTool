@@ -6,6 +6,7 @@ import { capitalize, prettifyChampionName } from "./util.js";
  */
 export class UserInterface {
 	constructor(defaultPickIconPath, defaultBanIconPath, imagePath) {
+		this.draftCounterMaxLimit = 999;
 		this.defaultPickIconPath = defaultPickIconPath;
 		this.defaultBanIconPath = defaultBanIconPath;
 		this.imagePath = imagePath;
@@ -1518,6 +1519,8 @@ export class UserInterface {
 		) {
 			value = this.draftLimitInput.value;
 		}
+		if (value > this.draftCounterMaxLimit)
+			value = this.draftCounterMaxLimit;
 
 		this.draftCounter.value = value;
 
@@ -1528,6 +1531,8 @@ export class UserInterface {
 		if (isNaN(this.draftCounter.value) || this.draftCounter.value == "")
 			return;
 
+		if (this.draftCounter.value > this.draftCounterMaxLimit)
+			this.draftCounter.value = this.draftCounterMaxLimit;
 		this.changeMaxDraftNumber();
 		this.changeTeamColors();
 
