@@ -46,6 +46,15 @@ export class UserInterface {
 
 		this.allyEnemyColors = ["none", "B/R", "R/B"];
 		this.currentAllyEnemyColorsIndex = this.loadSavedAllyEnemyColors();
+		this.oddDraftsColors = localStorage.getItem("oddDraftsColors");
+		if (
+			this.oddDraftsColors == null &&
+			this.currentAllyEnemyColorsIndex != 0
+		) {
+			this.oddDraftsColors =
+				this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+			localStorage.setItem("oddDraftsColors", this.oddDraftsColors);
+		}
 		document.documentElement.dataset.allyEnemyColors =
 			this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
 
@@ -1520,8 +1529,45 @@ export class UserInterface {
 			return;
 
 		this.changeMaxDraftNumber();
+		this.changeTeamColors();
 
+		localStorage.setItem("draftNumber", this.draftCounter.value);
 		this.sendProcessSignal();
+	}
+
+	changeTeamColors() {
+		if (this.oddDraftsColors == null || this.oddDraftsColors == "null") {
+			return;
+		}
+
+		if (
+			this.draftCounter.value % 2 == 0 &&
+			this.oddDraftsColors ==
+				this.allyEnemyColors[this.currentAllyEnemyColorsIndex]
+		) {
+			if (this.currentAllyEnemyColorsIndex == 1) {
+				this.currentAllyEnemyColorsIndex = 2;
+			} else if (this.currentAllyEnemyColorsIndex == 2) {
+				this.currentAllyEnemyColorsIndex = 1;
+			}
+		} else if (
+			this.draftCounter.value % 2 != 0 &&
+			this.oddDraftsColors !=
+				this.allyEnemyColors[this.currentAllyEnemyColorsIndex]
+		) {
+			if (this.currentAllyEnemyColorsIndex == 1) {
+				this.currentAllyEnemyColorsIndex = 2;
+			} else if (this.currentAllyEnemyColorsIndex == 2) {
+				this.currentAllyEnemyColorsIndex = 1;
+			}
+		}
+
+		const colors = this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+		document.documentElement.dataset.allyEnemyColors = colors;
+		this.toggleAllyEnemyColorsButton.value = "Colors: " + colors;
+
+		localStorage.setItem("ally_enemy_colors", colors);
+		localStorage.setItem("oddDraftsColors", this.oddDraftsColors);
 	}
 
 	hideMiddleOverlay() {
@@ -1887,6 +1933,11 @@ export class UserInterface {
 		this.toggleAllyEnemyColorsButton.value = "Colors: " + colors;
 
 		localStorage.setItem("ally_enemy_colors", colors);
+
+		if (this.draftCounter.value % 2 != 0) {
+			this.oddDraftsColors = colors;
+			localStorage.setItem("oddDraftsColors", this.oddDraftsColors);
+		}
 	}
 
 	loadSavedAllyEnemyColors() {
@@ -1898,7 +1949,7 @@ export class UserInterface {
 			if (colors == this.allyEnemyColors[i]) return i;
 		}
 
-		console.log("Couldn't find the theme in loadSavedTheme()!");
+		console.log("Couldn't find the colors in loadSavedAllyEnemyColors()!");
 		return 0;
 	}
 

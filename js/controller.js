@@ -44,6 +44,12 @@ export class Controller {
 		DataController.saveConfig(config);
 		DataController.saveData("default_data", default_data);
 
+		const draft_number = localStorage.getItem("draftNumber");
+		if (draft_number != "null" && draft_number != null) {
+			this.userInterface.draftCounter.value = draft_number;
+			this.userInterface.openDraft();
+		}
+
 		if (!localStorage.getItem("welcome_screen_off")) {
 			this.userInterface.openWelcomeScreen();
 		} else {
