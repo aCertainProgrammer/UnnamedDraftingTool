@@ -155,6 +155,12 @@ export class Backend {
 		return filteredDrafts;
 	}
 
+	/**
+	 * @param {number} draftNumber - the currently used draft number
+	 * @param {object[]} picksAndBans - all drafts
+	 * @param {string[]} data - champions to be displayed in the central part
+	 * @returns {string[]} - a filtered list of champions to be displayed
+	 */
 	filterFearlessMode(draftNumber, picksAndBans, data) {
 		const newData = [];
 		const invalidChampions = [];
@@ -185,6 +191,10 @@ export class Backend {
 		return newData;
 	}
 
+	/**
+	 * @param {object[]} picksAndBans - all drafts to be validated in accordance to fearless rules
+	 * @returns {object[]} - validated drafts
+	 */
 	validateFearlessDrafts(picksAndBans) {
 		const invalidChampions = [];
 		const maxDrafts = localStorage.getItem("maxDraftNumber");

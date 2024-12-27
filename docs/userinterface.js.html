@@ -28,7 +28,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>import { DataController } from "./datacontroller.js";
 import { Backend } from "./backend.js";
-import { capitalize } from "./util.js";
+import { capitalize, prettifyChampionName } from "./util.js";
 /**
  * A container for all UI-related events and rendering
  */
@@ -46,6 +46,7 @@ export class UserInterface {
 		this.banIconPostfix = null;
 
 		this.sendProcessSignal = null;
+		this.sendDraftImportSignal = null;
 		this.dataSource = null;
 		this.config = null;
 		this.team = "all";
@@ -73,6 +74,15 @@ export class UserInterface {
 
 		this.allyEnemyColors = ["none", "B/R", "R/B"];
 		this.currentAllyEnemyColorsIndex = this.loadSavedAllyEnemyColors();
+		this.oddDraftsColors = localStorage.getItem("oddDraftsColors");
+		if (
+			this.oddDraftsColors == null &amp;&amp;
+			this.currentAllyEnemyColorsIndex != 0
+		) {
+			this.oddDraftsColors =
+				this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+			localStorage.setItem("oddDraftsColors", this.oddDraftsColors);
+		}
 		document.documentElement.dataset.allyEnemyColors =
 			this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
 
@@ -181,8 +191,26 @@ export class UserInterface {
 		);
 		this.draftLimitInput = document.querySelector("#draft-limit-input");
 		let limit = localStorage.getItem("maxDraftNumber");
-		if (limit == null) limit = 0;
+		if (limit == null || limit == "null") limit = 0;
 		this.draftLimitInput.value = limit;
+		this.enableAllChampionsInTheLastDraftToggle = document.querySelector(
+			"#enable-all-champions-in-last-draft-toggle",
+		);
+		this.exportCurrentDraftsButton = document.querySelector(
+			"#export-current-drafts-button",
+		);
+		this.importDraftsButton = document.querySelector(
+			"#import-drafts-button",
+		);
+		this.importDraftsFileInput = document.querySelector(
+			"#import-drafts-file-input",
+		);
+		this.draftImportInputErrorBox = document.querySelector(
+			"#draft-import-input-error-box",
+		);
+		this.clearAllDraftsButton = document.querySelector(
+			"#clear-all-drafts-button",
+		);
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -376,6 +404,26 @@ export class UserInterface {
 		this.draftLimitInput.addEventListener(
 			"input",
 			this.changeMaxDraftNumber.bind(this),
+		);
+		this.enableAllChampionsInTheLastDraftToggle.addEventListener(
+			"click",
+			this.toggleEnablingAllChampionsForLastDraft.bind(this),
+		);
+		this.exportCurrentDraftsButton.addEventListener(
+			"click",
+			this.exportDrafts.bind(this),
+		);
+		this.importDraftsButton.addEventListener(
+			"click",
+			this.clickInput.bind(this, this.importDraftsFileInput),
+		);
+		this.importDraftsFileInput.addEventListener(
+			"input",
+			this.importDrafts.bind(this),
+		);
+		this.clearAllDraftsButton.addEventListener(
+			"click",
+			this.clearAllDrafts.bind(this),
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
@@ -935,6 +983,89 @@ export class UserInterface {
 		DataController.saveConfig(this.config);
 	}
 
+	toggleEnablingAllChampionsForLastDraft() {
+		this.config.enableAllChampionsInTheLastDraft =
+			!this.config.enableAllChampionsInTheLastDraft;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+
+		this.sendProcessSignal();
+	}
+
+	exportDrafts() {
+		const drafts = DataController.loadPicksAndBans();
+
+		let limited_drafts = [];
+
+		const maxDrafts = localStorage.getItem("maxDraftNumber");
+
+		if (
+			maxDrafts == 0 ||
+			maxDrafts == "" ||
+			maxDrafts == null ||
+			maxDrafts == "null"
+		) {
+			limited_drafts = drafts;
+		} else {
+			for (let i = 0; i &lt; maxDrafts; i++) {
+				limited_drafts.push(drafts[i]);
+			}
+		}
+
+		const blob = new Blob([JSON.stringify(limited_drafts, null, 4)], {
+			type: "plain/text",
+		});
+		const fileUrl = URL.createObjectURL(blob);
+		const downloadElement = document.createElement("a");
+		downloadElement.href = fileUrl;
+		downloadElement.download = "drafts.txt";
+		downloadElement.style.display = "none";
+		document.body.appendChild(downloadElement);
+		downloadElement.click();
+		document.body.removeChild(downloadElement);
+	}
+
+	async importDrafts() {
+		const file = event.target.files[0];
+		const data = await DataController.readFile(file);
+
+		try {
+			JSON.parse(data);
+		} catch (e) {
+			this.draftImportInputErrorBox.classList.remove("hidden");
+			this.draftImportInputErrorBox.innerHTML = e.toString();
+			return;
+		}
+
+		DataController.saveData("picksAndBans", data);
+
+		if (this.draftImportInputErrorBox.classList.contains("hidden")) {
+			this.draftImportInputErrorBox.classList.remove("hidden");
+		}
+
+		this.sendDraftImportSignal();
+		this.sendProcessSignal();
+	}
+
+	clearAllDrafts() {
+		const ok = window.confirm("Do you want to clear all drafts?");
+		if (!ok) return;
+
+		localStorage.removeItem("picksAndBans");
+
+		this.picks.forEach((current) => {
+			current.childNodes[1].dataset.champion = "";
+		});
+		this.bans.forEach((current) => {
+			current.childNodes[1].dataset.champion = "";
+		});
+
+		this.draftCounter.value = 1;
+
+		this.sendProcessSignal();
+	}
+
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
 		this.colorSettingsButtons();
@@ -1426,8 +1557,45 @@ export class UserInterface {
 			return;
 
 		this.changeMaxDraftNumber();
+		this.changeTeamColors();
 
+		localStorage.setItem("draftNumber", this.draftCounter.value);
 		this.sendProcessSignal();
+	}
+
+	changeTeamColors() {
+		if (this.oddDraftsColors == null || this.oddDraftsColors == "null") {
+			return;
+		}
+
+		if (
+			this.draftCounter.value % 2 == 0 &amp;&amp;
+			this.oddDraftsColors ==
+				this.allyEnemyColors[this.currentAllyEnemyColorsIndex]
+		) {
+			if (this.currentAllyEnemyColorsIndex == 1) {
+				this.currentAllyEnemyColorsIndex = 2;
+			} else if (this.currentAllyEnemyColorsIndex == 2) {
+				this.currentAllyEnemyColorsIndex = 1;
+			}
+		} else if (
+			this.draftCounter.value % 2 != 0 &amp;&amp;
+			this.oddDraftsColors !=
+				this.allyEnemyColors[this.currentAllyEnemyColorsIndex]
+		) {
+			if (this.currentAllyEnemyColorsIndex == 1) {
+				this.currentAllyEnemyColorsIndex = 2;
+			} else if (this.currentAllyEnemyColorsIndex == 2) {
+				this.currentAllyEnemyColorsIndex = 1;
+			}
+		}
+
+		const colors = this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+		document.documentElement.dataset.allyEnemyColors = colors;
+		this.toggleAllyEnemyColorsButton.value = "Colors: " + colors;
+
+		localStorage.setItem("ally_enemy_colors", colors);
+		localStorage.setItem("oddDraftsColors", this.oddDraftsColors);
 	}
 
 	hideMiddleOverlay() {
@@ -1650,7 +1818,7 @@ export class UserInterface {
 
 		const champ_name = document.createElement("label");
 		if (champion != "") {
-			champ_name.innerHTML = capitalize(champion);
+			champ_name.innerHTML = prettifyChampionName(champion);
 			div.appendChild(champ_name);
 		}
 
@@ -1793,6 +1961,11 @@ export class UserInterface {
 		this.toggleAllyEnemyColorsButton.value = "Colors: " + colors;
 
 		localStorage.setItem("ally_enemy_colors", colors);
+
+		if (this.draftCounter.value % 2 != 0) {
+			this.oddDraftsColors = colors;
+			localStorage.setItem("oddDraftsColors", this.oddDraftsColors);
+		}
 	}
 
 	loadSavedAllyEnemyColors() {
@@ -1804,7 +1977,7 @@ export class UserInterface {
 			if (colors == this.allyEnemyColors[i]) return i;
 		}
 
-		console.log("Couldn't find the theme in loadSavedTheme()!");
+		console.log("Couldn't find the colors in loadSavedAllyEnemyColors()!");
 		return 0;
 	}
 
@@ -1867,6 +2040,7 @@ export class UserInterface {
 		const buttons = [
 			this.useZenModeToggle,
 			this.useFearlessModeToggle,
+			this.enableAllChampionsInTheLastDraftToggle,
 			this.makeNewDraftsBlankToggle,
 			this.colorBordersToggle,
 			this.saveDraftStateToggle,
@@ -1883,6 +2057,7 @@ export class UserInterface {
 		const config_settings = [
 			this.useZenMode,
 			this.config.useFearlessMode,
+			this.config.enableAllChampionsInTheLastDraft,
 			this.config.makeNewDraftsBlank,
 			this.config.colorBorders,
 			this.config.saveDraftState,
@@ -2332,7 +2507,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Dec 21 2024 08:54:15 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Dec 27 2024 15:23:05 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
