@@ -184,6 +184,9 @@ export class UserInterface {
 		this.clearAllDraftsButton = document.querySelector(
 			"#clear-all-drafts-button",
 		);
+		this.toggleTeamColorTogglingToggle = document.querySelector(
+			"#toggle-color-toggling-toggle",
+		);
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
@@ -397,6 +400,10 @@ export class UserInterface {
 		this.clearAllDraftsButton.addEventListener(
 			"click",
 			this.clearAllDrafts.bind(this),
+		);
+		this.toggleTeamColorTogglingToggle.addEventListener(
+			"click",
+			this.toggleTeamColorToggling.bind(this),
 		);
 		this.colorBordersToggle.addEventListener(
 			"click",
@@ -1039,6 +1046,16 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 
+	toggleTeamColorToggling() {
+		this.config.toggleTeamColorsBetweenDrafts =
+			!this.config.toggleTeamColorsBetweenDrafts;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+
+		this.sendProcessSignal();
+	}
+
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
 		this.colorSettingsButtons();
@@ -1534,7 +1551,21 @@ export class UserInterface {
 		if (this.draftCounter.value > this.draftCounterMaxLimit)
 			this.draftCounter.value = this.draftCounterMaxLimit;
 		this.changeMaxDraftNumber();
-		this.changeTeamColors();
+
+		if (this.config.toggleTeamColorsBetweenDrafts == true) {
+			this.changeTeamColors();
+		} else if (this.draftCounter.value % 2 == 0) {
+			const colors =
+				this.allyEnemyColors[this.currentAllyEnemyColorsIndex];
+			if (colors == "B/R") {
+				this.oddDraftsColors = "R/B";
+			} else if (colors == "R/B") {
+				this.oddDraftsColors = "B/R";
+			} else if (colors == "none") {
+				this.oddDraftsColors = null;
+			}
+			localStorage.setItem("oddDraftsColors", this.oddDraftsColors);
+		}
 
 		localStorage.setItem("draftNumber", this.draftCounter.value);
 		this.sendProcessSignal();
@@ -2019,6 +2050,7 @@ export class UserInterface {
 			this.useFearlessModeToggle,
 			this.enableAllChampionsInTheLastDraftToggle,
 			this.makeNewDraftsBlankToggle,
+			this.toggleTeamColorTogglingToggle,
 			this.colorBordersToggle,
 			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
@@ -2036,6 +2068,7 @@ export class UserInterface {
 			this.config.useFearlessMode,
 			this.config.enableAllChampionsInTheLastDraft,
 			this.config.makeNewDraftsBlank,
+			this.config.toggleTeamColorsBetweenDrafts,
 			this.config.colorBorders,
 			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,

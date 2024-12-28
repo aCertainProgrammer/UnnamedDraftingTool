@@ -142,6 +142,9 @@ Note that the existing drafts will not be overriden, also this setting will not 
 ### Max drafts
 If the value is not 0 or empty, does not allow for going beyond the specified number
 
+### Toggle team colors between drafts
+If enabled, toggles the team colors between subsequent drafts 
+
 ### Color champion borders
 This colors the borders of the champions depending on which team they belong to:
 - Green for ally champions

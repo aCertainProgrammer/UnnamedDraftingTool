@@ -66,6 +66,7 @@ export class DataController {
 	 * @property {bool} useFearlessMode
 	 * @property {bool} enableAllChampionsInTheLastDraft
 	 * @property {bool} makeNewDraftsBlank
+	 * @property {bool} toggleTeamColorsBetweenDrafts
 	 * @property {bool} colorBorders
 	 * @property {bool} saveDraftState
 	 * @property {bool} loadUserDataOnProgramStart
@@ -115,6 +116,7 @@ export class DataController {
 			useFearlessMode: false,
 			enableAllChampionsInTheLastDraft: false,
 			makeNewDraftsBlank: true,
+			toggleTeamColorsBetweenDrafts: true,
 			colorBorders: false,
 			saveDraftState: true,
 			loadUserDataOnProgramStart: false,
@@ -131,6 +133,7 @@ export class DataController {
 			"useFearlessMode",
 			"enableAllChampionsInTheLastDraft",
 			"makeNewDraftsBlank",
+			"toggleTeamColorsBetweenDrafts",
 			"colorBorders",
 			"saveDraftState",
 			"loadUserDataOnProgramStart",
