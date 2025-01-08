@@ -847,6 +847,8 @@ export class UserInterface {
 		event.preventDefault();
 		event.stopPropagation();
 
+		if (event.target.dataset.champion == null) return;
+
 		const replacedChampion = event.target.dataset.champion;
 		this.recentlyDragged.dataset.champion = replacedChampion;
 
