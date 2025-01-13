@@ -2028,6 +2028,11 @@ export class UserInterface {
 
 		event.dataTransfer.setDragImage(dragImage, width / 2, height / 2);
 
+		if (
+			this.selectionData.selectedChampion == event.target.dataset.champion
+		) {
+			return;
+		}
 		this.selectChampion(event);
 	}
 
