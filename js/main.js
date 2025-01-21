@@ -2,7 +2,7 @@ import { Backend } from "./backend.js";
 import { Controller } from "./controller.js";
 import { Scraper } from "./scraper.js";
 import { UserInterface } from "./userinterface.js";
-import ZeroMd, { STYLES } from "../node_modules/zero-md/dist/index.js";
+import ZeroMd, { STYLES } from "https://cdn.jsdelivr.net/npm/zero-md@3";
 
 const controller = new Controller(
 	new Scraper(".champion-pick", ".champion-ban"),
