@@ -1001,7 +1001,7 @@ export class UserInterface {
 		const fileUrl = URL.createObjectURL(blob);
 		const downloadElement = document.createElement("a");
 		downloadElement.href = fileUrl;
-		downloadElement.download = "drafts.txt";
+		downloadElement.download = "drafts.json";
 		downloadElement.style.display = "none";
 		document.body.appendChild(downloadElement);
 		downloadElement.click();
@@ -1892,7 +1892,7 @@ export class UserInterface {
 		const fileUrl = URL.createObjectURL(blob);
 		const downloadElement = document.createElement("a");
 		downloadElement.href = fileUrl;
-		downloadElement.download = "snapshots.txt";
+		downloadElement.download = "snapshots.json";
 		downloadElement.style.display = "none";
 		document.body.appendChild(downloadElement);
 		downloadElement.click();
