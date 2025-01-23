@@ -117,6 +117,7 @@ export const default_data = JSON.stringify({
 			"lucian",
 			"lux",
 			"malzahar",
+			"mel",
 			"naafiri",
 			"neeko",
 			"orianna",
