@@ -397,6 +397,7 @@ The current list of all champions:
 "malzahar",
 "maokai",
 "masteryi",
+"mel",
 "milio",
 "missfortune",
 "mordekaiser",
