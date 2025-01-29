@@ -322,6 +322,7 @@ The current list of all champions:
 "aatrox",
 "ahri",
 "akali",
+"akshan",
 "alistar",
 "ambessa",
 "amumu",
@@ -362,6 +363,7 @@ The current list of all champions:
 "graves",
 "gwen",
 "hecarim",
+"heimerdinger",
 "hwei",
 "illaoi",
 "irelia",
@@ -381,6 +383,7 @@ The current list of all champions:
 "kayle",
 "kayn",
 "kennen",
+"khazix",
 "kindred",
 "kled",
 "kogmaw",
@@ -416,6 +419,7 @@ The current list of all champions:
 "ornn",
 "pantheon",
 "poppy",
+"pyke",
 "qiyana",
 "quinn",
 "rakan",
@@ -484,7 +488,7 @@ The current list of all champions:
 "ziggs",
 "zilean",
 "zoe",
-"zyra"
+"zyra",
 ```
 
 ---

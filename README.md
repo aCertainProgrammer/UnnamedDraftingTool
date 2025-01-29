@@ -24,6 +24,7 @@ Feel free to contact me by:
 |[Draft snapshots](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#draft-snapshots)|
 |[Custom data input](https://github.com/aCertainProgrammer/UnnamedDraftingTool?tab=readme-ov-file#custom-data-input)|
 
+
 ## Running the program 
 
 ### On the website
@@ -325,6 +326,7 @@ The current list of all champions:
 "aatrox",
 "ahri",
 "akali",
+"akshan",
 "alistar",
 "ambessa",
 "amumu",
@@ -365,6 +367,7 @@ The current list of all champions:
 "graves",
 "gwen",
 "hecarim",
+"heimerdinger",
 "hwei",
 "illaoi",
 "irelia",
@@ -384,6 +387,7 @@ The current list of all champions:
 "kayle",
 "kayn",
 "kennen",
+"khazix",
 "kindred",
 "kled",
 "kogmaw",
@@ -419,6 +423,7 @@ The current list of all champions:
 "ornn",
 "pantheon",
 "poppy",
+"pyke",
 "qiyana",
 "quinn",
 "rakan",
@@ -487,10 +492,11 @@ The current list of all champions:
 "ziggs",
 "zilean",
 "zoe",
-"zyra"
+"zyra",
 ```
 
 ---
 
 UnnamedDraftingTool isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc.
 UnnamedDraftingTool was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.
+
