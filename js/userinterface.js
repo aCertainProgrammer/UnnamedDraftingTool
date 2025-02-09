@@ -190,9 +190,6 @@ export class UserInterface {
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
-		this.saveDraftStateToggle = document.querySelector(
-			"#save-draft-state-toggle",
-		);
 		this.dataSourceOnLoadToggle = document.querySelector(
 			"#load-user-data-on-program-load-toggle",
 		);
@@ -408,10 +405,6 @@ export class UserInterface {
 		this.colorBordersToggle.addEventListener(
 			"click",
 			this.toggleBorderColor.bind(this),
-		);
-		this.saveDraftStateToggle.addEventListener(
-			"click",
-			this.toggleSavingDraftState.bind(this),
 		);
 		this.dataSourceOnLoadToggle.addEventListener(
 			"click",
@@ -1060,15 +1053,6 @@ export class UserInterface {
 
 	toggleBorderColor() {
 		this.config.colorBorders = !this.config.colorBorders;
-		this.colorSettingsButtons();
-
-		DataController.saveConfig(this.config);
-
-		this.sendProcessSignal();
-	}
-
-	toggleSavingDraftState() {
-		this.config.saveDraftState = !this.config.saveDraftState;
 		this.colorSettingsButtons();
 
 		DataController.saveConfig(this.config);
@@ -2059,7 +2043,6 @@ export class UserInterface {
 			this.makeNewDraftsBlankToggle,
 			this.toggleTeamColorTogglingToggle,
 			this.colorBordersToggle,
-			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
 			this.draftSnapshotDisplayToggle,
@@ -2077,7 +2060,6 @@ export class UserInterface {
 			this.config.makeNewDraftsBlank,
 			this.config.toggleTeamColorsBetweenDrafts,
 			this.config.colorBorders,
-			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
 			this.config.useSimpleSnapshotDisplay,

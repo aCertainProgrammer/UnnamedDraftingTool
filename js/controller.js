@@ -97,11 +97,7 @@ export class Controller {
 			picksAndBans = this.backend.validateFearlessDrafts(picksAndBans);
 		}
 
-		if (config.saveDraftState == true) {
-			DataController.saveData("picksAndBans", picksAndBans);
-		} else {
-			DataController.saveData("picksAndBans", JSON.stringify([]));
-		}
+		DataController.saveData("picksAndBans", picksAndBans);
 
 		/**
 		 * @typedef Request
