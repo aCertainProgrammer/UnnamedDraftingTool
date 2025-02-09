@@ -1656,6 +1656,15 @@ export class UserInterface {
 			page_number = 1;
 		}
 
+		const query = this.middleOverlaySearchBar.value;
+		if (query != "") {
+			saved_drafts = Backend.filterDrafts(saved_drafts, query);
+			if (saved_drafts.length < item_count * (page_number - 1)) {
+				page_number = 1;
+				this.draftSnapshotsPaginationPageCounter.value = 1;
+			}
+		}
+
 		const lower_index =
 			item_count == saved_drafts.length
 				? 0
@@ -1664,10 +1673,6 @@ export class UserInterface {
 			item_count == saved_drafts.length
 				? item_count
 				: item_count * page_number;
-
-		const query = this.middleOverlaySearchBar.value;
-		if (query != "")
-			saved_drafts = Backend.filterDrafts(saved_drafts, query);
 
 		for (let i = lower_index; i < upperIndex; i++) {
 			const draft = saved_drafts[i];
