@@ -149,6 +149,7 @@ export const default_data = JSON.stringify({
 			"aphelios",
 			"ashe",
 			"caitlyn",
+			"corki",
 			"draven",
 			"ezreal",
 			"jhin",
