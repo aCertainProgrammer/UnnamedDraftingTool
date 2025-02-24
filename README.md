@@ -13,6 +13,8 @@ Feel free to contact me by:
 2. Adding me on discord: rycer__
 3. Sending me an email: a_certain_programmer@proton.me
 
+Also, check out my tierlist maker: https://acertainprogrammer.github.io/UnnamedTierlistMaker/
+
 # Manual
 
 |Table of contents|

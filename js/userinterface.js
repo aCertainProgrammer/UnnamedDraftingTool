@@ -190,9 +190,6 @@ export class UserInterface {
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
-		this.saveDraftStateToggle = document.querySelector(
-			"#save-draft-state-toggle",
-		);
 		this.dataSourceOnLoadToggle = document.querySelector(
 			"#load-user-data-on-program-load-toggle",
 		);
@@ -408,10 +405,6 @@ export class UserInterface {
 		this.colorBordersToggle.addEventListener(
 			"click",
 			this.toggleBorderColor.bind(this),
-		);
-		this.saveDraftStateToggle.addEventListener(
-			"click",
-			this.toggleSavingDraftState.bind(this),
 		);
 		this.dataSourceOnLoadToggle.addEventListener(
 			"click",
@@ -1067,15 +1060,6 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 
-	toggleSavingDraftState() {
-		this.config.saveDraftState = !this.config.saveDraftState;
-		this.colorSettingsButtons();
-
-		DataController.saveConfig(this.config);
-
-		this.sendProcessSignal();
-	}
-
 	toggleDataSourceOnLoad() {
 		this.config.loadUserDataOnProgramStart =
 			!this.config.loadUserDataOnProgramStart;
@@ -1672,6 +1656,15 @@ export class UserInterface {
 			page_number = 1;
 		}
 
+		const query = this.middleOverlaySearchBar.value;
+		if (query != "") {
+			saved_drafts = Backend.filterDrafts(saved_drafts, query);
+			if (saved_drafts.length < item_count * (page_number - 1)) {
+				page_number = 1;
+				this.draftSnapshotsPaginationPageCounter.value = 1;
+			}
+		}
+
 		const lower_index =
 			item_count == saved_drafts.length
 				? 0
@@ -1680,10 +1673,6 @@ export class UserInterface {
 			item_count == saved_drafts.length
 				? item_count
 				: item_count * page_number;
-
-		const query = this.middleOverlaySearchBar.value;
-		if (query != "")
-			saved_drafts = Backend.filterDrafts(saved_drafts, query);
 
 		for (let i = lower_index; i < upperIndex; i++) {
 			const draft = saved_drafts[i];
@@ -2059,7 +2048,6 @@ export class UserInterface {
 			this.makeNewDraftsBlankToggle,
 			this.toggleTeamColorTogglingToggle,
 			this.colorBordersToggle,
-			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
 			this.draftSnapshotDisplayToggle,
@@ -2077,7 +2065,6 @@ export class UserInterface {
 			this.config.makeNewDraftsBlank,
 			this.config.toggleTeamColorsBetweenDrafts,
 			this.config.colorBorders,
-			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
 			this.config.useSimpleSnapshotDisplay,
