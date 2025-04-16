@@ -220,6 +220,9 @@ export class UserInterface {
 		this.useSmallBanIconsToggle = document.querySelector(
 			"#use-small-bans-toggle",
 		);
+		this.useColorGradientToggle = document.querySelector(
+			"#use-color-gradient-toggle",
+		);
 		this.settingsMenu = document.querySelector("#settings-menu");
 		this.enterSettingsButton = document.querySelector(
 			"#enter-settings-button",
@@ -440,6 +443,10 @@ export class UserInterface {
 		this.useSmallBanIconsToggle.addEventListener(
 			"click",
 			this.toggleBanIcons.bind(this),
+		);
+		this.useColorGradientToggle.addEventListener(
+			"click",
+			this.toggleColorGradient.bind(this),
 		);
 		document.addEventListener(
 			"keydown",
@@ -1161,6 +1168,19 @@ export class UserInterface {
 
 		this.setIcons();
 		this.sendProcessSignal();
+	}
+
+	toggleColorGradient() {
+		this.config.useColorGradient = !this.config.useColorGradient;
+		this.colorSettingsButtons();
+
+		if (this.config.useColorGradient == true) {
+			document.documentElement.dataset.gradient = "show";
+		} else {
+			document.documentElement.dataset.gradient = "hide";
+		}
+
+		DataController.saveConfig(this.config);
 	}
 
 	processKeyboardInput(event) {
@@ -2082,6 +2102,7 @@ export class UserInterface {
 			this.useSmallPickIconsToggle,
 			this.useSmallChampionIconsToggle,
 			this.useSmallBanIconsToggle,
+			this.useColorGradientToggle,
 		];
 		const config_settings = [
 			this.useZenMode,
@@ -2100,6 +2121,7 @@ export class UserInterface {
 			this.config.useSmallPickIcons,
 			this.config.useSmallChampionIcons,
 			this.config.useSmallBanIcons,
+			this.config.useColorGradient,
 		];
 
 		for (let i = 0; i < buttons.length; i++) {

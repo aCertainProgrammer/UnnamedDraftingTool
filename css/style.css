@@ -22,6 +22,20 @@
 	font-family: Helvetica, Arial, sans-serif;
 }
 
+:root[data-gradient="show"] {
+	body {
+		background:
+			linear-gradient(
+				90deg,
+				transparent,
+				rgb(0 0 255 / 20%) 0%,
+				var(--bodyBackgroundColor) 50%,
+				rgb(255 0 0/ 20%) 100%
+			),
+			var(--bodyBackgroundColor);
+	}
+}
+
 :root[data-mode="super-compact"] {
 	#champions-container {
 		display: none !important;

@@ -40,6 +40,12 @@ export class Controller {
 			else document.documentElement.dataset.mode = "wide";
 		}
 
+		if (config.useColorGradient == true) {
+			document.documentElement.dataset.gradient = "show";
+		} else {
+			document.documentElement.dataset.gradient = "hide";
+		}
+
 		if (config.loadUserDataOnProgramStart == true) {
 			const user_data = DataController.loadData("user_data", "none");
 			if (user_data != -1) {
