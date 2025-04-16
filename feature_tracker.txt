@@ -1,16 +1,14 @@
 CURRENT WORK:
 
-- make teams switching colors togglable
+- add super compact mode
 
 THEN:
 
+- add coloring to draft sides
+
 SHORT IDEAS:
 
-- consider tooltips or something like that for binds
-
 LONG IDEAS:
-
-- allow data presets for snapshots and data
 
 BUGS:
 

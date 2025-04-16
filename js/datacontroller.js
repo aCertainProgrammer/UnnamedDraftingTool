@@ -74,6 +74,8 @@ export class DataController {
 	 * @property {bool} useSimpleSnapshotDisplay
 	 * @property {bool} appendToDraftSnapshots
 	 * @property {bool} useLegacySearch
+	 * @property {bool} useSuperCompactMode
+	 * @property {bool} useCompactMode
 	 * @property {bool} useSmallPickIcons
 	 * @property {bool} useSmallChampionIcons
 	 * @property {bool} useSmallBanIcons
@@ -123,6 +125,7 @@ export class DataController {
 			useSimpleSnapshotDisplay: false,
 			appendToDraftSnapshots: true,
 			useLegacySearch: false,
+			useSuperCompactMode: false,
 			useCompactMode: true,
 			useSmallPickIcons: false,
 			useSmallBanIcons: true,
@@ -139,6 +142,7 @@ export class DataController {
 			"useSimpleSnapshotDisplay",
 			"appendToDraftSnapshots",
 			"useLegacySearch",
+			"useSuperCompactMode",
 			"useCompactMode",
 			"useSmallPickIcons",
 			"useSmallBanIcons",

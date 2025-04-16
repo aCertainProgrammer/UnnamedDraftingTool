@@ -205,6 +205,9 @@ export class UserInterface {
 		this.draftSnapshotDisplayToggle = document.querySelector(
 			"#draft-snapshot-display-toggle",
 		);
+		this.useSuperCompactModeToggle = document.querySelector(
+			"#use-super-compact-mode-toggle",
+		);
 		this.useCompactModeToggle = document.querySelector(
 			"#use-compact-mode-toggle",
 		);
@@ -417,6 +420,10 @@ export class UserInterface {
 		this.draftSnapshotDisplayToggle.addEventListener(
 			"click",
 			this.toggleDraftSnapshotDisplay.bind(this),
+		);
+		this.useSuperCompactModeToggle.addEventListener(
+			"click",
+			this.toggleSuperCompactMode.bind(this),
 		);
 		this.useCompactModeToggle.addEventListener(
 			"click",
@@ -1075,13 +1082,30 @@ export class UserInterface {
 		DataController.saveConfig(this.config);
 	}
 
+	toggleSuperCompactMode() {
+		this.config.useSuperCompactMode = !this.config.useSuperCompactMode;
+		this.colorSettingsButtons();
+
+		if (this.config.useSuperCompactMode == true) {
+			document.documentElement.dataset.mode = "super-compact";
+		} else {
+			if (this.config.useCompactMode == true) {
+				document.documentElement.dataset.mode = "compact";
+			} else document.documentElement.dataset.mode = "wide";
+		}
+
+		DataController.saveConfig(this.config);
+	}
+
 	toggleCompactMode() {
 		this.config.useCompactMode = !this.config.useCompactMode;
 		this.colorSettingsButtons();
 
-		if (this.config.useCompactMode == true)
-			document.documentElement.dataset.mode = "compact";
-		else document.documentElement.dataset.mode = "wide";
+		if (!this.config.useSuperCompactMode == true) {
+			if (this.config.useCompactMode == true)
+				document.documentElement.dataset.mode = "compact";
+			else document.documentElement.dataset.mode = "wide";
+		}
 
 		DataController.saveConfig(this.config);
 	}
@@ -2053,6 +2077,7 @@ export class UserInterface {
 			this.draftSnapshotDisplayToggle,
 			this.toggleAppendingToDraftSnapshotsButton,
 			this.toggleSearchModeButton,
+			this.useSuperCompactModeToggle,
 			this.useCompactModeToggle,
 			this.useSmallPickIconsToggle,
 			this.useSmallChampionIconsToggle,
@@ -2070,6 +2095,7 @@ export class UserInterface {
 			this.config.useSimpleSnapshotDisplay,
 			this.config.appendToDraftSnapshots,
 			this.config.useLegacySearch,
+			this.config.useSuperCompactMode,
 			this.config.useCompactMode,
 			this.config.useSmallPickIcons,
 			this.config.useSmallChampionIcons,

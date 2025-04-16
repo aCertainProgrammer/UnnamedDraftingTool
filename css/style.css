@@ -22,6 +22,38 @@
 	font-family: Helvetica, Arial, sans-serif;
 }
 
+:root[data-mode="super-compact"] {
+	#champions-container {
+		display: none !important;
+	}
+
+	.bans {
+		justify-content: center !important;
+	}
+
+	#blue-team-bans {
+		justify-content: end;
+	}
+	#red-team-bans {
+		justify-content: start;
+	}
+
+	.utils {
+		display: none !important;
+	}
+	--championsContainerWidth: 100%;
+	--championContainerPadding: 4px 40px;
+	--notBansWidth: 60%;
+	--notBansMinWidth: 0px;
+	--bansWidth: 60%;
+	--headerWidth: 68%;
+	--roleIconMaxWidth: 40px;
+	--roleIconMaxHeight: var(--roleIconMaxWidth);
+	--teamIconMaxWidth: 40px;
+	--teamIconMaxHeight: 40px;
+	--width: 1115px;
+}
+
 :root[data-mode="compact"] {
 	--championsContainerWidth: 100%;
 	--championContainerPadding: 4px 40px;
@@ -69,7 +101,8 @@
 }
 
 @media screen and (max-width: 1728px) {
-	:root[data-mode="compact"] {
+	:root[data-mode="compact"],
+	:root[data-mode="super-compact"] {
 		.team-selection#teams-container {
 			display: none !important;
 		}
@@ -83,6 +116,13 @@
 @media screen and (max-width: 1394px) {
 	:root[data-mode="compact"] {
 		.role-selection {
+			display: none !important;
+		}
+	}
+
+	:root[data-mode="super-compact"] {
+		#input_user_data,
+		#default_data {
 			display: none !important;
 		}
 	}
