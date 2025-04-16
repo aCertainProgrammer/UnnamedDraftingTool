@@ -28,9 +28,9 @@
 			linear-gradient(
 				90deg,
 				transparent,
-				rgb(0 0 255 / 20%) 0%,
+				rgb(0 0 255 / 15%) 0%,
 				var(--bodyBackgroundColor) 50%,
-				rgb(255 0 0/ 20%) 100%
+				rgb(255 0 0/ 15%) 100%
 			),
 			var(--bodyBackgroundColor);
 	}
