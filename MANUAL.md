@@ -483,6 +483,7 @@ The current list of all champions:
 "yasuo",
 "yone",
 "yorick",
+"yunara",
 "yuumi",
 "zac",
 "zed",

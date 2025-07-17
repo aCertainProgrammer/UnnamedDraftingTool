@@ -50,6 +50,7 @@ export const default_data = JSON.stringify({
 			"volibear",
 			"yone",
 			"yorick",
+			"yunara",
 		],
 		jungle: [
 			"amumu",
@@ -141,6 +142,7 @@ export const default_data = JSON.stringify({
 			"xerath",
 			"yasuo",
 			"yone",
+			"yunara",
 			"zed",
 			"ziggs",
 			"zoe",
@@ -168,6 +170,7 @@ export const default_data = JSON.stringify({
 			"varus",
 			"vayne",
 			"xayah",
+			"yunara",
 			"zeri",
 			"ziggs",
 		],

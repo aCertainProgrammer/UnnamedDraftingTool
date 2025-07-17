@@ -1,6 +1,22 @@
 import os
 from PIL import Image
 
+def normalize_filename(name: str) -> str:
+    # Remove apostrophes and spaces
+    name = name.replace("'", "").replace(" ", "")
+
+    # Manual mapping overrides (case-insensitive match)
+    name_map = {
+        "monkeyking": "Wukong",
+        "jarvaniv": "Jarvan"
+    }
+
+    key = name.lower()
+    if key in name_map:
+        return name_map[key]
+
+    # Default formatting: capitalize first, lowercase the rest
+    return name[0] + name[1:].lower() if len(name) > 1 else name.upper()
 
 # Centered
 input_directory = "./centered/"  
@@ -17,11 +33,13 @@ for filename in os.listdir(input_directory):
         input_image_path = os.path.join(input_directory, filename)
 
         img = Image.open(input_image_path)
-
         cropped_img = img.crop(crop_box)
-        resized_img = cropped_img.resize(target_size, Image.ANTIALIAS)
+        resized_img = cropped_img.resize(target_size)
 
-        output_image_path = os.path.join(output_directory, f"{os.path.splitext(filename)[0]}.webp")
+        base_name = os.path.splitext(filename)[0]
+        normalized_name = normalize_filename(base_name)
+        output_image_path = os.path.join(output_directory, f"{normalized_name}.webp")
+
         resized_img.save(output_image_path, format="WEBP", quality=85)
 
 print("Processing completed for all centered images.")
@@ -40,10 +58,12 @@ for filename in os.listdir(input_directory):
         input_image_path = os.path.join(input_directory, filename)
 
         img = Image.open(input_image_path)
+        resized_img = img.resize(target_size)
 
-        resized_img = img.resize(target_size, Image.ANTIALIAS)
+        base_name = os.path.splitext(filename)[0]
+        normalized_name = normalize_filename(base_name)
+        output_image_path = os.path.join(output_directory, f"{normalized_name}.webp")
 
-        output_image_path = os.path.join(output_directory, f"{os.path.splitext(filename)[0]}.webp")
         resized_img.save(output_image_path, format="WEBP", quality=85)
 
 print("Processing completed for all small images.")
@@ -62,10 +82,12 @@ for filename in os.listdir(input_directory):
         input_image_path = os.path.join(input_directory, filename)
 
         img = Image.open(input_image_path)
+        resized_img = img.resize(target_size)
 
-        resized_img = img.resize(target_size, Image.ANTIALIAS)
+        base_name = os.path.splitext(filename)[0]
+        normalized_name = normalize_filename(base_name)
+        output_image_path = os.path.join(output_directory, f"{normalized_name}.webp")
 
-        output_image_path = os.path.join(output_directory, f"{os.path.splitext(filename)[0]}.webp")
         resized_img.save(output_image_path, format="WEBP", quality=85)
 
 print("Processing completed for all tiled images.")
