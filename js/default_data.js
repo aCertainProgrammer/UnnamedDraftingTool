@@ -78,6 +78,7 @@ export const default_data = JSON.stringify({
 			"nocturne",
 			"nunu",
 			"olaf",
+			"pantheon",
 			"poppy",
 			"rammus",
 			"reksai",
