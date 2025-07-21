@@ -218,9 +218,6 @@ export class UserInterface {
 		this.colorBordersToggle = document.querySelector(
 			"#color-borders-toggle",
 		);
-		this.saveDraftStateToggle = document.querySelector(
-			"#save-draft-state-toggle",
-		);
 		this.dataSourceOnLoadToggle = document.querySelector(
 			"#load-user-data-on-program-load-toggle",
 		);
@@ -236,6 +233,9 @@ export class UserInterface {
 		this.draftSnapshotDisplayToggle = document.querySelector(
 			"#draft-snapshot-display-toggle",
 		);
+		this.useSuperCompactModeToggle = document.querySelector(
+			"#use-super-compact-mode-toggle",
+		);
 		this.useCompactModeToggle = document.querySelector(
 			"#use-compact-mode-toggle",
 		);
@@ -247,6 +247,9 @@ export class UserInterface {
 		);
 		this.useSmallBanIconsToggle = document.querySelector(
 			"#use-small-bans-toggle",
+		);
+		this.useColorGradientToggle = document.querySelector(
+			"#use-color-gradient-toggle",
 		);
 		this.settingsMenu = document.querySelector("#settings-menu");
 		this.enterSettingsButton = document.querySelector(
@@ -437,10 +440,6 @@ export class UserInterface {
 			"click",
 			this.toggleBorderColor.bind(this),
 		);
-		this.saveDraftStateToggle.addEventListener(
-			"click",
-			this.toggleSavingDraftState.bind(this),
-		);
 		this.dataSourceOnLoadToggle.addEventListener(
 			"click",
 			this.toggleDataSourceOnLoad.bind(this),
@@ -452,6 +451,10 @@ export class UserInterface {
 		this.draftSnapshotDisplayToggle.addEventListener(
 			"click",
 			this.toggleDraftSnapshotDisplay.bind(this),
+		);
+		this.useSuperCompactModeToggle.addEventListener(
+			"click",
+			this.toggleSuperCompactMode.bind(this),
 		);
 		this.useCompactModeToggle.addEventListener(
 			"click",
@@ -468,6 +471,10 @@ export class UserInterface {
 		this.useSmallBanIconsToggle.addEventListener(
 			"click",
 			this.toggleBanIcons.bind(this),
+		);
+		this.useColorGradientToggle.addEventListener(
+			"click",
+			this.toggleColorGradient.bind(this),
 		);
 		document.addEventListener(
 			"keydown",
@@ -875,6 +882,8 @@ export class UserInterface {
 		event.preventDefault();
 		event.stopPropagation();
 
+		if (event.target.dataset.champion == null) return;
+
 		const replacedChampion = event.target.dataset.champion;
 		this.recentlyDragged.dataset.champion = replacedChampion;
 
@@ -1027,7 +1036,7 @@ export class UserInterface {
 		const fileUrl = URL.createObjectURL(blob);
 		const downloadElement = document.createElement("a");
 		downloadElement.href = fileUrl;
-		downloadElement.download = "drafts.txt";
+		downloadElement.download = "drafts.json";
 		downloadElement.style.display = "none";
 		document.body.appendChild(downloadElement);
 		downloadElement.click();
@@ -1093,15 +1102,6 @@ export class UserInterface {
 		this.sendProcessSignal();
 	}
 
-	toggleSavingDraftState() {
-		this.config.saveDraftState = !this.config.saveDraftState;
-		this.colorSettingsButtons();
-
-		DataController.saveConfig(this.config);
-
-		this.sendProcessSignal();
-	}
-
 	toggleDataSourceOnLoad() {
 		this.config.loadUserDataOnProgramStart =
 			!this.config.loadUserDataOnProgramStart;
@@ -1117,13 +1117,30 @@ export class UserInterface {
 		DataController.saveConfig(this.config);
 	}
 
+	toggleSuperCompactMode() {
+		this.config.useSuperCompactMode = !this.config.useSuperCompactMode;
+		this.colorSettingsButtons();
+
+		if (this.config.useSuperCompactMode == true) {
+			document.documentElement.dataset.mode = "super-compact";
+		} else {
+			if (this.config.useCompactMode == true) {
+				document.documentElement.dataset.mode = "compact";
+			} else document.documentElement.dataset.mode = "wide";
+		}
+
+		DataController.saveConfig(this.config);
+	}
+
 	toggleCompactMode() {
 		this.config.useCompactMode = !this.config.useCompactMode;
 		this.colorSettingsButtons();
 
-		if (this.config.useCompactMode == true)
-			document.documentElement.dataset.mode = "compact";
-		else document.documentElement.dataset.mode = "wide";
+		if (!this.config.useSuperCompactMode == true) {
+			if (this.config.useCompactMode == true)
+				document.documentElement.dataset.mode = "compact";
+			else document.documentElement.dataset.mode = "wide";
+		}
 
 		DataController.saveConfig(this.config);
 	}
@@ -1179,6 +1196,19 @@ export class UserInterface {
 
 		this.setIcons();
 		this.sendProcessSignal();
+	}
+
+	toggleColorGradient() {
+		this.config.useColorGradient = !this.config.useColorGradient;
+		this.colorSettingsButtons();
+
+		if (this.config.useColorGradient == true) {
+			document.documentElement.dataset.gradient = "show";
+		} else {
+			document.documentElement.dataset.gradient = "hide";
+		}
+
+		DataController.saveConfig(this.config);
 	}
 
 	processKeyboardInput(event) {
@@ -1698,6 +1728,15 @@ export class UserInterface {
 			page_number = 1;
 		}
 
+		const query = this.middleOverlaySearchBar.value;
+		if (query != "") {
+			saved_drafts = Backend.filterDrafts(saved_drafts, query);
+			if (saved_drafts.length &lt; item_count * (page_number - 1)) {
+				page_number = 1;
+				this.draftSnapshotsPaginationPageCounter.value = 1;
+			}
+		}
+
 		const lower_index =
 			item_count == saved_drafts.length
 				? 0
@@ -1706,10 +1745,6 @@ export class UserInterface {
 			item_count == saved_drafts.length
 				? item_count
 				: item_count * page_number;
-
-		const query = this.middleOverlaySearchBar.value;
-		if (query != "")
-			saved_drafts = Backend.filterDrafts(saved_drafts, query);
 
 		for (let i = lower_index; i &lt; upperIndex; i++) {
 			const draft = saved_drafts[i];
@@ -1918,7 +1953,7 @@ export class UserInterface {
 		const fileUrl = URL.createObjectURL(blob);
 		const downloadElement = document.createElement("a");
 		downloadElement.href = fileUrl;
-		downloadElement.download = "snapshots.txt";
+		downloadElement.download = "snapshots.json";
 		downloadElement.style.display = "none";
 		document.body.appendChild(downloadElement);
 		downloadElement.click();
@@ -2054,6 +2089,11 @@ export class UserInterface {
 
 		event.dataTransfer.setDragImage(dragImage, width / 2, height / 2);
 
+		if (
+			this.selectionData.selectedChampion == event.target.dataset.champion
+		) {
+			return;
+		}
 		this.selectChampion(event);
 	}
 
@@ -2080,16 +2120,17 @@ export class UserInterface {
 			this.makeNewDraftsBlankToggle,
 			this.toggleTeamColorTogglingToggle,
 			this.colorBordersToggle,
-			this.saveDraftStateToggle,
 			this.dataSourceOnLoadToggle,
 			this.clearSearchbarOnFocusToggle,
 			this.draftSnapshotDisplayToggle,
 			this.toggleAppendingToDraftSnapshotsButton,
 			this.toggleSearchModeButton,
+			this.useSuperCompactModeToggle,
 			this.useCompactModeToggle,
 			this.useSmallPickIconsToggle,
 			this.useSmallChampionIconsToggle,
 			this.useSmallBanIconsToggle,
+			this.useColorGradientToggle,
 		];
 		const config_settings = [
 			this.useZenMode,
@@ -2098,16 +2139,17 @@ export class UserInterface {
 			this.config.makeNewDraftsBlank,
 			this.config.toggleTeamColorsBetweenDrafts,
 			this.config.colorBorders,
-			this.config.saveDraftState,
 			this.config.loadUserDataOnProgramStart,
 			this.config.clearSearchBarOnFocus,
 			this.config.useSimpleSnapshotDisplay,
 			this.config.appendToDraftSnapshots,
 			this.config.useLegacySearch,
+			this.config.useSuperCompactMode,
 			this.config.useCompactMode,
 			this.config.useSmallPickIcons,
 			this.config.useSmallChampionIcons,
 			this.config.useSmallBanIcons,
+			this.config.useColorGradient,
 		];
 
 		for (let i = 0; i &lt; buttons.length; i++) {
@@ -2545,7 +2587,7 @@ export class UserInterface {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Dec 28 2024 11:49:34 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Jul 21 2025 09:59:19 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
