@@ -8,7 +8,9 @@ def normalize_filename(name: str) -> str:
     # Manual mapping overrides (case-insensitive match)
     name_map = {
         "monkeyking": "Wukong",
-        "jarvaniv": "Jarvan"
+        "jarvaniv": "Jarvan",
+        "monkeyking_0": "Wukong_0",
+        "jarvaniv_0": "Jarvan_0"
     }
 
     key = name.lower()
