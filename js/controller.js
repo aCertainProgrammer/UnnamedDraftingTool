@@ -50,7 +50,7 @@ export class Controller {
 			const user_data = DataController.loadData("user_data", "none");
 			if (user_data != -1) {
 				this.userInterface.dataSource = "user_data";
-				this.userInterface.dataSourceSwitch.value = "Custom data";
+				this.userInterface.dataSourceSwitch.value = "Use default data";
 			}
 		}
 		DataController.saveConfig(config);

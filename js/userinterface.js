@@ -636,7 +636,9 @@ export class UserInterface {
 		const validatedData = this.validateUserData(data);
 		DataController.saveData("user_data", JSON.stringify(validatedData));
 
-		this.dataSource = "user_data";
+		if (this.dataSource != "user_data") {
+			this.toggleDataSource();
+		}
 
 		this.sendProcessSignal();
 	}
@@ -899,10 +901,10 @@ export class UserInterface {
 
 	toggleDataSource() {
 		if (this.dataSource == "default_data") {
-			this.dataSourceSwitch.value = "Custom data";
+			this.dataSourceSwitch.value = "Use default data";
 			this.loadUserData();
 		} else {
-			this.dataSourceSwitch.value = "Default data";
+			this.dataSourceSwitch.value = "Use custom data";
 			this.loadDefaultData();
 		}
 	}
@@ -2316,6 +2318,7 @@ export class UserInterface {
 	}
 
 	render(renderingData) {
+		console.log(renderingData);
 		const championData = DataController.loadData(
 			renderingData.dataSource,
 			"none",
