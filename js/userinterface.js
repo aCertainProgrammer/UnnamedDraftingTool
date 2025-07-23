@@ -1,6 +1,6 @@
 import { DataController } from "./datacontroller.js";
 import { Backend } from "./backend.js";
-import { capitalize, prettifyChampionName } from "./util.js";
+import { capitalize, downloadImage, prettifyChampionName } from "./util.js";
 /**
  * A container for all UI-related events and rendering
  */
@@ -183,6 +183,9 @@ export class UserInterface {
 		);
 		this.clearAllDraftsButton = document.querySelector(
 			"#clear-all-drafts-button",
+		);
+		this.exportAllDraftsAsScreenshotsButton = document.getElementById(
+			"export-all-draft-images-button",
 		);
 		this.toggleTeamColorTogglingToggle = document.querySelector(
 			"#toggle-color-toggling-toggle",
@@ -403,6 +406,10 @@ export class UserInterface {
 		this.clearAllDraftsButton.addEventListener(
 			"click",
 			this.clearAllDrafts.bind(this),
+		);
+		this.exportAllDraftsAsScreenshotsButton.addEventListener(
+			"click",
+			this.exportAllDraftsAsImages.bind(this),
 		);
 		this.toggleTeamColorTogglingToggle.addEventListener(
 			"click",
@@ -1055,6 +1062,104 @@ export class UserInterface {
 		this.draftCounter.value = 1;
 
 		this.sendProcessSignal();
+	}
+
+	async exportAllDraftsAsImages() {
+		const drafts = DataController.loadPicksAndBans();
+
+		let limited_drafts = [];
+
+		const maxDrafts = localStorage.getItem("maxDraftNumber");
+
+		if (
+			maxDrafts == 0 ||
+			maxDrafts == "" ||
+			maxDrafts == null ||
+			maxDrafts == "null"
+		) {
+			limited_drafts = drafts;
+		} else {
+			for (let i = 0; i < maxDrafts; i++) {
+				limited_drafts.push(drafts[i]);
+			}
+		}
+
+		const drafts_to_export = limited_drafts;
+		const image_canvas = document.createElement("canvas");
+		if (!image_canvas.getContext("2d")) {
+			console.error("Canvas API is not supported in your browser!");
+			this.exportAllDraftsAsScreenshotsButton.innerText =
+				"Canvas API is not supported in your browser!";
+			return;
+		}
+
+		const image_height_px = 1080;
+		const image_width_px = 1920;
+		image_canvas.height = image_height_px;
+		image_canvas.width = image_width_px;
+
+		const ctx = image_canvas.getContext("2d");
+		const row_gap_px = 10;
+		const column_gap_px = 20;
+		const champion_pick_width_px = 230;
+		const champion_pick_height_px = 130;
+
+		const image_urls = [];
+
+		async function loadImage(src) {
+			return new Promise((resolve, reject) => {
+				const img = new Image();
+				img.onload = () => resolve(img);
+				img.onerror = reject;
+				img.src = src;
+			});
+		}
+
+		async function drawDraft(draft) {
+			ctx.clearRect(0, 0, image_width_px, image_height_px);
+			await Promise.all(
+				draft.picks.map(async (champion, i) => {
+					let src = "";
+					if (champion == "" || champion == "undefined") {
+						if (this.config.useSmallPickIcons == true)
+							src = this.defaultBanIconPath;
+						else src = this.defaultPickIconPath;
+					} else {
+						src =
+							this.imagePath +
+							this.pickIconPath +
+							capitalize(champion) +
+							this.pickIconPostfix;
+					}
+
+					const img = await loadImage(src);
+
+					const col = i < 5 ? 1 : 0;
+					const row = i % 5;
+
+					const x = col * champion_pick_width_px + column_gap_px;
+					const y = row * champion_pick_width_px + row_gap_px;
+
+					ctx.drawImage(
+						img,
+						x,
+						y,
+						champion_pick_width_px,
+						champion_pick_height_px,
+					);
+				}),
+			);
+
+			image_urls.push(image_canvas.toDataURL("image/png"));
+		}
+
+		for (let i = 0; i < drafts_to_export.length; i++) {
+			await drawDraft.call(this, drafts_to_export[i]);
+		}
+
+		image_urls.forEach((url) => {
+			downloadImage(url, "draft.png");
+		});
 	}
 
 	toggleTeamColorToggling() {

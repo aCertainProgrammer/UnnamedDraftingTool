@@ -66,3 +66,13 @@ export function prettifyChampionName(name) {
 	}
 	return name;
 }
+
+export function downloadImage(dataUrl, fileName) {
+	const downloadElement = document.createElement("a");
+	downloadElement.href = dataUrl;
+	downloadElement.download = fileName;
+	downloadElement.style.display = "none";
+	document.body.appendChild(downloadElement);
+	downloadElement.click();
+	document.body.removeChild(downloadElement);
+}
