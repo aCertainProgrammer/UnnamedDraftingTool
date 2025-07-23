@@ -1093,16 +1093,27 @@ export class UserInterface {
 			return;
 		}
 
-		const image_height_px = 1080;
-		const image_width_px = 1920;
-		image_canvas.height = image_height_px;
-		image_canvas.width = image_width_px;
-
 		const ctx = image_canvas.getContext("2d");
 		const row_gap_px = 10;
-		const column_gap_px = 20;
+		const column_gap_px = 200;
+		const ban_gap_px = 10;
 		const champion_pick_width_px = 230;
 		const champion_pick_height_px = 130;
+		const champion_ban_width_px = 100;
+		const champion_ban_height_px = 100;
+		const padding_x_px = 4;
+		const padding_y_px = 4;
+
+		const image_height_px =
+			6 * champion_pick_height_px + row_gap_px * 2 + 2 * padding_y_px;
+		const image_width_px =
+			9 * champion_ban_width_px +
+			ban_gap_px * 9 +
+			column_gap_px +
+			champion_ban_width_px +
+			2 * padding_x_px;
+		image_canvas.height = image_height_px;
+		image_canvas.width = image_width_px;
 
 		const image_urls = [];
 
@@ -1117,28 +1128,48 @@ export class UserInterface {
 
 		async function drawDraft(draft) {
 			ctx.clearRect(0, 0, image_width_px, image_height_px);
+			ctx.fillStyle = "#0d1117";
+			ctx.fillRect(0, 0, image_width_px, image_height_px);
+
 			await Promise.all(
 				draft.picks.map(async (champion, i) => {
 					let src = "";
 					if (champion == "" || champion == "undefined") {
-						if (this.config.useSmallPickIcons == true)
-							src = this.defaultBanIconPath;
-						else src = this.defaultPickIconPath;
+						src = this.defaultPickIconPath;
 					} else {
 						src =
 							this.imagePath +
-							this.pickIconPath +
+							"/centered_minified_converted_to_webp_scaled/" +
 							capitalize(champion) +
 							this.pickIconPostfix;
 					}
+					console.log(src);
 
 					const img = await loadImage(src);
 
 					const col = i < 5 ? 1 : 0;
 					const row = i % 5;
 
-					const x = col * champion_pick_width_px + column_gap_px;
-					const y = row * champion_pick_width_px + row_gap_px;
+					const max_x =
+						9 * champion_ban_width_px +
+						ban_gap_px * 9 +
+						column_gap_px;
+
+					const x =
+						col == 0
+							? col * champion_pick_width_px +
+								column_gap_px * col +
+								padding_x_px
+							: max_x -
+								champion_pick_width_px +
+								champion_ban_width_px +
+								padding_x_px;
+					const y =
+						row * champion_pick_height_px +
+						row_gap_px * row +
+						champion_ban_height_px +
+						row_gap_px +
+						padding_y_px;
 
 					ctx.drawImage(
 						img,
@@ -1150,6 +1181,45 @@ export class UserInterface {
 				}),
 			);
 
+			await Promise.all(
+				draft.bans.map(async (champion, i) => {
+					let src = "";
+					if (champion == "" || champion == "undefined") {
+						src = this.defaultBanIconPath;
+					} else {
+						src =
+							this.imagePath +
+							"/small_converted_to_webp_scaled/" +
+							capitalize(champion) +
+							this.banIconPostfix;
+					}
+
+					const img = await loadImage(src);
+
+					const col = i;
+					const middle_gap = i > 4 ? 1 : 0;
+					const row = 0;
+
+					const x =
+						col * champion_ban_width_px +
+						ban_gap_px * col +
+						middle_gap * column_gap_px +
+						padding_x_px;
+					const y =
+						row * champion_pick_height_px +
+						row_gap_px * row +
+						padding_y_px;
+
+					ctx.drawImage(
+						img,
+						x,
+						y,
+						champion_ban_width_px,
+						champion_ban_height_px,
+					);
+				}),
+			);
+
 			image_urls.push(image_canvas.toDataURL("image/png"));
 		}
 
@@ -1157,8 +1227,8 @@ export class UserInterface {
 			await drawDraft.call(this, drafts_to_export[i]);
 		}
 
-		image_urls.forEach((url) => {
-			downloadImage(url, "draft.png");
+		image_urls.forEach((url, index) => {
+			downloadImage(url, `draft_${index + 1}.png`);
 		});
 	}
 
@@ -2423,7 +2493,6 @@ export class UserInterface {
 	}
 
 	render(renderingData) {
-		console.log(renderingData);
 		const championData = DataController.loadData(
 			renderingData.dataSource,
 			"none",
