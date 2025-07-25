@@ -79,6 +79,9 @@ export class UserInterface {
 		this.takeDraftScreenshotButton = document.querySelector(
 			"#screenshot-draft-button",
 		);
+		this.screenshotAllSnapshotsButton = document.querySelector(
+			"#screenshot-all-snapshots-button",
+		);
 		this.pickModeBindInput = document.querySelector("#pick-mode-bind");
 		this.banModeBindInput = document.querySelector("#ban-mode-bind");
 		this.clearPicksOrBansBindInput = document.querySelector(
@@ -539,6 +542,10 @@ export class UserInterface {
 		this.takeDraftScreenshotButton.addEventListener(
 			"click",
 			this.takeDraftScreenshot.bind(this),
+		);
+		this.screenshotAllSnapshotsButton.addEventListener(
+			"click",
+			this.screenshotAllSnapshots.bind(this),
 		);
 		this.saveDraftButton.addEventListener(
 			"click",
@@ -1133,6 +1140,12 @@ export class UserInterface {
 		};
 
 		this.exportDraftsAsImages([draft]);
+	}
+
+	screenshotAllSnapshots() {
+		const snapshots = DataController.loadSavedDrafts();
+
+		this.exportDraftsAsImages(snapshots);
 	}
 
 	toggleTeamColorToggling() {
