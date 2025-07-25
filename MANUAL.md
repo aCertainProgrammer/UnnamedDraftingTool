@@ -114,6 +114,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 - `!, @, #, $, %` (meaning `Shift` + `1, 2, 3, 4, 5`) to toggle role filtering from top to support
 - `Shift` + `Q, W, E` to toggle team filtering (All, Ally, Enemy respectively)
 - `Shift` + `<` and `Shift` + `>` to navigate between drafts or draft snapshots pages depending on what's currently opened
+- `Shift` + `L` to take a screenshot of the current draft
 
 ## Personalisation and configuration
 
@@ -187,6 +188,8 @@ You can save your drafts for later and come back to them easily by using draft s
 5. `Shift` + `G` to close the snapshot overlay
 
 You can also use the buttons for navigation.
+
+You can use the `Screenshot all` button to take a screenshot of all snapshots
 
 You can export and import the snapshot data, making it possible to share drafts with your team. This also allows them to edit the draft quickly and send you back a snapshot.
 

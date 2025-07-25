@@ -73,6 +73,9 @@ export class UserInterface {
 		this.leftOverlay = document.querySelector("#left-overlay");
 		this.bindMenu = document.querySelector("#bind-menu");
 		this.zenModeBindInput = document.querySelector("#zen-mode-bind");
+		this.takeScreenshotBindInput = document.querySelector(
+			"#take-screenshot-bind",
+		);
 		this.fearlessModeBindInput = document.querySelector(
 			"#fearless-mode-bind",
 		);
@@ -739,6 +742,8 @@ export class UserInterface {
 			case "toggle-enemy-filtering-bind":
 				this.binds.toggleEnemyFilteringBind = bindKey;
 				break;
+			case "take-screenshot-bind":
+				this.binds.takeScreenshotBind = bindKey;
 			case "reset-binds-button":
 				break;
 			default:
@@ -796,6 +801,8 @@ export class UserInterface {
 			this.binds.toggleAllyFilteringBind || "";
 		this.toggleEnemyFilteringBindInput.value =
 			this.binds.toggleEnemyFilteringBind || "";
+		this.takeScreenshotBindInput.value =
+			this.binds.takeScreenshotBind || "";
 	}
 
 	async takeFileInput(event) {
@@ -1532,6 +1539,12 @@ export class UserInterface {
 			) {
 				this.searchBar.blur();
 				this.saveDraftSnapshot();
+			}
+			if (
+				key.toLowerCase() == this.binds.takeScreenshotBind.toLowerCase()
+			) {
+				this.searchBar.blur();
+				this.takeDraftScreenshotButton.click();
 			}
 		}
 	}

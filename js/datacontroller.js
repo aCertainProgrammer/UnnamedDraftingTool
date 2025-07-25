@@ -215,6 +215,7 @@ export class DataController {
     * @property {string} toggleAllFilteringBind
     * @property {string} toggleAllyFilteringBind
     * @property {string} toggleEnemyFilteringBind
+    * @property {string} takeScreenshotBind 
 
     /**
     * @param {Binds} binds 
@@ -260,6 +261,7 @@ export class DataController {
 			toggleAllFilteringBind: "Q",
 			toggleAllyFilteringBind: "W",
 			toggleEnemyFilteringBind: "E",
+			takeScreenshotBind: "L",
 		};
 
 		const bindProperties = [
@@ -286,6 +288,7 @@ export class DataController {
 			"toggleAllFilteringBind",
 			"toggleAllyFilteringBind",
 			"toggleEnemyFilteringBind",
+			"takeScreenshotBind",
 		];
 
 		let validatedBinds = {};
