@@ -1,0 +1,142 @@
+import { capitalize } from "./util.js";
+
+async function loadImage(src) {
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		img.onload = () => resolve(img);
+		img.onerror = reject;
+		img.src = src;
+	});
+}
+
+export async function drawDraft(draft, icon_paths) {
+	const image_canvas = document.createElement("canvas");
+	if (!image_canvas.getContext("2d")) {
+		console.error("Canvas API is not supported in your browser!");
+		this.exportAllDraftsAsScreenshotsButton.innerText =
+			"Canvas API is not supported in your browser!";
+		return;
+	}
+
+	const ctx = image_canvas.getContext("2d");
+	const row_gap_px = 10;
+	const column_gap_px = 200;
+	const ban_gap_px = 10;
+	const champion_pick_width_px = 230;
+	const champion_pick_height_px = 130;
+	const champion_ban_width_px = 100;
+	const champion_ban_height_px = 100;
+	const padding_x_px = 4;
+	const padding_y_px = 4;
+
+	const image_height_px =
+		6 * champion_pick_height_px + row_gap_px * 2 + 2 * padding_y_px;
+	const image_width_px =
+		9 * champion_ban_width_px +
+		ban_gap_px * 9 +
+		column_gap_px +
+		champion_ban_width_px +
+		2 * padding_x_px;
+	image_canvas.height = image_height_px;
+	image_canvas.width = image_width_px;
+	ctx.clearRect(0, 0, image_width_px, image_height_px);
+	ctx.fillStyle = "#0d1117";
+	ctx.fillRect(0, 0, image_width_px, image_height_px);
+
+	await Promise.all(
+		draft.picks.map(async (champion, i) => {
+			let src = "";
+			if (champion == "" || champion == "undefined") {
+				src = icon_paths.defaultPickIconPath;
+			} else {
+				src =
+					icon_paths.imagePath +
+					"/centered_minified_converted_to_webp_scaled/" +
+					capitalize(champion) +
+					icon_paths.pickIconPostfix;
+			}
+			const img = await loadImage(src);
+
+			const col = i < 5 ? 1 : 0;
+			const row = i % 5;
+
+			const max_x =
+				9 * champion_ban_width_px + ban_gap_px * 9 + column_gap_px;
+
+			const x =
+				col == 0
+					? col * champion_pick_width_px +
+						column_gap_px * col +
+						padding_x_px
+					: max_x -
+						champion_pick_width_px +
+						champion_ban_width_px +
+						padding_x_px;
+			const y =
+				row * champion_pick_height_px +
+				row_gap_px * row +
+				champion_ban_height_px +
+				row_gap_px +
+				padding_y_px;
+
+			ctx.drawImage(
+				img,
+				x,
+				y,
+				champion_pick_width_px,
+				champion_pick_height_px,
+			);
+		}),
+	);
+
+	await Promise.all(
+		draft.bans.map(async (champion, i) => {
+			let src = "";
+			if (champion == "" || champion == "undefined") {
+				src = icon_paths.defaultBanIconPath;
+			} else {
+				src =
+					icon_paths.imagePath +
+					"/small_converted_to_webp_scaled/" +
+					capitalize(champion) +
+					icon_paths.banIconPostfix;
+			}
+
+			const img = await loadImage(src);
+
+			const col = i;
+			const middle_gap = i > 4 ? 1 : 0;
+			const row = 0;
+
+			const x =
+				col * champion_ban_width_px +
+				ban_gap_px * col +
+				middle_gap * column_gap_px +
+				padding_x_px;
+			const y =
+				row * champion_pick_height_px + row_gap_px * row + padding_y_px;
+
+			ctx.drawImage(
+				img,
+				x,
+				y,
+				champion_ban_width_px,
+				champion_ban_height_px,
+			);
+		}),
+	);
+
+	if (draft.name) {
+		const font_size_px = 48;
+		ctx.fillStyle = "#cccccc";
+		ctx.font = `${font_size_px}px serif`;
+		ctx.textAlign = "center";
+		ctx.fillText(
+			draft.name,
+			image_width_px / 2,
+			image_height_px - font_size_px,
+		);
+	}
+
+	return image_canvas.toDataURL("image/png");
+}

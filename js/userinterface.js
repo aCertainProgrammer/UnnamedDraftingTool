@@ -1,6 +1,7 @@
 import { DataController } from "./datacontroller.js";
 import { Backend } from "./backend.js";
 import { capitalize, downloadImage, prettifyChampionName } from "./util.js";
+import { drawDraft } from "./images.js";
 /**
  * A container for all UI-related events and rendering
  */
@@ -1084,152 +1085,34 @@ export class UserInterface {
 			}
 		}
 
-		const drafts_to_export = limited_drafts;
-		const image_canvas = document.createElement("canvas");
-		if (!image_canvas.getContext("2d")) {
-			console.error("Canvas API is not supported in your browser!");
-			this.exportAllDraftsAsScreenshotsButton.innerText =
-				"Canvas API is not supported in your browser!";
-			return;
-		}
+		await this.exportDraftsAsImages(drafts);
+	}
 
-		const ctx = image_canvas.getContext("2d");
-		const row_gap_px = 10;
-		const column_gap_px = 200;
-		const ban_gap_px = 10;
-		const champion_pick_width_px = 230;
-		const champion_pick_height_px = 130;
-		const champion_ban_width_px = 100;
-		const champion_ban_height_px = 100;
-		const padding_x_px = 4;
-		const padding_y_px = 4;
+	async exportDraftsAsImages(drafts) {
+		const paths = {
+			imagePath: this.imagePath,
+			pickIconPostfix: this.pickIconPostfix,
+			banIconPostfix: this.banIconPostfix,
+			defaultPickIconPath: this.defaultPickIconPath,
+			defaultBanIconPath: this.defaultBanIconPath,
+		};
 
-		const image_height_px =
-			6 * champion_pick_height_px + row_gap_px * 2 + 2 * padding_y_px;
-		const image_width_px =
-			9 * champion_ban_width_px +
-			ban_gap_px * 9 +
-			column_gap_px +
-			champion_ban_width_px +
-			2 * padding_x_px;
-		image_canvas.height = image_height_px;
-		image_canvas.width = image_width_px;
+		let image_urls = [];
 
-		const image_urls = [];
-
-		async function loadImage(src) {
-			return new Promise((resolve, reject) => {
-				const img = new Image();
-				img.onload = () => resolve(img);
-				img.onerror = reject;
-				img.src = src;
-			});
-		}
-
-		async function drawDraft(draft) {
-			ctx.clearRect(0, 0, image_width_px, image_height_px);
-			ctx.fillStyle = "#0d1117";
-			ctx.fillRect(0, 0, image_width_px, image_height_px);
-
-			await Promise.all(
-				draft.picks.map(async (champion, i) => {
-					let src = "";
-					if (champion == "" || champion == "undefined") {
-						src = this.defaultPickIconPath;
-					} else {
-						src =
-							this.imagePath +
-							"/centered_minified_converted_to_webp_scaled/" +
-							capitalize(champion) +
-							this.pickIconPostfix;
-					}
-					console.log(src);
-
-					const img = await loadImage(src);
-
-					const col = i < 5 ? 1 : 0;
-					const row = i % 5;
-
-					const max_x =
-						9 * champion_ban_width_px +
-						ban_gap_px * 9 +
-						column_gap_px;
-
-					const x =
-						col == 0
-							? col * champion_pick_width_px +
-								column_gap_px * col +
-								padding_x_px
-							: max_x -
-								champion_pick_width_px +
-								champion_ban_width_px +
-								padding_x_px;
-					const y =
-						row * champion_pick_height_px +
-						row_gap_px * row +
-						champion_ban_height_px +
-						row_gap_px +
-						padding_y_px;
-
-					ctx.drawImage(
-						img,
-						x,
-						y,
-						champion_pick_width_px,
-						champion_pick_height_px,
-					);
-				}),
-			);
-
-			await Promise.all(
-				draft.bans.map(async (champion, i) => {
-					let src = "";
-					if (champion == "" || champion == "undefined") {
-						src = this.defaultBanIconPath;
-					} else {
-						src =
-							this.imagePath +
-							"/small_converted_to_webp_scaled/" +
-							capitalize(champion) +
-							this.banIconPostfix;
-					}
-
-					const img = await loadImage(src);
-
-					const col = i;
-					const middle_gap = i > 4 ? 1 : 0;
-					const row = 0;
-
-					const x =
-						col * champion_ban_width_px +
-						ban_gap_px * col +
-						middle_gap * column_gap_px +
-						padding_x_px;
-					const y =
-						row * champion_pick_height_px +
-						row_gap_px * row +
-						padding_y_px;
-
-					ctx.drawImage(
-						img,
-						x,
-						y,
-						champion_ban_width_px,
-						champion_ban_height_px,
-					);
-				}),
-			);
-
-			image_urls.push(image_canvas.toDataURL("image/png"));
-		}
-
-		for (let i = 0; i < drafts_to_export.length; i++) {
-			await drawDraft.call(this, drafts_to_export[i]);
+		for (let i = 0; i < drafts.length; i++) {
+			image_urls.push(await drawDraft.call(this, drafts[i], paths));
 		}
 
 		image_urls.forEach((url, index) => {
 			downloadImage(url, `draft_${index + 1}.png`);
 		});
+	}
+
+	exportSnapshotAsImage(id) {
+		event.stopPropagation();
+		let drafts = DataController.loadSavedDrafts();
+
+		this.exportDraftsAsImages([drafts[id]]);
 	}
 
 	toggleTeamColorToggling() {
@@ -2027,6 +1910,15 @@ export class UserInterface {
 			this.removeDraftSnapshot.bind(this, container, id),
 		);
 
+		const screenshot_button = document.createElement("img");
+		screenshot_button.src = "./img/screenshot.webp";
+		screenshot_button.classList += "take-snapshot-screenshot-icon";
+		container.appendChild(screenshot_button);
+		screenshot_button.addEventListener(
+			"click",
+			this.exportSnapshotAsImage.bind(this, id),
+		);
+
 		return container;
 	}
 
@@ -2715,6 +2607,20 @@ export class UserInterface {
 				!current.contains(event.target) &&
 				!current.classList.contains("hidden")
 			) {
+				if (
+					current == this.middleOverlay &&
+					event.target.classList.contains(
+						"take-snapshot-screenshot-icon",
+					)
+				) {
+					return;
+				}
+				if (
+					event.target.dataset != undefined &&
+					event.target.dataset.is_download_element == "true"
+				) {
+					return;
+				}
 				current.classList.add("hidden");
 			}
 		});

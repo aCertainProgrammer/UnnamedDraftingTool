@@ -996,6 +996,14 @@ body {
 	filter: invert(80%);
 }
 
+.take-snapshot-screenshot-icon {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	filter: invert(80%);
+	max-width: 27px;
+}
+
 .complex-draft-snapshot-container > .draft-snapshot-remove-button {
 	position: absolute;
 	top: 0px;

@@ -72,6 +72,7 @@ export function downloadImage(dataUrl, fileName) {
 	downloadElement.href = dataUrl;
 	downloadElement.download = fileName;
 	downloadElement.style.display = "none";
+	downloadElement.dataset.is_download_element = true;
 	document.body.appendChild(downloadElement);
 	downloadElement.click();
 	document.body.removeChild(downloadElement);
