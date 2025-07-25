@@ -949,9 +949,9 @@ body {
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	max-width: calc(var(--draftPreviewIconSize) * 5);
+	max-width: calc(var(--draftPreviewIconSize) * 5.08);
 	max-height: calc(var(--draftPreviewIconSize) * 7.93);
-	min-width: calc(var(--draftPreviewIconSize) * 5);
+	min-width: calc(var(--draftPreviewIconSize) * 5.08);
 	min-height: calc(var(--draftPreviewIconSize) * 7.93);
 	border: var(--championPickBorder);
 	cursor: pointer;
