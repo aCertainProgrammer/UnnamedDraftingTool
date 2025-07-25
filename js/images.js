@@ -57,7 +57,7 @@ export async function drawDraft(draft, icon_paths) {
 			}
 			const img = await loadImage(src);
 
-			const col = i < 5 ? 1 : 0;
+			const col = i < 5 ? 0 : 1;
 			const row = i % 5;
 
 			const max_x =
@@ -86,6 +86,17 @@ export async function drawDraft(draft, icon_paths) {
 				champion_pick_width_px,
 				champion_pick_height_px,
 			);
+
+			const border_width_px = 1;
+			const border_color = "#404040";
+			ctx.strokeStyle = border_color;
+			ctx.lineWidth = border_width_px;
+			ctx.strokeRect(
+				x,
+				y,
+				champion_pick_width_px,
+				champion_pick_height_px,
+			);
 		}),
 	);
 
@@ -104,15 +115,23 @@ export async function drawDraft(draft, icon_paths) {
 
 			const img = await loadImage(src);
 
-			const col = i;
+			let col = i;
+			if (i > 4) {
+				col = 9 - (col % 5);
+			}
+
 			const middle_gap = i > 4 ? 1 : 0;
 			const row = 0;
+
+			const separator_values = [0, 0, 0, 1, 1, -1, -1, 0, 0, 0];
+			let ban_separator = separator_values[col];
 
 			const x =
 				col * champion_ban_width_px +
 				ban_gap_px * col +
 				middle_gap * column_gap_px +
-				padding_x_px;
+				padding_x_px +
+				ban_separator * ban_gap_px * 2;
 			const y =
 				row * champion_pick_height_px + row_gap_px * row + padding_y_px;
 
@@ -123,6 +142,12 @@ export async function drawDraft(draft, icon_paths) {
 				champion_ban_width_px,
 				champion_ban_height_px,
 			);
+
+			const border_width_px = 1;
+			const border_color = "#404040";
+			ctx.strokeStyle = border_color;
+			ctx.lineWidth = border_width_px;
+			ctx.strokeRect(x, y, champion_ban_width_px, champion_ban_height_px);
 		}),
 	);
 

@@ -76,6 +76,9 @@ export class UserInterface {
 		this.fearlessModeBindInput = document.querySelector(
 			"#fearless-mode-bind",
 		);
+		this.takeDraftScreenshotButton = document.querySelector(
+			"#screenshot-draft-button",
+		);
 		this.pickModeBindInput = document.querySelector("#pick-mode-bind");
 		this.banModeBindInput = document.querySelector("#ban-mode-bind");
 		this.clearPicksOrBansBindInput = document.querySelector(
@@ -532,6 +535,10 @@ export class UserInterface {
 		this.draftSnapshotsPaginationItemCount.addEventListener(
 			"change",
 			this.inputDraftSnapshotPaginationItemCount.bind(this),
+		);
+		this.takeDraftScreenshotButton.addEventListener(
+			"click",
+			this.takeDraftScreenshot.bind(this),
 		);
 		this.saveDraftButton.addEventListener(
 			"click",
@@ -1113,6 +1120,19 @@ export class UserInterface {
 		let drafts = DataController.loadSavedDrafts();
 
 		this.exportDraftsAsImages([drafts[id]]);
+	}
+
+	takeDraftScreenshot() {
+		const picksAndBans =
+			DataController.loadPicksAndBans()[this.getDraftNumber()];
+
+		const draft = {
+			picks: picksAndBans.picks,
+			bans: picksAndBans.bans,
+			name: "",
+		};
+
+		this.exportDraftsAsImages([draft]);
 	}
 
 	toggleTeamColorToggling() {

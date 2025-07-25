@@ -125,6 +125,9 @@
 			display: none;
 		}
 	}
+	#toggle-pick-ban-mode {
+		display: none !important;
+	}
 }
 
 @media screen and (max-width: 1394px) {
@@ -998,10 +1001,10 @@ body {
 
 .take-snapshot-screenshot-icon {
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: 3px;
+	left: 3px;
 	filter: invert(80%);
-	max-width: 27px;
+	max-width: 20px;
 }
 
 .complex-draft-snapshot-container > .draft-snapshot-remove-button {
