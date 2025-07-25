@@ -1125,7 +1125,14 @@ export class UserInterface {
 		}
 
 		image_urls.forEach((url, index) => {
-			downloadImage(url, `draft_${index + 1}.png`);
+			let name = `draft_${index + 1}`;
+			if (
+				drafts[index].name != undefined &&
+				drafts[index].name.trim() != ""
+			) {
+				name = drafts[index].name;
+			}
+			downloadImage(url, `${name}.png`);
 		});
 	}
 
