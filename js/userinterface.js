@@ -236,6 +236,9 @@ export class UserInterface {
 		this.useColorGradientToggle = document.querySelector(
 			"#use-color-gradient-toggle",
 		);
+		this.disableDeleteToggle = document.querySelector(
+			"#disable-delete-button",
+		);
 		this.settingsMenu = document.querySelector("#settings-menu");
 		this.enterSettingsButton = document.querySelector(
 			"#enter-settings-button",
@@ -464,6 +467,10 @@ export class UserInterface {
 		this.useColorGradientToggle.addEventListener(
 			"click",
 			this.toggleColorGradient.bind(this),
+		);
+		this.disableDeleteToggle.addEventListener(
+			"click",
+			this.toggleDeleteDisabling.bind(this),
 		);
 		document.addEventListener(
 			"keydown",
@@ -1293,6 +1300,13 @@ export class UserInterface {
 		DataController.saveConfig(this.config);
 	}
 
+	toggleDeleteDisabling() {
+		this.config.disableDeleteButton = !this.config.disableDeleteButton;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+	}
+
 	processKeyboardInput(event) {
 		const key = event.key;
 		if (this.middleOverlay.classList.contains("hidden"))
@@ -1340,7 +1354,7 @@ export class UserInterface {
 				this.searchBar.value = "";
 			this.searchBar.focus();
 		}
-		if (key == "Delete") {
+		if (key == "Delete" && !this.config.disableDeleteButton) {
 			this.picks.forEach((current) => {
 				current.childNodes[1].dataset.champion = "";
 			});
@@ -2228,6 +2242,7 @@ export class UserInterface {
 			this.useSmallChampionIconsToggle,
 			this.useSmallBanIconsToggle,
 			this.useColorGradientToggle,
+			this.disableDeleteToggle,
 		];
 		const config_settings = [
 			this.useZenMode,
@@ -2247,6 +2262,7 @@ export class UserInterface {
 			this.config.useSmallChampionIcons,
 			this.config.useSmallBanIcons,
 			this.config.useColorGradient,
+			this.config.disableDeleteButton,
 		];
 
 		for (let i = 0; i < buttons.length; i++) {

@@ -178,6 +178,12 @@ If enabled, appends to draft snapshots when you import them instead of replacing
 ### Use compact mode, Use small X icons
 These settings change the looks of the draft area
 
+### Color sides blue/red
+If enabled, adds a hue to blue and redside
+
+### Stop delete from clearing the draft
+If enabled, disables the `Delete` hotkey from erasing the whole draft
+
 ## Draft snapshots
 You can save your drafts for later and come back to them easily by using draft snapshots.
 
