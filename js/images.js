@@ -156,12 +156,42 @@ export async function drawDraft(draft, icon_paths) {
 		ctx.fillStyle = "#cccccc";
 		ctx.font = `${font_size_px}px serif`;
 		ctx.textAlign = "center";
-		ctx.fillText(
-			draft.name,
-			image_width_px / 2,
-			image_height_px - font_size_px,
-		);
+
+		const max_text_width_px =
+			image_width_px - 2 * champion_pick_width_px - 2 * ban_gap_px;
+
+		const lines = getLines(ctx, draft.name, max_text_width_px);
+
+		lines.forEach((line, index) => {
+			ctx.fillText(
+				line,
+				image_width_px / 2,
+				champion_ban_height_px * 2 + index * font_size_px,
+				max_text_width_px,
+			);
+		});
 	}
 
 	return image_canvas.toDataURL("image/png");
+}
+
+function getLines(ctx, text, maxWidth) {
+	let words = text.split(" ");
+	let lines = [];
+	let currentLine = words[0];
+
+	for (let i = 1; i < words.length; i++) {
+		let word = words[i];
+		let width = ctx.measureText(currentLine + " " + word).width;
+
+		if (width < maxWidth) {
+			currentLine += " " + word;
+		} else {
+			lines.push(currentLine);
+			currentLine = word;
+		}
+	}
+
+	lines.push(currentLine);
+	return lines;
 }
