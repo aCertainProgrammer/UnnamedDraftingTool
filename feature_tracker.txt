@@ -1,10 +1,6 @@
 CURRENT WORK:
 
-- add super compact mode
-
 THEN:
-
-- add coloring to draft sides
 
 SHORT IDEAS:
 
