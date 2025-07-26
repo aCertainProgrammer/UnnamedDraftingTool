@@ -92,6 +92,7 @@ Note that there is a special case: if you search for Vi, you will see Vi and pos
 - `Shift` + `X` to clear picks or bans depending on the mode
 
 ### Search bar operations
+- `Escape` to clear the search bar
 - `Spacebar` or any letter (`a` to `z`, `A` to `Z`) to focus the search bar (no need to click it with the mouse)
 
     If the [Clear search bar on focus](#clear-search-bar-on-focus) setting is enabled, every time you refocus the searchbar it will be cleared

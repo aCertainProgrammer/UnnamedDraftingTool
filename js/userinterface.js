@@ -1354,6 +1354,11 @@ export class UserInterface {
 				this.searchBar.value = "";
 			this.searchBar.focus();
 		}
+		if (key == "Escape") {
+			this.searchBar.value = "";
+			this.searchBar.blur();
+			this.sendProcessSignal();
+		}
 		if (key == "Delete" && !this.config.disableDeleteButton) {
 			this.picks.forEach((current) => {
 				current.childNodes[1].dataset.champion = "";
