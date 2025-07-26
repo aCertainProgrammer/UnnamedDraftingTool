@@ -814,6 +814,7 @@ export class UserInterface {
 
 		DataController.saveData("user_data", JSON.stringify(validatedData));
 		this.dataSource = "user_data";
+		this.dataSourceSwitch.value = "Use default data";
 
 		const json = JSON.parse(data);
 		this.userDataInputTextarea.value = JSON.stringify(json, null, 4);
