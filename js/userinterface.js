@@ -1615,6 +1615,11 @@ export class UserInterface {
 			this.middleOverlaySearchBar.blur();
 			this.draftSnapshotsPaginationRightArrow.click();
 		}
+		if (key == "Escape") {
+			this.middleOverlaySearchBar.value = "";
+			this.middleOverlaySearchBar.blur();
+			this.browseSavedDrafts();
+		}
 	}
 
 	openSettingsMenu() {
