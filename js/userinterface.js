@@ -1124,13 +1124,15 @@ export class UserInterface {
 			image_urls.push(await drawDraft.call(this, drafts[i], paths));
 		}
 
+		const MAX_SCREENSHOT_NAME_LENGTH = 200;
 		image_urls.forEach((url, index) => {
 			let name = `draft_${index + 1}`;
 			if (
 				drafts[index].name != undefined &&
-				drafts[index].name.trim() != ""
+				drafts[index].name.trim() != "" &&
+				drafts[index].name.trim().length < MAX_SCREENSHOT_NAME_LENGTH
 			) {
-				name = drafts[index].name;
+				name = drafts[index].name.trim();
 			}
 			downloadImage(url, `${name}.png`);
 		});
