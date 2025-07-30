@@ -99,6 +99,7 @@ export const default_data = JSON.stringify({
 		],
 		mid: [
 			"ahri",
+			"akali",
 			"anivia",
 			"annie",
 			"akshan",
