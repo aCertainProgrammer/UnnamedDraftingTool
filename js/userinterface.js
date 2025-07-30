@@ -1124,6 +1124,8 @@ export class UserInterface {
 			banIconPostfix: this.banIconPostfix,
 			defaultPickIconPath: this.defaultPickIconPath,
 			defaultBanIconPath: this.defaultBanIconPath,
+			banIconPath: this.banIconPath,
+			pickIconPath: this.pickIconPath,
 		};
 
 		let image_urls = [];

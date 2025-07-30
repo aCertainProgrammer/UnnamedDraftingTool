@@ -53,7 +53,7 @@ export async function drawDraft(draft, icon_paths) {
 					icon_paths.imagePath +
 					"/centered_minified_converted_to_webp_scaled/" +
 					capitalize(champion) +
-					icon_paths.pickIconPostfix;
+					"_0.webp";
 			}
 			const img = await loadImage(src);
 
@@ -108,7 +108,7 @@ export async function drawDraft(draft, icon_paths) {
 			} else {
 				src =
 					icon_paths.imagePath +
-					"/small_converted_to_webp_scaled/" +
+					icon_paths.banIconPath +
 					capitalize(champion) +
 					icon_paths.banIconPostfix;
 			}
