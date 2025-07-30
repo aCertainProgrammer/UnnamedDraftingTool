@@ -28,9 +28,13 @@ export async function drawDraft(draft, icon_paths) {
 	const champion_ban_height_px = 100;
 	const padding_x_px = 4;
 	const padding_y_px = 4;
+	const name_space_px = 50;
 
 	const image_height_px =
-		6 * champion_pick_height_px + row_gap_px * 2 + 2 * padding_y_px;
+		6 * champion_pick_height_px +
+		row_gap_px * 2 +
+		2 * padding_y_px +
+		name_space_px;
 	const image_width_px =
 		9 * champion_ban_width_px +
 		ban_gap_px * 9 +
@@ -77,7 +81,8 @@ export async function drawDraft(draft, icon_paths) {
 				row_gap_px * row +
 				champion_ban_height_px +
 				row_gap_px +
-				padding_y_px;
+				padding_y_px +
+				name_space_px;
 
 			ctx.drawImage(
 				img,
@@ -133,7 +138,10 @@ export async function drawDraft(draft, icon_paths) {
 				padding_x_px +
 				ban_separator * ban_gap_px * 2;
 			const y =
-				row * champion_pick_height_px + row_gap_px * row + padding_y_px;
+				row * champion_pick_height_px +
+				row_gap_px * row +
+				padding_y_px +
+				name_space_px;
 
 			ctx.drawImage(
 				img,
@@ -151,8 +159,8 @@ export async function drawDraft(draft, icon_paths) {
 		}),
 	);
 
+	const font_size_px = 48;
 	if (draft.name) {
-		const font_size_px = 48;
 		ctx.fillStyle = "#cccccc";
 		ctx.font = `${font_size_px}px serif`;
 		ctx.textAlign = "center";
@@ -170,6 +178,24 @@ export async function drawDraft(draft, icon_paths) {
 				max_text_width_px,
 			);
 		});
+	}
+
+	ctx.textAlign = "left";
+	if (draft.blue_name) {
+		ctx.fillText(
+			draft.blue_name,
+			padding_x_px,
+			font_size_px - padding_y_px / 2,
+		);
+	}
+
+	ctx.textAlign = "right";
+	if (draft.red_name) {
+		ctx.fillText(
+			draft.red_name,
+			image_width_px - padding_x_px,
+			font_size_px - padding_y_px / 2,
+		);
 	}
 
 	return image_canvas.toDataURL("image/png");

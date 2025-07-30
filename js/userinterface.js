@@ -1585,7 +1585,13 @@ export class UserInterface {
 		const shiftKeyPressed = event.shiftKey;
 		if (
 			document.activeElement.classList.contains("draft-name") ||
-			document.activeElement.classList.contains("complex-draft-name")
+			document.activeElement.classList.contains(
+				"draft-team-name-input",
+			) ||
+			document.activeElement.classList.contains("complex-draft-name") ||
+			document.activeElement.classList.contains(
+				"complex-draft-team-name-input",
+			)
 		) {
 			return;
 		}
@@ -1817,6 +1823,8 @@ export class UserInterface {
 			name: "",
 			picks: picks.picks,
 			bans: picks.bans,
+			blue_name: "",
+			red_name: "",
 		};
 		const saved_drafts = DataController.loadSavedDrafts();
 
@@ -1883,12 +1891,14 @@ export class UserInterface {
 		container.classList.add("draft-snapshot-container");
 		container.dataset.draft = JSON.stringify(draft);
 
+		const draft_text_container = document.createElement("div");
+		draft_text_container.classList += "draft-text-container";
+		container.appendChild(draft_text_container);
+
 		const draft_name = document.createElement("input");
 		draft_name.type = "text";
 		draft_name.classList.add("draft-name");
 		draft_name.value = draft.name == null ? "" : draft.name;
-
-		container.appendChild(draft_name);
 
 		draft_name.addEventListener("click", () => {
 			event.stopPropagation();
@@ -1898,6 +1908,47 @@ export class UserInterface {
 			"input",
 			this.changeDraftName.bind(this, id),
 		);
+
+		const blue_name_input = document.createElement("input");
+		blue_name_input.classList += "draft-team-name-input";
+		blue_name_input.type = "text";
+		blue_name_input.placeholder = "Blue";
+
+		blue_name_input.addEventListener(
+			"input",
+			this.changeDraftBlueName.bind(this, id),
+		);
+
+		blue_name_input.addEventListener("click", () => {
+			event.stopPropagation();
+		});
+
+		if (draft.blue_name != null) {
+			blue_name_input.value = draft.blue_name;
+		}
+
+		draft_text_container.appendChild(blue_name_input);
+		draft_text_container.appendChild(draft_name);
+
+		const red_name_input = document.createElement("input");
+		red_name_input.classList += "draft-team-name-input";
+		red_name_input.type = "text";
+		red_name_input.placeholder = "Red";
+
+		if (draft.red_name != null) {
+			red_name_input.value = draft.red_name;
+		}
+
+		red_name_input.addEventListener(
+			"input",
+			this.changeDraftRedName.bind(this, id),
+		);
+
+		red_name_input.addEventListener("click", () => {
+			event.stopPropagation();
+		});
+
+		draft_text_container.appendChild(red_name_input);
 
 		for (let i = 0; i < draft.picks.length; i++) {
 			const champion = draft.picks[i];
@@ -1949,12 +2000,14 @@ export class UserInterface {
 		container.classList.add("complex-draft-snapshot-container");
 		container.dataset.draft = JSON.stringify(draft);
 
+		const draft_text_container = document.createElement("div");
+		draft_text_container.classList += "complex-draft-text-container";
+		container.appendChild(draft_text_container);
+
 		const draft_name = document.createElement("input");
 		draft_name.type = "text";
 		draft_name.classList.add("complex-draft-name");
 		draft_name.value = draft.name == null ? "" : draft.name;
-
-		container.appendChild(draft_name);
 
 		draft_name.addEventListener("click", () => {
 			event.stopPropagation();
@@ -1964,6 +2017,48 @@ export class UserInterface {
 			"input",
 			this.changeDraftName.bind(this, id),
 		);
+
+		const blue_name_input = document.createElement("input");
+		blue_name_input.classList += "complex-draft-team-name-input";
+		blue_name_input.type = "text";
+		blue_name_input.placeholder = "Blue";
+
+		blue_name_input.addEventListener(
+			"input",
+			this.changeDraftBlueName.bind(this, id),
+		);
+
+		blue_name_input.addEventListener("click", () => {
+			event.stopPropagation();
+		});
+
+		if (draft.blue_name != null) {
+			blue_name_input.value = draft.blue_name;
+		}
+
+		draft_text_container.appendChild(blue_name_input);
+		draft_text_container.appendChild(draft_name);
+
+		const red_name_input = document.createElement("input");
+		red_name_input.classList += "complex-draft-team-name-input";
+		red_name_input.type = "text";
+		red_name_input.placeholder = "Red";
+
+		if (draft.red_name != null) {
+			red_name_input.value = draft.red_name;
+		}
+
+		red_name_input.addEventListener(
+			"input",
+			this.changeDraftRedName.bind(this, id),
+		);
+
+		red_name_input.addEventListener("click", () => {
+			event.stopPropagation();
+		});
+
+		draft_text_container.appendChild(red_name_input);
+
 		const icon_order = [
 			draft.bans[0],
 			draft.bans[1],
@@ -2049,6 +2144,22 @@ export class UserInterface {
 		let drafts = DataController.loadSavedDrafts();
 
 		drafts[id].name = event.target.value;
+
+		DataController.saveData("savedDrafts", drafts);
+	}
+
+	changeDraftBlueName(id) {
+		let drafts = DataController.loadSavedDrafts();
+
+		drafts[id].blue_name = event.target.value;
+
+		DataController.saveData("savedDrafts", drafts);
+	}
+
+	changeDraftRedName(id) {
+		let drafts = DataController.loadSavedDrafts();
+
+		drafts[id].red_name = event.target.value;
 
 		DataController.saveData("savedDrafts", drafts);
 	}

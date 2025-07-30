@@ -957,17 +957,30 @@ body {
 	cursor: pointer;
 }
 
-.complex-draft-name {
+.complex-draft-text-container {
 	position: absolute;
 	top: -25px;
 	min-width: calc(var(--draftPreviewIconSize) * 5);
 	max-width: calc(var(--draftPreviewIconSize) * 5);
+
+	display: flex;
+}
+
+.complex-draft-name,
+.complex-draft-team-name-input {
 	background: var(--sourceButtonBackgroundColor);
 	border: var(--sourceButtonBorder);
 	border-radius: var(--generalBorderRadius);
 	color: inherit;
 	text-align: center;
 	font-size: var(--dataButtonFontSize);
+}
+
+.complex-draft-name {
+	width: 70%;
+}
+.complex-draft-team-name-input {
+	width: 15%;
 }
 
 .snapshot-pick-container {
@@ -1022,17 +1035,29 @@ body {
 	filter: invert(90%);
 }
 
-.draft-name {
+.draft-text-container {
 	position: absolute;
 	top: -20px;
 	min-width: calc(var(--draftPreviewIconSize) * 3);
 	max-width: calc(var(--draftPreviewIconSize) * 3);
+}
+
+.draft-name,
+.draft-team-name-input {
 	background: var(--sourceButtonBackgroundColor);
 	border: var(--sourceButtonBorder);
 	border-radius: var(--generalBorderRadius);
 	color: inherit;
 	text-align: center;
 	font-size: var(--dataButtonFontSize);
+}
+
+.draft-name {
+	width: 50%;
+}
+
+.draft-team-name-input {
+	width: 25%;
 }
 
 #snapshots-input-error-box {
