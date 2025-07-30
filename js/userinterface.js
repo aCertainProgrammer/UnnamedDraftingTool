@@ -1932,6 +1932,15 @@ export class UserInterface {
 			this.removeDraftSnapshot.bind(this, container, id),
 		);
 
+		const screenshot_button = document.createElement("img");
+		screenshot_button.src = "./img/screenshot.webp";
+		screenshot_button.classList += "take-snapshot-screenshot-icon";
+		container.appendChild(screenshot_button);
+		screenshot_button.addEventListener(
+			"click",
+			this.exportSnapshotAsImage.bind(this, id),
+		);
+
 		return container;
 	}
 
