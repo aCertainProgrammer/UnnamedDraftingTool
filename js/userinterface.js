@@ -623,6 +623,21 @@ export class UserInterface {
 			"click",
 			this.closeOverlaysIfClickIsOutside.bind(this),
 		);
+
+		this.enterSettingsButton.addEventListener("dragstart", this.stopDrag);
+		this.openManualButton.addEventListener("dragstart", this.stopDrag);
+		this.takeDraftScreenshotButton.addEventListener(
+			"dragstart",
+			this.stopDrag,
+		);
+
+		this.roleIcons.forEach((icon) =>
+			icon.addEventListener("dragstart", this.stopDrag),
+		);
+
+		this.logos.forEach((logo) =>
+			logo.addEventListener("dragstart", this.stopDrag),
+		);
 	}
 
 	//end of constructor
@@ -1956,6 +1971,7 @@ export class UserInterface {
 			const div = document.createElement("div");
 			div.classList = "draft-preview-icon-container";
 			div.draggable = false;
+			div.addEventListener("dragstart", this.stopDrag);
 
 			const img = document.createElement("img");
 			if (champion == "") img.src = this.defaultBanIconPath;
@@ -1975,6 +1991,8 @@ export class UserInterface {
 		const remove_button = document.createElement("img");
 		remove_button.src = "./img/trash.png";
 		remove_button.classList += "draft-snapshot-remove-button";
+		remove_button.draggable = false;
+		remove_button.addEventListener("dragstart", this.stopDrag);
 
 		container.appendChild(remove_button);
 
@@ -1986,6 +2004,8 @@ export class UserInterface {
 		const screenshot_button = document.createElement("img");
 		screenshot_button.src = "./img/screenshot.webp";
 		screenshot_button.classList += "take-snapshot-screenshot-icon";
+		screenshot_button.draggable = false;
+		screenshot_button.addEventListener("dragstart", this.stopDrag);
 		container.appendChild(screenshot_button);
 		screenshot_button.addEventListener(
 			"click",
@@ -2088,6 +2108,8 @@ export class UserInterface {
 		const remove_button = document.createElement("img");
 		remove_button.src = "./img/trash.png";
 		remove_button.classList += "draft-snapshot-remove-button";
+		remove_button.draggable = false;
+		remove_button.addEventListener("dragstart", this.stopDrag);
 
 		container.appendChild(remove_button);
 
@@ -2099,6 +2121,8 @@ export class UserInterface {
 		const screenshot_button = document.createElement("img");
 		screenshot_button.src = "./img/screenshot.webp";
 		screenshot_button.classList += "take-snapshot-screenshot-icon";
+		screenshot_button.draggable = false;
+		screenshot_button.addEventListener("dragstart", this.stopDrag);
 		container.appendChild(screenshot_button);
 		screenshot_button.addEventListener(
 			"click",
