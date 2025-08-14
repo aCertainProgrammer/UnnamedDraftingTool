@@ -88,6 +88,7 @@ export const default_data = JSON.stringify({
 			"shyvana",
 			"skarner",
 			"taliyah",
+			"trundle",
 			"udyr",
 			"wukong",
 			"vi",
