@@ -81,6 +81,7 @@ export class DataController {
 	 * @property {bool} useSmallBanIcons
 	 * @property {bool} useColorGradient
 	 * @property {bool} disableDeleteButton
+	 * @property {bool} showChampionsInPoolOrder
 	 */
 	/**
 	 * Saves a config object to localStorage
@@ -134,6 +135,7 @@ export class DataController {
 			useSmallChampionIcons: true,
 			useColorGradient: false,
 			disableDeleteButton: false,
+			showChampionsInPoolOrder: false,
 		};
 		const properties = [
 			"useFearlessMode",
@@ -153,6 +155,7 @@ export class DataController {
 			"useSmallChampionIcons",
 			"useColorGradient",
 			"disableDeleteButton",
+			"showChampionsInPoolOrder",
 		];
 		let config = {};
 

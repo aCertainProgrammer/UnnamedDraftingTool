@@ -239,6 +239,9 @@ export class UserInterface {
 		this.disableDeleteToggle = document.querySelector(
 			"#disable-delete-button",
 		);
+		this.showChampionsInOrderToggle = document.querySelector(
+			"#show-champions-in-order-button",
+		);
 		this.settingsMenu = document.querySelector("#settings-menu");
 		this.enterSettingsButton = document.querySelector(
 			"#enter-settings-button",
@@ -471,6 +474,10 @@ export class UserInterface {
 		this.disableDeleteToggle.addEventListener(
 			"click",
 			this.toggleDeleteDisabling.bind(this),
+		);
+		this.showChampionsInOrderToggle.addEventListener(
+			"click",
+			this.toggleShowingChampionsInOrder.bind(this),
 		);
 		document.addEventListener(
 			"keydown",
@@ -1322,6 +1329,16 @@ export class UserInterface {
 		this.colorSettingsButtons();
 
 		DataController.saveConfig(this.config);
+	}
+
+	toggleShowingChampionsInOrder() {
+		this.config.showChampionsInPoolOrder =
+			!this.config.showChampionsInPoolOrder;
+		this.colorSettingsButtons();
+
+		DataController.saveConfig(this.config);
+
+		this.sendProcessSignal();
 	}
 
 	processKeyboardInput(event) {
@@ -2399,6 +2416,7 @@ export class UserInterface {
 			this.useSmallBanIconsToggle,
 			this.useColorGradientToggle,
 			this.disableDeleteToggle,
+			this.showChampionsInOrderToggle,
 		];
 		const config_settings = [
 			this.useZenMode,
@@ -2419,6 +2437,7 @@ export class UserInterface {
 			this.config.useSmallBanIcons,
 			this.config.useColorGradient,
 			this.config.disableDeleteButton,
+			this.config.showChampionsInPoolOrder,
 		];
 
 		for (let i = 0; i < buttons.length; i++) {

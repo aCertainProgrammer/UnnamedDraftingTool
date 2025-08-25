@@ -51,6 +51,10 @@ export class Backend {
 			return;
 		}
 
+		if (!config.showChampionsInPoolOrder) {
+			data = data.sort();
+		}
+
 		data = this.removeDuplicates(data);
 		data = this.removeWhitespace(data);
 
@@ -89,7 +93,7 @@ export class Backend {
 	}
 
 	filterDataBySearchQueryModern(data, searchQuery) {
-		if (searchQuery == "") return data.sort();
+		if (searchQuery == "") return data;
 
 		const newData = [];
 		data = data.sort();
@@ -118,7 +122,7 @@ export class Backend {
 	}
 
 	filterDataBySearchQueryLegacy(data, searchQuery) {
-		data = data.sort();
+		data = data;
 
 		if (searchQuery == "") return data;
 		const newData = [];
