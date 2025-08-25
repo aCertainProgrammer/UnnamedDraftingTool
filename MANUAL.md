@@ -185,6 +185,9 @@ If enabled, adds a hue to blue and redside
 ### Stop delete from clearing the draft
 If enabled, disables the `Delete` hotkey from erasing the whole draft
 
+### Show champions in order
+If enabled, it shows the champions in the order specified in the data (custom data). Only works when the search query is empty, useful for comfort specifications during prep
+
 ## Draft snapshots
 You can save your drafts for later and come back to them easily by using draft snapshots.
 
