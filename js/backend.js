@@ -51,7 +51,7 @@ export class Backend {
 			return;
 		}
 
-		if (!config.showChampionsInPoolOrder) {
+		if (!config.showChampionsInPoolOrder || request.team == "all") {
 			data = data.sort();
 		}
 
