@@ -159,7 +159,7 @@ export async function drawDraft(draft, icon_paths) {
 		}),
 	);
 
-	const font_size_px = 48;
+	const font_size_px = 40;
 	if (draft.name) {
 		ctx.fillStyle = "#cccccc";
 		ctx.font = `${font_size_px}px serif`;
