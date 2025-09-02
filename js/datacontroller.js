@@ -178,6 +178,14 @@ export class DataController {
 		return picksAndBans;
 	}
 
+	static savePicksAndBans(picksAndBans) {
+		try {
+			localStorage.setItem("picksAndBans", JSON.stringify(picksAndBans));
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
 	/**
 	 * @typedef Draft
 	 * @property {string} name

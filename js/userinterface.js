@@ -197,6 +197,9 @@ export class UserInterface {
 		this.exportAllDraftsAsScreenshotsButton = document.getElementById(
 			"export-all-draft-images-button",
 		);
+		this.importDraftFromDrafterLolButton = document.getElementById(
+			"import-draft-from-drafterlol-button",
+		);
 		this.toggleTeamColorTogglingToggle = document.querySelector(
 			"#toggle-color-toggling-toggle",
 		);
@@ -426,6 +429,10 @@ export class UserInterface {
 		this.exportAllDraftsAsScreenshotsButton.addEventListener(
 			"click",
 			this.exportAllDraftsAsImages.bind(this),
+		);
+		this.importDraftFromDrafterLolButton.addEventListener(
+			"click",
+			this.importDraftFromDrafterLol.bind(this),
 		);
 		this.toggleTeamColorTogglingToggle.addEventListener(
 			"click",
@@ -1194,6 +1201,52 @@ export class UserInterface {
 		const snapshots = DataController.loadSavedDrafts();
 
 		this.exportDraftsAsImages(snapshots);
+	}
+
+	importDraftFromDrafterLol() {
+		const body = prompt("Paste the drafter html string (watch the guide)");
+
+		const scripts = body.split("<script>");
+		const words = scripts[scripts.length - 1].split('\\"');
+
+		let bans = [];
+		let picks = [];
+
+		for (let i = 0; i < words.length; i++) {
+			const word = words[i];
+
+			if (word.includes("blueBan") || word.includes("redBan")) {
+				bans.push(words[i + 2].toLowerCase());
+			}
+			if (word.includes("bluePick") || word.includes("redPick")) {
+				picks.push(words[i + 2].toLowerCase());
+			}
+		}
+
+		function translateToHuman(array) {
+			for (let i = 0; i < array.length; i++) {
+				if (array[i] == "monkeyking") {
+					array[i] = "wukong";
+				}
+			}
+		}
+
+		translateToHuman(picks);
+		translateToHuman(bans);
+
+		const draft = {
+			picks: picks,
+			bans: bans,
+		};
+
+		let picksAndBans = DataController.loadPicksAndBans();
+		let draftNumber = this.getDraftNumber();
+
+		picksAndBans[draftNumber] = draft;
+		DataController.savePicksAndBans(picksAndBans);
+
+		this.sendDraftImportSignal();
+		this.sendProcessSignal();
 	}
 
 	toggleTeamColorToggling() {
