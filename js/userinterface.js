@@ -1,6 +1,11 @@
 import { DataController } from "./datacontroller.js";
 import { Backend } from "./backend.js";
-import { capitalize, downloadImage, prettifyChampionName } from "./util.js";
+import {
+	capitalize,
+	downloadImage,
+	prettifyChampionName,
+	translateToHuman,
+} from "./util.js";
 import { drawDraft } from "./images.js";
 /**
  * A container for all UI-related events and rendering
@@ -199,6 +204,9 @@ export class UserInterface {
 		);
 		this.importDraftFromDrafterLolButton = document.getElementById(
 			"import-draft-from-drafterlol-button",
+		);
+		this.importDraftFromDraftlolButton = document.getElementById(
+			"import-draft-from-draftlol-button",
 		);
 		this.toggleTeamColorTogglingToggle = document.querySelector(
 			"#toggle-color-toggling-toggle",
@@ -433,6 +441,10 @@ export class UserInterface {
 		this.importDraftFromDrafterLolButton.addEventListener(
 			"click",
 			this.importDraftFromDrafterLol.bind(this),
+		);
+		this.importDraftFromDraftlolButton.addEventListener(
+			"click",
+			this.importDraftFromDraftlol.bind(this),
 		);
 		this.toggleTeamColorTogglingToggle.addEventListener(
 			"click",
@@ -1204,49 +1216,91 @@ export class UserInterface {
 	}
 
 	importDraftFromDrafterLol() {
-		const body = prompt("Paste the drafter html string (watch the guide)");
+		try {
+			const body = prompt(
+				"Paste the drafter html string (watch the guide)",
+			);
 
-		const scripts = body.split("<script>");
-		const words = scripts[scripts.length - 1].split('\\"');
-
-		let bans = [];
-		let picks = [];
-
-		for (let i = 0; i < words.length; i++) {
-			const word = words[i];
-
-			if (word.includes("blueBan") || word.includes("redBan")) {
-				bans.push(words[i + 2].toLowerCase());
+			if (body == null) {
+				return;
 			}
-			if (word.includes("bluePick") || word.includes("redPick")) {
-				picks.push(words[i + 2].toLowerCase());
-			}
-		}
 
-		function translateToHuman(array) {
-			for (let i = 0; i < array.length; i++) {
-				if (array[i] == "monkeyking") {
-					array[i] = "wukong";
+			const scripts = body.split("<script>");
+			const words = scripts[scripts.length - 1].split('\\"');
+
+			let bans = [];
+			let picks = [];
+
+			for (let i = 0; i < words.length; i++) {
+				const word = words[i];
+
+				if (word.includes("blueBan") || word.includes("redBan")) {
+					bans.push(words[i + 2].toLowerCase());
+				}
+				if (word.includes("bluePick") || word.includes("redPick")) {
+					picks.push(words[i + 2].toLowerCase());
 				}
 			}
+
+			translateToHuman(picks);
+			translateToHuman(bans);
+
+			const draft = {
+				picks: picks,
+				bans: bans,
+			};
+
+			let picksAndBans = DataController.loadPicksAndBans();
+			let draftNumber = this.getDraftNumber();
+
+			picksAndBans[draftNumber] = draft;
+			DataController.savePicksAndBans(picksAndBans);
+
+			this.sendDraftImportSignal();
+			this.sendProcessSignal();
+		} catch (e) {
+			alert(e);
 		}
+	}
 
-		translateToHuman(picks);
-		translateToHuman(bans);
+	importDraftFromDraftlol() {
+		try {
+			const text = prompt("Paste the draftlol JSON (watch the guide)");
+			if (text == null) {
+				return;
+			}
 
-		const draft = {
-			picks: picks,
-			bans: bans,
-		};
+			const json = JSON.parse(text);
 
-		let picksAndBans = DataController.loadPicksAndBans();
-		let draftNumber = this.getDraftNumber();
+			if (json.newState.state != "finished") {
+				throw "draft not over yet";
+			}
 
-		picksAndBans[draftNumber] = draft;
-		DataController.savePicksAndBans(picksAndBans);
+			const picks = [
+				...json.newState.bluePicks,
+				...json.newState.redPicks,
+			];
+			const bans = [...json.newState.blueBans, ...json.newState.redBans];
 
-		this.sendDraftImportSignal();
-		this.sendProcessSignal();
+			translateToHuman(picks);
+			translateToHuman(bans);
+
+			const draft = {
+				picks: picks,
+				bans: bans,
+			};
+
+			let picksAndBans = DataController.loadPicksAndBans();
+			let draftNumber = this.getDraftNumber();
+
+			picksAndBans[draftNumber] = draft;
+			DataController.savePicksAndBans(picksAndBans);
+
+			this.sendDraftImportSignal();
+			this.sendProcessSignal();
+		} catch (e) {
+			alert(e);
+		}
 	}
 
 	toggleTeamColorToggling() {

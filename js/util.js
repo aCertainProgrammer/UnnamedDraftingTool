@@ -77,3 +77,13 @@ export function downloadImage(dataUrl, fileName) {
 	downloadElement.click();
 	document.body.removeChild(downloadElement);
 }
+
+export function translateToHuman(array) {
+	for (let i = 0; i < array.length; i++) {
+		array[i] = array[i].toLowerCase();
+
+		if (array[i] == "monkeyking") {
+			array[i] = "wukong";
+		}
+	}
+}
