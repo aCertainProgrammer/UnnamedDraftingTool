@@ -80,10 +80,21 @@ export function downloadImage(dataUrl, fileName) {
 
 export function translateToHuman(array) {
 	for (let i = 0; i < array.length; i++) {
+		if (typeof array[i] != typeof "") {
+			array[i] = "";
+			continue;
+		}
+
 		array[i] = array[i].toLowerCase();
 
 		if (array[i] == "monkeyking") {
 			array[i] = "wukong";
+		}
+		if (array[i] == "jarvaniv") {
+			array[i] = "jarvan";
+		}
+		if (array[i] == "none") {
+			array[i] = "";
 		}
 	}
 }
