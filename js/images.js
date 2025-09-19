@@ -160,11 +160,11 @@ export async function drawDraft(draft, icon_paths) {
 	);
 
 	const font_size_px = 40;
-	if (draft.name) {
-		ctx.fillStyle = "#cccccc";
-		ctx.font = `${font_size_px}px serif`;
-		ctx.textAlign = "center";
+	ctx.fillStyle = "#cccccc";
+	ctx.font = `${font_size_px}px serif`;
+	ctx.textAlign = "center";
 
+	if (draft.name) {
 		const max_text_width_px =
 			image_width_px - 2 * champion_pick_width_px - 2 * ban_gap_px;
 
