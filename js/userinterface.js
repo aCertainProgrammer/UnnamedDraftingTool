@@ -11,11 +11,17 @@ import { drawDraft } from "./images.js";
  * A container for all UI-related events and rendering
  */
 export class UserInterface {
-	constructor(defaultPickIconPath, defaultBanIconPath, imagePath) {
+	constructor(
+		defaultPickIconPath,
+		defaultBanIconPath,
+		imagePath,
+		backendURL,
+	) {
 		this.draftCounterMaxLimit = 999;
 		this.defaultPickIconPath = defaultPickIconPath;
 		this.defaultBanIconPath = defaultBanIconPath;
 		this.imagePath = imagePath;
+		this.backendURL = backendURL;
 
 		this.pickIconPath = null;
 		this.pickIconPostfix = null;
@@ -204,6 +210,12 @@ export class UserInterface {
 		);
 		this.importDraftFromDrafterLolButton = document.getElementById(
 			"import-draft-from-drafterlol-button",
+		);
+		this.importDraftFromDrafterLolByURLButton = document.getElementById(
+			"import-draft-from-drafterlol-by-url-button",
+		);
+		this.importSeriesFromDrafterLolByURLButton = document.getElementById(
+			"import-series-from-drafterlol-by-url-button",
 		);
 		this.importDraftFromDraftlolButton = document.getElementById(
 			"import-draft-from-draftlol-button",
@@ -441,6 +453,14 @@ export class UserInterface {
 		this.importDraftFromDrafterLolButton.addEventListener(
 			"click",
 			this.importDraftFromDrafterLol.bind(this),
+		);
+		this.importDraftFromDrafterLolByURLButton.addEventListener(
+			"click",
+			this.importDraftFromDrafterLolByURL.bind(this),
+		);
+		this.importSeriesFromDrafterLolByURLButton.addEventListener(
+			"click",
+			this.importSeriesFromDrafterLolByURL.bind(this),
 		);
 		this.importDraftFromDraftlolButton.addEventListener(
 			"click",
@@ -1256,6 +1276,59 @@ export class UserInterface {
 			picksAndBans[draftNumber] = draft;
 			DataController.savePicksAndBans(picksAndBans);
 
+			this.sendDraftImportSignal();
+			this.sendProcessSignal();
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	async importDraftFromDrafterLolByURL() {
+		try {
+			const url = prompt("Paste the drafter link");
+			if (url == null) {
+				return;
+			}
+
+			const response = await fetch(
+				`${this.backendURL}/?url=${url}&mode=draft`,
+			);
+
+			const draft = await response.json();
+			if (draft.picks == undefined || draft.bans == undefined) {
+				throw "bad response from server, cannot import";
+			}
+
+			let picksAndBans = DataController.loadPicksAndBans();
+			let draftNumber = this.getDraftNumber();
+
+			picksAndBans[draftNumber] = draft;
+			DataController.savePicksAndBans(picksAndBans);
+			this.sendDraftImportSignal();
+			this.sendProcessSignal();
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	async importSeriesFromDrafterLolByURL() {
+		try {
+			const url = prompt("Paste the drafter link");
+			if (url == null) {
+				return;
+			}
+
+			const response = await fetch(
+				`${this.backendURL}/?url=${url}&mode=series`,
+			);
+
+			const drafts = await response.json();
+			if (drafts == undefined) {
+				throw "bad response from server, cannot import";
+			}
+
+			DataController.savePicksAndBans(drafts);
+			this.draftCounter.value = 1;
 			this.sendDraftImportSignal();
 			this.sendProcessSignal();
 		} catch (e) {
