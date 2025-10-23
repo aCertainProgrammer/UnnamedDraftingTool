@@ -10,6 +10,7 @@ const controller = new Controller(
 		"./img/pick_icon.webp",
 		"./img/ban-icon.webp",
 		"./img/champion_icons",
+		"https://frog03-20729.wykr.es",
 	),
 	new Backend(),
 );

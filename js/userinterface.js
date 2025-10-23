@@ -11,11 +11,18 @@ import { drawDraft } from "./images.js";
  * A container for all UI-related events and rendering
  */
 export class UserInterface {
-	constructor(defaultPickIconPath, defaultBanIconPath, imagePath) {
+	constructor(
+		defaultPickIconPath,
+		defaultBanIconPath,
+		imagePath,
+		backendURL,
+	) {
 		this.draftCounterMaxLimit = 999;
 		this.defaultPickIconPath = defaultPickIconPath;
 		this.defaultBanIconPath = defaultBanIconPath;
 		this.imagePath = imagePath;
+		this.backendURL = backendURL;
+		this.draftlolwebsocketURL = "wss://draftlol.dawe.gg";
 
 		this.pickIconPath = null;
 		this.pickIconPostfix = null;
@@ -205,8 +212,20 @@ export class UserInterface {
 		this.importDraftFromDrafterLolButton = document.getElementById(
 			"import-draft-from-drafterlol-button",
 		);
+		this.importDraftFromDrafterLolByURLButton = document.getElementById(
+			"import-draft-from-drafterlol-by-url-button",
+		);
+		this.importSeriesFromDrafterLolByURLButton = document.getElementById(
+			"import-series-from-drafterlol-by-url-button",
+		);
 		this.importDraftFromDraftlolButton = document.getElementById(
 			"import-draft-from-draftlol-button",
+		);
+		this.importDraftFromDraftlolByURLButton = document.getElementById(
+			"import-draft-from-draftlol-by-url-button",
+		);
+		this.listenToDraftFromDraftlolByURLButton = document.getElementById(
+			"listen-to-draft-from-draftlol-by-url-button",
 		);
 		this.toggleTeamColorTogglingToggle = document.querySelector(
 			"#toggle-color-toggling-toggle",
@@ -442,9 +461,25 @@ export class UserInterface {
 			"click",
 			this.importDraftFromDrafterLol.bind(this),
 		);
+		this.importDraftFromDrafterLolByURLButton.addEventListener(
+			"click",
+			this.importDraftFromDrafterLolByURL.bind(this),
+		);
+		this.importSeriesFromDrafterLolByURLButton.addEventListener(
+			"click",
+			this.importSeriesFromDrafterLolByURL.bind(this),
+		);
 		this.importDraftFromDraftlolButton.addEventListener(
 			"click",
 			this.importDraftFromDraftlol.bind(this),
+		);
+		this.importDraftFromDraftlolByURLButton.addEventListener(
+			"click",
+			this.importDraftFromDraftlolByURL.bind(this),
+		);
+		this.listenToDraftFromDraftlolByURLButton.addEventListener(
+			"click",
+			this.listenToDraftFromDraftlolByURL.bind(this),
 		);
 		this.toggleTeamColorTogglingToggle.addEventListener(
 			"click",
@@ -1263,17 +1298,71 @@ export class UserInterface {
 		}
 	}
 
-	importDraftFromDraftlol() {
+	async importDraftFromDrafterLolByURL() {
 		try {
-			const text = prompt("Paste the draftlol JSON (watch the guide)");
-			if (text == null) {
+			const url = prompt("Paste the drafter link");
+			if (url == null) {
 				return;
 			}
 
-			const json = JSON.parse(text);
+			const response = await fetch(
+				`${this.backendURL}/?url=${url}&mode=draft`,
+			);
 
-			if (json.newState.state != "finished") {
-				throw "draft not over yet";
+			const draft = await response.json();
+			if (draft.picks == undefined || draft.bans == undefined) {
+				throw "bad response from server, cannot import";
+			}
+
+			let picksAndBans = DataController.loadPicksAndBans();
+			let draftNumber = this.getDraftNumber();
+
+			picksAndBans[draftNumber] = draft;
+			DataController.savePicksAndBans(picksAndBans);
+			this.sendDraftImportSignal();
+			this.sendProcessSignal();
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	async importSeriesFromDrafterLolByURL() {
+		try {
+			const url = prompt("Paste the drafter link");
+			if (url == null) {
+				return;
+			}
+
+			const response = await fetch(
+				`${this.backendURL}/?url=${url}&mode=series`,
+			);
+
+			const drafts = await response.json();
+			if (drafts == undefined) {
+				throw "bad response from server, cannot import";
+			}
+
+			DataController.savePicksAndBans(drafts);
+			this.draftCounter.value = 1;
+			this.sendDraftImportSignal();
+			this.sendProcessSignal();
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	loadDraftlolDraft(json) {
+		try {
+			const arraysToValidate = [
+				json.newState.bluePicks,
+				json.newState.blueBans,
+				json.newState.redPicks,
+				json.newState.redBans,
+			];
+			for (const array of arraysToValidate) {
+				while (array.length < 5) {
+					array.push("");
+				}
 			}
 
 			const picks = [
@@ -1298,6 +1387,90 @@ export class UserInterface {
 
 			this.sendDraftImportSignal();
 			this.sendProcessSignal();
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	importDraftFromDraftlol() {
+		try {
+			const text = prompt("Paste the draftlol JSON (watch the guide)");
+			if (text == null) {
+				return;
+			}
+
+			const json = JSON.parse(text);
+			this.loadDraftlolDraft(json);
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	importDraftFromDraftlolByURL() {
+		try {
+			const text = prompt("Paste the draftlol link");
+			if (text == null) {
+				return;
+			}
+
+			const url = new URL(text);
+
+			const words = url.pathname.split("/");
+			const roomID = words[1];
+
+			const socket = new WebSocket(this.draftlolwebsocketURL);
+
+			socket.addEventListener("open", (event) => {
+				socket.send(
+					JSON.stringify({
+						type: "joinroom",
+						roomId: roomID,
+					}),
+				);
+			});
+
+			socket.addEventListener("message", (event) => {
+				socket.close();
+
+				const json = JSON.parse(event.data);
+				this.loadDraftlolDraft(json);
+			});
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	listenToDraftFromDraftlolByURL() {
+		try {
+			const text = prompt("Paste the draftlol link");
+			if (text == null) {
+				return;
+			}
+
+			const url = new URL(text);
+
+			const words = url.pathname.split("/");
+			const roomID = words[1];
+
+			const socket = new WebSocket(this.draftlolwebsocketURL);
+
+			socket.addEventListener("open", (event) => {
+				socket.send(
+					JSON.stringify({
+						type: "joinroom",
+						roomId: roomID,
+					}),
+				);
+			});
+
+			socket.addEventListener("message", (event) => {
+				const json = JSON.parse(event.data);
+				if (json.newState.state == "finished") {
+					socket.close();
+				}
+
+				this.loadDraftlolDraft(json);
+			});
 		} catch (e) {
 			alert(e);
 		}
