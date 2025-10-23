@@ -265,6 +265,8 @@ The snapshot data must be in the form of valid JSON, as an array of draft object
 
 ## Custom data input
 
+### It's highly recommended that you use https://acertainprogrammer.github.io/UnnamedTierlistMaker2/ to easily create and import a champion pool into the drafting tool<br><br>
+
 **Note: if the data doesn't load, it means you made a mistake in your input. Read the error message that is being displayed for you and fix the problem.
 You can also validate your JSON here:
 https://jsonchecker.com/
