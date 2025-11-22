@@ -60,6 +60,7 @@ export const default_data = JSON.stringify({
 			"yone",
 			"yorick",
 			"zac",
+			"zaahen",
 		],
 		jungle: [
 			"amumu",
@@ -115,6 +116,7 @@ export const default_data = JSON.stringify({
 			"zac",
 			"zed",
 			"zyra",
+			"zaahen",
 		],
 		mid: [
 			"ahri",
