@@ -503,6 +503,7 @@ The current list of all champions:
 "yunara",
 "yuumi",
 "zac",
+"zaahen",
 "zed",
 "zeri",
 "ziggs",
