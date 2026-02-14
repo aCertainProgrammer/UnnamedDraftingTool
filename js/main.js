@@ -1,5 +1,6 @@
 import { Backend } from "./backend.js";
 import { Controller } from "./controller.js";
+import { DataController } from "./datacontroller.js";
 import { Scraper } from "./scraper.js";
 import { UserInterface } from "./userinterface.js";
 import ZeroMd, { STYLES } from "https://cdn.jsdelivr.net/npm/zero-md@3";
@@ -28,3 +29,4 @@ customElements.define(
 controller.init();
 controller.process();
 controller.firstProcess = false;
+DataController.registerPoolChangeCheck(controller.process.bind(controller));

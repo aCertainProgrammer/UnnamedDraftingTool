@@ -314,4 +314,17 @@ export class DataController {
 
 		return validatedBinds;
 	}
+
+	static registerPoolChangeCheck(onChangeCallback) {
+		const key = "championPoolUpdated";
+		localStorage.setItem(key, JSON.stringify(false));
+
+		setInterval(() => {
+			const poolUpdated = JSON.parse(localStorage.getItem(key));
+			if (poolUpdated) {
+				onChangeCallback();
+				localStorage.setItem(key, JSON.stringify(false));
+			}
+		}, 1000);
+	}
 }
