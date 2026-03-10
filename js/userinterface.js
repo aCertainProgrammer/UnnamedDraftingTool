@@ -1314,6 +1314,9 @@ export class UserInterface {
 				throw "bad response from server, cannot import";
 			}
 
+			translateToHuman(draft.picks);
+			translateToHuman(draft.bans);
+
 			let picksAndBans = DataController.loadPicksAndBans();
 			let draftNumber = this.getDraftNumber();
 
@@ -1340,6 +1343,11 @@ export class UserInterface {
 			const drafts = await response.json();
 			if (drafts == undefined) {
 				throw "bad response from server, cannot import";
+			}
+
+			for (const draft of drafts) {
+				translateToHuman(draft.picks);
+				translateToHuman(draft.bans);
 			}
 
 			DataController.savePicksAndBans(drafts);

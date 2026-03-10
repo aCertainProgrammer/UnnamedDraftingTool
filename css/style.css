@@ -1172,3 +1172,11 @@ body {
 #toggle-ally-enemy-coloring-button {
 	width: 132px;
 }
+
+.settings-menu-topbar {
+	height: fit-content;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}

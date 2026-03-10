@@ -12,7 +12,7 @@ Feel free to contact me by:
 2. Adding me on discord: rycer__
 3. Sending me an email: a_certain_programmer@proton.me
 
-Also, check out my tierlist maker: https://acertainprogrammer.github.io/UnnamedTierlistMaker/
+Also, check out my tierlist maker: https://acertainprogrammer.github.io/UnnamedTierlistMaker2/
 
 |Table of contents|
 |-----------------|
@@ -503,6 +503,7 @@ The current list of all champions:
 "yunara",
 "yuumi",
 "zac",
+"zaahen",
 "zed",
 "zeri",
 "ziggs",
