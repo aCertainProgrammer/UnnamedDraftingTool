@@ -152,6 +152,7 @@ export const default_data = JSON.stringify({
 			"kayle",
 			"leblanc",
 			"lissandra",
+			"locke",
 			"lucian",
 			"lux",
 			"malzahar",
